@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-1234567
+    <div class="root">
+        <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
+        <div class="container">
+            <th:block th:replace="~{fragments/snb :: snbFragment}"></th:block>
+            <div class="contents">
+                <div class="dashboard">
+                    <div class="student-info-preview">
+                        <span>수강생 출석률</span>
+                    </div>
+                    <div>
+
+                    </div>
+                    <div>
+
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+    </div>
 </body>
 </html>
