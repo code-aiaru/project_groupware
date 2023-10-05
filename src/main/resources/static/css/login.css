@@ -1,0 +1,73 @@
+@import url(/css/common/reset.css);
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Giants-Inline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    font-family: Pretendard;
+}
+
+
+.root {
+    height: 100vh;
+    background-color: #f7f8fa;
+    position: relative;
+}
+
+.logo {
+    font-family: Giants-Inline;
+    font-size: 20px;
+    margin: 0 auto;
+    padding: 0 0 20px 0;
+}
+
+.login_box {
+    /* height: 300px; */
+    width: 300px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    padding: 50px;
+    border-radius: 5px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+}
+
+.login_form span {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.login_form input[type="text"] {
+    height: 25px;
+}
+
+.login_form a{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-size: 10px;
+}
+
+.login_btn {
+    height: 35px;
+    margin-top: 20px;
+}
