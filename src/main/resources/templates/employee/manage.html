@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>인사 관리 페이지</title>
+    <script th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<h1>인사 관리</h1>
+<div id="loadedContent">
+<!--    <li><a th:href="@{/employee/join}">사원 추가</a></li>-->
+    <li><a href="/employee/join" data-ajax="true">사원 추가</a></li>
+    <li><a th:href="@{/employee/employeeList?page=0&subject=&search=}">사원 목록</a></li>
+</div>
+</body>
+</html>

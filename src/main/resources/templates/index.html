@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>INDEX</title>
@@ -8,6 +9,31 @@
 <body>
     <div class="root">
         <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
+        
+        <!-- gnb -->
+        <div class="gnb">
+            <span class="logo">그린컴퓨터아카데미</span>
+            <div class="notice">
+                notice list...
+            </div>
+            <div class="user-console">
+                <img src="/images/index/header/iconmonstr-email-4.svg" alt="메세지 아이콘" class="message_icon">
+                <img src="/images/index/header/iconmonstr-bell-2.svg" alt="알람 아이콘" class="alarm_icon">
+                <div class="profile-img_box">
+                    <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}">
+                        <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/header/iconmonstr-user-7.svg'">
+                    </a>
+                </div>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><span th:text="${employee.employeeName}"></span>님</li>
+                    <li><a th:href="@{/logout}">로그아웃</a></li>
+                </th:block>
+            </div>
+        </div>
+        <!-- gnb end -->
+
+
+
         <div class="container">
             <th:block th:replace="~{fragments/snb :: snbFragment}"></th:block>
             <div class="contents">
@@ -25,6 +51,35 @@
 
                     </div>
                 </div>
+    
+                <div class="work">
+                    <span>WORK</span>
+                    <ul>
+                        <th:block sec:authorize="hasAnyRole('ADMIN')">
+                            <li><a href="/employee/manage" data-ajax="true">인사 관리</a></li>
+                        </th:block>
+                        <li><a href="/schedule" data-ajax="true">일정 관리</a></li>
+                        <li><a href="">업무 관리</a></li>
+                        <li><a href="">전자결재</a></li>
+                        <li><a href="">업무일지</a></li>
+                    </ul>
+                </div>
+    
+                <div class="student">
+                    <span>STUDENT</span>
+                    <ul>
+                        <li><a href="">수강생 조회</a></li>
+                        <li><a href="/student/manage" data-ajax="true">수강생 관리</a></li>
+                    </ul>
+                </div>
+    
+                <div class="community">
+                    <span>COMMUNITY</span>
+                    <ul>
+                        <li><a href="">공지사항</a></li>
+                    </ul>
+                </div>
+    
             </div>
         </div>
         <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>

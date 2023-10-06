@@ -2,6 +2,8 @@ package spring.project.groupware.academy.employee.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
@@ -167,6 +169,40 @@ public class EmployeeService {
         }
     }
 
+    // Read, 페이징/검색
+    public Page<EmployeeDto> employeeList(Pageable pageable, String subject, String search) {
+
+        Page<EmployeeEntity> employeeEntities = null; // 기본 null값으로 설정
+
+        if(subject.equals("employeeId")){
+            employeeEntities = employeeRepository.findByEmployeeIdContaining(pageable, search);
+        }else if(subject.equals("employeeName")){
+            employeeEntities = employeeRepository.findByEmployeeNameContaining(pageable, search);
+        }else if(subject.equals("employeePhone")){
+            employeeEntities = employeeRepository.findByEmployeePhoneContaining(pageable, search);
+        }else if(subject.equals("employeeEmail")) {
+            employeeEntities = employeeRepository.findByEmployeeEmailContaining(pageable, search);
+        }else if(subject.equals("employeeDep")) {
+            employeeEntities = employeeRepository.findByEmployeeDepContaining(pageable, search);
+        }else if(subject.equals("employeePosition")) {
+            employeeEntities = employeeRepository.findByEmployeePositionContaining(pageable, search);
+        }else if(subject.equals("employeeBirth")) {
+            employeeEntities = employeeRepository.findByEmployeeBirthContaining(pageable, search);
+        }else if(subject.equals("employeeStreetAddress")){
+            employeeEntities = employeeRepository.findByEmployeeStreetAddressContaining(pageable, search);
+        }else{
+            employeeEntities = employeeRepository.findAll(pageable);
+        }
+
+        employeeEntities.getNumber();
+        employeeEntities.getTotalElements();
+        employeeEntities.getTotalPages();
+        employeeEntities.getSize();
+
+        Page<EmployeeDto> employeeDtos = employeeEntities.map(EmployeeDto::toEmployeeDto);
+
+        return employeeDtos;
+    }
 
 
 
