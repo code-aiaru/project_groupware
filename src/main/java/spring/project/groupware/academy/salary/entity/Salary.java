@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Builder
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class Salary {
 
     @Id
@@ -21,9 +21,9 @@ public class Salary {
 
     private int salary;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee")
-    private Employee employee;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "employee")
+//    private Employee employee;
 
 
 }

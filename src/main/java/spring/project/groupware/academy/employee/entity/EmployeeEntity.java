@@ -68,8 +68,8 @@ public class EmployeeEntity extends BaseEntity {
     private String temporaryPassword;
 
     // 연관 관계
-    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
-    private ImageEntity image;
+//    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+//    private ImageEntity image;
 
     public static EmployeeEntity toEmployeeEntityInsert(EmployeeDto employeeDto, PasswordEncoder passwordEncoder) {
 
@@ -86,11 +86,11 @@ public class EmployeeEntity extends BaseEntity {
         employeeEntity.setEmployeePostCode(employeeDto.getEmployeePostCode());
         employeeEntity.setEmployeeStreetAddress(employeeDto.getEmployeeStreetAddress());
         employeeEntity.setEmployeeDetailAddress(employeeDto.getEmployeeDetailAddress());
-        employeeEntity.setRole(Role.ADMIN);
+        employeeEntity.setRole(Role.EMPLOYEE);
 
         return employeeEntity;
     }
-    public static EmployeeEntity toemployeeEntityUpdate(EmployeeDto employeeDto) {
+    public static EmployeeEntity toEmployeeEntityUpdate(EmployeeDto employeeDto) {
 
         EmployeeEntity employeeEntity =new EmployeeEntity();
 

@@ -34,12 +34,16 @@ public class HomeController {
         if(myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
             model.addAttribute("employee", employee);
+            return "index"; // 로그인 돼있다면 index 페이지로 이동
         }
-        return "index";
+        return "login"; // 로그인 안돼있으면 로그인 페이지로 이동
     }
 
 //    @GetMapping({"/login"})
 //    public String login(){
 //        return "login";
 //    }
+
+
+
 }

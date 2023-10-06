@@ -77,7 +77,6 @@ public class EmployeeDto {
     @NotBlank(message = "상세주소를 입력해주세요")
     private String employeeDetailAddress;
 
-    @Enumerated(EnumType.STRING)
     private Role role;
 
     // 비밀번호 찾기 기능에서 이메일, 휴대전화번호 일치하는지 확인 시 필요
@@ -114,7 +113,7 @@ public class EmployeeDto {
         employeeDto.setCreateTime(employeeEntity.getCreateTime());
         employeeDto.setUpdateTime(employeeEntity.getUpdateTime());
 
-        employeeDto.setImageUrl(employeeEntity.getImage().getImageUrl());
+//        employeeDto.setImageUrl(employeeEntity.getImage().getImageUrl());
 
         return employeeDto;
     }

@@ -150,7 +150,7 @@ public class EmployeeService {
             return new IllegalArgumentException("수정할 사원정보가 없습니다");
         }));
 
-        EmployeeEntity employeeEntity = EmployeeEntity.toemployeeEntityUpdate(employeeDto);
+        EmployeeEntity employeeEntity = EmployeeEntity.toEmployeeEntityUpdate(employeeDto);
         Long employeeNo = employeeRepository.save(employeeEntity).getEmployeeNo();
 
         Optional<EmployeeEntity> optionalEmployeeEntity1 = Optional.ofNullable(employeeRepository.findById(employeeNo).orElseThrow(() -> {

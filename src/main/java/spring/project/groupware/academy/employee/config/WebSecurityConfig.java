@@ -2,6 +2,7 @@ package spring.project.groupware.academy.employee.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,8 +14,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+
+    // 일반 사원
     @Configuration
-    public static class UserConfig{
+    @Order(1)
+    public static class EmployeeConfig{
 
         @Bean
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
