@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
-import spring.project.groupware.academy.employee.service.ImageServiceImpl;
+//import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final EmployeeService employeeService;
-    private final ImageServiceImpl imageService;
+//    private final ImageServiceImpl imageService;
 
 //    @GetMapping({"", "/index"})
 //    public String index(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
