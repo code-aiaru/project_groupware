@@ -1,7 +1,7 @@
 //package spring.project.groupware.academy.employee.entity;
 //
 //import lombok.*;
-//import spring.project.groupware.academy.employee.util.BaseEntity;
+//import spring.project.groupware.academy.util.BaseEntity;
 //
 //import javax.persistence.*;
 //

@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import spring.project.groupware.academy.employee.constraint.Role;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
-import spring.project.groupware.academy.employee.util.BaseEntity;
+import spring.project.groupware.academy.util.BaseEntity;
 
 import javax.persistence.*;
 

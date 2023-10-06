@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.employee.util;
+package spring.project.groupware.academy.util;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
