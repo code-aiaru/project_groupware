@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 상세보기</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/employee/detail.js}" defer="defer"></script>
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <div class="detail-con">
+            <div class="title">
+                <h1><span th:text="${employee.employeeName}" ></span>님 상세정보</h1>
+            </div>
+            <!-- 이미지 미리보기 영역 -->
+<!--            <div id="image-preview"><img id="preview-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>-->
+<!--            <th:block th:if="${#authentication.principal.username==employee.employeeId}">-->
+<!--            <span class="image_btn">-->
+<!--                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>-->
+<!--            </span>-->
+<!--            </th:block>-->
+<!--            <th:block th:unless="${#authentication.principal.username==employee.employeeId}">-->
+<!--            <span>-->
+<!--                본인글이 아닙니다-->
+<!--            </span>-->
+<!--            </th:block>-->
+            <div class="detail">
+                <ul>
+<!--                    <span th:if="${false}" th:text="${employee.employeeNo}"></span> <br> &lt;!&ndash; th:if="${false}" 입력 시 안보이게 처리 &ndash;&gt;-->
+<!--                    <span th:if="${false}" :text="${employee.employeePassword}"></span> <br>-->
+                    <li>
+                        <span>아이디</span>
+                        <span th:text="${employee.employeeId}"></span>
+                    </li>
+                    <li>
+                        <span>이름</span>
+                        <span th:text="${employee.employeeName}"></span>
+                    </li>
+                    <li>
+                        <span>휴대전화번호</span>
+                        <span th:text="${employee.employeePhone}"></span>
+                    </li>
+                    <li>
+                        <span>이메일</span>
+                        <span th:text="${employee.employeeEmail}"></span>
+                    </li>
+                    <li>
+                        <span>부서</span>
+                        <span th:text="${employee.employeeDep}"></span>
+                    </li>
+                    <li>
+                        <span>직급</span>
+                        <span th:text="${employee.employeePosition}"></span>
+                    </li>
+                    <li>
+                        <span>생년월일</span>
+                        <span th:text="${employee.employeeBirth}"></span>
+                    </li>
+                    <li>
+                        <span>주소</span>
+                        <span th:text="${employee.employeeStreetAddress + ', ' + employee.employeeDetailAddress}"></span>
+                    </li>
+<!--                    <li>-->
+<!--                        <span>권한</span> &lt;!&ndash; 필요없으면 숨기기 &ndash;&gt;-->
+<!--                        <span th:text="${employee.role}"></span>-->
+<!--                    </li>-->
+                    <li>
+                        <span>입사일</span>
+                        <span th:text="${#temporals.format(employee.createTime, 'yyyy-MM-dd')}"></span>
+                    </li>
+                        <th:block th:if="${#authentication.principal.username==employee.employeeId}">
+                            <li class="update">
+                                <span>
+                                    <div class="update-btn">
+                                        <a th:href="@{/employee/update/{employeeNo}(employeeNo=${employee.employeeNo})}">수정</a>
+                                    </div>
+                                </span>
+                            </li>
+                            <li class="delete">
+                                <span>
+                                    <div class="delete-btn">
+                                        <a th:href="@{/employee/confirmEmail/{employeeNo}(employeeNo=${employee.employeeNo})}">삭제</a>
+                                    </div>
+                                </span>
+                            </li>
+                        </th:block>
+                    <th:block th:unless="${#authentication.principal.username==employee.employeeId}">
+                        <span>
+                            본인글이 아닙니다
+                        </span>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<button th:onclick="@{location.href='/index'}">홈</button>
+<!-- Thymeleaf 표현식을 사용하여 employeeNo JavaScript 변수에 할당 -->
+<script th:inline="javascript">
+    var employeeNo = /*[[${employee.employeeNo}]]*/ null;
+</script>
+<!-- 이동 버튼 클릭 시 지정된 URL로 이동 -->
+<script>
+    function redirectToURL() {
+         if (employeeNo !== null) {
+           var dynamicURL = "/employee/updateImage/" + employeeNo;
+           window.location.href = dynamicURL;
+         }
+    }
+</script>
+</body>
+</html>

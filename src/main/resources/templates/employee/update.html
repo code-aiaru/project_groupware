@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>update</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!--다음 api 관련 js-->
+  <script th:src="@{/js/employee/addressApi.js}" defer="defer"></script> <!--다음 api 관련 js-->
+  <script th:src="@{/js/employee/update_birth.js}" defer="defer"></script>
+</head>
+<body>
+<div class="container">
+  <div class="nav">
+    <div class="update-con">
+      <div class="title">
+        <h1><span th:text="${employeeDto.employeeName}" ></span>님 정보 수정</h1>
+      </div>
+      <form th:action="@{/employee/update}" method="post" th:object="${employeeDto}" onsubmit="return onSubmitForm()">
+        <ul>
+          <li>
+            사원번호 : <input type="text" name="employeeNo" th:value="${employeeDto.employeeNo}" id="employeeNo" readonly> <br>
+          </li>
+          <li>
+            아이디 : <input type="text" name="employeeId" th:value="${employeeDto.employeeId}" id="employeeId" readonly> <br>
+          </li>
+          <li>
+            비밀번호 : <input type="password" name="employeePassword" th:value="${employeeDto.employeePassword}" id="employeePassword" readonly> <br>
+          </li>
+          <li>
+            <label th:for="employeeName">이름</label>
+            <input type="text" th:field="*{employeeName}" th:value="${employeeDto.employeeName}" required="required" placeholder="이름을 입력하세요"> <br>
+          </li>
+          <p th:if="${#fields.hasErrors('employeeName')}" th:errors="*{employeeName}" class="error"></p>
+          <li>
+            <label th:for="employeePhone">휴대전화</label>
+            <input type="text" th:field="*{employeePhone}" th:value="${employeeDto.employeePhone}" required="required" placeholder="휴대전화를 입력하세요"> <br>
+            <p th:if="${#fields.hasErrors('employeePhone')}" th:errors="*{employeePhone}" class="error"></p>
+          </li>
+          <li>
+            이메일 : <input type="email" name="employeeEmail" th:value="${employeeDto.employeeEmail}" id="employeeEmail" readonly> <br>
+          </li>
+          <th:block sec:authorize="hasAnyRole('ADMIN')">
+          <li>
+            <label for="employeeDep">부서</label>
+            <select id="employeeDep" name="employeeDep" required="required" class="box">
+              <option value="영업부" th:selected="${employee.employeeDep == '영업부'}">영업부</option>
+              <option value="총무부" th:selected="${employee.employeeDep == '총무부'}">총무부</option>
+              <option value="마케팅부" th:selected="${employee.employeeDep == '마케팅부'}">마케팅부</option>
+            </select>
+          </li>
+          <li>
+            <label for="employeePosition">직급</label>
+            <select id="employeePosition" name="employeePosition" required="required" class="box">
+              <option value="부장" th:selected="${employee.employeePosition == '부장'}">부장</option>
+              <option value="대리" th:selected="${employee.employeePosition == '대리'}">대리</option>
+              <option value="사원" th:selected="${employee.employeePosition == '사원'}">사원</option>
+            </select>
+          </li>
+          </th:block>
+<!--          <li>-->
+<!--            <label for="employeeDep">부서</label>-->
+<!--            <select id="employeeDep" name="employeeDep" required="required" class="box">-->
+<!--              <option value="영업부">영업부</option>-->
+<!--              <option value="총무부">총무부</option>-->
+<!--              <option value="마케팅부">교육부</option>-->
+<!--            </select>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <label for="employeePosition">직급</label>-->
+<!--            <select id="employeePosition" name="employeePosition" required="required" class="box">-->
+<!--              <option value="부장">부장</option>-->
+<!--              <option value="대리">대리</option>-->
+<!--              <option value="사원">사원</option>-->
+<!--            </select>-->
+<!--          </li>-->
+
+          <li>
+            <label th:for="employeeBirth">생년월일</label>
+            <input type="text" th:field="*{employeeBirth}" th:value="${employeeDto.employeeBirth}" required="required" placeholder="생년월일을 입력하세요" onclick="toggleBirthDropdowns(); validateBirth(this);" readonly>
+            <!-- 오류 메시지를 표시할 영역 -->
+            <span id="birthErrorMessage" style="color: red;"></span> <br>
+          </li>
+          <p th:if="${#fields.hasErrors('employeeBirth')}" th:errors="*{employeeBirth}" class="error"></p>
+          <!-- 드롭다운 선택 영역 -->
+          <div id="birthDropdowns" style="display: none;">
+            <select th:field="*{birthYear}" required="required" onchange="updateBirthInput()">
+              <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
+            </select>
+            년
+            <select th:field="*{birthMonth}" required="required" onchange="updateBirthInput()">
+              <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
+            </select>
+            월
+            <select th:field="*{birthDay}" required="required" onchange="updateBirthInput()">
+              <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
+            </select>
+            일
+          </div>
+          <li>
+            <label th:for="employeePostCode">우편번호</label>
+            <input type="text" th:field="*{employeePostCode}" th:value="${employeeDto.employeePostCode}" required="required" readonly="readonly"> <br>
+            <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
+          </li>
+          <p th:if="${#fields.hasErrors('employeePostCode')}" th:errors="*{employeePostCode}" class="error"></p>
+          <li>
+            <label th:for="employeeStreetAddress">도로명주소</label>
+            <input type="text" th:field="*{employeeStreetAddress}" th:value="${employeeDto.employeeStreetAddress}" placeholder="도로명주소를 입력하세요" readonly="readonly"> <br>
+          </li>
+          <li>
+            <label th:for="employeeDetailAddress">상세주소</label>
+            <input type="text" th:field="*{employeeDetailAddress}" th:value="${employeeDto.employeeDetailAddress}" required="required" placeholder="상세주소를 입력하세요"> <br>
+          </li>
+          <li>
+            <label th:for="role">권한</label>
+            <input type="text" th:field="*{role}" th:value="${employeeDto.role}" readonly> <br>
+          </li>
+          <button type="button" onclick="javascript:history.back()">수정취소</button>
+          <input type="submit" value="수정실행">
+          <a th:href="@{/employee/confirmPassword/{employeeNo}(employeeNo=${employeeDto.employeeNo})}"><button type="button">비밀번호 변경</button></a>
+        </ul>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  // 생년월일 유효성 검사 함수
+  function validateBirth() {
+      var birth = document.getElementById('employeeBirth').textContent;
+
+      if (!/^[0-9]{8}$/.test(birth)) {
+          document.getElementById('birthErrorMessage').textContent = "올바른 형식으로 입력해주세요 (8자리 숫자)";
+      } else {
+          document.getElementById('birthErrorMessage').textContent = "";
+      }
+  }
+  // 페이지 로드 시 유효성 검사 수행
+  window.onload = validateBirth;
+</script>
+</body>
+</html>
+

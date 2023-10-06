@@ -1,5 +1,4 @@
-package spring.project.groupware.academy.controller;
-
+package spring.project.groupware.academy.employee.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,8 +10,8 @@ import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
-@Controller
 @RequiredArgsConstructor
+@Controller
 public class HomeController {
 
     private final EmployeeService employeeService;
@@ -28,18 +27,4 @@ public class HomeController {
 //        return "index";
 //    }
 
-    @GetMapping({"", "/index"})
-    public String index(@AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
-
-        if(myUserDetails != null) {
-            EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
-            model.addAttribute("employee", employee);
-        }
-        return "index";
-    }
-
-//    @GetMapping({"/login"})
-//    public String login(){
-//        return "login";
-//    }
 }
