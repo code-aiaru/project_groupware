@@ -17,7 +17,6 @@ public class WebSecurityConfig {
 
     // 일반 사원
     @Configuration
-    @Order(1)
     public static class EmployeeConfig{
 
         @Bean
@@ -34,7 +33,7 @@ public class WebSecurityConfig {
                     .usernameParameter("employeeId")
                     .passwordParameter("employeePassword")
                     .loginProcessingUrl("/employee/login/post")
-                    .failureUrl("/employee/login")
+                    .failureUrl("/login")
                     .defaultSuccessUrl("/");
 
 //                    .and()

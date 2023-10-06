@@ -39,10 +39,10 @@ public class HomeController {
         return "login"; // 로그인 안돼있으면 로그인 페이지로 이동
     }
 
-//    @GetMapping({"/login"})
-//    public String login(){
-//        return "login";
-//    }
+    @GetMapping({"/login"})
+    public String login(){
+        return "login";
+    }
 
 
 
