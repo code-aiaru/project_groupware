@@ -1,12 +1,183 @@
 @import url(/css/common/reset.css);
-
-
-
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Giants-Inline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 .root {
     background-color: #f7f8fa;
+    min-width: 800px;
 }
+
+
+/* header */
+.gnb {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #ffffff;
+    box-shadow: 0px 10px 10px -5px #f1f1f1;
+
+    font-family: Pretendard;
+    font-size: 15px;
+}
+
+.logo {
+    font-family: Giants-Inline;
+    font-size: 20px;
+    padding-left: 25px;
+}
+
+.notice {
+
+}
+
+.user-console {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 200px;
+}
+
+.profile-img_box {
+    height: 25px;
+    width: 25px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-img_box img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+/* header end */
+
+
+/* snb */
+.snb {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    margin-top: -50px;
+    height: 100vh;
+    min-width: 200px;
+    background-color: #ffffff;
+    box-shadow: 10px 0px 10px -5px #f1f1f1;
+    font-family: Pretendard;
+    font-size: 15px;
+}
+
+.general {
+    padding: 60px 15px 15px 15px;
+}
+
+.general span {
+    font-weight: bold;
+}
+
+.general img {
+    height: 15px;
+    width: 15px;
+    padding-right: 5px;
+}
+
+.general ul {
+    position: relative;
+    /* left: 20px; */
+    padding: 10px 0 20px 0;
+}
+
+.general ul li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+
+
+.work {
+    padding: 15px;
+}
+.work span {
+    font-weight: bold;
+}
+.work ul {
+    position: relative;
+    /* left: 20px; */
+    padding: 10px 0 20px 0;
+}
+.work ul li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+
+
+.student {
+    padding: 15px;
+}
+.student span {
+    font-weight: bold;
+}
+.student ul {
+    position: relative;
+    /* left: 20px; */
+    padding: 10px 0 20px 0;
+}
+.student ul li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+
+
+.community {
+    padding: 15px;
+}
+.community span {
+    font-weight: bold;
+}
+.community ul {
+    position: relative;
+    /* left: 20px; */
+    padding: 10px 0 20px 0;
+}
+.community ul li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+/* snb end */
+
+
+
+/* footer */
+.footer {
+    
+}
+/* footer end */
 
 .container {
     display: flex;

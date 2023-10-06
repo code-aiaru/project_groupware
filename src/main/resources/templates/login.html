@@ -9,12 +9,13 @@
     <div class="root">
         
         <div class="login_box">
-            <form action="" class="login_form">
+            <form th:action="@{/employee/login/post}" method="post" class="login_form">
                 <h1 class="logo">그린컴퓨터아카데미</h1>
-                <span>아이디</span><input type="text">
-                <span>패스워드</span><input type="text">
-                <a href=""><span>아이디/패스워드 찾기</span></a>
-                <input type="submit" value="로그인" class="login_btn">
+                <span>아이디</span><input type="text" name="employeeId" id="employeeId" required>
+                <span>패스워드</span><input type="password" name="employeePassword" id="employeePassword" required>
+                <a th:href="@{/findId}"><span>아이디 찾기</span></a>
+                <a th:href="@{/tempPassword}"><span>패스워드 찾기</span></a>
+                <input type="submit" value="로그인" class="login_btn"> <br>
             </form>
         </div>
         
