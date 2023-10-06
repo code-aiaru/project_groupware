@@ -15,13 +15,13 @@ public class ApprovalUserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ApprovalUser_id")
+    @Column(name = "approval_user_id")
     private Long id;
 
     private String Approval;
 
     @ManyToOne
-    @JoinColumn(name = "Approval_id")
+    @JoinColumn(name = "approval_id")
     private ApprovalEntity approvalEntity;
 
 //    @ManyToOne
