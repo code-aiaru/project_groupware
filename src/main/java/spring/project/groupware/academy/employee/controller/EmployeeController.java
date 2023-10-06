@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
-import spring.project.groupware.academy.employee.service.ImageServiceImpl;
+//import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class EmployeeController {
     // 사원 Controller
 
     private final EmployeeService employeeService;
-    private final ImageServiceImpl imageService;
+//    private final ImageServiceImpl imageService;
 
     // Create
     @GetMapping("/join")
@@ -87,10 +87,10 @@ public class EmployeeController {
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
         // 이미지 url을 db에서 가져오기
-        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employee", employee);
-        model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
+//        model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
         return "employee/detail";
     }
 
@@ -115,10 +115,10 @@ public class EmployeeController {
 
         if (myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+//            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
             model.addAttribute("employee", employee);
-            model.addAttribute("employeeImageUrl", employeeImageUrl);
+//            model.addAttribute("employeeImageUrl", employeeImageUrl);
         }
 
         model.addAttribute("birthYears", birthYears);
@@ -168,11 +168,11 @@ public class EmployeeController {
     public String getConfirmPasswordView(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employeeNo", employeeNo);
         model.addAttribute("employee", employee);
-        model.addAttribute("employeeImageUrl", employeeImageUrl);
+//        model.addAttribute("employeeImageUrl", employeeImageUrl);
 
         return "employee/confirmPassword";
     }
@@ -209,11 +209,11 @@ public class EmployeeController {
     public String getChangePasswordPage(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employeeNo", employeeNo);
         model.addAttribute("employee", employee);
-        model.addAttribute("employeeImageUrl", employeeImageUrl);
+//        model.addAttribute("employeeImageUrl", employeeImageUrl);
 
         return "employee/changePassword"; // changePassword.html 페이지로 이동
     }

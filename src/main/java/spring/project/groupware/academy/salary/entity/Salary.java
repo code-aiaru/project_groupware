@@ -7,10 +7,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-//@Builder
-@NoArgsConstructor
+@Builder
 @Getter
 @Setter
+@AllArgsConstructor
 public class Salary {
 
     @Id
