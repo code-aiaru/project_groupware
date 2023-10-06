@@ -6,9 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
-import spring.project.groupware.academy.employee.entity.ImageEntity;
+//import spring.project.groupware.academy.employee.entity.ImageEntity;
 import spring.project.groupware.academy.employee.repository.EmployeeRepository;
-import spring.project.groupware.academy.employee.repository.ImageRepository;
+//import spring.project.groupware.academy.employee.repository.ImageRepository;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class EmployeeService {
 
     private final PasswordEncoder passwordEncoder;
     private final EmployeeRepository employeeRepository;
-    private final ImageRepository imageRepository;
+//    private final ImageRepository imageRepository;
 
     
     // Create(사원 추가)
@@ -31,12 +31,12 @@ public class EmployeeService {
         Long employeeNo = employeeRepository.save(employeeEntity).getEmployeeNo();
 
         // 이미지 생성 및 저장
-        ImageEntity imageEntity = new ImageEntity();
-        imageEntity.setImageUrl("/profileImages/default.png");
-        imageEntity.setEmployee(employeeEntity);
-
-        // ImageEntity를 db에 저장
-        imageRepository.save(imageEntity);
+//        ImageEntity imageEntity = new ImageEntity();
+//        imageEntity.setImageUrl("/profileImages/default.png");
+//        imageEntity.setEmployee(employeeEntity);
+//
+//        // ImageEntity를 db에 저장
+//        imageRepository.save(imageEntity);
     }
 
     //  Detail (to메서드)
@@ -47,7 +47,7 @@ public class EmployeeService {
         }));
 
         if (optionalEmployeeEntity.isPresent()) {
-            ImageEntity imageEntity = optionalEmployeeEntity.get().getImage();
+//            ImageEntity imageEntity = optionalEmployeeEntity.get().getImage();
             return EmployeeDto.toEmployeeDto(optionalEmployeeEntity.get());
         }
         return null;
