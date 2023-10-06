@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.management.attendance;
+package spring.project.groupware.academy.attendance;
 
 public enum AttendanceStatus {
     IN,OUT,LATE,SICK,VACATION,OUTING,ABSENT

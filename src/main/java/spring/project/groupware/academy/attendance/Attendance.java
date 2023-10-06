@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class Attendance {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +28,12 @@ public class Attendance {
 //    @JoinColumn(name = "employee_id")
 //    private Employee employee;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "student_id")
+//    private Student student;
+
 // 직원 쪽은
-//    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "employee_id", cascade = CascadeType.ALL)
 //    private List<Attend> attends = new ArrayList<>();
 
 

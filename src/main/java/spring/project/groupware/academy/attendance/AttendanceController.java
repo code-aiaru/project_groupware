@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.management.attendance;
+package spring.project.groupware.academy.attendance;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -19,13 +18,13 @@ public class AttendanceController {
 
     @PostMapping("/in/{id}")
     public void inAttend(@PathVariable("id") Long id) {
-//        if (classStartTime-?<LocalDateTime.now()<classStartTime+?){
+////        if (classStartTime-?<LocalDateTime.now()<classStartTime+?){
+////        }
+//        int rs = attendanceRepository.findByDate(LocalDate.now());
+//
+//        if (rs==1){
+//            attendanceService.inAttend(id);
 //        }
-        int rs = attendanceRepository.findByDate(LocalDate.now());
-
-        if (rs==1){
-            attendanceService.inAttend(id);
-        }
 
     }
 
@@ -33,7 +32,7 @@ public class AttendanceController {
     public void outAttend(@PathVariable("id") Long id) {
 //        if (classEndTime<LocalDateTime.now()){
 //        }
-        attendanceService.outAttend(id);
+//        attendanceService.outAttend(id);
 
     }
 
