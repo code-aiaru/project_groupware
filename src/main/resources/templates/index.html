@@ -4,30 +4,93 @@
     <meta charset="UTF-8">
     <title>INDEX</title>
     <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{/js/index.js}"></script>
 </head>
 <body>
     <div class="root">
-        <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
-        <div class="container">
-            <th:block th:replace="~{fragments/snb :: snbFragment}"></th:block>
-            <div class="contents">
-                <div class="dashboard">
-                    <div class="student-info-preview">
-                        <span>수강생 출석률</span>
-                    </div>
-                    <div>
-
-                    </div>
-                    <div>
-
-                    </div>
-                    <div>
-
-                    </div>
+        
+        <!-- gnb -->
+        <div class="gnb">
+            <span class="logo">그린컴퓨터아카데미</span>
+            <div class="notice">
+                notice list...
+            </div>
+            <div class="user-console">
+                <img src="/images/index/header/iconmonstr-email-4.svg" alt="메세지 아이콘" class="message_icon">
+                <img src="/images/index/header/iconmonstr-bell-2.svg" alt="알람 아이콘" class="alarm_icon">
+                <div class="profile-img_box">
+                    <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/header/iconmonstr-user-7.svg'">
                 </div>
+
+                <span>login info</span>
             </div>
         </div>
-        <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+        <!-- gnb end -->
+
+
+
+        <div class="container">
+
+            <!-- snb -->
+            <div class="snb">
+
+                <div class="general">
+                    <span>GENERAL</span>
+                    <ul>
+                        <li>
+                            <img src="/images/index/snb/iconmonstr-dashboard-filled.svg" alt="대시보드 아이콘">
+                            <a href="/dashboard" data-ajax="true">대시보드</a>
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="work">
+                    <span>WORK</span>
+                    <ul>
+                        <li><a href="">인사 관리</a></li>
+                        <li><a href="/schedule" data-ajax="true">일정 관리</a></li>
+                        <li><a href="">업무 관리</a></li>
+                        <li><a href="">전자결재</a></li>
+                        <li><a href="">업무일지</a></li>
+                    </ul>
+                </div>
+    
+                <div class="student">
+                    <span>STUDENT</span>
+                    <ul>
+                        <li><a href="">수강생 조회</a></li>
+                        <li><a href="">수강생 관리</a></li>
+                    </ul>
+                </div>
+    
+                <div class="community">
+                    <span>COMMUNITY</span>
+                    <ul>
+                        <li><a href="">공지사항</a></li>
+                    </ul>
+                </div>
+    
+            </div>
+            <!-- snb end -->
+
+
+            <!-- content -->
+            <div class="contents" id="contents">
+              
+            </div>
+            <!-- content end -->
+
+
+
+        </div>
+
+        <!-- footer -->
+        <div class="footer">
+            
+        </div>
+        <!-- footer end -->
+
+
     </div>
 </body>
 </html>

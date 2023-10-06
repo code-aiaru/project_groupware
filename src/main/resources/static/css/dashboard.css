@@ -1,0 +1,84 @@
+@import url(/css/common/reset.css);
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Giants-Inline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: Pretendard;
+}
+
+.shortcut_section {
+    width: 860px;
+    margin: 40px 40px 0 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
+    row-gap: 40px;
+}
+
+.shortcut_box_1 {
+    grid-area: 1 / 1 / 2 / 2;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+.shortcut_box_2 {
+    grid-area: 1 / 2 / 2 / 3;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+.shortcut_box_3 {
+    grid-area: 1 / 3 / 2 / 4;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+.shortcut_box_4 {
+    grid-area: 1 / 4 / 2 / 5;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+.shortcut_box_5 {
+    grid-area: 2 / 1 / 3 / 2;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+.shortcut_box_6 {
+    grid-area: 2 / 2 / 3 / 3;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+.shortcut_box_7 {
+    grid-area: 2 / 3 / 3 / 4;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+.shortcut_box_8 {
+    grid-area: 2 / 4 / 3 / 5;
+    height: 100px;
+    width: 100px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}

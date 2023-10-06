@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Builder
+//@Builder
 @NoArgsConstructor
 @Getter
 @Setter
@@ -23,9 +23,9 @@ public class Attendance {
     @Enumerated(EnumType.STRING)
     private AttendanceStatus attendanceStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "employee_id")
+//    private Employee employee;
 
 // 직원 쪽은
 //    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
