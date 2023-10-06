@@ -13,6 +13,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    document.getElementById('size-control_btn').addEventListener('click', function(event) {
+        var contractBtn = document.querySelector('.contract_btn');
+        var expandBtn = document.querySelector('.expand_btn');
+        var snb = document.querySelector('.snb');
+        
+        if (snb.classList.contains('contracted')) {
+            snb.classList.remove('contracted');
+            snb.classList.add('expanded');
+            contractBtn.style.display = 'block';
+            expandBtn.style.display = 'none';
+
+            document.querySelectorAll('.contract-shown').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.expand-shown').forEach(el => {
+                el.style.display = 'block';
+            });
+
+        } else if(snb.classList.contains('expanded')) {
+            snb.classList.remove('expanded');
+            snb.classList.add('contracted');
+            contractBtn.style.display = 'none';
+            expandBtn.style.display = 'block';
+            
+            document.querySelectorAll('.contract-shown').forEach(el => {
+                el.style.display = 'block';
+            });
+            document.querySelectorAll('.expand-shown').forEach(el => {
+                el.style.display = 'none';
+            });
+        }
+    });
+    
+    
+
 });
 
 function resetLoadedElements() {

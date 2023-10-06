@@ -23,7 +23,7 @@
 .gnb {
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 0;
     height: 50px;
     display: flex;
     justify-content: space-between;
@@ -34,12 +34,6 @@
 
     font-family: Pretendard;
     font-size: 15px;
-}
-
-.logo {
-    font-family: Giants-Inline;
-    font-size: 20px;
-    padding-left: 25px;
 }
 
 .notice {
@@ -73,22 +67,75 @@
 /* header end */
 
 
-/* snb */
+/* snb 공통 */
+.expand-shown {
+
+}
+.contract-shown {
+
+}
+
 .snb {
     position: sticky;
     top: 0;
-    z-index: 0;
+    z-index: 1;
     margin-top: -50px;
-    height: 100vh;
     min-width: 200px;
+    height: 100vh;
     background-color: #ffffff;
     box-shadow: 10px 0px 10px -5px #f1f1f1;
     font-family: Pretendard;
     font-size: 15px;
+    transition: margin-left 0.5s ease-in-out;
 }
 
+.snb.expanded {
+    margin-left: 0px;
+}
+.snb.contracted {
+    margin-left: -145px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    height: 50px;
+    box-shadow: 0px 10px 10px -5px #f1f1f1;
+}
+.logo span {
+    font-family: Giants-Inline;
+    font-size: 20px;
+    padding: 0 15px 0 15px;
+}
+.logo img {
+    position: relative;
+    left: 72px;
+    height: 35px;
+    width: 35px;
+}
+.snb_controller {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 0;
+    left: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.snb_controller img {
+    height: 20px;
+    width: 20px;
+}
+
+
 .general {
-    padding: 60px 15px 15px 15px;
+    padding: 15px;
 }
 
 .general span {
@@ -169,9 +216,27 @@
     align-items: center;
     justify-content: start;
 }
+
+/* snb 확장 */
+.--snb-expanded {
+
+}
+/* snb 축소 */
+.--snb-contracted {
+
+}
+
 /* snb end */
 
-
+/* contents */
+.contents {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+/* contents end */
 
 /* footer */
 .footer {
