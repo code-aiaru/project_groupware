@@ -9,7 +9,6 @@
 </head>
 <body>
     <div class="root">
-        <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
         
         <!-- gnb -->
         <div class="gnb">
@@ -32,64 +31,6 @@
             </div>
         </div>
         <!-- gnb end -->
-
-
-
-        <div class="container">
-            <th:block th:replace="~{fragments/snb :: snbFragment}"></th:block>
-            <div class="contents">
-                <div class="dashboard">
-                    <div class="student-info-preview">
-                        <span>수강생 출석률</span>
-                    </div>
-                    <div>
-
-                    </div>
-                    <div>
-
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-    
-                <div class="work">
-                    <span>WORK</span>
-                    <ul>
-                        <th:block sec:authorize="hasAnyRole('ADMIN')">
-                            <li><a href="/employee/manage" data-ajax="true">인사 관리</a></li>
-                        </th:block>
-                        <li><a href="/schedule" data-ajax="true">일정 관리</a></li>
-                        <li><a href="">업무 관리</a></li>
-                        <li><a href="">전자결재</a></li>
-                        <li><a href="">업무일지</a></li>
-                    </ul>
-                </div>
-    
-                <div class="student">
-                    <span>STUDENT</span>
-                    <ul>
-                        <li><a href="">수강생 조회</a></li>
-                        <li><a href="/student/manage" data-ajax="true">수강생 관리</a></li>
-                    </ul>
-                </div>
-    
-                <div class="community">
-                    <span>COMMUNITY</span>
-                    <ul>
-                        <li><a href="">공지사항</a></li>
-                    </ul>
-                </div>
-    
-                    <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/header/iconmonstr-user-7.svg'">
-                </div>
-
-                <span>login info</span>
-            </div>
-        </div>
-        <!-- gnb end -->
-
-
 
         <div class="container">
 
@@ -120,7 +61,9 @@
                     <div class="work">
                         <span>WORK</span>
                         <ul>
-                            <li><a href="">인사 관리</a></li>
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
+                                <li><a href="/employee/manage" data-ajax="true">인사 관리</a></li>
+                            </th:block>
                             <li><a href="/schedule" data-ajax="true">일정 관리</a></li>
                             <li><a href="">업무 관리</a></li>
                             <li><a href="">전자결재</a></li>
@@ -132,7 +75,7 @@
                         <span>STUDENT</span>
                         <ul>
                             <li><a href="">수강생 조회</a></li>
-                            <li><a href="">수강생 관리</a></li>
+                            <li><a href="/student/manage" data-ajax="true">수강생 관리</a></li>
                         </ul>
                     </div>
         

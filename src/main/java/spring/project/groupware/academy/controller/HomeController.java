@@ -49,6 +49,9 @@ public class HomeController {
         return "dashboard";
     }
 
-
+    @GetMapping({"/student/manage"})
+    public String getStudentManage() {
+        return "student/manage";
+    }
 
 }
