@@ -17,14 +17,42 @@
     font-family: Pretendard;
 }
 
+.dashboard_gnb {
+    position: sticky;
+    top: 50px;
+    z-index: 9;
+    height: 35px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    background-color: #ffffff;
+    box-shadow: 0px 10px 10px -5px #f1f1f1;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+.dashboard_gnb img {
+    height: 15px;
+    width: 15px;
+    filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(94%) contrast(95%);
+}
+.dashboard_gnb span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #444444;
+}
+.dashboard_gnb_divider{
+    padding: 0 5px;
+}
 
 .shortcut_section {
-    width: 860px;
-    margin: 40px 40px 0 40px;
+    /* width: 860px; */
+    margin: 40px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr 1fr 1fr auto;
     column-gap: 20px;
-    row-gap: 40px;
+    row-gap: 20px;
 }
 
 .shortcut_box_1 {
@@ -34,7 +62,7 @@
     border-radius: 5px;
 
     background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    box-shadow: 0px 0px 10px 0px #dedede;
 }
 .shortcut_box_2 {
     grid-area: 1 / 2 / 2 / 3;
@@ -43,7 +71,7 @@
     border-radius: 5px;
 
     background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    box-shadow: 0px 0px 10px 0px #dedede;
 }
 .shortcut_box_3 {
     grid-area: 1 / 3 / 2 / 4;
@@ -52,50 +80,44 @@
     border-radius: 5px;
 
     background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    box-shadow: 0px 0px 10px 0px #dedede;
 }
 .shortcut_box_4 {
-    grid-area: 1 / 4 / 2 / 5;
-    height: 100px;
-    width: 200px;
-    border-radius: 5px;
-
-    background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
-}
-.shortcut_box_5 {
     grid-area: 2 / 1 / 3 / 2;
     height: 100px;
     width: 200px;
     border-radius: 5px;
 
     background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    box-shadow: 0px 0px 10px 0px #dedede;
 }
-.shortcut_box_6 {
+.shortcut_box_5 {
     grid-area: 2 / 2 / 3 / 3;
     height: 100px;
     width: 200px;
     border-radius: 5px;
 
     background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    box-shadow: 0px 0px 10px 0px #dedede;
 }
-.shortcut_box_7 {
+.shortcut_box_6 {
     grid-area: 2 / 3 / 3 / 4;
     height: 100px;
     width: 200px;
     border-radius: 5px;
 
     background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    box-shadow: 0px 0px 10px 0px #dedede;
 }
-.shortcut_box_8 {
-    grid-area: 2 / 4 / 3 / 5;
-    height: 100px;
-    width: 200px;
+.profile_box {
+    grid-area: 1 / 4 / 3 / 5;
+    height: 220px;
+    width: 340px;
     border-radius: 5px;
 
     background-color: #ffffff;
-    box-shadow: 0px 0px 3px 0px #b1b1b1;
+    box-shadow: 0px 0px 10px 0px #dedede;
+}
+.shortcut_box_8 {
+
 }

@@ -23,7 +23,7 @@
 .gnb {
     position: sticky;
     top: 0;
-    z-index: 0;
+    z-index: 10;
     height: 50px;
     display: flex;
     justify-content: space-between;
@@ -36,6 +36,17 @@
     font-size: 15px;
 }
 
+.dummy_box {
+    min-width: 405px;
+    height: 50px;
+    transition: margin-left 0.5s ease-in-out;
+}
+.dummy_box.expanded {
+    margin-left: 0px;
+}
+.dummy_box.contracted {
+    margin-left: -145px;
+}
 .notice {
 
 }
@@ -45,6 +56,11 @@
     justify-content: space-evenly;
     align-items: center;
     width: 200px;
+}
+.user-console img {
+    height: 20px;
+    width: 20px;
+    filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(94%) contrast(95%);
 }
 
 .profile-img_box {
@@ -63,22 +79,17 @@
     width:100%;
     height:100%;
     object-fit:cover;
+    filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(94%) contrast(95%);
 }
 /* header end */
 
 
 /* snb 공통 */
-.expand-shown {
-
-}
-.contract-shown {
-
-}
 
 .snb {
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 11;
     margin-top: -50px;
     min-width: 200px;
     height: 100vh;
@@ -88,12 +99,15 @@
     font-size: 15px;
     transition: margin-left 0.5s ease-in-out;
 }
-
 .snb.expanded {
     margin-left: 0px;
 }
 .snb.contracted {
     margin-left: -145px;
+}
+
+.expand-shown {
+    display: block;
 }
 
 .logo {
@@ -131,6 +145,7 @@
 .snb_controller img {
     height: 20px;
     width: 20px;
+    filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(94%) contrast(95%);
 }
 
 
@@ -150,7 +165,6 @@
 
 .general ul {
     position: relative;
-    /* left: 20px; */
     padding: 10px 0 20px 0;
 }
 
@@ -170,7 +184,6 @@
 }
 .work ul {
     position: relative;
-    /* left: 20px; */
     padding: 10px 0 20px 0;
 }
 .work ul li {
@@ -189,7 +202,6 @@
 }
 .student ul {
     position: relative;
-    /* left: 20px; */
     padding: 10px 0 20px 0;
 }
 .student ul li {
@@ -208,7 +220,6 @@
 }
 .community ul {
     position: relative;
-    /* left: 20px; */
     padding: 10px 0 20px 0;
 }
 .community ul li {
@@ -217,24 +228,37 @@
     justify-content: start;
 }
 
-/* snb 확장 */
-.--snb-expanded {
 
+.contract-shown {
+    display: none;
 }
-/* snb 축소 */
-.--snb-contracted {
-
+.index-icon_section {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: -146px;
 }
-
+.index-icon_section img {
+    height: 30px;
+    width: 30px;
+    filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(94%) contrast(95%);
+}
+.index-icon_section span {
+    font-size: 10px;
+    color: #444444;
+    margin-top: -15px;
+}
 /* snb end */
 
 /* contents */
 .contents {
     width: 100%;
+    min-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
 }
 /* contents end */
 
@@ -247,10 +271,10 @@
 .container {
     display: flex;
 }
-.dashboard {
+/* .dashboard {
     width: 800px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 20px;
     row-gap: 40px;
-}
+} */

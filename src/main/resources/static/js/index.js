@@ -17,10 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var contractBtn = document.querySelector('.contract_btn');
         var expandBtn = document.querySelector('.expand_btn');
         var snb = document.querySelector('.snb');
+        var dummyBox = document.querySelector('.dummy_box');
         
         if (snb.classList.contains('contracted')) {
             snb.classList.remove('contracted');
             snb.classList.add('expanded');
+            dummyBox.classList.remove('contracted')
+            dummyBox.classList.add('expanded')
             contractBtn.style.display = 'block';
             expandBtn.style.display = 'none';
 
@@ -34,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if(snb.classList.contains('expanded')) {
             snb.classList.remove('expanded');
             snb.classList.add('contracted');
+            dummyBox.classList.remove('expanded')
+            dummyBox.classList.add('contracted')
             contractBtn.style.display = 'none';
             expandBtn.style.display = 'block';
             
