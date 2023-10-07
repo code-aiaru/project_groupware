@@ -1,6 +1,11 @@
 package spring.project.groupware.academy.employee.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/employee")
@@ -28,7 +34,7 @@ public class EmployeeController {
 //    private final ImageServiceImpl imageService;
 
     // Create
-    @GetMapping("/join")
+    @GetMapping({"/join"})
     public String getJoin(EmployeeDto employeeDto, Model model){
 
         // 연도, 월, 일 데이터를 모델에 추가하여 뷰로 전달
@@ -48,6 +54,8 @@ public class EmployeeController {
         model.addAttribute("birthYears", birthYears);
         model.addAttribute("birthMonths", birthMonths);
         model.addAttribute("birthDays", birthDays);
+
+        log.info("employee method activated");
 
         return "employee/join";
     }
@@ -80,6 +88,50 @@ public class EmployeeController {
 //        return "login";
 //    }
 
+    // 인사관리 화면
+    @GetMapping({"/manage"})
+    public String getEmployeeManage(){
+        log.info("employee method activated");
+        return "employee/manage";
+    }
+
+    // Read - 사원 목록
+    @GetMapping("/employeeList")
+    public String getEmployeeList(
+            @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model,
+            @RequestParam(value = "subject", required = false) String subject,
+            @RequestParam(value = "search", required = false) String search,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
+    ) {
+
+        if (myUserDetails != null) {
+            EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
+//            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+
+            model.addAttribute("employee", employee);
+//            model.addAttribute("memberImageUrl", memberImageUrl);
+            model.addAttribute("myUserDetails", myUserDetails);
+        }
+
+        Page<EmployeeDto> employeeList = employeeService.employeeList(pageable, subject, search);
+
+        Long totalCount = employeeList.getTotalElements();
+        int totalPage = employeeList.getTotalPages();
+        int pageSize = employeeList.getSize();
+        int nowPage = employeeList.getNumber();
+        int blockNum = 10;
+
+        int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+                (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+        model.addAttribute("employeeList", employeeList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "employee/employeeList";
+    }
 
     // Detail - 사원 상세 보기
     @GetMapping("/detail/{employeeNo}")
@@ -93,7 +145,6 @@ public class EmployeeController {
 //        model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
         return "employee/detail";
     }
-
 
     // Update - 회원 수정 화면
     @GetMapping("/update/{employeeNo}")
@@ -161,7 +212,6 @@ public class EmployeeController {
             return "redirect:/";
         }
     }
-
 
     // 정보 수정 전 비밀번호 확인 - 입력 화면
     @GetMapping("/confirmPassword/{employeeNo}")

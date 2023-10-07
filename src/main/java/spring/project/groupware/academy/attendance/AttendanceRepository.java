@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
@@ -20,6 +21,10 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
 //    @Modifying
 //    @Query(value = "select count(*) from Attendance where attDate=:day")
 //    int findByDate(@Param("day") LocalDate day);
+
+//    @Modifying
+//    @Query(value = "select * from Attendance where attDate=:day ")
+//    Supplier<Object> findByToday(@Param("day") LocalDate day);
 
 //    select count(*) from Attendance where 출석=:1 and 날짜~ 비트윈 ~날짜
 

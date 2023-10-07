@@ -71,26 +71,23 @@
                         <span>입사일</span>
                         <span th:text="${#temporals.format(employee.createTime, 'yyyy-MM-dd')}"></span>
                     </li>
-                        <th:block th:if="${#authentication.principal.username==employee.employeeId}">
-                            <li class="update">
-                                <span>
-                                    <div class="update-btn">
-                                        <a th:href="@{/employee/update/{employeeNo}(employeeNo=${employee.employeeNo})}">수정</a>
-                                    </div>
-                                </span>
-                            </li>
-                            <li class="delete">
-                                <span>
-                                    <div class="delete-btn">
-                                        <a th:href="@{/employee/confirmEmail/{employeeNo}(employeeNo=${employee.employeeNo})}">삭제</a>
-                                    </div>
-                                </span>
-                            </li>
-                        </th:block>
-                    <th:block th:unless="${#authentication.principal.username==employee.employeeId}">
-                        <span>
-                            본인글이 아닙니다
-                        </span>
+                    <th:block th:if="${#authentication.principal.username==employee.employeeId or #authorization.expression('hasRole(''ADMIN'')')}">
+                        <li class="update">
+                            <span>
+                                <div class="update-btn">
+                                    <a th:href="@{/employee/update/{employeeNo}(employeeNo=${employee.employeeNo})}">수정</a>
+                                </div>
+                            </span>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <li class="delete">
+                            <span>
+                                <div class="delete-btn">
+                                    <a th:href="@{/employee/confirmEmail/{employeeNo}(employeeNo=${employee.employeeNo})}">삭제</a>
+                                </div>
+                            </span>
+                        </li>
                     </th:block>
                 </ul>
             </div>

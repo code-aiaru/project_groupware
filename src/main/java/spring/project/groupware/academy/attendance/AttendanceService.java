@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class AttendanceService{
 
 ////        Attendance empAtt = employeeRepository.findById(employeeid).get().getAttendance();
 //        Employee emp = employeeRepository.findById(employeeid).get();
-//        Attendance empAtt = attendanceRepository.findByToday(LocalDate.now()).get();
+//        Attendance empAtt = (Attendance) attendanceRepository.findByToday(LocalDate.now()).get();
 //
 //        if (LocalTime.now().isBefore(LocalTime.of(9,30,0))){
 //            empAtt.builder().attendanceStatus(AttendanceStatus.IN).build();
@@ -45,9 +46,11 @@ public class AttendanceService{
 
     }
 
-    public static void outAttend(Long employeeid) {
+    public void outAttend(Long employeeid) {
 
 //        Attendance empAtt = employeeRepository.findById(employeeid).get().getAttendance();
+//        Employee emp = employeeRepository.findById(employeeid).get();
+//        Attendance empAtt = (Attendance) attendanceRepository.findByToday(LocalDate.now()).get();
 //
 //        if (LocalTime.now().isAfter(LocalTime.of(17,50,0))){
 //            empAtt.builder().attendanceStatus(AttendanceStatus.OUT).build();

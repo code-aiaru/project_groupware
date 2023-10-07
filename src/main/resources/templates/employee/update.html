@@ -41,41 +41,32 @@
           <li>
             이메일 : <input type="email" name="employeeEmail" th:value="${employeeDto.employeeEmail}" id="employeeEmail" readonly> <br>
           </li>
-          <th:block sec:authorize="hasAnyRole('ADMIN')">
-          <li>
-            <label for="employeeDep">부서</label>
-            <select id="employeeDep" name="employeeDep" required="required" class="box">
-              <option value="영업부" th:selected="${employee.employeeDep == '영업부'}">영업부</option>
-              <option value="총무부" th:selected="${employee.employeeDep == '총무부'}">총무부</option>
-              <option value="마케팅부" th:selected="${employee.employeeDep == '마케팅부'}">마케팅부</option>
-            </select>
-          </li>
-          <li>
-            <label for="employeePosition">직급</label>
-            <select id="employeePosition" name="employeePosition" required="required" class="box">
-              <option value="부장" th:selected="${employee.employeePosition == '부장'}">부장</option>
-              <option value="대리" th:selected="${employee.employeePosition == '대리'}">대리</option>
-              <option value="사원" th:selected="${employee.employeePosition == '사원'}">사원</option>
-            </select>
-          </li>
+          <th:block sec:authorize="hasAnyRole('EMPLOYEE')">
+            <li>
+              부서 : <input type="text" name="employeeDep" th:value="${employeeDto.employeeDep}" id="employeeDep1" readonly> <br>
+            </li>
+            <li>
+              직급 : <input type="text" name="employeePosition" th:value="${employeeDto.employeePosition}" id="employeePosition1" readonly> <br>
+            </li>
           </th:block>
-<!--          <li>-->
-<!--            <label for="employeeDep">부서</label>-->
-<!--            <select id="employeeDep" name="employeeDep" required="required" class="box">-->
-<!--              <option value="영업부">영업부</option>-->
-<!--              <option value="총무부">총무부</option>-->
-<!--              <option value="마케팅부">교육부</option>-->
-<!--            </select>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <label for="employeePosition">직급</label>-->
-<!--            <select id="employeePosition" name="employeePosition" required="required" class="box">-->
-<!--              <option value="부장">부장</option>-->
-<!--              <option value="대리">대리</option>-->
-<!--              <option value="사원">사원</option>-->
-<!--            </select>-->
-<!--          </li>-->
-
+          <th:block sec:authorize="hasAnyRole('ADMIN')">
+            <li>
+              <label for="employeeDep">부서</label>
+              <select id="employeeDep" name="employeeDep" required="required" class="box">
+                <option value="영업부" th:selected="${employee.employeeDep == '영업부'}">영업부</option>
+                <option value="총무부" th:selected="${employee.employeeDep == '총무부'}">총무부</option>
+                <option value="마케팅부" th:selected="${employee.employeeDep == '마케팅부'}">마케팅부</option>
+              </select>
+            </li>
+            <li>
+              <label for="employeePosition">직급</label>
+              <select id="employeePosition" name="employeePosition" required="required" class="box">
+                <option value="부장" th:selected="${employee.employeePosition == '부장'}">부장</option>
+                <option value="대리" th:selected="${employee.employeePosition == '대리'}">대리</option>
+                <option value="사원" th:selected="${employee.employeePosition == '사원'}">사원</option>
+              </select>
+            </li>
+          </th:block>
           <li>
             <label th:for="employeeBirth">생년월일</label>
             <input type="text" th:field="*{employeeBirth}" th:value="${employeeDto.employeeBirth}" required="required" placeholder="생년월일을 입력하세요" onclick="toggleBirthDropdowns(); validateBirth(this);" readonly>
