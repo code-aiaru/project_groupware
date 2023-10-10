@@ -74,8 +74,10 @@
                     <th:block th:if="${#authentication.principal.username==employee.employeeId or #authorization.expression('hasRole(''ADMIN'')')}">
                         <li class="update">
                             <span>
-                                <div class="update-btn">
-                                    <a th:href="@{/employee/update/{employeeNo}(employeeNo=${employee.employeeNo})}">수정</a>
+                                <div class="update">
+                                    <li>
+                                        <a th:href="@{/employee/update/{employeeNo}(employeeNo=${employee.employeeNo})}">수정</a>
+                                    </li>
                                 </div>
                             </span>
                         </li>
@@ -83,8 +85,10 @@
                     <th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                         <li class="delete">
                             <span>
-                                <div class="delete-btn">
-                                    <a th:href="@{/employee/confirmEmail/{employeeNo}(employeeNo=${employee.employeeNo})}">삭제</a>
+                                <div class="delete">
+                                    <li>
+                                        <a th:href="@{/employee/confirmPassword/delete/{employeeNo}(employeeNo=${employee.employeeNo})}">삭제</a>
+                                    </li>
                                 </div>
                             </span>
                         </li>

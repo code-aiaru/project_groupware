@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -213,8 +215,31 @@ public class EmployeeController {
         }
     }
 
-    // 정보 수정 전 비밀번호 확인 - 입력 화면
-    @GetMapping("/confirmPassword/{employeeNo}")
+    // Delete - 사원 삭제(관리자(admin 권한)만 가능)
+    @GetMapping("/delete/{employeeNo}")
+    public String getDelete(@PathVariable("employeeNo") Long employeeNo){
+
+        int rs=employeeService.deleteEmployee(employeeNo);
+
+        if (rs==1) {
+            System.out.println("사원 삭제 성공");
+
+            // 사원 삭제 후 로그아웃 처리
+            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+            if (authentication!=null) {
+                SecurityContextHolder.clearContext();
+            }
+            return "redirect:/";
+
+        }else{
+            System.out.println("사원 삭제 실패");
+            return "redirect:/";
+        }
+    }
+
+
+    // 정보 수정 전 비밀번호 확인(비밀번호 변경) - 입력 화면
+    @GetMapping("/confirmPassword/password/{employeeNo}")
     public String getConfirmPasswordView(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
@@ -224,7 +249,21 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
 //        model.addAttribute("employeeImageUrl", employeeImageUrl);
 
-        return "employee/confirmPassword";
+        return "employee/confirmPassword_changePw";
+    }
+
+    // 정보 수정 전 비밀번호 확인(사원 삭제) - 입력 화면
+    @GetMapping("/confirmPassword/delete/{employeeNo}")
+    public String getConfirmPasswordDeleteView(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        EmployeeDto employee = employeeService.detailEmployee(employeeNo);
+//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+
+        model.addAttribute("employeeNo", employeeNo);
+        model.addAttribute("employee", employee);
+//        model.addAttribute("employeeImageUrl", employeeImageUrl);
+
+        return "employee/confirmPassword_delete";
     }
 
     // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
@@ -250,7 +289,7 @@ public class EmployeeController {
         if (valid) {
             return "redirect:/employee/changePassword/" + employeeDto.getEmployeeNo(); // 비밀번호 수정 페이지로 이동
         } else {
-            return "redirect:/employee/confirmPassword/" + employeeDto.getEmployeeNo(); // 다시 비밀번호 확인 페이지로 이동
+            return "redirect:/employee/confirmPassword/password/" + employeeDto.getEmployeeNo(); // 다시 비밀번호 확인 페이지로 이동
         }
     }
 

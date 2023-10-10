@@ -34,5 +34,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> 
     Page<EmployeeEntity> findByEmployeePositionContaining(Pageable pageable, String employeePosition);
     Page<EmployeeEntity> findByEmployeeBirthContaining(Pageable pageable, String employeeBirth);
     Page<EmployeeEntity> findByEmployeeStreetAddressContaining(Pageable pageable, String employeeStreetAddress);
+    Page<EmployeeEntity> findByEmployeeNoContaining(Pageable pageable, String employeeNo);
+
 
 }

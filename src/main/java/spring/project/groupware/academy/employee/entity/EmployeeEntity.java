@@ -2,11 +2,14 @@ package spring.project.groupware.academy.employee.entity;
 
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import spring.project.groupware.academy.attendance.Attendance;
 import spring.project.groupware.academy.employee.constraint.Role;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.util.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -70,6 +73,14 @@ public class EmployeeEntity extends BaseEntity {
     // 연관 관계
 //    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
 //    private ImageEntity image;
+
+    // 연관 관계 - attendance
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Attendance> attendance = new ArrayList<>();
+
+    // 연관 관계 - 일정 1:N
+
+
 
     public static EmployeeEntity toEmployeeEntityInsert(EmployeeDto employeeDto, PasswordEncoder passwordEncoder) {
 

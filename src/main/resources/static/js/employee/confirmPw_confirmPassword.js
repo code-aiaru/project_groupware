@@ -39,5 +39,5 @@ $(function() {
                 e.preventDefault();
                 alert('현재 비밀번호를 확인해주세요.');
             }
-        });
+    });
 });

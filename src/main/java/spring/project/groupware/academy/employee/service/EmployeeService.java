@@ -55,6 +55,85 @@ public class EmployeeService {
         return null;
     }
 
+    // UpdateView - 사원정보 수정화면
+    public EmployeeDto updateViewEmployee(Long employeeNo) {
+        EmployeeEntity employeeEntity = employeeRepository.findById(employeeNo).orElseThrow(IllegalAccessError::new);
+        return EmployeeDto.toEmployeeDto(employeeEntity);
+    }
+
+    // Update - 사원정보 수정
+    public int updateEmployee(EmployeeDto employeeDto) {
+
+        Optional<EmployeeEntity> optionalEmployeeEntity = Optional.ofNullable(employeeRepository.findById(employeeDto.getEmployeeNo()).orElseThrow(() -> {
+            return new IllegalArgumentException("수정할 사원정보가 없습니다");
+        }));
+
+        EmployeeEntity employeeEntity = EmployeeEntity.toEmployeeEntityUpdate(employeeDto);
+        Long employeeNo = employeeRepository.save(employeeEntity).getEmployeeNo();
+
+        Optional<EmployeeEntity> optionalEmployeeEntity1 = Optional.ofNullable(employeeRepository.findById(employeeNo).orElseThrow(() -> {
+            return new IllegalArgumentException("수정할 사원정보가 없습니다");
+        }));
+
+        if (optionalEmployeeEntity1.isPresent()) {
+            System.out.println("사원정보 수정 성공");
+            return 1;
+
+        } else {
+            System.out.println("사원정보 수정 실패");
+            return 0;
+        }
+    }
+
+    // Read, 페이징/검색
+    public Page<EmployeeDto> employeeList(Pageable pageable, String subject, String search) {
+
+        Page<EmployeeEntity> employeeEntities = null; // 기본 null값으로 설정
+
+        if(subject.equals("employeeNo")){
+            employeeEntities = employeeRepository.findByEmployeeNoContaining(pageable, search);
+        }else if(subject.equals("employeeName")){
+            employeeEntities = employeeRepository.findByEmployeeNameContaining(pageable, search);
+        }else if(subject.equals("employeePhone")){
+            employeeEntities = employeeRepository.findByEmployeePhoneContaining(pageable, search);
+        }else if(subject.equals("employeeDep")) {
+            employeeEntities = employeeRepository.findByEmployeeDepContaining(pageable, search);
+        }else if(subject.equals("employeePosition")) {
+            employeeEntities = employeeRepository.findByEmployeePositionContaining(pageable, search);
+        }else if(subject.equals("employeeEmail")) {
+            employeeEntities = employeeRepository.findByEmployeeEmailContaining(pageable, search);
+        }else{
+            employeeEntities = employeeRepository.findAll(pageable);
+        }
+
+        employeeEntities.getNumber();
+        employeeEntities.getTotalElements();
+        employeeEntities.getTotalPages();
+        employeeEntities.getSize();
+
+        Page<EmployeeDto> employeeDtos = employeeEntities.map(EmployeeDto::toEmployeeDto);
+
+        return employeeDtos;
+    }
+
+    // Delete
+    public int deleteEmployee(Long employeeNo) {
+
+        Optional<EmployeeEntity> optionalEmployeeEntity = Optional.ofNullable(employeeRepository.findById(employeeNo).orElseThrow(() -> {
+            return new IllegalArgumentException("삭제할 사원번호가 없습니다");
+        }));
+
+        employeeRepository.delete(optionalEmployeeEntity.get());
+
+        Optional<EmployeeEntity> optionalEmployeeEntity1 = employeeRepository.findById(employeeNo);
+
+        if (!optionalEmployeeEntity1.isPresent()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     // 아이디 찾기 메서드(이메일, 휴대전화번호 이용)
     public String findIdByEmailAndPhone(String employeeEmail, String employeePhone) {
 
@@ -137,71 +216,6 @@ public class EmployeeService {
     // 중복 검사 관련 메서드
     public boolean existsByEmployeePhone(String employeePhone) {
         return employeeRepository.existsByEmployeePhone(employeePhone);
-    }
-
-    // UpdateView - 사원정보 수정화면
-    public EmployeeDto updateViewEmployee(Long employeeNo) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(employeeNo).orElseThrow(IllegalAccessError::new);
-        return EmployeeDto.toEmployeeDto(employeeEntity);
-    }
-
-    // Update - 사원정보 수정
-    public int updateEmployee(EmployeeDto employeeDto) {
-
-        Optional<EmployeeEntity> optionalEmployeeEntity = Optional.ofNullable(employeeRepository.findById(employeeDto.getEmployeeNo()).orElseThrow(() -> {
-            return new IllegalArgumentException("수정할 사원정보가 없습니다");
-        }));
-
-        EmployeeEntity employeeEntity = EmployeeEntity.toEmployeeEntityUpdate(employeeDto);
-        Long employeeNo = employeeRepository.save(employeeEntity).getEmployeeNo();
-
-        Optional<EmployeeEntity> optionalEmployeeEntity1 = Optional.ofNullable(employeeRepository.findById(employeeNo).orElseThrow(() -> {
-            return new IllegalArgumentException("수정할 사원정보가 없습니다");
-        }));
-
-        if (optionalEmployeeEntity1.isPresent()) {
-            System.out.println("사원정보 수정 성공");
-            return 1;
-
-        } else {
-            System.out.println("사원정보 수정 실패");
-            return 0;
-        }
-    }
-
-    // Read, 페이징/검색
-    public Page<EmployeeDto> employeeList(Pageable pageable, String subject, String search) {
-
-        Page<EmployeeEntity> employeeEntities = null; // 기본 null값으로 설정
-
-        if(subject.equals("employeeId")){
-            employeeEntities = employeeRepository.findByEmployeeIdContaining(pageable, search);
-        }else if(subject.equals("employeeName")){
-            employeeEntities = employeeRepository.findByEmployeeNameContaining(pageable, search);
-        }else if(subject.equals("employeePhone")){
-            employeeEntities = employeeRepository.findByEmployeePhoneContaining(pageable, search);
-        }else if(subject.equals("employeeEmail")) {
-            employeeEntities = employeeRepository.findByEmployeeEmailContaining(pageable, search);
-        }else if(subject.equals("employeeDep")) {
-            employeeEntities = employeeRepository.findByEmployeeDepContaining(pageable, search);
-        }else if(subject.equals("employeePosition")) {
-            employeeEntities = employeeRepository.findByEmployeePositionContaining(pageable, search);
-        }else if(subject.equals("employeeBirth")) {
-            employeeEntities = employeeRepository.findByEmployeeBirthContaining(pageable, search);
-        }else if(subject.equals("employeeStreetAddress")){
-            employeeEntities = employeeRepository.findByEmployeeStreetAddressContaining(pageable, search);
-        }else{
-            employeeEntities = employeeRepository.findAll(pageable);
-        }
-
-        employeeEntities.getNumber();
-        employeeEntities.getTotalElements();
-        employeeEntities.getTotalPages();
-        employeeEntities.getSize();
-
-        Page<EmployeeDto> employeeDtos = employeeEntities.map(EmployeeDto::toEmployeeDto);
-
-        return employeeDtos;
     }
 
 

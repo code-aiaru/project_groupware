@@ -14,17 +14,13 @@
         <div class="search">
           <a th:href="@{/employee/join}"><span>사원 추가</span></a>
           <a th:href="@{/index}"><span>홈</span></a>
-          <form th:action="@{/employee/manage}" method="get">
+          <form th:action="@{/employee/employeeList}" method="get">
             <select name="subject" id="subject">
-              <option value="employeeId">아이디</option>
+              <option value="employeeNo">사원번호</option>
               <option value="employeeName">이름</option>
-              <option value="employeePhone">휴대전화번호</option>
-              <option value="employeeEmail">이메일</option>
               <option value="employeeDep">부서</option>
               <option value="employeePosition">직급</option>
-              <option value="employeeBirth">생일</option>
-              <option value="employeeStreetAddress">주소</option>
-              <option value="role">권한</option>
+              <option value="employeePhone">휴대전화번호</option>
             </select>
             <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요"> <!-- th:value="${param.search}" : 검색어 입력후 실행하고 입력한 검색어 그대로 유지 -->
             <input type="submit" value="검색">
@@ -44,6 +40,7 @@
           <th>이름</th>
           <th>부서</th>
           <th>직급</th>
+          <th>휴대전화번호</th>
           <th>입사일</th>
           <th>상세보기</th>
         </tr>
@@ -55,6 +52,7 @@
           <td th:text="${employee.employeeName}"></td>
           <td th:text="${employee.employeeDep}"></td>
           <td th:text="${employee.employeePosition}"></td>
+          <td th:text="${employee.employeePhone}"></td>
           <td th:text="${#temporals.format(employee.createTime, 'yyyy-MM-dd')}"></td>
           <td>
             <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}">상세보기</a>

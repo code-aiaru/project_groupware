@@ -25,7 +25,7 @@ public class WebSecurityConfig {
                     .antMatchers("/", "/employee/join", "/login").permitAll() // "/employee/join" 테스트용으로 둔것, 삭제해야함
                     .antMatchers("/logout", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
                             "/board/**", "/employee/inquiry**", "/student/join", "/inquiry/**").authenticated()
-                    .antMatchers("/employee/join", "/employee/manage**").hasAnyRole("ADMIN")
+                    .antMatchers("/employee/join", "/employee/employeeList**").hasAnyRole("ADMIN")
 
                     .and()
                     .formLogin()
