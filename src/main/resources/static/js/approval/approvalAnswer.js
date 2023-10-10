@@ -1,17 +1,17 @@
-const payAnwserBtn=document.querySelector('#payAnwserBtn');
+const approvalAnswerBtn=document.querySelector('#approvalAnswerBtn');
 const XBtn=document.querySelector('#XBtn');
-const replyWriteForm=document.querySelector('.reply-write');
+const approvalAnswerForm=document.querySelector('.approval-write');
 
 
-payAnwserBtn.addEventListener('click',writeFn);
-XBtn.addEventListener('click',xFn);
+approvalAnswerBtn.addEventListener('click',approvalFn);
+XBtn.addEventListener('click',closeFn);
 
-function writeFn(event){
+function approvalFn(event){
     scriptBack.style.display='flex';
-    replyWriteForm.style.display='flex';
+    approvalAnswerForm.style.display='flex';
 }
 
-function xFn(event){
+function closeFn(event){
     scriptBack.style.display='none';
-    replyWriteForm.style.display='none';
+    approvalAnswerForm.style.display='none';
 }
