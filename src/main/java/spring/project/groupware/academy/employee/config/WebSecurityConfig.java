@@ -1,5 +1,6 @@
 package spring.project.groupware.academy.employee.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -9,6 +10,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -17,7 +22,10 @@ public class WebSecurityConfig {
 
     // 일반 사원
     @Configuration
-    public static class EmployeeConfig{
+    public static class EmployeeConfig {
+
+        @Autowired
+        private DataSource dataSource;
 
         @Bean
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
@@ -36,11 +44,13 @@ public class WebSecurityConfig {
                     .failureUrl("/login")
                     .defaultSuccessUrl("/");
 
-//                    .and()
-//                    .oauth2Login()
-//                    .loginPage("/login")
-//                    .userInfoEndpoint()
-//                    .userService(myAuth2UserService());
+            // 자동로그인 기능
+            http.rememberMe()
+                    .rememberMeParameter("rememberMe")
+                    .tokenValiditySeconds(86400 * 7) // 7일
+                    .alwaysRemember(false) // true 시 무조건 자동로그인
+                    .userDetailsService(userDetailsService());
+
 
             http.logout()
                     .logoutUrl("/logout")
@@ -57,23 +67,19 @@ public class WebSecurityConfig {
             return new BCryptPasswordEncoder();
         }
 
-//        @Bean
-//        public OAuth2UserService<OAuth2UserRequest, OAuth2User> myAuth2UserService() {
-//            return new MyOAuth2UserService();
-//        }
-
         @Bean
-        public UserDetailsServiceImpl userDetailsService(){
+        public UserDetailsServiceImpl userDetailsService() {
             return new UserDetailsServiceImpl();
         }
 
         @Bean
-        public DaoAuthenticationProvider userAuthenticationProvider(){
-            DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
+        public DaoAuthenticationProvider userAuthenticationProvider() {
+            DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
             provider.setUserDetailsService(userDetailsService());
             provider.setPasswordEncoder(passwordEncoder());
             return provider;
         }
+
     }
 
 

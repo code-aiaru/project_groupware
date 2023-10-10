@@ -97,7 +97,7 @@ public class EmployeeEntity extends BaseEntity {
         employeeEntity.setEmployeePostCode(employeeDto.getEmployeePostCode());
         employeeEntity.setEmployeeStreetAddress(employeeDto.getEmployeeStreetAddress());
         employeeEntity.setEmployeeDetailAddress(employeeDto.getEmployeeDetailAddress());
-        employeeEntity.setRole(Role.ADMIN);
+        employeeEntity.setRole(Role.EMPLOYEE);
 
         return employeeEntity;
     }

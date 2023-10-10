@@ -7,7 +7,7 @@ $(function() {
      var employeeNo = $('#employeeNo').val();
 
      $.ajax({
-         url: '/employee/checkCurrentPassword',
+         url: '/employee/checkAdminPassword',
          method: 'POST',
          data: { employeeNo: employeeNo, currentPassword: currentPassword },
          success: function(response) {
