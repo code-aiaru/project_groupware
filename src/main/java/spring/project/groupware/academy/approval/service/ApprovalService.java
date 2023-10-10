@@ -17,8 +17,8 @@ public class ApprovalService {
     private final EmployeeRepository employeeRepository;
     private final ApprovalRepository approvalRepository;
 
-    public Long approvalWrite(ApprovalDto approvalDto, Long id) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(()->{
+    public Long approvalWrite(ApprovalDto approvalDto, String employeeId) {
+        EmployeeEntity employeeEntity = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->{
             throw new IllegalArgumentException("회원 존재하지 않음");
         });
 
@@ -26,14 +26,14 @@ public class ApprovalService {
                 .ApprovalStatus("대기")
                 .ApprovalTitle(approvalDto.getApprovalTitle())
                 .ApprovalContent(approvalDto.getApprovalContent())
-//                .employeeEntity(employeeEntity)
+                .employeeEntity(employeeEntity)
                 .build()).getId();
 
         return approvalId;
     }
 
-    public Page<ApprovalDto> approvalListPage(Pageable pageable, Long id) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(()->{
+    public Page<ApprovalDto> approvalListPage(Pageable pageable, String employeeId) {
+        EmployeeEntity employeeEntity = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->{
             throw new IllegalArgumentException("회원 존재하지 않음");
         });
 

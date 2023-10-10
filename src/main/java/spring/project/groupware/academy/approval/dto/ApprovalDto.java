@@ -34,7 +34,7 @@ public class ApprovalDto {
                 .ApprovalTitle(approvalEntity.getApprovalTitle())
                 .ApprovalContent(approvalEntity.getApprovalContent())
                 .ApprovalAnswer(approvalEntity.getApprovalAnswer())
-//                .employeeEntity(approvalEntity)
+                .employeeEntity(approvalEntity.getEmployeeEntity())
                 .approvalUserEntityList(approvalEntity.getApprovalUserEntityList())
                 .createTime(approvalEntity.getCreateTime())
                 .updateTime(approvalEntity.getUpdateTime())

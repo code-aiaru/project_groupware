@@ -34,7 +34,7 @@ public class ApprovalUserService  {
             approvalUserRepository.save(ApprovalUserEntity.builder()
                     .Ap(approvalUserDto.getAp())
                     .approvalEntity(approvalEntity)
-//                    .employeeEntity(employeeEntity)
+                    .employeeEntity(employeeEntity)
                     .build());
         }
     }
