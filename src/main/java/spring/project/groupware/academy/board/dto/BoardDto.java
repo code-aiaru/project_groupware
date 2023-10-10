@@ -8,8 +8,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDto {
-    private Long boardId;
+    private Long id;
     private String title;
     private String content;
+
+    public BoardDto(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 //    private EmployeeEntity writer;
 }
