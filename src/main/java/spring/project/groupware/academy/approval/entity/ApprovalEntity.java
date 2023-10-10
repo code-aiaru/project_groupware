@@ -29,8 +29,8 @@ public class ApprovalEntity extends BaseEntity {
     @OneToMany(mappedBy = "approvalEntity", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<ApprovalUserEntity> approvalUserEntityList;
 
-//    @ManyToOne
-//    @JoinColumn(name = "employee_no")
-//    private EmployeeEntity employeeEntity;
+    @ManyToOne
+    @JoinColumn(name = "employee_no")
+    private EmployeeEntity employeeEntity;
 
 }
