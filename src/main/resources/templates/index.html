@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>INDEX</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <script th:src="@{/js/index.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}" data-static>
+    <script th:src="@{/js/index.js}" data-static></script>
 </head>
 <body>
     <div class="root">
@@ -38,7 +38,7 @@
                     </div>
                 </th:block>
                 <ul>
-                    <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}">
+                    <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>
                         <li>
                             <span>마이페이지</span>
                             <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
@@ -89,7 +89,7 @@
                     <div class="general">
                         <span>GENERAL</span>
                         <ul>
-                            <a href="/dashboard" data-ajax="true">
+                            <a href="/dashboard" data-ajax>
                                 <li>대시보드</li>
                             </a>
                         </ul>
@@ -98,7 +98,7 @@
                     <div class="work">
                         <span>WORK</span>
                         <ul>
-                            <a href="/schedule" data-ajax="true">
+                            <a href="/schedule" data-ajax>
                                 <li>일정관리</li>
                             </a>
                             <a href="#">
@@ -113,7 +113,7 @@
                             <a href="#">
                                 <li>수강생 조회</li>
                             </a>
-                            <a href="/student/manage" data-ajax="true">
+                            <a href="/student/manage" data-ajax>
                                 <li>수강생 관리</li>
                             </a>
                         </ul>
@@ -126,7 +126,7 @@
                                 <a th:href="@{/employee/employeeList?page=0&subject=&search=}">
                                     <li>인사조회</li>
                                 </a>
-                                <a href="/employee/manage" data-ajax="true">
+                                <a href="/employee/manage" data-ajax>
                                     <li>인사관리</li>
                                 </a>
                             </ul>
