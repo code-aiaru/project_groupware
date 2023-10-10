@@ -103,10 +103,21 @@
             <label th:for="employeeDetailAddress">상세주소</label>
             <input type="text" th:field="*{employeeDetailAddress}" th:value="${employeeDto.employeeDetailAddress}" required="required" placeholder="상세주소를 입력하세요"> <br>
           </li>
-          <li>
-            <label th:for="role">권한</label>
-            <input type="text" th:field="*{role}" th:value="${employeeDto.role}" readonly> <br>
-          </li>
+          <th:block sec:authorize="hasAnyRole('EMPLOYEE')">
+            <li>
+              <label th:for="role">권한</label>
+              <input type="text" th:field="*{role}" th:value="${employeeDto.role}" readonly> <br>
+            </li>
+          </th:block>
+          <th:block sec:authorize="hasAnyRole('ADMIN')">
+            <li>
+              <label for="role">권한</label>
+              <select id="role" name="role" required="required" class="box">
+                <option value="EMPLOYEE" th:selected="${employeeDto.role == 'EMPLOYEE'}">일반</option>
+                <option value="ADMIN" th:selected="${employeeDto.role == 'ADMIN'}">관리자</option>
+              </select>
+            </li>
+          </th:block>
           <button type="button" onclick="javascript:history.back()">수정취소</button>
           <input type="submit" value="수정실행">
           <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}"><button type="button">비밀번호 변경</button></a>

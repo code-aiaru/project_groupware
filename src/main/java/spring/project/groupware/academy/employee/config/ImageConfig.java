@@ -14,6 +14,9 @@ public class ImageConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/employeeImages/**")
-                .addResourceLocations("file:" + employeeImgUploadDir);
+                .addResourceLocations("file:" + employeeImgUploadDir)
+                // static/image에 들어있는 이미지들을 허가. // 상재씨 전 프로젝트 코드 참조
+                .addResourceLocations("classpath:/static/images/employee/").setCachePeriod(60 * 60 * 24 * 365);
+
     }
 }

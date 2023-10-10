@@ -31,7 +31,8 @@
                     <div class="user-info_box">
                         <div class="user-img_box_large">
 <!--                            <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/gnb/iconmonstr-user-7.svg'">-->
-                            <img id="info-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
+                            <img th:if="${employeeImageUrl}" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
+                            <img th:unless="${employeeImageUrl}" th:src="@{/images/employee/default.png}" alt="프로필 이미지" style="width: 35px; height: 35px;">
                         </div>
                         <div class="user-name_box">
                             <span th:text="${employee.employeeName}"></span>
