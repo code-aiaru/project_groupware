@@ -9,11 +9,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
+import spring.project.groupware.academy.employee.config.UserDetailsServiceImpl;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 //import spring.project.groupware.academy.employee.service.ImageServiceImpl;
@@ -34,6 +37,9 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 //    private final ImageServiceImpl imageService;
+
+    private final UserDetailsServiceImpl userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
     // Create
     @GetMapping({"/join"})
@@ -81,7 +87,8 @@ public class EmployeeController {
         employeeDto.setEmployeeBirth(birthDate);
 
         employeeService.insertEmployee(employeeDto);
-        return "login";
+
+        return "redirect:/employee/employeeList?page=0&subject=&search=";
     }
 
     // 로그인 화면
@@ -223,13 +230,7 @@ public class EmployeeController {
 
         if (rs==1) {
             System.out.println("사원 삭제 성공");
-
-            // 사원 삭제 후 로그아웃 처리
-            Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-            if (authentication!=null) {
-                SecurityContextHolder.clearContext();
-            }
-            return "redirect:/";
+            return "redirect:/employee/employeeList?page=0&subject=&search=";
 
         }else{
             System.out.println("사원 삭제 실패");
@@ -277,6 +278,35 @@ public class EmployeeController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("valid", valid);
         return response;
+    }
+
+    // 현재 관리자의 비밀번호와 DB에 있는 관리자 비밀번호 일치하는지
+    @PostMapping("/checkAdminPassword")
+    @ResponseBody
+    public Map<String, Boolean> postCheckAdminPassword(@RequestParam("currentPassword") String currentPassword) {
+
+        // 현재 로그인한 유저의 정보를 가져옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String employeeId = userDetails.getUsername();
+
+            // username을 이용하여 현재 로그인한 유저의 정보를 가져옴 (UserDetailsService 사용)
+            MyUserDetails currentUserDetails = (MyUserDetails) userDetailsService.loadUserByUsername(employeeId);
+
+            // 현재 입력한 비밀번호와 현재 로그인한 유저의 비밀번호를 비교
+            boolean valid = passwordEncoder.matches(currentPassword, currentUserDetails.getPassword());
+
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("valid", valid);
+            return response;
+        } else {
+            // 사용자가 로그인하지 않은 경우 또는 인증이 실패한 경우
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("valid", false);
+            return response;
+        }
     }
 
     @PostMapping("/confirmPassword")

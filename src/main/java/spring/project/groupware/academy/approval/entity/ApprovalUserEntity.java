@@ -1,6 +1,7 @@
 package spring.project.groupware.academy.approval.entity;
 
 import lombok.*;
+import spring.project.groupware.academy.employee.entity.EmployeeEntity;
 
 import javax.persistence.*;
 
@@ -18,14 +19,14 @@ public class ApprovalUserEntity {
     @Column(name = "approval_user_id")
     private Long id;
 
-    private String Approval;
+    private Long Ap;
 
     @ManyToOne
     @JoinColumn(name = "approval_id")
     private ApprovalEntity approvalEntity;
 
-//    @ManyToOne
-//    @JoinColumn(name = "employee_no")
-//    private EmployeeEntity employeeEntity;
+    @ManyToOne
+    @JoinColumn(name = "employee_no")
+    private EmployeeEntity employeeEntity;
 
 }

@@ -19,7 +19,7 @@ public class ApprovalEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "approval_id")
-    private Long id;
+    private Long Id;
 
     private String ApprovalStatus;
     private String ApprovalTitle;
@@ -29,8 +29,8 @@ public class ApprovalEntity extends BaseEntity {
     @OneToMany(mappedBy = "approvalEntity", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<ApprovalUserEntity> approvalUserEntityList;
 
-//    @ManyToOne
-//    @JoinColumn(name = "employee_no")
-//    private EmployeeEntity employeeEntity;
+    @ManyToOne
+    @JoinColumn(name = "employee_no")
+    private EmployeeEntity employeeEntity;
 
 }

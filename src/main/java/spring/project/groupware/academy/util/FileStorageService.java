@@ -3,8 +3,14 @@ package spring.project.groupware.academy.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import spring.project.groupware.academy.employee.dto.ImageResponseDto;
+import spring.project.groupware.academy.employee.entity.EmployeeEntity;
+import spring.project.groupware.academy.employee.entity.ImageEntity;
+import spring.project.groupware.academy.employee.repository.EmployeeRepository;
+import spring.project.groupware.academy.employee.repository.ImageRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,11 +34,16 @@ public class FileStorageService {
 
     // yml에 기록한 파일 저장 경로를 불러옵니다.
     // 만약 파일 저장 경로를 추가하고 싶다면, yml에 추가후 이곳에 같은 형식으로 작성하시면 됩니다.
+
+    // 송원철
+    private final EmployeeRepository employeeRepository;
+    private final ImageRepository imageRepository;
+
     @Value("${file.boardImgUploadDir}")
     private String boardImgUploadDir;
 
-    @Value("${file.memberImgUploadDir}")
-    private String memberImgUploadDir;
+    @Value("${file.employeeImgUploadDir}")
+    private String employeeImgUploadDir;
 
 
     // 첨부된 파일의 고유한 이름을 생성하기 위한 메소드 (이름이 중복 되지 않도록)
@@ -54,8 +65,8 @@ public class FileStorageService {
 
         if ("board".equals(fileType)) {
             uploadDir = boardImgUploadDir;
-        } else if ("member".equals(fileType)) {
-            uploadDir = memberImgUploadDir;
+        } else if ("employee".equals(fileType)) {
+            uploadDir = employeeImgUploadDir;
 
             // 만약 파일 저장 경로를 추가하려면, 이곳에 else if를 사용해서 위와 동일한 로직을 만드셔야 합니다.
 
@@ -69,5 +80,25 @@ public class FileStorageService {
         productImages.transferTo(new File(filePath));
 
         return filePath;
+    }
+
+    // 송원철
+    // 사원 프로필 이미지 조회
+    public ImageResponseDto findImage(String employeeId){
+        EmployeeEntity employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->
+                new UsernameNotFoundException("아이디가 존재하지않습니다"));
+        ImageEntity image = imageRepository.findByEmployee(employee);
+
+        String defaultImageUrl = "/employeeImages/default.png";
+
+        if (image == null) {
+            return ImageResponseDto.builder()
+                    .imageUrl(defaultImageUrl)
+                    .build();
+        }else {
+            return ImageResponseDto.builder()
+                    .imageUrl(image.getImageUrl())
+                    .build();
+        }
     }
 }

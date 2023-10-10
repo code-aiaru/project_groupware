@@ -24,7 +24,7 @@ class AcademyApplicationTests {
 		// 임시계정 생성(admin)
 		EmployeeDto tempEmployeeDto = EmployeeDto.builder()
 				.employeeId("admin")
-				.employeePassword("1111")
+				.employeePassword("111")
 				.employeeName("관리자")
 				.employeePhone("01012341234")
 				.employeeEmail("admin@email.com")
