@@ -71,8 +71,8 @@ public class EmployeeEntity extends BaseEntity {
     private String temporaryPassword;
 
     // 연관 관계
-//    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
-//    private ImageEntity image;
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    private ImageEntity image;
 
     // 연관 관계 - attendance
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)

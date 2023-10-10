@@ -21,7 +21,8 @@
                 <img src="/images/index/gnb/iconmonstr-bell-2.svg" alt="알람 아이콘" class="console-icon_img">
                 <div class="user-img_box_small" id="user-img_box_small">                    
                     <img src="" alt="프로필 이미지" class="user_img" style="display: none;">
-                    <img src="/images/index/gnb/iconmonstr-user-7.svg" alt="대체 프로필 이미지" class="user_img_alt">
+<!--                    <img src="/images/index/gnb/iconmonstr-user-7.svg" alt="대체 프로필 이미지" class="user_img_alt">-->
+                    <img id="console-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
                 </div>
             </div>
             <div class="dropdown-menu" style="display: none;">
@@ -29,7 +30,8 @@
                 <th:block sec:authorize="isAuthenticated()">
                     <div class="user-info_box">
                         <div class="user-img_box_large">
-                            <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/gnb/iconmonstr-user-7.svg'">
+<!--                            <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/gnb/iconmonstr-user-7.svg'">-->
+                            <img id="info-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
                         </div>
                         <div class="user-name_box">
                             <span th:text="${employee.employeeName}"></span>

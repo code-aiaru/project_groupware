@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
+import spring.project.groupware.academy.util.FileStorageService;
 //import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
 @Controller
@@ -16,6 +17,8 @@ import spring.project.groupware.academy.employee.service.EmployeeService;
 public class HomeController {
 
     private final EmployeeService employeeService;
+    private final FileStorageService fileStorageService;
+
 //    private final ImageServiceImpl imageService;
 
 //    @GetMapping({"", "/index"})
@@ -33,7 +36,10 @@ public class HomeController {
 
         if(myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
+            String employeeImageUrl = fileStorageService.findImage(employee.getEmployeeId()).getImageUrl();
+
             model.addAttribute("employee", employee);
+            model.addAttribute("employeeImageUrl", employeeImageUrl);
             return "index"; // 로그인 돼있다면 index 페이지로 이동
         }
         return "login"; // 로그인 안돼있으면 로그인 페이지로 이동

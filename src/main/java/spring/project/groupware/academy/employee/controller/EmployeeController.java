@@ -87,7 +87,8 @@ public class EmployeeController {
         employeeDto.setEmployeeBirth(birthDate);
 
         employeeService.insertEmployee(employeeDto);
-        return "login";
+
+        return "redirect:/employee/employeeList?page=0&subject=&search=";
     }
 
     // 로그인 화면

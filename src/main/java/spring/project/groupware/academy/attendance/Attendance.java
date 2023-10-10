@@ -29,7 +29,7 @@ public class Attendance {
     private AttendanceStatus attendanceStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee_no")
     private EmployeeEntity employee;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
