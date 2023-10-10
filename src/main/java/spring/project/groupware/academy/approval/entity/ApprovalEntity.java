@@ -19,7 +19,7 @@ public class ApprovalEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "approval_id")
-    private Long id;
+    private Long Id;
 
     private String ApprovalStatus;
     private String ApprovalTitle;

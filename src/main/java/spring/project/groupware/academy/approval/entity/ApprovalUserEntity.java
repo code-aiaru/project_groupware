@@ -18,7 +18,7 @@ public class ApprovalUserEntity {
     @Column(name = "approval_user_id")
     private Long id;
 
-    private String Approval;
+    private Long Ap;
 
     @ManyToOne
     @JoinColumn(name = "approval_id")
