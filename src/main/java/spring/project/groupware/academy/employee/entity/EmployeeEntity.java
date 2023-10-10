@@ -2,6 +2,8 @@ package spring.project.groupware.academy.employee.entity;
 
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import spring.project.groupware.academy.approval.entity.ApprovalEntity;
+import spring.project.groupware.academy.approval.entity.ApprovalUserEntity;
 import spring.project.groupware.academy.attendance.Attendance;
 import spring.project.groupware.academy.employee.constraint.Role;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
@@ -70,13 +72,22 @@ public class EmployeeEntity extends BaseEntity {
     @Column(name = "temporary_password")
     private String temporaryPassword;
 
-    // 연관 관계
+    // 연관 관계 - image
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private ImageEntity image;
 
     // 연관 관계 - attendance
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Attendance> attendance = new ArrayList<>();
+
+    // 연관 관계 - approval
+    @OneToMany(mappedBy = "employeeEntity", cascade = CascadeType.ALL)
+    private List<ApprovalEntity> approval = new ArrayList<>();
+
+    // 연관 관계 - approvalUser
+    @OneToMany(mappedBy = "employeeEntity", cascade = CascadeType.ALL)
+    private List<ApprovalUserEntity> approvalUser = new ArrayList<>();
+
 
     // 연관 관계 - 일정 1:N
 
@@ -98,6 +109,7 @@ public class EmployeeEntity extends BaseEntity {
         employeeEntity.setEmployeeStreetAddress(employeeDto.getEmployeeStreetAddress());
         employeeEntity.setEmployeeDetailAddress(employeeDto.getEmployeeDetailAddress());
         employeeEntity.setRole(Role.EMPLOYEE);
+//        employeeEntity.setRole(employeeDto.getRole());
 
         return employeeEntity;
     }
