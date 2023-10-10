@@ -21,7 +21,7 @@ public class ApprovalUserDto {
         ApprovalUserDto approvalUserDto = new ApprovalUserDto();
         approvalUserDto.setId(approvalUserEntity.getId());
         approvalUserDto.setAp(approvalUserEntity.getAp());
-//        approvalUserDto.setEmployeeEntity(approvalUserEntity.getEmployeeEntity);
+        approvalUserDto.setEmployeeEntity(approvalUserEntity.getEmployeeEntity());
         approvalUserDto.setApprovalEntity(approvalUserEntity.getApprovalEntity());
 
         return approvalUserDto;
