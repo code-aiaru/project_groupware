@@ -16,32 +16,3 @@
     max-width: 1100px;
     margin: 0 auto;
 }
-
-.dashboard_gnb {
-    position: sticky;
-    top: 50px;
-    z-index: 9;
-    height: 35px;
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-
-    background-color: #ffffff;
-    box-shadow: 0px 10px 10px -5px #f1f1f1;
-    padding-right: 15px;
-    box-sizing: border-box;
-}
-.dashboard_gnb img {
-    height: 15px;
-    width: 15px;
-    filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(94%) contrast(95%);
-}
-.dashboard_gnb span {
-    font-size: 12px;
-    font-weight: bold;
-    color: #444444;
-}
-.dashboard_gnb_divider{
-    padding: 0 5px;
-}
