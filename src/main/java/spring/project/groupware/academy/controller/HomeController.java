@@ -54,4 +54,13 @@ public class HomeController {
         return "student/manage";
     }
 
+
+
+
+
+
+
+
+
+
 }

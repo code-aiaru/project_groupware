@@ -17,17 +17,54 @@
                 notice list...
             </div>
             <div class="user-console">
-                <img src="/images/index/header/iconmonstr-email-4.svg" alt="메세지 아이콘">
-                <img src="/images/index/header/iconmonstr-bell-2.svg" alt="알람 아이콘">
-                <div class="profile-img_box">
-                    <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}">
-                        <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/header/iconmonstr-user-7.svg'">
-                    </a>
+                <img src="/images/index/gnb/iconmonstr-email-4.svg" alt="메세지 아이콘" class="console-icon_img">
+                <img src="/images/index/gnb/iconmonstr-bell-2.svg" alt="알람 아이콘" class="console-icon_img">
+                <div class="user-img_box_small" id="user-img_box_small">                    
+                    <img src="" alt="프로필 이미지" class="user_img" style="display: none;">
+                    <img src="/images/index/gnb/iconmonstr-user-7.svg" alt="대체 프로필 이미지" class="user_img_alt">
                 </div>
+            </div>
+            <div class="dropdown-menu" style="display: none;">
+                <div class="dropdown-menu_head"></div>
                 <th:block sec:authorize="isAuthenticated()">
-                    <li><span th:text="${employee.employeeName}"></span>님</li>
-                    <li><a th:href="@{/logout}">로그아웃</a></li>
+                    <div class="user-info_box">
+                        <div class="user-img_box_large">
+                            <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/gnb/iconmonstr-user-7.svg'">
+                        </div>
+                        <div class="user-name_box">
+                            <span th:text="${employee.employeeName}"></span>
+                            <span>님</span>
+                        </div>
+                    </div>
                 </th:block>
+                <ul>
+                    <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}">
+                        <li>
+                            <span>마이페이지</span>
+                            <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li>
+                            <span>b</span>
+                            <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li>
+                            <span>c</span>
+                            <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
+                        </li>
+                    </a>
+                    <a th:href="@{/logout}">
+                        <li>
+                            <th:block sec:authorize="isAuthenticated()">
+                                <span>로그아웃</span>
+                                <img src="/images/index/gnb/iconmonstr-log-out-16.svg" alt="로그아웃 아이콘">
+                            </th:block>
+                        </li>
+                    </a>
+                </ul>
             </div>
         </div>
         <!-- gnb end -->
@@ -39,7 +76,7 @@
 
                 <div class="logo">
                     <span class="expand-shown">그린컴퓨터아카데미</span>
-                    <img src="/images/index/logo/new23_headerlogo0.svg" alt="그린컴퓨터아카데미 로고" class="contract-shown" style="display: none;">
+                    <img src="/images/index/logo/new23_headerlogo0-fixed-lined.svg" alt="그린컴퓨터아카데미 로고" class="contract-shown" style="display: none;">
                 </div>
                 
                 <button class="snb_controller" id="size-control_btn">
@@ -52,37 +89,59 @@
                     <div class="general">
                         <span>GENERAL</span>
                         <ul>
-                            <li>
-                                <a href="/dashboard" data-ajax="true">대시보드</a>
-                            </li>
+                            <a href="/dashboard" data-ajax="true">
+                                <li>대시보드</li>
+                            </a>
                         </ul>
                     </div>
         
                     <div class="work">
                         <span>WORK</span>
                         <ul>
-                            <th:block sec:authorize="hasAnyRole('ADMIN')">
-                                <li><a href="/employee/manage" data-ajax="true">인사 관리</a></li>
-                            </th:block>
-                            <li><a href="/schedule" data-ajax="true">일정 관리</a></li>
-                            <li><a href="">업무 관리</a></li>
-                            <li><a href="">전자결재</a></li>
-                            <li><a href="">업무일지</a></li>
+                            <a href="/schedule" data-ajax="true">
+                                <li>일정관리</li>
+                            </a>
+                            <a href="#">
+                                <li>전자결재</li>
+                            </a>
                         </ul>
                     </div>
         
                     <div class="student">
                         <span>STUDENT</span>
                         <ul>
-                            <li><a href="">수강생 조회</a></li>
-                            <li><a href="/student/manage" data-ajax="true">수강생 관리</a></li>
+                            <a href="#">
+                                <li>수강생 조회</li>
+                            </a>
+                            <a href="/student/manage" data-ajax="true">
+                                <li>수강생 관리</li>
+                            </a>
                         </ul>
                     </div>
         
+                    <th:block sec:authorize="hasAnyRole('ADMIN')">
+                        <div class="human-resource">
+                            <span>H.R</span>
+                            <ul>
+                                <a href="#">
+                                    <li>인사조회</li>
+                                </a>
+                                <a href="/employee/manage" data-ajax="true">
+                                    <li>인사관리</li>
+                                </a>
+                            </ul>
+                        </div>
+                    </th:block>
+                        
                     <div class="community">
                         <span>COMMUNITY</span>
                         <ul>
-                            <li><a href="">공지사항</a></li>
+                            <a href="#">
+                                <li>자유게시판</li>
+                            </a>
+                            <a href="#">
+                                <li>공지사항</li>
+                            </a>
                         </ul>
                     </div>
 
@@ -101,6 +160,10 @@
                         <a href=""><img src="/images/index/snb_contract/iconmonstr-gear-2.svg" alt="설정 아이콘"></a>
                         <span>설정</span>
                     </div>
+                </div>
+
+                <div class="snb-background-img_box">
+                    <img src="/images/index/snb/iconmonstr-share-4.svg" alt="">
                 </div>
 
             </div>

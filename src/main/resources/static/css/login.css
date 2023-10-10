@@ -20,7 +20,8 @@
     height: 100vh;
     /* background-color: #f7f8fa; */
     position: relative;
-    background-image: url("/images/login/milad-fakurian-HE1_K4_-QT8-unsplash.jpg");
+    /* background-image: url("/images/login/milad-fakurian-HE1_K4_-QT8-unsplash-green.png"); */
+    background-image: url("/images/login/jean-philippe-delberghe-75xPHEQBmvA-unsplash-fixed2.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -37,7 +38,7 @@
     /* height: 300px; */
     width: 300px;
     background-color: #ffffff;
-    box-shadow: 0px 0px 5px 0px #e1e1e1;
+    box-shadow: 0px 0px 25px 0px #dddddd;
     padding: 35px 50px 50px 50px;
     border-radius: 5px;
 
@@ -63,7 +64,7 @@
 
 .login_form input[type="text"], input[type="password"] {
     height: 34px;
-    background-color: #e8f0fe;
+    background-color: #e4f1f7;
     border: none;
     border-radius: 5px;
     padding: 0px 10px;
@@ -77,10 +78,20 @@
     font-size: 10px;
 }
 
+.auto-login_box {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 5px;
+}
+.auto-login_box span {
+    margin: 0 0 0 5px;
+}
+
 .login_btn {
     height: 35px;
-    margin-top: 40px;
-    background-color: #7366ff;
+    margin-top: 12px;
+    background-image: linear-gradient(to right, #6eaebe, #88c6af);
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -93,6 +104,7 @@
     justify-content: space-evenly;
     align-items: center;
     padding: 0 65px 0 65px;
+    margin-top: 15px;
 }
 
 .find-account_box span {

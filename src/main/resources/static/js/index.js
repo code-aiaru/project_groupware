@@ -1,13 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    // html 로딩시 초기 설정
     loadContent('/dashboard');
 
-    document.querySelector('.snb').addEventListener('click', function(event) {
-        console.log('SNB clicked:', event);  // 추가
 
-        if (event.target.tagName === 'A' && event.target.getAttribute('data-ajax') === 'true') {
+
+
+    // SNB 관련 로직
+    document.querySelector('.snb').addEventListener('click', function(event) {
+        console.log('SNB clicked:', event);
+
+        const anchor = event.target.closest('a');  // 가장 가까운 <a> 태그를 찾습니다.
+
+        if (anchor && anchor.getAttribute('data-ajax') === 'true') {
             event.preventDefault();
-            const url = event.target.getAttribute('href');
+            console.log('ajax loaded:', event);
+            const url = anchor.getAttribute('href');
             resetLoadedElements();
             loadContent(url);
         }
@@ -51,9 +59,46 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+
+
+    // GNB 관련 로직
+
+    // 드롭다운메뉴 관련 로직
+    var dropdownMenu = document.querySelector('.dropdown-menu');
+    var userImgBox = document.getElementById('user-img_box_small');
+
+    userImgBox.addEventListener('click', function(event) {
+        if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+        } else {
+            dropdownMenu.style.display = 'block';
+        }
+        event.stopPropagation();
+    });
+
+    // userImgBox.addEventListener('click', toggleMenu);
     
+    // 드롭다운메뉴 닫기
+    document.body.addEventListener('click', function(event) {
+        if (!userImgBox.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+
+
 
 });
+
+
+
+
+
+
+
+
+
+
+
 
 function resetLoadedElements() {
     // data-loaded 속성이 "true"로 설정된 모든 script 태그를 선택합니다.
