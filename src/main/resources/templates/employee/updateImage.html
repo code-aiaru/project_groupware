@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
->
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>프로필 이미지 수정</title>
@@ -33,10 +32,6 @@
         </div>
     </div>
 </div>
-<!-- Thymeleaf 표현식을 사용하여 memberId를 JavaScript 변수에 할당 -->
-<!--<script th:inline="javascript">-->
-<!--    var memberId = /*[[${member.memberId}]]*/ null;-->
-<!--</script>-->
 <script>
     function goBack() {
       window.history.back();

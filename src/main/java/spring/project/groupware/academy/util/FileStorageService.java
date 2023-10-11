@@ -82,23 +82,4 @@ public class FileStorageService {
         return filePath;
     }
 
-    // 송원철
-    // 사원 프로필 이미지 조회
-    public ImageResponseDto findImage(String employeeId){
-        EmployeeEntity employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->
-                new UsernameNotFoundException("아이디가 존재하지않습니다"));
-        ImageEntity image = imageRepository.findByEmployee(employee);
-
-        String defaultImageUrl = "/employeeImages/default.png";
-
-        if (image == null) {
-            return ImageResponseDto.builder()
-                    .imageUrl(defaultImageUrl)
-                    .build();
-        }else {
-            return ImageResponseDto.builder()
-                    .imageUrl(image.getImageUrl())
-                    .build();
-        }
-    }
 }

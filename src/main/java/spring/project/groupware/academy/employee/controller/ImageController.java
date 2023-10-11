@@ -26,11 +26,22 @@ public class ImageController {
     private final EmployeeService employeeService;
 
     // 이미지 등록
+//    @PostMapping("/upload")
+//    public String upload(@ModelAttribute ImageUploadDto imageUploadDto, @AuthenticationPrincipal MyUserDetails myUserDetails, Model model) throws IOException {
+//
+//        EmployeeEntity employee = myUserDetails.getEmployeeEntity();
+//        imageService.saveEmployeeImage(employee, imageUploadDto.getFile());
+//
+//        // 이미지 URL을 모델에 추가
+//        model.addAttribute("employeeImageUrl", "/employeeImages/" + imageUploadDto.getFile().getOriginalFilename());
+//
+//        return "redirect:/employee/detail/" + myUserDetails.getEmployeeEntity().getEmployeeNo();
+//    }
     @PostMapping("/upload")
-    public String upload(@ModelAttribute ImageUploadDto imageUploadDto, @AuthenticationPrincipal MyUserDetails myUserDetails, Model model) throws IOException {
+    public String upload(@ModelAttribute ImageUploadDto imageUploadDto, @AuthenticationPrincipal MyUserDetails myUserDetails, Model model){
 
-        EmployeeEntity employee = myUserDetails.getEmployeeEntity();
-        imageService.saveEmployeeImage(employee, imageUploadDto.getFile());
+        EmployeeEntity employeeEntity = myUserDetails.getEmployeeEntity();
+        imageService.upload(imageUploadDto, employeeEntity.getEmployeeId());
 
         // 이미지 URL을 모델에 추가
         model.addAttribute("employeeImageUrl", "/employeeImages/" + imageUploadDto.getFile().getOriginalFilename());
@@ -39,12 +50,12 @@ public class ImageController {
     }
 
     // 이미지 삭제
-//    @PostMapping("/delete")
-//    public String deleteImage(@AuthenticationPrincipal MyUserDetails myUserDetails) {
-//
-//        String employeeId = myUserDetails.getUsername();
-//        fileStorageService.deleteImage(employeeId);
-//        return "redirect:/employee/detail/" + myUserDetails.getEmployeeEntity().getEmployeeNo();
-//    }
+    @PostMapping("/delete")
+    public String deleteImage(@AuthenticationPrincipal MyUserDetails myUserDetails) {
+
+        String employeeId = myUserDetails.getUsername();
+        imageService.deleteImage(employeeId);
+        return "redirect:/employee/detail/" + myUserDetails.getEmployeeEntity().getEmployeeNo();
+    }
 
 }
