@@ -98,7 +98,11 @@
         </div>
     </div>
 </div>
-<button th:onclick="@{location.href='/index'}">홈</button>
+<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
+<a th:href="@{/index}">홈</a>
+<th:block sec:authorize="hasAnyRole('ADMIN')">
+    <a th:href="@{/employee/employeeList?page=0&subject=&search=}">인사조회</a>
+</th:block>
 <!-- Thymeleaf 표현식을 사용하여 employeeNo JavaScript 변수에 할당 -->
 <script th:inline="javascript">
     var employeeNo = /*[[${employee.employeeNo}]]*/ null;

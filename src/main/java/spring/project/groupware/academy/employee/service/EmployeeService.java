@@ -92,9 +92,7 @@ public class EmployeeService {
 
         Page<EmployeeEntity> employeeEntities = null; // 기본 null값으로 설정
 
-        if(subject.equals("employeeNo")){
-            employeeEntities = employeeRepository.findByEmployeeNoContaining(pageable, search);
-        }else if(subject.equals("employeeName")){
+        if(subject.equals("employeeName")){
             employeeEntities = employeeRepository.findByEmployeeNameContaining(pageable, search);
         }else if(subject.equals("employeePhone")){
             employeeEntities = employeeRepository.findByEmployeePhoneContaining(pageable, search);

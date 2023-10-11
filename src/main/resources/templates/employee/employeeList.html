@@ -3,20 +3,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
-  <title>사원관리 페이지</title>
+  <title>인사조회 페이지</title>
+  <link rel="stylesheet" th:href="@{/css/employee/employeeList.css}">
 </head>
 <body>
 <div class="container">
   <div class="pagingList">
     <div class="pagingList-con">
       <div class="pagingList-table">
-        <h1>사원 관리</h1>
+        <h1>인사 조회</h1>
         <div class="search">
           <a th:href="@{/employee/join}"><span>사원추가</span></a>
           <a th:href="@{/index}"><span>홈</span></a>
           <form th:action="@{/employee/employeeList}" method="get">
             <select name="subject" id="subject">
-              <option value="employeeNo">사원번호</option>
               <option value="employeeName">이름</option>
               <option value="employeeDep">부서</option>
               <option value="employeePosition">직급</option>
