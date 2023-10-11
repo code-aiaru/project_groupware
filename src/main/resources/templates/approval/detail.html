@@ -30,7 +30,7 @@
                     <tr>
                         <td><span>결제자 | </span></br>
                             <th:block th:each="approvalUser: ${approvalUserList}">
-                                <span th:text="|${approvalUser.employeeName} - ${employee.employeeDep} - ${employee.employeePosition}|"></span>
+                                <span th:text="|${approvalUser.employeeEntity.employeeName} - ${approvalUser.employeeEntity.employeeDep} - ${approvalUser.employeeEntity.employeePosition}|"></span>
                                 <span th:if="${approvalUser.Ap == 0}">결제</span>
                                 <span th:if="${approvalUser.Ap == 1}">참조</span>
                                 </br>
@@ -38,7 +38,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="td-content"><span th:text="${paymail.PayContent}"></span></td>
+                        <td class="td-content"><span th:text="${approval.ApprovalContent}"></span></td>
                     </tr>
                     <tr>
                         <td class="th-last">
