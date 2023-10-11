@@ -48,9 +48,8 @@ public class WebSecurityConfig {
             http.rememberMe()
                     .rememberMeParameter("rememberMe")
                     .tokenValiditySeconds(86400 * 7) // 7일
-                    .alwaysRemember(false) // true 시 무조건 자동로그인
+                    .alwaysRemember(false) // true 시 무조건 자동로그인, 기본값은 false
                     .userDetailsService(userDetailsService());
-
 
             http.logout()
                     .logoutUrl("/logout")

@@ -88,7 +88,6 @@ public class EmployeeEntity extends BaseEntity {
     @OneToMany(mappedBy = "employeeEntity", cascade = CascadeType.ALL)
     private List<ApprovalUserEntity> approvalUser = new ArrayList<>();
 
-
     // 연관 관계 - 일정 1:N
 
 

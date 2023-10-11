@@ -64,10 +64,18 @@
  // 페이지 로드 시 유효성 검사 수행
  window.onload = validateBirth;
 
-// 이미지 삭제 버튼 클릭 시 프로필 이미지 삭제 확인 팝업 띄우기, 기본 이미지로 변경
-// 원래는 진짜 삭제였지만 이미지 없는 경우 헤더에 프로필 아이콘 오류가 발생해서 삭제 버튼 누르면 기본 이미지로 변경되도록 코드 수정함
 document.getElementById('delete-button').addEventListener('click', function() {
   if (confirm("기존 이미지가 삭제됩니다. 삭제하시겠습니까?\n(삭제 후, 취소 버튼 눌러도 복구 안됨)")) {
+    // '확인'을 선택한 경우에만 이미지 삭제 요청 보내고 폼 제출
+    // 프로필 이미지 삭제 요청 보내기
+    fetch('/image/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      if (response.ok) {
         // 이미지 삭제 성공 시
         // 이미지를 기본 이미지로 설정
         loadDefaultImage();
@@ -80,6 +88,14 @@ document.getElementById('delete-button').addEventListener('click', function() {
           // 프로필 삭제 버튼 비활성화
           document.getElementById('delete-button').disabled = true;
         }
+      } else {
+        // 이미지 삭제 실패 시 처리
+        console.error('이미지 삭제 실패');
+      }
+    })
+    .catch(error => {
+      console.error('이미지 삭제 중 오류 발생:', error);
+    });
   } else {
     // '취소'를 선택한 경우 아무 작업도 수행하지 않음
   }
@@ -90,7 +106,7 @@ function isDefaultImage() {
   var imagePreview = document.getElementById('preview-image1');
   var imageUrl = imagePreview.src;
 
-  return imageUrl.endsWith('/profileImages/default.png');
+  return imageUrl.endsWith('/employeeImages/default.png');
 }
 
 // 페이지 로드 시 이미지가 기본 이미지인 경우 삭제 버튼 비활성화
@@ -102,7 +118,7 @@ window.onload = function() {
 // 기본 이미지를 다시 로드하는 함수
 function loadDefaultImage() {
   var imagePreview = document.getElementById('preview-image1');
-  imagePreview.src = '/profileImages/default.png';
+  imagePreview.src = '/employeeImages/default.png';
 }
 
 

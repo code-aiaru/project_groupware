@@ -19,6 +19,8 @@ import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.config.UserDetailsServiceImpl;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
+import spring.project.groupware.academy.employee.service.ImageService;
+import spring.project.groupware.academy.util.FileStorageService;
 //import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
 import javax.validation.Valid;
@@ -36,10 +38,10 @@ public class EmployeeController {
     // 사원 Controller
 
     private final EmployeeService employeeService;
-//    private final ImageServiceImpl imageService;
-
+    private final ImageService imageService;
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final FileStorageService fileStorageService;
 
     // Create
     @GetMapping({"/join"})
@@ -119,7 +121,7 @@ public class EmployeeController {
 //            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
             model.addAttribute("employee", employee);
-//            model.addAttribute("memberImageUrl", memberImageUrl);
+//            model.addAttribute("employeeImageUrl", employeeImageUrl);
             model.addAttribute("myUserDetails", myUserDetails);
         }
 
@@ -142,6 +144,7 @@ public class EmployeeController {
         return "employee/employeeList";
     }
 
+
     // Detail - 사원 상세 보기
     @GetMapping("/detail/{employeeNo}")
     public String getDetail(@PathVariable("employeeNo") Long employeeNo, Model model){
@@ -149,11 +152,14 @@ public class EmployeeController {
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
         // 이미지 url을 db에서 가져오기
 //        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employee", employee);
-//        model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
+        model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
+
         return "employee/detail";
     }
+
 
     // Update - 회원 수정 화면
     @GetMapping("/update/{employeeNo}")
@@ -193,6 +199,7 @@ public class EmployeeController {
         return "employee/update";
     }
 
+
     // Update - 실제 실행
     @PostMapping("/update")
     public String postUpdate(@Valid EmployeeDto employeeDto, BindingResult bindingResult, @AuthenticationPrincipal MyUserDetails myUserDetails) {
@@ -222,6 +229,7 @@ public class EmployeeController {
         }
     }
 
+
     // Delete - 사원 삭제(관리자(admin 권한)만 가능)
     @GetMapping("/delete/{employeeNo}")
     public String getDelete(@PathVariable("employeeNo") Long employeeNo){
@@ -236,6 +244,22 @@ public class EmployeeController {
             System.out.println("사원 삭제 실패");
             return "redirect:/";
         }
+    }
+
+
+    // 프로필 이미지 변경 페이지
+    @GetMapping("/updateImage/{employeeNo}")
+    public String getUpdateImage(@PathVariable("employeeNo") Long employeeNo, Model model){
+
+        EmployeeDto employee = employeeService.detailEmployee(employeeNo);
+
+        // 이미지 url을 db에서 가져오기
+        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+
+        model.addAttribute("employee", employee);
+        model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
+
+        return "employee/updateImage";
     }
 
 

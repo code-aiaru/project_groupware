@@ -12,7 +12,7 @@
       <div class="pagingList-table">
         <h1>사원 관리</h1>
         <div class="search">
-          <a th:href="@{/employee/join}"><span>사원 추가</span></a>
+          <a th:href="@{/employee/join}"><span>사원추가</span></a>
           <a th:href="@{/index}"><span>홈</span></a>
           <form th:action="@{/employee/employeeList}" method="get">
             <select name="subject" id="subject">
@@ -29,7 +29,7 @@
       <table style="width:1700px;" align="center" border="1";>
         <thead>
         <tr>
-          <th colspan="7">
+          <th colspan="8">
             현재 로그인 사용자 : <span th:text="${myUserDetails.employeeEntity.employeeName}"></span>,
             권한 : <span th:text="${myUserDetails.employeeEntity.role}"></span>
           </th>
@@ -37,6 +37,7 @@
         <tr>
 <!--          <th>이미지</th>-->
           <th>사원번호</th>
+          <th>프로필 이미지</th>
           <th>이름</th>
           <th>부서</th>
           <th>직급</th>
@@ -47,8 +48,8 @@
         </thead>
         <tbody>
         <tr th:each="employee : ${employeeList}">
-<!--          <td><div id="image-preview"><img th:src="${member.imageUrl}" alt="프로필 이미지" style="width: 50px; height: 50px;"></div></td>-->
           <td th:text="${employee.employeeNo}"></td>
+          <td><div id="image-preview"><img th:src="${employee.imageUrl}" alt="프로필 이미지" style="width: 50px; height: 50px;"></div></td>
           <td th:text="${employee.employeeName}"></td>
           <td th:text="${employee.employeeDep}"></td>
           <td th:text="${employee.employeePosition}"></td>
