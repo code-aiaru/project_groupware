@@ -37,6 +37,7 @@
     font-size: 15px;
 }
 
+
 .dummy_box {
     min-width: 405px;
     height: 50px;
@@ -235,7 +236,6 @@
     filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(94%) contrast(95%);
 }
 
-
 .general {
     padding: 10px 0;
 }
@@ -252,7 +252,6 @@
     padding: 10px 0;
 }
 
-
 .expand-shown span {
     padding: 10px;
     display: block;
@@ -262,22 +261,45 @@
 }
 .expand-shown ul li {
     padding: 10px 7px 10px 30px;
-    border-right: 3px solid transparent;
+    /* border-right: 3px solid transparent; */
     /* border-bottom: 1px solid #dddddd; */
+    position: relative;
+    
     display: flex;
     align-items: center;
     justify-content: start;
     font-size: 13px;
     color: #ffffff;
+    overflow: visible;
 }
 .expand-shown ul li:hover {
-    border-right: 3px solid #2788b5;
+    /* border-right: 3px solid #2788b5; */
     color: #2788b5;
     font-weight: bold;
-    background-color: #e4f1f7;
+    /* background-color: #e4f1f7; */
 }
-.expand-shown ul li a {
-    box-sizing: border-box;
+.menu-icon_small {
+    height: 15px;
+    width: 15px;
+    padding-right: 5px;    
+    filter: invert(100%) sepia(22%) saturate(0%) hue-rotate(10deg) brightness(103%) contrast(100%);
+}
+.expand-shown ul li:hover .menu-icon_small {
+    filter: invert(50%) sepia(26%) saturate(1211%) hue-rotate(154deg) brightness(87%) contrast(95%);
+}
+.select-highlight {
+    display: none;
+    position: absolute;
+    top: -72px;
+    right: 0px;
+    z-index: -1;
+    height: 180px;
+    width: 190px;
+}
+
+/* li에 마우스를 올렸을 때만 select-highlight 클래스를 가진 이미지를 보여줍니다. */
+.expand-shown ul li:hover .select-highlight {
+    display: inline-block;
 }
 
 .contract-shown {

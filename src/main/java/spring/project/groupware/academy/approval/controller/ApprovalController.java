@@ -70,14 +70,13 @@ public class ApprovalController {
         List<ApprovalUserDto> approvalUserDtoList = new ArrayList<>();
 
         for (ApprovalUserDto approvalUserDto : newApprovalUserArray) {
-            // 객체를 복사하여 새로운 객체 생성
             ApprovalUserDto modifiedApprovalUser = new ApprovalUserDto();
             modifiedApprovalUser.setId(approvalUserDto.getId());
             modifiedApprovalUser.setAp(approvalUserDto.getAp());
             approvalUserDtoList.add(modifiedApprovalUser);
         }
-        Long employeeNo = myUserDetails.getEmployeeEntity().getEmployeeNo();
-        Long approvalId = approvalService.approvalWrite(approvalDto, employeeNo);
+        String employeeId = myUserDetails.getUsername();
+        Long approvalId = approvalService.approvalWrite(approvalDto, employeeId);
         approvalUserService.approvalUserCreate(approvalUserDtoList, approvalId);
         return "redirect:/approval/list";
 
@@ -86,8 +85,8 @@ public class ApprovalController {
     @GetMapping("/list")
     public String getlist(@AuthenticationPrincipal MyUserDetails myUserDetails,
                           @PageableDefault(page = 0, size = 10, sort = "approval_id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        Long employeeNo = myUserDetails.getEmployeeEntity().getEmployeeNo();
-        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeNo);
+        String employeeId = myUserDetails.getUsername();
+        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeId);
         int totalPage = approvalDtoPage.getTotalPages();
         int nowPage = approvalDtoPage.getNumber();
         int blockNum = 5;
@@ -104,9 +103,9 @@ public class ApprovalController {
             model.addAttribute("pSize", pSize);
 //            model.addAttribute("subject", subject);
 //            model.addAttribute("search", search);
-            return "payment/list";
+            return "approval/list";
         }
-        return "redirect:/board/write";
+        return "redirect:/approval/write";
 
     }
     @GetMapping("/detail/{id}")

@@ -1,12 +1,12 @@
-package spring.project.groupware.academy.attendance;
+package spring.project.groupware.academy.attendance.dto;
 
 import lombok.*;
+import spring.project.groupware.academy.attendance.entity.AttendanceStatus;
+import spring.project.groupware.academy.attendance.entity.Attendance;
+import spring.project.groupware.academy.employee.entity.EmployeeEntity;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -22,6 +22,8 @@ public class AttendanceDto {
     private LocalDate attDate;
 
     private AttendanceStatus attendanceStatus;
+
+    private EmployeeEntity employee;
 
 //    public static class AttendanceStatusPage{
 ////        private AttendanceStatus attendanceStatus;

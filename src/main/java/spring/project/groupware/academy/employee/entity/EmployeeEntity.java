@@ -39,7 +39,7 @@ public class EmployeeEntity extends BaseEntity {
     @Column(name = "employee_phone", unique = true, nullable = false)
     private String employeePhone;
 
-    @Column(name = "employee_email", nullable = false)
+    @Column(name = "employee_email", nullable = false, unique = true)
     private String employeeEmail;
 
     // 부서
