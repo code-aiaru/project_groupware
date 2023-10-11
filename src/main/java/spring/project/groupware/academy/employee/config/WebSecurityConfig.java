@@ -30,9 +30,9 @@ public class WebSecurityConfig {
         @Bean
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests()
-                    .antMatchers("/", "/employee/join", "/login").permitAll() // "/employee/join" 테스트용으로 둔것, 삭제해야함
+                    .antMatchers("/", "/login").permitAll()
                     .antMatchers("/logout", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
-                            "/board/**", "/employee/inquiry**", "/student/join", "/inquiry/**").authenticated()
+                            "/board/**", "/employee/inquiry**", "/student/**", "/inquiry/**").authenticated()
                     .antMatchers("/employee/join", "/employee/employeeList**").hasAnyRole("ADMIN")
 
                     .and()

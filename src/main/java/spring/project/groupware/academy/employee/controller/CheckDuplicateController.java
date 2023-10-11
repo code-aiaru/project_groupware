@@ -10,6 +10,7 @@ import spring.project.groupware.academy.employee.exception.BadRequestException;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -30,28 +31,79 @@ public class CheckDuplicateController {
         }
     }
 
+//    @GetMapping("/employeeEmail/check")
+//    public ResponseEntity<?> getCheckEmailDuplication(@RequestParam(value = "employeeEmail") String employeeEmail) throws BadRequestException {
+//
+//        System.out.println(employeeEmail);
+//
+//        if(employeeService.existsByEmployeeEmail(employeeEmail) == true){
+//            throw new BadRequestException("이미 사용중인 이메일입니다");
+//        }else{
+//            return ResponseEntity.ok("사용가능한 이메일입니다");
+//        }
+//    }
+
     @GetMapping("/employeeEmail/check")
     public ResponseEntity<?> getCheckEmailDuplication(@RequestParam(value = "employeeEmail") String employeeEmail) throws BadRequestException {
+        String jpql = "SELECT COUNT(e) " +
+                "FROM EmployeeEntity e " +
+                "WHERE e.employeeEmail = :email";
 
-        System.out.println(employeeEmail);
+        String semiJpql = "SELECT COUNT(s) " +
+                "FROM StudentEntity s " +
+                "WHERE s.studentEmail = :email";
 
-        if(employeeService.existsByEmployeeEmail(employeeEmail) == true){
+        TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class)
+                .setParameter("email", employeeEmail);
+
+        TypedQuery<Long> semiQuery = entityManager.createQuery(semiJpql, Long.class)
+                .setParameter("email", employeeEmail);
+
+        Long count = query.getSingleResult() + semiQuery.getSingleResult();
+
+        if (count > 0) {
             throw new BadRequestException("이미 사용중인 이메일입니다");
-        }else{
+        } else {
             return ResponseEntity.ok("사용가능한 이메일입니다");
         }
     }
 
+//    @GetMapping("/employeePhone/check")
+//    public ResponseEntity<?> getCheckPhoneDuplication(@RequestParam(value = "employeePhone") String employeePhone) throws BadRequestException {
+//
+//        System.out.println(employeePhone);
+//
+//        if(employeeService.existsByEmployeePhone(employeePhone) == true){
+//            throw new BadRequestException("이미 사용중인 휴대전화번호입니다");
+//        }else{
+//            return ResponseEntity.ok("사용가능한 휴대전화번호입니다");
+//        }
+//    }
+
     @GetMapping("/employeePhone/check")
     public ResponseEntity<?> getCheckPhoneDuplication(@RequestParam(value = "employeePhone") String employeePhone) throws BadRequestException {
+        String jpql = "SELECT COUNT(e) " +
+                "FROM EmployeeEntity e " +
+                "WHERE e.employeePhone = :phone";
 
-        System.out.println(employeePhone);
+        String semiJpql = "SELECT COUNT(s) " +
+                "FROM StudentEntity s " +
+                "WHERE s.studentPhone = :phone";
 
-        if(employeeService.existsByEmployeePhone(employeePhone) == true){
+        TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class)
+                .setParameter("phone", employeePhone);
+
+        TypedQuery<Long> semiQuery = entityManager.createQuery(semiJpql, Long.class)
+                .setParameter("phone", employeePhone);
+
+        Long count = query.getSingleResult() + semiQuery.getSingleResult();
+
+        if (count > 0) {
             throw new BadRequestException("이미 사용중인 휴대전화번호입니다");
-        }else{
+        } else {
             return ResponseEntity.ok("사용가능한 휴대전화번호입니다");
         }
     }
+
 
 }

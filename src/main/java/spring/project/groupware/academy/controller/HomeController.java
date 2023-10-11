@@ -57,10 +57,11 @@ public class HomeController {
         return "dashboard";
     }
 
-    @GetMapping({"/student/manage"})
-    public String getStudentManage() {
-        return "student/manage";
-    }
+    // student 내 controller로 이동함
+//    @GetMapping({"/student/manage"})
+//    public String getStudentManage() {
+//        return "student/manage";
+//    }
 
 
 
