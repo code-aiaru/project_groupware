@@ -14,14 +14,18 @@ import javax.persistence.*;
 public class BoardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long boardId;
+    private Long id;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String content;
 
     public BoardEntity(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
+
+
 
 //    @ManyToOne
 //    @JoinColumn(name = "employee_id")
