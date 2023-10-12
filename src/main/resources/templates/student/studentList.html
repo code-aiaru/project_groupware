@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
-  <title>학생조회 페이지</title>
+  <title>수강생조회 페이지</title>
   <link rel="stylesheet" th:href="@{/css/employee/employeeList.css}">
 </head>
 <body>
@@ -11,9 +11,9 @@
   <div class="pagingList">
     <div class="pagingList-con">
       <div class="pagingList-table">
-        <h1>학생 조회</h1>
+        <h1>수강생 조회</h1>
         <div class="search">
-          <a th:href="@{/student/join}"><span>학생추가</span></a>
+          <a th:href="@{/student/join}"><span>수강생추가</span></a>
           <a th:href="@{/index}"><span>홈</span></a>
           <form th:action="@{/student/studentList}" method="get">
             <select name="subject" id="subject">

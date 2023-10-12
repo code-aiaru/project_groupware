@@ -68,11 +68,14 @@ document.getElementById('delete-button').addEventListener('click', function() {
   if (confirm("기존 이미지가 삭제됩니다. 삭제하시겠습니까?\n(삭제 후, 취소 버튼 눌러도 복구 안됨)")) {
     // '확인'을 선택한 경우에만 이미지 삭제 요청 보내고 폼 제출
     // 프로필 이미지 삭제 요청 보내기
+    var studentId = document.querySelector('input[name="studentId"]').value;  // studentId 가져오기
+
+    var formData = new FormData();
+    formData.append('studentId', studentId); // studentId를 formData에 추가
+
     fetch('/image/delete2', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: formData, // formData를 body로 설정
     })
     .then(response => {
       if (response.ok) {
@@ -100,6 +103,7 @@ document.getElementById('delete-button').addEventListener('click', function() {
     // '취소'를 선택한 경우 아무 작업도 수행하지 않음
   }
 });
+
 
 // 현재 이미지가 기본 이미지(default.png)인지 확인하는 함수
 function isDefaultImage() {

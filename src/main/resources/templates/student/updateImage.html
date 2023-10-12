@@ -18,6 +18,7 @@
             <div id="image-preview1"><img id="preview-image1" th:src="${studentImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <!-- 버튼을 클릭하면 /image/upload2로 POST 요청 보내기 -->
             <form action="/image/upload2" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="studentId" th:value="${student.studentId}" />
                 <ul>
                     <li>
                         <input type="file" name="file" id="file-input" onchange="enableUploadButton()"> <!-- 파일 업로드 필드 -->
