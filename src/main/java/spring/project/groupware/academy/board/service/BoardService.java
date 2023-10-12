@@ -17,10 +17,11 @@ import java.util.Collections;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public BoardDto createBoard(BoardDto boardDTO) {
-        BoardEntity board = new BoardEntity(boardDTO.getTitle(), boardDTO.getContent());
-        BoardEntity createdBoard = boardRepository.save(board);
-        return new BoardDto(createdBoard.getId(), createdBoard.getTitle(), createdBoard.getContent());
+    public BoardDto createBoard(BoardDto boardDto) {
+        BoardEntity createdBoard = new BoardEntity(boardDto.getTitle(), boardDto.getContent(),boardDto.getWriter(),boardDto.getBoardPw());
+        BoardEntity board = boardRepository.save(createdBoard);
+
+    return new BoardDto(board.getId(),board.getTitle(),board.getContent(),board.getWriter(), board.getBoardPw());
     }
 
     public BoardDto getBoardById(Long id) {
@@ -28,7 +29,7 @@ public class BoardService {
             Optional<BoardEntity> optionalBoard = boardRepository.findById(id);
             if (optionalBoard.isPresent()) {
                 BoardEntity board = optionalBoard.get();
-                return new BoardDto(board.getId(), board.getTitle(), board.getContent());
+                return new BoardDto(board.getId(), board.getTitle(), board.getContent(), board.getWriter(), board.getBoardPw());
             } else {
                 return null;
             }
@@ -42,7 +43,7 @@ public class BoardService {
         try {
             List<BoardEntity> boards = boardRepository.findAll();
             return boards.stream()
-                    .map(board -> new BoardDto(board.getId(), board.getTitle(), board.getContent()))
+                    .map(board -> new BoardDto(board.getId(),board.getTitle(), board.getWriter(), board.getBoardPw(),board.getContent()))
                     .collect(Collectors.toList());
         } catch (DataAccessException ex) {
             ex.printStackTrace();
@@ -50,23 +51,28 @@ public class BoardService {
         }
     }
 
-    public BoardDto updateBoard(Long id, BoardDto boardDTO) {
+    public boolean updateBoard(Long id, BoardDto boardDTO) {
         try {
             Optional<BoardEntity> optionalBoard = boardRepository.findById(id);
             if (optionalBoard.isPresent()) {
                 BoardEntity existingBoard = optionalBoard.get();
-                // 업데이트할 게시판이 존재하는 경우
-                // 엔티티 업데이트 로직 (예: 엔티티 필드 업데이트)
+
+                // 엔티티 필드를 업데이트
+                existingBoard.setTitle(boardDTO.getTitle());
+                existingBoard.setContent(boardDTO.getContent());
+                existingBoard.setWriter(boardDTO.getWriter());
+                existingBoard.setBoardPw(boardDTO.getBoardPw());
+
 
                 // 엔티티를 저장하고 저장된 엔티티를 반환
-                BoardEntity updatedBoard = boardRepository.save(new BoardEntity( boardDTO.getTitle(), boardDTO.getContent()));
-                return new BoardDto(updatedBoard.getTitle(), updatedBoard.getContent());
+                BoardEntity updatedBoard = boardRepository.save(existingBoard);
+                return true;
             } else {
-                return null; // 업데이트할 게시판이 존재하지 않는 경우
+                return false; // 업데이트할 게시판이 존재하지 않는 경우
             }
         } catch (DataAccessException ex) {
             ex.printStackTrace();
-            return null; // 데이터베이스 연산 실패 시
+            return false; // 데이터베이스 연산 실패 시
         }
     }
 
@@ -84,4 +90,14 @@ public class BoardService {
             return false; // 데이터베이스 연산 실패 시
         }
     }
-}
+
+    public boolean validatePassword(Long id,String clientPassword) {
+        Optional<BoardEntity> optionalBoard = boardRepository.findById(id);
+
+        String pw = optionalBoard.get().getBoardPw();
+        if (pw.equals(clientPassword)) {
+            return true;
+        }
+        return false;
+    }
+    }

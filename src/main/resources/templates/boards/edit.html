@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 수정</title>
+</head>
+<body>
+<h1>게시물 수정</h1>
+<div>
+  <form id="updateForm" th:action="@{'/api/boards/' + ${board.id}}" method="post">
+
+    <div>
+      <label for="title">제목:</label>
+      <input type="text" id="title" name="title" th:value="${board.title}" required>
+    </div>
+    <div>
+      <label for="content">내용:</label>
+      <textarea id="content" name="content" required th:text="${board.content}"></textarea>
+    </div>
+    <div>
+      <label for="writer">작성자:</label>
+      <input type="text" id="writer" name="writer" th:value="${board.writer}" required>
+    </div>
+    <div>
+      <label for="boardPw">비밀번호 변경:</label>
+      <input type="password" id="boardPw" name="boardPw" required>
+    </div>
+    <div>
+      <label for="boardPwConfirm">비밀번호 확인:</label>
+      <input type="password" id="boardPwConfirm" name="boardPwConfirm" required>
+    </div>
+
+    <button type="submit">게시물 수정</button>
+  </form>
+</div>
+<a href="/boards/list">게시판 목록으로 돌아가기</a>
+
+<script th:inline="javascript">
+    let id = /*[[${board.id}]]*/ null; // 상세 페이지에서 id를 JavaScript 변수에 할당
+</script>
+
+<script>
+const updateForm = document.getElementById('updateForm');
+updateForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    const writer = document.getElementById('writer').value;
+    const boardPw = document.getElementById('boardPw').value;
+    const boardPwConfirm = document.getElementById('boardPwConfirm').value;
+
+    // 비밀번호와 비밀번호 확인 값을 비교
+    if (boardPw !== boardPwConfirm) {
+        alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+        return; // 비밀번호 불일치 시 요청을 보내지 않음
+    }
+
+    const data = {
+        title: title,
+        content: content,
+        writer: writer,
+        boardPw: boardPw
+    };
+
+    // 게시물 수정 요청을 보냅니다.
+    fetch(`/api/boards/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.status === 200) {
+            alert('게시물이 성공적으로 수정되었습니다.');
+            window.location.href = '/boards/list';
+        } else if (response.status === 404) {
+            alert('게시물 수정에 실패했습니다. 비밀번호가 일치하지 않거나 게시물이 존재하지 않습니다.');
+        } else {
+            alert('게시물 수정 요청 실패');
+        }
+    })
+    .catch(error => {
+        console.error('게시물 수정 요청 실패: ' + error);
+    });
+});
+
+
+
+</script>
+</body>
+</html>

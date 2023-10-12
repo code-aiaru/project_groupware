@@ -42,10 +42,10 @@
         // 클릭된 엘리먼트가 <a> 태그인지 확인합니다.
         if (event.target.tagName === 'A') {
             // data-id 속성을 사용하여 ID 값을 가져옵니다.
-            const boardId = event.target.getAttribute('data-id');
+            const id = event.target.getAttribute('data-id');
 
             // boardId를 사용하여 상세 정보 페이지로 이동합니다.
-            window.location.href = `/boards/detail/${boardId}`;
+            window.location.href = `/boards/detail/${id}`;
         }
     });
 </script>
