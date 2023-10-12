@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <title>인사조회 페이지</title>
   <link rel="stylesheet" th:href="@{/css/employee/employeeList.css}">
+  <link rel="stylesheet" th:href="@{/css/employee/modal.css}">
+  <script th:src="@{/js/employee/modal.js}" defer="defer"></script>
 </head>
 <body>
 <div class="container">
@@ -104,6 +106,38 @@
       </div>
     </div>
   </div>
+  </div>
+
+  <!-- 모달 창 토글 버튼 -->
+  <button id="openModalBtn">사원 추가</button>
+
+  <!-- 모달 창 -->
+  <div id=modalBackground class="modalBackground"></div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <div id="loadedContent">
+        <h2>사원 추가</h2>
+        <form th:action="@{/employee/join}" method="post">
+          <!-- 폼 요소를 추가하세요. 예: -->
+          <label for="employeeName">이름:</label>
+          <input type="text" id="employeeName" name="employeeName" required>
+
+          <label for="employeeDep">부서:</label>
+          <input type="text" id="employeeDep" name="employeeDep" required>
+
+          <label for="employeePosition">직급:</label>
+          <input type="text" id="employeePosition" name="employeePosition" required>
+
+          <label for="employeePhone">휴대전화번호:</label>
+          <input type="text" id="employeePhone" name="employeePhone" required>
+
+          <!-- 기타 폼 요소를 추가하세요. -->
+
+          <input type="submit" value="추가">
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 </body>

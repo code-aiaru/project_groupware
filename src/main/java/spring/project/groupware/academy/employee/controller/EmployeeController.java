@@ -279,7 +279,7 @@ public class EmployeeController {
 
     // 정보 수정 전 비밀번호 확인(사원 삭제) - 입력 화면
     @GetMapping("/confirmPassword/delete/{employeeNo}")
-    public String getConfirmPasswordDeleteView(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+    public String getConfirmPasswordDeleteView(@PathVariable("employeeNo") Long employeeNo, Model model){
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
 //        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
