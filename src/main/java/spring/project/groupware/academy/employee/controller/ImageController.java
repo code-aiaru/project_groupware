@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.ImageUploadDto;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
@@ -42,16 +43,17 @@ public class ImageController {
 
     // 학생 이미지 등록
     @PostMapping("/upload2")
-    public String upload2(@ModelAttribute ImageUploadDto imageUploadDto, Long studentId, Model model){
-
+    public String upload2(@ModelAttribute ImageUploadDto imageUploadDto, @RequestParam("studentId") Long studentId, Model model) {
         StudentEntity studentEntity = studentRepository.findByStudentId(studentId);
-        imageService.upload2(imageUploadDto, studentEntity.getStudentId());
+        imageService.upload2(imageUploadDto, studentId);
 
         // 이미지 URL을 모델에 추가
         model.addAttribute("studentImageUrl", "/studentImages/" + imageUploadDto.getFile().getOriginalFilename());
+        model.addAttribute("student", studentEntity);
 
-        return "redirect:/student/detail/" + studentEntity.getStudentId();
+        return "redirect:/student/detail/" + studentId;
     }
+
 
     // 이미지 삭제
     @PostMapping("/delete")
@@ -64,11 +66,10 @@ public class ImageController {
 
     // 학생 이미지 삭제
     @PostMapping("/delete2")
-    public String deleteImage2(Long studentId) {
-
+    public String deleteImage2(@RequestParam("studentId") Long studentId) {
         StudentEntity studentEntity = studentRepository.findByStudentId(studentId);
         imageService.deleteImage2(studentId);
-        return "redirect:/student/detail/" + studentEntity.getStudentId();
+        return "redirect:/student/detail/" + studentId;
     }
 
 }

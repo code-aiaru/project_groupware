@@ -14,7 +14,6 @@ import spring.project.groupware.academy.employee.repository.EmployeeRepository;
 import spring.project.groupware.academy.employee.repository.ImageRepository;
 import spring.project.groupware.academy.student.entity.StudentEntity;
 import spring.project.groupware.academy.student.repository.StudentRepository;
-import spring.project.groupware.academy.util.FileStorageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +30,7 @@ public class ImageService {
 
     // 이미지 URL 기본값 설정(이미지 없을 경우 기본 이미지로 설정)
     private final String defaultImageUrl = "/employeeImages/default.png";
+    private final String defaultImageUrl2 = "/studentImages/default.png";
 
     @Value("${file.employeeImgUploadDir}")
     private String uploadFolder;
@@ -109,7 +109,7 @@ public class ImageService {
         ImageEntity image = imageRepository.findByStudent(student);
         if (image != null) {
             // 이미지가 이미 존재하면 URL 업데이트
-            image.updateUrl("studentImages/" + imageFileName);
+            image.updateUrl("/studentImages/" + imageFileName);
         } else {
             // 이미지가 없으면 객체 생성 후 저장
             image = ImageEntity.builder()
@@ -155,7 +155,7 @@ public class ImageService {
     public void deleteImage2(Long studentId) {
 
         StudentEntity student = studentRepository.findById(studentId).orElseThrow(() ->
-                new UsernameNotFoundException("아이디가 존재하지 않습니다"));
+                new UsernameNotFoundException("해당 수강생이 존재하지 않습니다"));
 
         ImageEntity image = imageRepository.findByStudent(student);
         if (image != null) {
@@ -202,11 +202,11 @@ public class ImageService {
                 new UsernameNotFoundException("아이디가 존재하지않습니다"));
         ImageEntity image = imageRepository.findByStudent(student);
 
-        String defaultImageUrl = "/studentImages/default.png";
+        String defaultImageUrl2 = "/studentImages/default.png";
 
         if (image == null) {
             return ImageResponseDto.builder()
-                    .imageUrl(defaultImageUrl)
+                    .imageUrl(defaultImageUrl2)
                     .build();
         }else {
             return ImageResponseDto.builder()

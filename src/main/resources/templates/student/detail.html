@@ -7,6 +7,7 @@
     <title>학생정보 상세보기</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/student/detail.js}" defer="defer"></script>
+    <script th:src="@{/js/student/delete.js}" defer="defer"></script>
 </head>
 <body>
 <div class="container">
@@ -72,7 +73,7 @@
                         <span>
                             <div class="delete">
                                 <li>
-                                    <a th:href="@{/}">삭제</a> <!-- 바로 팝업 띄워서 확인/취소 선택 가능하도록 만들기 -->
+                                    <input type="button" id="deleteButton" th:value="삭제" th:data-student-id="${student.studentId}" onclick="confirmDelete()">
                                 </li>
                             </div>
                         </span>
@@ -84,7 +85,7 @@
 </div>
 <!--<button th:onclick="@{location.href='/index'}">홈</button>-->
 <a th:href="@{/index}">홈</a>
-<a th:href="@{/student/studentList?page=0&subject=&search=}">학생조회</a>
+<a th:href="@{/student/studentList?page=0&subject=&search=}">수강생조회</a>
 <!-- Thymeleaf 표현식을 사용하여 employeeNo JavaScript 변수에 할당 -->
 <script th:inline="javascript">
     var studentId = /*[[${student.studentId}]]*/ null;

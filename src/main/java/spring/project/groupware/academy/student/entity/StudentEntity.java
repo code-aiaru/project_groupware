@@ -53,7 +53,7 @@ public class StudentEntity extends BaseEntity {
     private String studentDetailAddress;
     
     // 수강생 상태(ex. 출석, 결석, 병가, 조퇴, 지각 등)
-    @Column(name = "student_state")
+    @Column(name = "student_status")
     private String studentStatus;
 
     // 연관 관계 - image

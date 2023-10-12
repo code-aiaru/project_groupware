@@ -8,11 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
-//import spring.project.groupware.academy.employee.entity.ImageEntity;
 import spring.project.groupware.academy.employee.entity.ImageEntity;
 import spring.project.groupware.academy.employee.repository.EmployeeRepository;
 import spring.project.groupware.academy.employee.repository.ImageRepository;
-//import spring.project.groupware.academy.employee.repository.ImageRepository;
+
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -217,7 +216,6 @@ public class EmployeeService {
     public boolean existsByEmployeePhone(String employeePhone) {
         return employeeRepository.existsByEmployeePhone(employeePhone);
     }
-
 
 
 
