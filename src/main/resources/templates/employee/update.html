@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
-  <title>update</title>
+  <title>정보수정 페이지</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!--다음 api 관련 js-->
   <script th:src="@{/js/employee/addressApi.js}" defer="defer"></script> <!--다음 api 관련 js-->
@@ -34,9 +34,7 @@
           </li>
           <p th:if="${#fields.hasErrors('employeeName')}" th:errors="*{employeeName}" class="error"></p>
           <li>
-            <label th:for="employeePhone">휴대전화</label>
-            <input type="text" th:field="*{employeePhone}" th:value="${employeeDto.employeePhone}" required="required" placeholder="휴대전화를 입력하세요"> <br>
-            <p th:if="${#fields.hasErrors('employeePhone')}" th:errors="*{employeePhone}" class="error"></p>
+            휴대전화번호 : <input type="text" name="employeePhone" th:value="${employeeDto.employeePhone}" id="employeePhone" readonly> <br>
           </li>
           <li>
             이메일 : <input type="email" name="employeeEmail" th:value="${employeeDto.employeeEmail}" id="employeeEmail" readonly> <br>
@@ -56,6 +54,7 @@
                 <option value="영업부" th:selected="${employee.employeeDep == '영업부'}">영업부</option>
                 <option value="총무부" th:selected="${employee.employeeDep == '총무부'}">총무부</option>
                 <option value="마케팅부" th:selected="${employee.employeeDep == '마케팅부'}">마케팅부</option>
+                <option value="교육부" th:selected="${employee.employeeDep == '교육부'}">교육부</option>
               </select>
             </li>
             <li>

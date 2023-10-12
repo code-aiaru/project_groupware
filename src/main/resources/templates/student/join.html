@@ -131,7 +131,7 @@
 <!--<button th:onclick="@{location.href='/index'}">홈</button>-->
 <a th:href="@{/index}">홈</a>
 <th:block sec:authorize="isAuthenticated()">
-    <a th:href="@{/student/studentList?page=0&subject=&search=}">학생조회</a>
+    <a th:href="@{/student/studentList?page=0&subject=&search=}">수강생조회</a>
 </th:block>
 </body>
 </html>

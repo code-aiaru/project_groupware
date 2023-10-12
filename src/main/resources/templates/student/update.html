@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
-  <title>update</title>
+  <title>정보수정 페이지</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!--다음 api 관련 js-->
   <script th:src="@{/js/student/addressApi.js}" defer="defer"></script> <!--다음 api 관련 js-->
@@ -29,24 +29,22 @@
           <p th:if="${#fields.hasErrors('studentName')}" th:errors="*{studentName}" class="error"></p>
           <li>
             <label>성별</label>
-            <input type="radio" id="male" name="studentGender" value="남" required="required" checked>
+            <input type="radio" id="male" name="studentGender" value="남" required="required" th:checked="${studentDto.studentGender == '남'}">
             <label for="male">남</label>
 
-            <input type="radio" id="female" name="studentGender" value="여" required="required">
+            <input type="radio" id="female" name="studentGender" value="여" required="required" th:checked="${studentDto.studentGender == '여'}">
             <label for="female">여</label>
           </li>
           <li>
             <label for="studentClass">강의</label>
             <select id="studentClass" name="studentClass" required="required" class="box">
-              <option value="백엔드">백엔드</option>
-              <option value="프론트엔드">프론트엔드</option>
-              <option value="포토샵">포토샵</option>
+              <option value="백엔드" th:selected="${studentDto.studentClass == '백엔드'}">백엔드</option>
+              <option value="프론트엔드" th:selected="${studentDto.studentClass == '프론트엔드'}">프론트엔드</option>
+              <option value="포토샵" th:selected="${studentDto.studentClass == '포토샵'}">포토샵</option>
             </select>
           </li>
           <li>
-            <label th:for="studentPhone">휴대전화</label>
-            <input type="text" th:field="*{studentPhone}" th:value="${studentDto.studentPhone}" required="required" placeholder="휴대전화를 입력하세요"> <br>
-            <p th:if="${#fields.hasErrors('studentPhone')}" th:errors="*{studentPhone}" class="error"></p>
+            휴대전화번호 : <input type="text" name="studentPhone" th:value="${studentDto.studentPhone}" id="studentPhone" readonly> <br>
           </li>
           <li>
             이메일 : <input type="email" name="studentEmail" th:value="${studentDto.studentEmail}" id="studentEmail" readonly> <br>
