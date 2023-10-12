@@ -11,6 +11,8 @@ public class BoardDto {
     private Long id;
     private String title;
     private String content;
+    private String writer;
+    private String boardPw;
 
     public BoardDto(String title, String content) {
         this.title = title;
