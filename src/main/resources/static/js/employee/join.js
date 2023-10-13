@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     // 회원가입 폼 전송(submit) 이벤트 처리
     $('#signupForm').submit(function(event) {
-        var id = ${'employeeId'}.val();
+        var id = $('#employeeId').val();
         var password = $('#employeePassword').val();
         var confirmPassword = $('#confirmPassword').val();
         var phoneInput = $('#employeePhone').val();

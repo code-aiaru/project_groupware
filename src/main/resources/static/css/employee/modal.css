@@ -62,3 +62,11 @@ h2 {
 text-align: center;
 }
 
+#openModalBtn:hover {
+  cursor: pointer;
+}
+
+#openDetailModalBtn:hover {
+  cursor: pointer;
+}
+
