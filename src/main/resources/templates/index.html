@@ -141,10 +141,21 @@
                             </a>
                         </ul>
                     </div>
-        
-                    <th:block sec:authorize="hasAnyRole('ADMIN')">
+
                         <div class="human-resource">
                             <span>H.R</span>
+                            <th:block sec:authorize="hasAnyRole('EMPLOYEE')">
+                            <ul>
+                                <a th:href="@{/employee/simpleEmployeeList?page=0&subject=&search=}">
+                                    <li>
+                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        인사조회
+                                        <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
+                                    </li>
+                                </a>
+                            </ul>
+                            </th:block>
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
                             <ul>
                                 <a th:href="@{/employee/employeeList?page=0&subject=&search=}">
                                     <li>
@@ -161,8 +172,9 @@
                                     </li>
                                 </a>
                             </ul>
+                            </th:block>
                         </div>
-                    </th:block>
+
                         
                     <div class="community">
                         <span>COMMUNITY</span>

@@ -162,26 +162,98 @@ public class EmployeeController {
         return "employee/employeeList";
     }
 
+    @GetMapping("/simpleEmployeeList")
+    public String getSimpleEmployeeList(
+            @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model,
+            @RequestParam(value = "subject", required = false) String subject,
+            @RequestParam(value = "search", required = false) String search,
+            @AuthenticationPrincipal MyUserDetails myUserDetails
+    ) {
+
+        if (myUserDetails != null) {
+            EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
+//            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+
+            model.addAttribute("employee", employee);
+//            model.addAttribute("employeeImageUrl", employeeImageUrl);
+            model.addAttribute("myUserDetails", myUserDetails);
+        }
+
+        Page<EmployeeDto> employeeList = employeeService.employeeList(pageable, subject, search);
+
+        Long totalCount = employeeList.getTotalElements();
+        int totalPage = employeeList.getTotalPages();
+        int pageSize = employeeList.getSize();
+        int nowPage = employeeList.getNumber();
+        int blockNum = 10;
+
+        int startPage = (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ?
+                (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+        model.addAttribute("employeeList", employeeList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "employee/simpleEmployeeList";
+    }
+
 
     // Detail - 사원 상세 보기
     @GetMapping("/detail/{employeeNo}")
-    public String getDetail(@PathVariable("employeeNo") Long employeeNo, Model model){
+    public String getDetail(@PathVariable("employeeNo") Long employeeNo, Model model,
+                            @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        // 현재 사용자 권한이 admin인지 확인, admin 아니라면 true 반환
+        if (!myUserDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+
+            if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
+                return "error";
+            }
+        }
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-        // 이미지 url을 db에서 가져오기
-//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
         String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employee", employee);
         model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
-
         return "employee/detail";
     }
+
+//    @GetMapping("/detail/{employeeNo}")
+//    public String getDetail(@PathVariable("employeeNo") Long employeeNo, Model model,
+//                            @AuthenticationPrincipal MyUserDetails myUserDetails){
+//
+//        if(myUserDetails != null){
+//            Long userEmployeeNo = myUserDetails.getEmployeeEntity().getEmployeeNo();
+//
+//            if (userEmployeeNo.equals(employeeNo)) {
+//                EmployeeDto employee = employeeService.detailEmployee(employeeNo);
+//                String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+//
+//                model.addAttribute("employee", employee);
+//                model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
+//                return "employee/detail";
+//            }
+//        }
+//        return "redirect:/error";
+//
+//    }
 
 
     // Update - 회원 수정 화면
     @GetMapping("/update/{employeeNo}")
     public String getUpdate(@PathVariable("employeeNo") Long employeeNo, EmployeeDto employeeDto, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        if (!myUserDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+
+            if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
+                return "error";
+            }
+        }
 
         // 연도, 월, 일 데이터를 모델에 추가하여 뷰로 전달
         List<Integer> birthYears = new ArrayList<>();
@@ -199,10 +271,7 @@ public class EmployeeController {
 
         if (myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-//            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
-
             model.addAttribute("employee", employee);
-//            model.addAttribute("employeeImageUrl", employeeImageUrl);
         }
 
         model.addAttribute("birthYears", birthYears);
@@ -211,8 +280,6 @@ public class EmployeeController {
 
         employeeDto = employeeService.updateViewEmployee(employeeNo);
         model.addAttribute("employeeDto", employeeDto);
-
-        System.out.println("imageUrl : " + employeeDto.getImageUrl()); // 오류 발견 목적으로 써놓음, 지워도 됨
 
         return "employee/update";
     }
@@ -250,7 +317,15 @@ public class EmployeeController {
 
     // Delete - 사원 삭제(관리자(admin 권한)만 가능)
     @GetMapping("/delete/{employeeNo}")
-    public String getDelete(@PathVariable("employeeNo") Long employeeNo){
+    public String getDelete(@PathVariable("employeeNo") Long employeeNo, @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        if (!myUserDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+
+            if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
+                return "error";
+            }
+        }
 
         int rs=employeeService.deleteEmployee(employeeNo);
 
@@ -267,7 +342,11 @@ public class EmployeeController {
 
     // 프로필 이미지 변경 페이지
     @GetMapping("/updateImage/{employeeNo}")
-    public String getUpdateImage(@PathVariable("employeeNo") Long employeeNo, Model model){
+    public String getUpdateImage(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
+            return "error";
+        }
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
 
@@ -285,26 +364,35 @@ public class EmployeeController {
     @GetMapping("/confirmPassword/password/{employeeNo}")
     public String getConfirmPasswordView(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
+        if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
+            return "error";
+        }
+
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employeeNo", employeeNo);
         model.addAttribute("employee", employee);
-//        model.addAttribute("employeeImageUrl", employeeImageUrl);
 
         return "employee/confirmPassword_changePw";
     }
 
-    // 정보 수정 전 비밀번호 확인(사원 삭제) - 입력 화면
+    // 사원 삭제 전 비밀번호 확인(사원 삭제) - 입력 화면
     @GetMapping("/confirmPassword/delete/{employeeNo}")
-    public String getConfirmPasswordDeleteView(@PathVariable("employeeNo") Long employeeNo, Model model){
+    public String getConfirmPasswordDeleteView(@PathVariable("employeeNo") Long employeeNo, Model model,
+                                               @AuthenticationPrincipal MyUserDetails myUserDetails){
+
+        if (!myUserDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+
+            if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
+                return "error";
+            }
+        }
 
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employeeNo", employeeNo);
         model.addAttribute("employee", employee);
-//        model.addAttribute("employeeImageUrl", employeeImageUrl);
 
         return "employee/confirmPassword_delete";
     }
