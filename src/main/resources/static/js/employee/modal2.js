@@ -1,30 +1,82 @@
-  const detailLinks = document.querySelectorAll('.detail-link');  // "상세보기" 링크를 모두 선택합니다.
-  const detailModalBackground = document.getElementById('detailModalBackground');
-  const detailModal = document.getElementById('detailModal');
-  const closeDetailModalBtn = document.getElementById('closeDetailModal');
-  const detailContent = document.getElementById('detailContent');
+// 모달 열기 버튼 클릭 시
+const detailModalBackground = document.getElementById('detailModalBackground');
+const detailModal = document.getElementById('detailModal');
+const closeDetailModalBtn = document.getElementById('closeDetailModal');
+const detailModalContent = document.getElementById('detailContent');
 
-  // "상세보기" 링크를 클릭했을 때 모달을 열고 상세 정보를 가져와 표시합니다.
-  function openDetailModal(event) {
-    event.preventDefault();  // 기본 링크 동작을 중지합니다.
-
-    const employeeNo = this.getAttribute('data-employee-no');
-    // 이제 'employeeNo'를 사용하여 해당 사원의 상세 정보를 가져오는 요청을 서버에 보내고, 그 응답을 detailContent에 업데이트합니다.
-    // 여기에서는 서버 요청 및 응답 부분을 처리하지 않았으므로, 해당 부분을 서버와 연결하여 구현해야 합니다.
-    
-    // detailContent.innerHTML = '여기에 서버에서 받은 상세 정보를 표시하는 HTML을 넣으세요';
-    
-    detailModal.style.display = 'block';
-    detailModalBackground.style.display = 'block';
-  }
-
-  closeDetailModalBtn.onclick = function() {
-    detailModal.style.display = 'none';
-    detailModalBackground.style.display = 'none';
-  }
-
-  // "상세보기" 링크에 클릭 이벤트 리스너를 추가합니다.
-  detailLinks.forEach(link => {
-    link.addEventListener('click', openDetailModal);
-  });
+document.addEventListener('click', function (event) {
+    if (event.target && event.target.id === 'openDetailModalBtn') {
+        const employeeNo = event.target.getAttribute('data-employee-no');
+        openDetailModal(employeeNo);
+    }
 });
+
+closeDetailModalBtn.onclick = function() {
+  detailModal.style.display = 'none';
+  detailModalBackground.style.display = 'none';
+}
+
+// 페이지 로딩 시 모달 초기 상태 설정
+window.onload = function() {
+  detailModal.style.display = 'none';
+}
+
+// 모달 바깥을 클릭해도 모달이 닫히지않도록
+detailModalContent.addEventListener('click', function(event) {
+  event.stopPropagation();
+});
+
+// 모달 내용 업데이트 함수
+function updateDetailModal(data) {
+    // 사원 정보를 받아서 모달 내용을 업데이트
+    const detailContent = document.getElementById('detailContent');
+    detailContent.innerHTML = `
+        <ul>
+            <li>
+                <span>아이디</span>
+                <span>${data.employeeId}</span>
+            </li>
+            <li>
+                <span>이름</span>
+                <span>${data.employeeName}</span>
+            </li>
+            <li>
+                <span>부서</span>
+                <span>${data.employeeDep}</span>
+            </li>
+            <li>
+                <span>직급</span>
+                <span>${data.employeePosition}</span>
+            </li>
+            <li>
+                <span>휴대전화번호</span>
+                <span>${data.employeePhone}</span>
+            </li>
+            <!-- 다른 정보도 필요한대로 추가 -->
+        </ul>
+    `;
+}
+
+// 상세보기 모달 열기 함수
+function openDetailModal(employeeNo) {
+    console.log("Employee No:", employeeNo); // 확인용 로그
+    const url = "/employee/detail/" + employeeNo;
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert('사원 정보를 가져오지 못했습니다.');
+        } else {
+            updateDetailModal(data);
+            detailModal.style.display = 'block';
+            detailModalBackground.style.display = 'block';
+        }
+    })
+}
+
+

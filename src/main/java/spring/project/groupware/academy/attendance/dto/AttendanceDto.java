@@ -4,6 +4,7 @@ import lombok.*;
 import spring.project.groupware.academy.attendance.entity.AttendanceStatus;
 import spring.project.groupware.academy.attendance.entity.Attendance;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
+import spring.project.groupware.academy.student.entity.StudentEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class AttendanceDto {
     private AttendanceStatus attendanceStatus;
 
     private EmployeeEntity employee;
+    private StudentEntity student;
 
 //    public static class AttendanceStatusPage{
 ////        private AttendanceStatus attendanceStatus;

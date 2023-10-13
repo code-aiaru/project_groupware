@@ -10,7 +10,5 @@ import spring.project.groupware.academy.student.entity.StudentEntity;
 public interface ImageRepository extends JpaRepository<ImageEntity, Long> {
 
     ImageEntity findByEmployee(EmployeeEntity employee);
-
     ImageEntity findByStudent(StudentEntity student);
-
 }
