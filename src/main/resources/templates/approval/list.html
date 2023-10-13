@@ -1,31 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="page-title" title="결재 문서 리스트">
     <title>결재 문서 리스트</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}" data-static>
-    <script th:src="@{/js/approval/approvalUser.js}" defer></script>
+<!--    <link rel="stylesheet" th:href="@{/css/approval/list.css}">-->
 </head>
 <body>
-<div class="container">
+<div class="approvalList_root" id="loadedContent">
     <div class="approval-con">
         <div class="approval-title">
             <h1>결재 문서</h1>
         </div>
-        <div class="approval-search">
-            <div class="search">
-                <form th:action="@{/approval/search}" method="GET">
-                    <select name="subject" id="subject">
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                    <input type="text" name="search" id="search" th:value="${param.search}">
-                    <input type="submit" value="검색" class="inputSearch">
-                </form>
-            </div>
-            <div class="move-write">
-                <li><a th:href="@{/approval/write}">결재문서작성</a></li>
+        <div class="approval-menu">
+            <div class="menu">
+                <ul>
+                <li><a th:href="@{/approval/write}" data-ajax>결재문서작성</a></li>
+                </ul>
             </div>
         </div>
         <div class="approval-list">
@@ -43,7 +34,7 @@
                     <tbody>
                     <tr th:each="approval :${approvalList}">
                         <td th:text="${approval.Id}">Opions</td>
-                        <td class="td-title"><a th:href="@{/approval/detail/{id}(id=${approval.Id})}"><span
+                        <td class="td-title"><a th:href="@{/approval/detail/{id}(id=${approval.Id})}" data-ajax><span
                                 th:text="${approval.ApprovalTitle}"></span></a>
                         </td>
                         <td th:text="${approval.ApprovalStatus}">Opions</td>

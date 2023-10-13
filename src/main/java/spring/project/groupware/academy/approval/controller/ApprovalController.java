@@ -1,6 +1,7 @@
 package spring.project.groupware.academy.approval.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,7 +23,8 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/approval")
+@Slf4j
+//@RequestMapping("/approval")
 @RequiredArgsConstructor
 public class ApprovalController {
 
@@ -30,8 +32,35 @@ public class ApprovalController {
     private final ApprovalService approvalService;
     private final ApprovalUserService approvalUserService;
 
+    @GetMapping({"/approval"})
+    public String getApprovalPage(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                                  @PageableDefault(page = 0, size = 10, sort = "approval_id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        log.info("approval method activated");
+        String employeeId = myUserDetails.getUsername();
+        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeId);
+        int totalPage = approvalDtoPage.getTotalPages();
+        int nowPage = approvalDtoPage.getNumber();
+        int blockNum = 5;
+        int pSize = approvalDtoPage.getSize();
 
-    @GetMapping("/write")
+        int startPage = (int) ((Math.ceil(nowPage / blockNum) * blockNum) + 1 <= totalPage ? (Math.ceil(nowPage / blockNum) * blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+        if (!approvalDtoPage.isEmpty()) {
+            model.addAttribute("approvalList", approvalDtoPage);
+            model.addAttribute("myUserDetails", myUserDetails);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("pSize", pSize);
+//            model.addAttribute("subject", subject);
+//            model.addAttribute("search", search);
+            return "approval/list";
+        }
+        return "redirect:/approval/write";
+    }
+
+
+    @GetMapping({"/approval/write"})
     public String getwrite(@PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam(value = "search", required = false) String search,
@@ -44,7 +73,7 @@ public class ApprovalController {
         return "approval/write";
     }
 
-    @PostMapping("/write")
+    @PostMapping({"/approval/write"})
     public String postwrite(@AuthenticationPrincipal MyUserDetails myUserDetails, ApprovalDto approvalDto) {
         Long[] dataArray = approvalDto.getDataArray();
         int newApprovalUserArrayLength = dataArray.length / 2;
@@ -108,7 +137,7 @@ public class ApprovalController {
         return "redirect:/approval/write";
 
     }
-    @GetMapping("/detail/{id}")
+    @GetMapping({"/approval/detail/{id}"})
     public String getdetail(@PathVariable("id") Long id,
                             @AuthenticationPrincipal MyUserDetails myUserDetails,
                             Model model) {

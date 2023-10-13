@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", function () {
+initializeScriptAS();
+
+function initializeScriptAS() {
   const inputField = document.querySelector("#nameSearch");
   const searchBox = document.querySelector(".searchBox");
   if (inputField) {
@@ -11,4 +13,4 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     console.error("Input field not found");
   }
-});
+}
