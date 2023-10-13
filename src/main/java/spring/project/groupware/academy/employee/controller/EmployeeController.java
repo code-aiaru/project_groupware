@@ -107,7 +107,7 @@ public class EmployeeController {
         return "employee/manage";
     }
 
-    // Read - 사원 목록
+    // Read - 사원 목록(admin만 조회 가능)
     @GetMapping("/employeeList")
     public String getEmployeeList(
             @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
@@ -162,6 +162,7 @@ public class EmployeeController {
         return "employee/employeeList";
     }
 
+    // 간단한 사원목록(일반사원 조회 가능)
     @GetMapping("/simpleEmployeeList")
     public String getSimpleEmployeeList(
             @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
@@ -221,26 +222,6 @@ public class EmployeeController {
         model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
         return "employee/detail";
     }
-
-//    @GetMapping("/detail/{employeeNo}")
-//    public String getDetail(@PathVariable("employeeNo") Long employeeNo, Model model,
-//                            @AuthenticationPrincipal MyUserDetails myUserDetails){
-//
-//        if(myUserDetails != null){
-//            Long userEmployeeNo = myUserDetails.getEmployeeEntity().getEmployeeNo();
-//
-//            if (userEmployeeNo.equals(employeeNo)) {
-//                EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-//                String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
-//
-//                model.addAttribute("employee", employee);
-//                model.addAttribute("employeeImageUrl", employeeImageUrl); // 이미지 url 모델에 추가
-//                return "employee/detail";
-//            }
-//        }
-//        return "redirect:/error";
-//
-//    }
 
 
     // Update - 회원 수정 화면
@@ -457,12 +438,14 @@ public class EmployeeController {
     @GetMapping("/changePassword/{employeeNo}")
     public String getChangePasswordPage(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
+        if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
+            return "error";
+        }
+
         EmployeeDto employee = employeeService.detailEmployee(employeeNo);
-//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
         model.addAttribute("employeeNo", employeeNo);
         model.addAttribute("employee", employee);
-//        model.addAttribute("employeeImageUrl", employeeImageUrl);
 
         return "employee/changePassword"; // changePassword.html 페이지로 이동
     }
