@@ -1,11 +1,14 @@
 package spring.project.groupware.academy.student.entity;
 
 import lombok.*;
+import spring.project.groupware.academy.attendance.entity.Attendance;
 import spring.project.groupware.academy.employee.entity.ImageEntity;
 import spring.project.groupware.academy.student.dto.StudentDto;
 import spring.project.groupware.academy.util.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -59,6 +62,10 @@ public class StudentEntity extends BaseEntity {
     // 연관 관계 - image
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private ImageEntity image;
+
+    // 연관 관계 - attendance
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Attendance> attendance = new ArrayList<>();
 
 
     public static StudentEntity toStudentEntityInsert(StudentDto studentDto) {
