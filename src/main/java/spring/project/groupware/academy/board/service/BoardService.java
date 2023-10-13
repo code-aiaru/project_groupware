@@ -7,14 +7,15 @@ import spring.project.groupware.academy.board.dto.BoardDto;
 import spring.project.groupware.academy.board.entity.BoardEntity;
 import spring.project.groupware.academy.board.repository.BoardRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
 public class BoardService {
+
     private final BoardRepository boardRepository;
 
     public BoardDto createBoard(BoardDto boardDto) {
@@ -56,23 +57,16 @@ public class BoardService {
             Optional<BoardEntity> optionalBoard = boardRepository.findById(id);
             if (optionalBoard.isPresent()) {
                 BoardEntity existingBoard = optionalBoard.get();
-
-                // 엔티티 필드를 업데이트
-                existingBoard.setTitle(boardDTO.getTitle());
                 existingBoard.setContent(boardDTO.getContent());
-                existingBoard.setWriter(boardDTO.getWriter());
-                existingBoard.setBoardPw(boardDTO.getBoardPw());
 
-
-                // 엔티티를 저장하고 저장된 엔티티를 반환
                 BoardEntity updatedBoard = boardRepository.save(existingBoard);
                 return true;
             } else {
-                return false; // 업데이트할 게시판이 존재하지 않는 경우
+                return false;
             }
         } catch (DataAccessException ex) {
             ex.printStackTrace();
-            return false; // 데이터베이스 연산 실패 시
+            return false;
         }
     }
 
@@ -81,13 +75,13 @@ public class BoardService {
             Optional<BoardEntity> optionalBoard = boardRepository.findById(id);
             if (optionalBoard.isPresent()) {
                 boardRepository.deleteById(id);
-                return true; // 게시판 삭제 성공
+                return true;
             } else {
-                return false; // 삭제할 게시판이 존재하지 않는 경우
+                return false;
             }
         } catch (DataAccessException ex) {
             ex.printStackTrace();
-            return false; // 데이터베이스 연산 실패 시
+            return false;
         }
     }
 

@@ -7,16 +7,15 @@ import spring.project.groupware.academy.board.dto.BoardDto;
 import spring.project.groupware.academy.board.service.BoardService;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import java.util.List;
 
 @Controller
 @RequestMapping("/boards")
-public class BoardWebController {
+public class BoardWeb {
 
     private final BoardService boardService;
 
-    public BoardWebController(BoardService boardService) {
+    public BoardWeb(BoardService boardService) {
         this.boardService = boardService;
     }
 
