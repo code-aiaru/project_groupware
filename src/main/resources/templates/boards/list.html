@@ -9,14 +9,20 @@
 <h1>게시판 목록</h1>
 
 <ul id="boardList">
-    <!-- JSON 데이터가 여기에 동적으로 추가될 것입니다. -->
+   <li>
+       <a href="board.title"></a>
+   </li>
+
 </ul>
+
 
 <a th:href="@{/boards/create}">새로운 게시물 작성</a>
 
+
+
 <script>
     // 페이지 로딩 시 JSON 데이터를 가져와서 게시물 목록을 동적으로 생성합니다.
-    fetch('/api/boards/list')
+    fetch('/api/boards')
         .then(response => response.json())
         .then(data => {
             const boardList = document.getElementById('boardList');
@@ -27,10 +33,8 @@
                 const link = document.createElement('a');
                 link.href = `javascript:void(0);`; // 기본 href를 사용하지 않음
                 link.innerText = board.title;
-
                 // data-id 속성을 사용하여 ID 값을 저장합니다.
                 link.setAttribute('data-id', board.id);
-
                 li.appendChild(link);
                 boardList.appendChild(li);
             });

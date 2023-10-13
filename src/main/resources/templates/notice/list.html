@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- head 부분 내용 -->
+    <meta charset="UTF-8">
+    <title>공지사항 목록</title>
+</head>
+<body>
+<h1>게시판 목록</h1>
+
+<ul id="noticeList">
+</ul>
+
+<a th:href="@{/notice/create}">새로운 게시물 작성</a>
+
+<script>
+    // 페이지 로딩 시 JSON 데이터를 가져와서 게시물 목록을 동적으로 생성합니다.
+    fetch('/api/boards/notice')
+        .then(response => response.json())
+        .then(data => {
+            const noticeList = document.getElementById('noticeList');
+
+            // JSON 데이터를 반복하여 게시물 목록을 생성합니다.
+            data.forEach(notice => {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `javascript:void(0);`;
+                link.innerText = notice.title;
+                link.setAttribute('data-id', notice.id);
+                li.appendChild(link);
+
+                // 작성자 정보를 추가
+                const writer = document.createElement('span');
+                writer.innerText = ' 작성자: ' + notice.writer;
+                li.appendChild(writer);
+
+                noticeList.appendChild(li);
+            });
+        });
+
+    const noticeList = document.getElementById('noticeList');
+    noticeList.addEventListener('click', (event) => {
+        if (event.target.tagName === 'A') {
+            const id = event.target.getAttribute('data-id');
+            window.location.href = `/notice/detail/${id}`;
+        }
+    });
+</script>
+</body>
+</html>

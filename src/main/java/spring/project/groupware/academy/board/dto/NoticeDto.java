@@ -7,13 +7,12 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDto {
+public class NoticeDto{
     private Long id;
     private String title;
-    private String content;
     private String writer;
-    private String boardPw;
+    private String content;
 
 
-//    private EmployeeEntity writer;
+
 }
