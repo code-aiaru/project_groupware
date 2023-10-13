@@ -32,8 +32,8 @@ public class WebSecurityConfig {
             http.authorizeHttpRequests()
                     .antMatchers("/", "/login").permitAll()
                     .antMatchers("/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
-                            "/board/**", "/employee/inquiry**", "/student/**", "/inquiry/**").authenticated()
-                    .antMatchers("/employee/join", "/employee/employeeList**").hasAnyRole("ADMIN")
+                            "/student/**", "/boards/**", "/notice/detail/**", "/notice/list").authenticated()
+                    .antMatchers("/employee/join", "/employee/employeeList**", "/notice/create", "/notice/edit/**").hasAnyRole("ADMIN")
 
                     .and()
                     .formLogin()
