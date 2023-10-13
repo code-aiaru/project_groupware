@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", function() {
+initializeScriptAU();
+
+function initializeScriptAU() {
     const ApprovalUserBlock = document.querySelector('#ApprovalUserData');
 
     const userAddBtns = document.querySelectorAll('.userAddBtn');
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
             textSpan.textContent = employeeInfo;
 
             const LabelPayment = document.createElement("label");
-            LabelPayment.textContent = "결제";
+            LabelPayment.textContent = "결재";
             LabelPayment.classList.add("paymentLabel");
             const CheckBoxPayment = document.createElement("input");
             CheckBoxPayment.type = "checkbox";
@@ -106,4 +108,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
         });
     });
-});
+}
