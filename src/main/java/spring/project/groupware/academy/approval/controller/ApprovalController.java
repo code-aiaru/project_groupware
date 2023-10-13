@@ -122,4 +122,28 @@ public class ApprovalController {
         return "approval/detail";
     }
 
+    @GetMapping("/delete/{id}")
+    public String getdelete(@PathVariable("id") Long id,
+                            @AuthenticationPrincipal MyUserDetails myUserDetails,
+                            Model model) {
+        int rs = approvalService.approvalDelete(id);
+        if (rs == 1) {
+            System.out.println(("삭제 Success!"));
+        } else {
+            System.out.println(("삭제 Fail!"));
+        }
+        return "redirect:/approval/list";
+    }
+
+    @PostMapping("/ap")
+    public String getap(ApprovalDto approvalDto){
+        Long approvalId=approvalDto.getId();
+        int rs = approvalService.approvalAp(approvalDto);
+        if (rs == 1) {
+            System.out.println(("수정 Success!"));
+        } else {
+            System.out.println(("수정 Fail!"));
+        }
+        return "redirect:/approval/detail/"+approvalId;
+    }
 }
