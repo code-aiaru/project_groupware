@@ -1,6 +1,6 @@
 /* 모달 스타일링 */
-/*.modalBackground {
-*//* display: none; *//*
+.modalBackground {
+/* display: none; *//*
 position: fixed;
 top: 50%;
 left: 50%;
