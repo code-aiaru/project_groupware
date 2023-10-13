@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>인사조회 페이지</title>
+  <link rel="stylesheet" th:href="@{/css/employee/employeeList.css}">
+  <link rel="stylesheet" th:href="@{/css/employee/modal.css}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:src="@{/js/employee/modal.js}" defer="defer"></script>
+</head>
+<body>
+<div class="container">
+  <div class="pagingList">
+    <div class="pagingList-con">
+      <div class="pagingList-table">
+        <h1>인사 조회</h1>
+        <div class="search">
+          <a th:href="@{/index}"><span>홈</span></a>
+          <form th:action="@{/employee/simpleEmployeeList}" method="get">
+            <select name="subject" id="subject">
+              <option value="employeeName">이름</option>
+              <option value="employeeDep">부서</option>
+              <option value="employeePosition">직급</option>
+            </select>
+            <input type="text" name="search" id="search" th:value="${param.search}" placeholder="검색어를 입력하세요"> <!-- th:value="${param.search}" : 검색어 입력후 실행하고 입력한 검색어 그대로 유지 -->
+            <input type="submit" value="검색">
+          </form>
+        </div>
+      <table style="width:1700px;" align="center" border="1";>
+        <thead>
+        <tr>
+          <th colspan="3">
+            현재 로그인 사용자 : <span th:text="${myUserDetails.employeeEntity.employeeName}"></span>,
+            권한 : <span th:text="${myUserDetails.employeeEntity.role}"></span>
+          </th>
+        </tr>
+        <tr>
+          <th>이름</th>
+          <th>부서</th>
+          <th>직급</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employeeList}">
+          <td th:text="${employee.employeeName}"></td>
+          <td th:text="${employee.employeeDep}"></td>
+          <td th:text="${employee.employeePosition}"></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="paging">
+        <ul>
+          <li>
+            <!-- 현재페이지가  첫번째 페이지이면 span표시 -->
+            <span th:if="${1==employeeList.pageable.pageNumber+1}" class="span0">처음</span>
+            <!-- 처음 페이지가 아니면  a -->
+            <span th:unless="${1==employeeList.pageable.pageNumber+1}">
+              <a th:href="@{/employee/simpleEmployeeList(page=0, search=${param.search}, subject=${param.subject})}" class="span1">처음</a>
+            </span>
+          </li>
+          <li>
+            <!-- 이전페이지가  첫번째 페이지이면   span표시 -->
+            <span th:if="${1==employeeList.pageable.pageNumber+1}" class="span0">이전</span>
+            <span th:unless="${1==employeeList.pageable.pageNumber+1}">
+              <!--boardList.pageable.pageNumber 현재페이지 -1 -->
+              <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.pageable.pageNumber-1}, search=${param.search}, subject=${param.subject})}" class="span1">이전</a>
+            </span>
+          </li>
+          <!--페이지 번호-->
+          <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
+            <span th:if="${i==employeeList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
+            <a th:unless="${i==employeeList.pageable.pageNumber+1}"
+               th:href="@{/employee/simpleEmployeeList(page=${i-1}, search=${param.search}, subject=${param.subject})}" th:text="${i}"></a>
+          </li>
+          <li>
+            <!-- 현재페이지가 마지막 페이지이면   span표시 -->
+            <span th:if="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}" class="span0">다음</span>
+            <!-- 현재페이지가 마지막 페이지아니면    a 표시 현재페이지 +1 -->
+            <span th:unless="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}">
+               <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.pageable.pageNumber+1}, search=${param.search}, subject=${param.subject})}"   class="span1">다음</a>
+            </span>
+          </li>
+          <li>
+            <!-- 현재페이지가 마지막 페이지이면   span표시 -->
+            <span th:if="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}" class="span0">마지막</span>
+            <!-- 현재페이지가 마지막 페이지가 아니면 마지막 페이지로 이동 해라  a -->
+            <span th:unless="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}">
+              <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.totalPages-1}, search=${param.search}, subject=${param.subject})}"  class="span1">마지막</a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</body>
+</html>

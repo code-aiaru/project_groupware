@@ -2,6 +2,7 @@ package spring.project.groupware.academy.attendance.entity;
 
 import lombok.*;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
+import spring.project.groupware.academy.student.entity.StudentEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,9 +32,9 @@ public class Attendance {
     @JoinColumn(name = "employee_no")
     private EmployeeEntity employee;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "student_id")
-//    private StudentEntity student;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private StudentEntity student;
 
 //    // 직원 쪽 엔티티에 추가
 //    // 출석 연관 관계
