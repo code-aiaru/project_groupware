@@ -6,6 +6,13 @@ $(document).ready(function () {
 
     // 아이디 중복 확인 버튼 클릭 시 이벤트 처리
         $('#idCheckButton').click(function () {
+
+            let employeeId = $('#employeeId').val();
+            if (employeeId.trim() === '') {
+                alert('아이디를 입력해주세요.');
+                return;
+            }
+
             $.ajax({
                 url: '/api/employee/employeeId/check',
                 type: 'GET',
@@ -33,8 +40,11 @@ $(document).ready(function () {
     // 이메일 중복 확인 버튼 클릭 시 이벤트 처리
     $('#emailCheckButton').click(function () {
 
-    // 현재 입력된 이메일 값 가져오기
         let employeeEmail = $('#employeeEmail').val();
+        if (employeeEmail.trim() === '') {
+            alert('이메일을 입력해주세요.');
+            return;
+        }
 
         $.ajax({
             url: '/api/employee/employeeEmail/check',
@@ -61,6 +71,13 @@ $(document).ready(function () {
 
     // 휴대전화번호 중복 확인 버튼 클릭 시 이벤트 처리
     $('#phoneCheckButton').click(function () {
+
+        let employeePhone = $('#employeePhone').val();
+        if (employeePhone.trim() === '') {
+            alert('휴대전화번호를 입력해주세요.');
+            return;
+        }
+
         $.ajax({
             url: '/api/employee/employeePhone/check',
             type: 'GET',

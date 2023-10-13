@@ -23,6 +23,7 @@ import spring.project.groupware.academy.employee.service.ImageService;
 import spring.project.groupware.academy.util.FileStorageService;
 //import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,6 +141,23 @@ public class EmployeeController {
         model.addAttribute("employeeList", employeeList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+
+        // 모달창으로 사원추가 시 생년월일 기입 위해 필요
+        List<Integer> birthYears = new ArrayList<>();
+        for (int year = 2023; year >= 1900; year--) { // 2023부터 1900까지 역순으로 추가
+            birthYears.add(year);
+        }
+        List<Integer> birthMonths = new ArrayList<>();
+        for (int month = 1; month <= 12; month++) {
+            birthMonths.add(month);
+        }
+        List<Integer> birthDays = new ArrayList<>();
+        for (int day = 1; day <= 31; day++) {
+            birthDays.add(day);
+        }
+        model.addAttribute("birthYears", birthYears);
+        model.addAttribute("birthMonths", birthMonths);
+        model.addAttribute("birthDays", birthDays);
 
         return "employee/employeeList";
     }

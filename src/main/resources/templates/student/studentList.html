@@ -29,13 +29,12 @@
       <table style="width:1700px;" align="center" border="1";>
         <thead>
         <tr>
-          <th colspan="10">
+          <th colspan="9">
             현재 로그인 사용자 : <span th:text="${myUserDetails.employeeEntity.employeeName}"></span>,
             권한 : <span th:text="${myUserDetails.employeeEntity.role}"></span>
           </th>
         </tr>
         <tr>
-          <th>학생번호</th>
           <th>프로필 이미지</th>
           <th>이름</th>
           <th>성별</th>
@@ -49,7 +48,6 @@
         </thead>
         <tbody>
         <tr th:each="student : ${studentList}">
-          <td th:text="${student.studentId}"></td>
           <td><div id="image-preview"><img th:src="${student.imageUrl}" alt="프로필 이미지" style="width: 50px; height: 50px;"></div></td>
           <td th:text="${student.studentName}"></td>
           <td th:text="${student.studentGender}"></td>
