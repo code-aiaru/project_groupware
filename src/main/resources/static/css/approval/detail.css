@@ -1,0 +1,19 @@
+@import url(/css/common/reset.css);
+
+
+.scriptBack{
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: space-between;
+    background-color: #00000066;
+    position: fixed;
+    z-index: 998;
+}
+
+.approval-Result{
+    position: relative;
+    z-index: 999;
+    display: none;
+    justify-content: center;
+}

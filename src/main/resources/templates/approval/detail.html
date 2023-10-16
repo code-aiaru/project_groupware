@@ -5,61 +5,64 @@
     <meta charset="UTF-8">
     <meta name="page-title" title="결재 문서 상세조회">
     <title>결재 문서 상세조회</title>
-    <!--    <link rel="stylesheet" th:href="@{/css/approval/detail.css}">-->
+    <link rel="stylesheet" th:href="@{/css/approval/detail.css}">
     <script src="/js/approval/approvalAnswer.js"></script>
 </head>
 <body>
 <div class="approvalDetail_root" id="loadedContent">
     <div class="approval-con">
-        <div class="scriptBack">
-            <div class="approval-title">
-                <h1>결재 문서 상세조회</h1>
-                <div class="approval-detail">
-                    <table class="approval-table">
-                        <tr>
-                            <td class="td-title"><span th:text="${approval.ApprovalTitle}"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>작성자 | </span><span th:text="${approval.EmployeeEntity.employeeName}"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>작성일자 | </span><span
-                                    th:text="${#temporals.format(approval.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span>상태 | </span><span th:text="${approval.ApprovalStatus}"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>결제자 | </span></br>
-                                <th:block th:each="approvalUser: ${approvalUserList}">
-                                    <span th:text="|${approvalUser.employeeEntity.employeeName} - ${approvalUser.employeeEntity.employeeDep} - ${approvalUser.employeeEntity.employeePosition}|"></span>
-                                    <span th:if="${approvalUser.Ap == 0}">결재</span>
-                                    <span th:if="${approvalUser.Ap == 1}">참조</span>
-                                    </br>
-                                </th:block>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-content"><span th:text="${approval.ApprovalContent}"></span></td>
-                        </tr>
-                        <tr>
-                            <td class="th-last">
+        <div class="approval-title">
+            <h1>결재 문서 상세조회</h1>
+            <div class="approval-detail">
+                <table class="approval-table">
+                    <tr>
+                        <td class="td-title"><span th:text="${approval.ApprovalTitle}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span>작성자 | </span><span th:text="${approval.EmployeeEntity.employeeName}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span>작성일자 | </span><span
+                                th:text="${#temporals.format(approval.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>상태 | </span><span th:text="${approval.ApprovalStatus}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span>결제자 | </span></br>
+                            <th:block th:each="approvalUser: ${approvalUserList}">
+                                <span th:text="|${approvalUser.employeeEntity.employeeName} - ${approvalUser.employeeEntity.employeeDep} - ${approvalUser.employeeEntity.employeePosition}|"></span>
+                                <span th:if="${approvalUser.Ap == 0}">결재</span>
+                                <span th:if="${approvalUser.Ap == 1}">참조</span>
+                                </br>
+                            </th:block>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-content"><span th:text="${approval.ApprovalContent}"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="th-last">
+                            <th:block
+                                    th:if="${#authentication.principal.employeeEntity.equals(approval.employeeEntity)}">
                                 <a th:href="@{/approval/delete/{id}(id=${approval.id})}" data-ajax>삭제</a>
                                 <a th:href="@{/approval/update/{id}(id=${approval.id})}" data-ajax>수정</a>
-                                <a th:href="@{/approval/list/create}" data-ajax>목록</a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                            </th:block>
+                            <a th:href="@{/approval/list/create}" data-ajax>목록</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <th:block th:if="${approval.ApprovalStatus.equals('대기')}">
                 <div class="approval-Answer">
                     <div class="approval-divide">
                         <hr class="divide">
                         <button type="button" id="approvalAnswerBtn">결재</button>
                     </div>
-                    <div class="approval-write">
+                    <div class="approval-Result">
                         <form th:action="@{/post/approval/ap}" method="post" th:object="${approvalDto}">
-                        <table class="approval-table">
+                            <table class="approval-table">
                                 <tr>
                                     <input type="hidden" readonly name="id" th:value="${approval.Id}"><br>
                                 </tr>
@@ -76,11 +79,21 @@
                                     <button type="button" id="XBtn">취소</button>
                                 </td>
                                 </tr>
-                        </table>
+                            </table>
                         </form>
                     </div>
                 </div>
-            </div>
+            </th:block>
+            <th:block th:unless="${approval.ApprovalStatus.equals('대기')}">
+                <div class="approval-Result">
+                    <div class="approval-divide">
+                        <hr class="divide">
+                        <tr>
+                            <td class="td-Answer"><span th:text="${approval.ApprovalAnswer}"></span></td>
+                        </tr>
+                    </div>
+                </div>
+            </th:block>
         </div>
     </div>
 </div>
