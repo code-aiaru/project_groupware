@@ -32,7 +32,7 @@ public class ApprovalController {
     private final ApprovalService approvalService;
     private final ApprovalUserService approvalUserService;
 
-    @GetMapping({"/approval/{category}"})
+    @GetMapping({"/approval/list/{category}"})
     public String getApprovalPage(@PathVariable("category") String category,
                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
                                   @PageableDefault(page = 0, size = 10, sort = "approval_id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
@@ -119,7 +119,7 @@ public class ApprovalController {
         String employeeId = myUserDetails.getUsername();
         Long approvalId = approvalService.approvalWrite(approvalDto, employeeId);
         approvalUserService.approvalUserCreate(approvalUserDtoList, approvalId);
-        return "redirect:/approval/create";
+        return "redirect:/approval/list/create";
 
     }
 
@@ -130,7 +130,6 @@ public class ApprovalController {
                             Model model) {
         ApprovalDto approvalDto = approvalService.approvalDetail(id);
         List<ApprovalUserDto> approvalUserDtoList = approvalUserService.approvalUserList(approvalDto.getId());
-
 
         model.addAttribute("approval", approvalDto);
         model.addAttribute("approvalUserList", approvalUserDtoList);
@@ -148,7 +147,7 @@ public class ApprovalController {
         } else {
             System.out.println(("삭제 Fail!"));
         }
-        return "redirect:/approval/create";
+        return "redirect:/approval/list/create";
     }
 
     @PostMapping({"approval/ap"})
