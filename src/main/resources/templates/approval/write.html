@@ -18,7 +18,7 @@
         </div>
         <div class="approval-write">
             <div class="approval-form">
-                <form th:action="@{/approval/writePost}" method="post" th:object="${approvalDto}">
+                <form th:action="@{/post/approval/write}" method="post" th:object="${approvalDto}">
                     <table border="1">
                         <tr>
                             <th scope="row"><label th:for="ApprovalTitle">제목</label></th>

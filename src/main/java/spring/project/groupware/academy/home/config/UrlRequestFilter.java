@@ -28,7 +28,7 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/login");
         excludedUrl.add("/favicon.ico");
         excludedUrl.add("/api/");
-        excludedUrl.add("/approval/writePost");
+        excludedUrl.add("/post/");
 //        excludedUrl.add("/login/post");
     }
 

@@ -85,7 +85,7 @@ public class ApprovalController {
         return "approval/write";
     }
 
-    @PostMapping({"/approval/writePost"})
+    @PostMapping({"/post/approval/write"})
     public String postwrite(@AuthenticationPrincipal MyUserDetails myUserDetails, ApprovalDto approvalDto) {
         Long[] dataArray = approvalDto.getDataArray();
         int newApprovalUserArrayLength = dataArray.length / 2;
@@ -136,7 +136,7 @@ public class ApprovalController {
         return "approval/detail";
     }
 
-    @GetMapping({"approval/delete/{id}"})
+    @GetMapping({"/approval/delete/{id}"})
     public String getdelete(@PathVariable("id") Long id,
                             @AuthenticationPrincipal MyUserDetails myUserDetails,
                             Model model) {
@@ -149,7 +149,7 @@ public class ApprovalController {
         return "redirect:/approval/list/create";
     }
 
-    @PostMapping({"approval/ap"})
+    @PostMapping({"/post/approval/ap"})
     public String getap(ApprovalDto approvalDto){
         Long approvalId=approvalDto.getId();
         int rs = approvalService.approvalAp(approvalDto);

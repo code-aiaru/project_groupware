@@ -58,7 +58,7 @@
                         <button type="button" id="approvalAnswerBtn">결재</button>
                     </div>
                     <div class="approval-write">
-                        <form th:action="@{/approval/ap}" method="post" th:object="${approvalDto}">
+                        <form th:action="@{/post/approval/ap}" method="post" th:object="${approvalDto}">
                         <table class="approval-table">
                                 <tr>
                                     <input type="hidden" readonly name="id" th:value="${approval.Id}"><br>
