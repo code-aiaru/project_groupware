@@ -1,8 +1,10 @@
 package spring.project.groupware.academy.board.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import spring.project.groupware.academy.board.RandomNameGenerator;
 import spring.project.groupware.academy.board.dto.BoardDto;
 import spring.project.groupware.academy.board.service.BoardService;
 
@@ -14,13 +16,20 @@ import java.util.List;
 public class BoardWeb {
 
     private final BoardService boardService;
+    private final RandomNameGenerator randomNameGenerator;
 
-    public BoardWeb(BoardService boardService) {
+    public BoardWeb(BoardService boardService ,RandomNameGenerator randomNameGenerator) {
+        this.randomNameGenerator = randomNameGenerator;
         this.boardService = boardService;
     }
 
     @GetMapping("/create")
-    public String showCreateBoardForm() {
+    public String showCreateBoardForm(Model model) {
+
+        String randomName = randomNameGenerator.getRandomName();
+
+        model.addAttribute("randomName", randomName);
+
         return "boards/create";
     }
 

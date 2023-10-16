@@ -26,6 +26,7 @@ public class Board {
     @GetMapping("/getRandomWriter")
     public String getRandomName() {
         String randomName = randomNameGenerator.getRandomName();
+
         return randomName;
     }
 
