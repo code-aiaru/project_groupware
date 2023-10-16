@@ -48,10 +48,10 @@ public class HomeController {
             }
             logger.info("Redirected to index page");
             return "index"; // 로그인 돼있다면 index 페이지로 이동
-//        }
+        }
 //        logger.info("Redirected to login page");
 //        return "login"; // 로그인 안돼있으면 로그인 페이지로 이동
-    }
+//    }
 
     @GetMapping({"/login"})
     public String login(){
@@ -65,11 +65,11 @@ public class HomeController {
         return "dashboard";
     }
 
-    @GetMapping({"/student/manage"})
-    public String getStudentManage() {
-        logger.info("GetMapped : student/manage");
-        return "student/manage";
-    }
+//    @GetMapping({"/student/manage"})
+//    public String getStudentManage() {
+//        logger.info("GetMapped : student/manage");
+//        return "student/manage";
+//    }
 
 
 }

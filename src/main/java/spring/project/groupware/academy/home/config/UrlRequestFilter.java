@@ -27,6 +27,7 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/images/");
         excludedUrl.add("/login");
         excludedUrl.add("/favicon.ico");
+//        excludedUrl.add("/login/post");
     }
 
     @Override

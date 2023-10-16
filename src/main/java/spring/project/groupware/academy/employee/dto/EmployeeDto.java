@@ -110,7 +110,11 @@ public class EmployeeDto {
         employeeDto.setCreateTime(employeeEntity.getCreateTime());
         employeeDto.setUpdateTime(employeeEntity.getUpdateTime());
 
-        employeeDto.setImageUrl(employeeEntity.getImage().getImageUrl());
+//        employeeDto.setImageUrl(employeeEntity.getImage().getImageUrl());
+
+        if (employeeEntity.getImage() != null && employeeEntity.getImage().getImageUrl() != null) {
+            employeeDto.setImageUrl(employeeEntity.getImage().getImageUrl());
+        }
 
         return employeeDto;
     }
