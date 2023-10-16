@@ -32,12 +32,23 @@ public class ApprovalController {
     private final ApprovalService approvalService;
     private final ApprovalUserService approvalUserService;
 
-    @GetMapping({"/approval"})
-    public String getApprovalPage(@AuthenticationPrincipal MyUserDetails myUserDetails,
+    @GetMapping({"/approval/{category}"})
+    public String getApprovalPage(@PathVariable("category") String category,
+                                  @AuthenticationPrincipal MyUserDetails myUserDetails,
                                   @PageableDefault(page = 0, size = 10, sort = "approval_id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         log.info("approval method activated");
         String employeeId = myUserDetails.getUsername();
-        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeId);
+        Page<ApprovalDto> approvalDtoPage = null;
+        if(category.equals("read")){
+            approvalDtoPage=approvalService.approvalReadListPage(pageable, employeeId);
+        }else if(category.equals("create")){
+            approvalDtoPage=approvalService.approvalCreateListPage(pageable, employeeId);
+        }else if(category.equals("result")) {
+            approvalDtoPage = approvalService.approvalResultListPage(pageable, employeeId);
+        }else {
+            approvalDtoPage = approvalService.approvalCreateListPage(pageable, employeeId);
+        }
+
         int totalPage = approvalDtoPage.getTotalPages();
         int nowPage = approvalDtoPage.getNumber();
         int blockNum = 5;
@@ -52,6 +63,7 @@ public class ApprovalController {
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
             model.addAttribute("pSize", pSize);
+            model.addAttribute("category", category);
 //            model.addAttribute("subject", subject);
 //            model.addAttribute("search", search);
             return "approval/list";
@@ -107,36 +119,11 @@ public class ApprovalController {
         String employeeId = myUserDetails.getUsername();
         Long approvalId = approvalService.approvalWrite(approvalDto, employeeId);
         approvalUserService.approvalUserCreate(approvalUserDtoList, approvalId);
-        return "redirect:/approval/list";
+        return "redirect:/approval/create";
 
     }
 
-    @GetMapping("/list")
-    public String getlist(@AuthenticationPrincipal MyUserDetails myUserDetails,
-                          @PageableDefault(page = 0, size = 10, sort = "approval_id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        String employeeId = myUserDetails.getUsername();
-        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeId);
-        int totalPage = approvalDtoPage.getTotalPages();
-        int nowPage = approvalDtoPage.getNumber();
-        int blockNum = 5;
-        int pSize = approvalDtoPage.getSize();
 
-        int startPage = (int) ((Math.ceil(nowPage / blockNum) * blockNum) + 1 <= totalPage ? (Math.ceil(nowPage / blockNum) * blockNum) + 1 : totalPage);
-        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
-
-        if (!approvalDtoPage.isEmpty()) {
-            model.addAttribute("approvalList", approvalDtoPage);
-            model.addAttribute("myUserDetails", myUserDetails);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("pSize", pSize);
-//            model.addAttribute("subject", subject);
-//            model.addAttribute("search", search);
-            return "approval/list";
-        }
-        return "redirect:/approval/write";
-
-    }
     @GetMapping({"/approval/detail/{id}"})
     public String getdetail(@PathVariable("id") Long id,
                             @AuthenticationPrincipal MyUserDetails myUserDetails,
@@ -151,7 +138,7 @@ public class ApprovalController {
         return "approval/detail";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping({"approval/delete/{id}"})
     public String getdelete(@PathVariable("id") Long id,
                             @AuthenticationPrincipal MyUserDetails myUserDetails,
                             Model model) {
@@ -161,10 +148,10 @@ public class ApprovalController {
         } else {
             System.out.println(("삭제 Fail!"));
         }
-        return "redirect:/approval/list";
+        return "redirect:/approval/create";
     }
 
-    @PostMapping("/ap")
+    @PostMapping({"approval/ap"})
     public String getap(ApprovalDto approvalDto){
         Long approvalId=approvalDto.getId();
         int rs = approvalService.approvalAp(approvalDto);

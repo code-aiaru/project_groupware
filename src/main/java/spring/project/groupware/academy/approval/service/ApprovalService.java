@@ -31,8 +31,8 @@ public class ApprovalService {
 
         return approvalId;
     }
-    // 로그인한 사람이 조회할수 있는 리스트
-    public Page<ApprovalDto> approvalListPage(Pageable pageable, String employeeId) {
+    // 로그인한 사람이 작성한 결재 리스트
+    public Page<ApprovalDto> approvalCreateListPage(Pageable pageable, String employeeId) {
         EmployeeEntity employeeEntity = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->{
             throw new IllegalArgumentException("회원 존재하지 않음");
         });
@@ -42,8 +42,8 @@ public class ApprovalService {
 
         return approvalDtoPage;
     }
-    // 로그인한 사람이 참조할수 있는 리스트
-    public Page<ApprovalDto> paymailReadListPage(Pageable pageable, String employeeId) {
+    // 로그인한 사람이 참조할수 있는 결재 리스트
+    public Page<ApprovalDto> approvalReadListPage(Pageable pageable, String employeeId) {
         EmployeeEntity employeeEntity = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->{
             throw new IllegalArgumentException("회원 존재하지 않음");
         });
@@ -55,7 +55,7 @@ public class ApprovalService {
     }
 
     // 로그인한 사람이 결재 해야하는 리스트
-    public Page<ApprovalDto> paymailApListPage(Pageable pageable, String employeeId) {
+    public Page<ApprovalDto> approvalResultListPage(Pageable pageable, String employeeId) {
         EmployeeEntity employeeEntity = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->{
             throw new IllegalArgumentException("회원 존재하지 않음");
         });
