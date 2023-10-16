@@ -143,21 +143,21 @@ public class EmployeeController {
         model.addAttribute("endPage", endPage);
 
         // 모달창으로 사원추가 시 생년월일 기입 위해 필요
-        List<Integer> birthYears = new ArrayList<>();
-        for (int year = 2023; year >= 1900; year--) { // 2023부터 1900까지 역순으로 추가
-            birthYears.add(year);
-        }
-        List<Integer> birthMonths = new ArrayList<>();
-        for (int month = 1; month <= 12; month++) {
-            birthMonths.add(month);
-        }
-        List<Integer> birthDays = new ArrayList<>();
-        for (int day = 1; day <= 31; day++) {
-            birthDays.add(day);
-        }
-        model.addAttribute("birthYears", birthYears);
-        model.addAttribute("birthMonths", birthMonths);
-        model.addAttribute("birthDays", birthDays);
+//        List<Integer> birthYears = new ArrayList<>();
+//        for (int year = 2023; year >= 1900; year--) { // 2023부터 1900까지 역순으로 추가
+//            birthYears.add(year);
+//        }
+//        List<Integer> birthMonths = new ArrayList<>();
+//        for (int month = 1; month <= 12; month++) {
+//            birthMonths.add(month);
+//        }
+//        List<Integer> birthDays = new ArrayList<>();
+//        for (int day = 1; day <= 31; day++) {
+//            birthDays.add(day);
+//        }
+//        model.addAttribute("birthYears", birthYears);
+//        model.addAttribute("birthMonths", birthMonths);
+//        model.addAttribute("birthDays", birthDays);
 
         return "employee/employeeList";
     }
@@ -286,12 +286,12 @@ public class EmployeeController {
         if (rs == 1) {
             System.out.println("회원정보 수정 성공");
 
-            System.out.println("imageUrl : " + employeeDto.getImageUrl()); // 오류 발견 목적으로 써놓음, 지워도 됨
-
             return "redirect:/employee/detail/" + employeeDto.getEmployeeNo(); // 수정된 정보를 보여주는 상세 페이지로 이동
+
         } else {
             System.out.println("회원정보 수정 실패");
-            return "redirect:/";
+//            return "redirect:/";
+            return "employee/employeeList";
         }
     }
 
@@ -379,46 +379,46 @@ public class EmployeeController {
     }
 
     // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
-    @PostMapping("/checkCurrentPassword")
-    @ResponseBody
-    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
-                                                         @RequestParam("employeeNo") Long employeeNo) {
-
-        boolean valid = employeeService.checkCurrentPassword(employeeNo, currentPassword);
-
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("valid", valid);
-        return response;
-    }
+//    @PostMapping("/checkCurrentPassword")
+//    @ResponseBody
+//    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
+//                                                         @RequestParam("employeeNo") Long employeeNo) {
+//
+//        boolean valid = employeeService.checkCurrentPassword(employeeNo, currentPassword);
+//
+//        Map<String, Boolean> response = new HashMap<>();
+//        response.put("valid", valid);
+//        return response;
+//    }
 
     // 현재 관리자의 비밀번호와 DB에 있는 관리자 비밀번호 일치하는지
-    @PostMapping("/checkAdminPassword")
-    @ResponseBody
-    public Map<String, Boolean> postCheckAdminPassword(@RequestParam("currentPassword") String currentPassword) {
-
-        // 현재 로그인한 유저의 정보를 가져옴
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String employeeId = userDetails.getUsername();
-
-            // username을 이용하여 현재 로그인한 유저의 정보를 가져옴 (UserDetailsService 사용)
-            MyUserDetails currentUserDetails = (MyUserDetails) userDetailsService.loadUserByUsername(employeeId);
-
-            // 현재 입력한 비밀번호와 현재 로그인한 유저의 비밀번호를 비교
-            boolean valid = passwordEncoder.matches(currentPassword, currentUserDetails.getPassword());
-
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("valid", valid);
-            return response;
-        } else {
-            // 사용자가 로그인하지 않은 경우 또는 인증이 실패한 경우
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("valid", false);
-            return response;
-        }
-    }
+//    @PostMapping("/checkAdminPassword")
+//    @ResponseBody
+//    public Map<String, Boolean> postCheckAdminPassword(@RequestParam("currentPassword") String currentPassword) {
+//
+//        // 현재 로그인한 유저의 정보를 가져옴
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//            String employeeId = userDetails.getUsername();
+//
+//            // username을 이용하여 현재 로그인한 유저의 정보를 가져옴 (UserDetailsService 사용)
+//            MyUserDetails currentUserDetails = (MyUserDetails) userDetailsService.loadUserByUsername(employeeId);
+//
+//            // 현재 입력한 비밀번호와 현재 로그인한 유저의 비밀번호를 비교
+//            boolean valid = passwordEncoder.matches(currentPassword, currentUserDetails.getPassword());
+//
+//            Map<String, Boolean> response = new HashMap<>();
+//            response.put("valid", valid);
+//            return response;
+//        } else {
+//            // 사용자가 로그인하지 않은 경우 또는 인증이 실패한 경우
+//            Map<String, Boolean> response = new HashMap<>();
+//            response.put("valid", false);
+//            return response;
+//        }
+//    }
 
     @PostMapping("/confirmPassword")
     public String postConfirmPassword(@RequestParam("currentPassword") String currentPassword,

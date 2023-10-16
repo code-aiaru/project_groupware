@@ -8,6 +8,7 @@
     <script th:src="@{/js/employee/detail.js}" defer="defer"></script>
 </head>
 <body>
+<div id="loadedContent">
 <div class="container">
     <div class="nav">
         <div class="updateImage-con">
@@ -17,7 +18,7 @@
             <!-- 이미지 미리보기 영역 -->
             <div id="image-preview1"><img id="preview-image1" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <!-- 버튼을 클릭하면 /image/upload로 POST 요청 보내기 -->
-            <form action="/image/upload" method="post" enctype="multipart/form-data">
+            <form action="/images/upload" method="post" enctype="multipart/form-data">
                 <ul>
                     <li>
                         <input type="file" name="file" id="file-input" onchange="enableUploadButton()"> <!-- 파일 업로드 필드 -->
@@ -31,6 +32,7 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 <script>
     function goBack() {

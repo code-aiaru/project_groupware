@@ -68,7 +68,7 @@ document.getElementById('delete-button').addEventListener('click', function() {
   if (confirm("기존 이미지가 삭제됩니다. 삭제하시겠습니까?\n(삭제 후, 취소 버튼 눌러도 복구 안됨)")) {
     // '확인'을 선택한 경우에만 이미지 삭제 요청 보내고 폼 제출
     // 프로필 이미지 삭제 요청 보내기
-    fetch('/image/delete', {
+    fetch('/images/delete', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ function uploadDefaultImage() {
   formData.append('file', defaultImageFile);
 
   // 기본 이미지 업로드 요청 보내기
-  fetch('/image/upload', {
+  fetch('/images/upload', {
     method: 'POST',
     body: formData,
   })

@@ -21,7 +21,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/image")
+@RequestMapping("/images")
 public class ImageController {
 
     private final ImageService imageService;

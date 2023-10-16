@@ -3,6 +3,7 @@ $(document).ready(function () {
     let isIdAvailable = false;
     let isEmailAvailable = false;
     let isPhoneAvailable = false;
+    let isAsyncUrlRequest = false;
 
     // 아이디 중복 확인 버튼 클릭 시 이벤트 처리
         $('#idCheckButton').click(function () {
@@ -17,9 +18,14 @@ $(document).ready(function () {
                 url: '/api/employee/employeeId/check',
                 type: 'GET',
                 contentType: 'application/json',
+//                headers: {
+//                            "AsyncUrlRequest": isAsyncUrlRequest,
+//                            "CurrentURL": url,
+//                        }
                 data: {
                     employeeId: $('#employeeId').val()
                 },
+                // header에 데이터 넣어보기
                 success: function (result) {
                     $('#idNotAvailable').hide();
                     $('#idAvailable').show().text(result).append($('<br />'));
