@@ -45,9 +45,9 @@
                         </tr>
                         <tr>
                             <td class="th-last">
-                                <a th:href="@{/approval/delete/{id}(id=${approval.id})}">삭제</a>
-                                <a th:href="@{/approval/update/{id}(id=${approval.id})}">수정</a>
-                                <a th:href="@{/approval/create/list}">목록</a>
+                                <a th:href="@{/approval/delete/{id}(id=${approval.id})}" data-ajax>삭제</a>
+                                <a th:href="@{/approval/update/{id}(id=${approval.id})}" data-ajax>수정</a>
+                                <a th:href="@{/approval/list/create}" data-ajax>목록</a>
                             </td>
                         </tr>
                     </table>

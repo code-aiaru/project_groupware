@@ -85,7 +85,7 @@ public class ApprovalController {
         return "approval/write";
     }
 
-    @PostMapping({"/approval/write"})
+    @PostMapping({"/approval/writePost"})
     public String postwrite(@AuthenticationPrincipal MyUserDetails myUserDetails, ApprovalDto approvalDto) {
         Long[] dataArray = approvalDto.getDataArray();
         int newApprovalUserArrayLength = dataArray.length / 2;
@@ -97,7 +97,6 @@ public class ApprovalController {
 
             Long firstValue = dataArray[firstIndex];
             Long secondValue = dataArray[secondIndex];
-
 
             ApprovalUserDto newApprovalUserDto = new ApprovalUserDto();
 
