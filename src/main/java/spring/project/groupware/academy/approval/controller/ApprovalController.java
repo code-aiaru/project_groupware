@@ -68,7 +68,13 @@ public class ApprovalController {
 //            model.addAttribute("search", search);
             return "approval/list";
         }
-        return "redirect:/approval/write";
+        model.addAttribute("approvalList", approvalDtoPage);
+        model.addAttribute("myUserDetails", myUserDetails);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("pSize", pSize);
+        model.addAttribute("category", category);
+        return "approval/list";
     }
 
 
@@ -118,8 +124,8 @@ public class ApprovalController {
         String employeeId = myUserDetails.getUsername();
         Long approvalId = approvalService.approvalWrite(approvalDto, employeeId);
         approvalUserService.approvalUserCreate(approvalUserDtoList, approvalId);
-        return "redirect:/approval/list/create";
 
+        return "redirect:/approval/list/create";
     }
 
 

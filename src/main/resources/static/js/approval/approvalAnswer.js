@@ -1,3 +1,6 @@
+initializeScriptAW();
+
+function initializeScriptAW(){
 const approvalAnswerBtn=document.querySelector('#approvalAnswerBtn');
 const XBtn=document.querySelector('#XBtn');
 const approvalResultForm=document.querySelector('.approval-Result');
@@ -14,4 +17,5 @@ function approvalFn(event){
 function closeFn(event){
     scriptBack.style.display='none';
     approvalResultForm.style.display='none';
+}
 }

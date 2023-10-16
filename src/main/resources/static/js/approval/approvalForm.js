@@ -5,8 +5,8 @@ $(document).ready(function () {
 
         if (paymentCheckboxes.length === 0) {
             event.preventDefault();
-            alert("결재자가 없습니다");
-        } else {
+            alert("결재자가 없습니다.");
+        } else if(paymentCheckboxes.length === 1){
             event.preventDefault();  // 폼 제출 방지
 
             var formData = $(this).serialize();  // 폼 데이터 수집
@@ -27,7 +27,9 @@ $(document).ready(function () {
                     console.error("Error:", error);
                 }
             });
-
+        }else {
+            event.preventDefault();
+            alert("결재자는 한명만 설정할수 있습니다.");
         }
     });
 });
