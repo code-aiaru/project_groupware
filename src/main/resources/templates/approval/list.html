@@ -15,9 +15,9 @@
         <div class="approval-menu">
             <div class="menu">
                 <ul>
-                    <li><a th:href="@{/approval/create}" data-ajax>상신함</a></li>
-                    <li><a th:href="@{/approval/read}" data-ajax>수신함</a></li>
-                    <li><a th:href="@{/approval/result}" data-ajax>결재함</a></li>
+                    <li><a th:href="@{/approval/list/create}" data-ajax>상신함</a></li>
+                    <li><a th:href="@{/approval/list/read}" data-ajax>수신함</a></li>
+                    <li><a th:href="@{/approval/list/result}" data-ajax>결재함</a></li>
                 </ul>
                 <ul>
                 <li><a th:href="@{/approval/write}" data-ajax>결재문서작성</a></li>
@@ -56,27 +56,27 @@
                     <li>
                         <span th:if="${1==approvalList.pageable.pageNumber+1}" class="spanOff">◁◁</span>
                         <span th:unless="${1==approvalList.pageable.pageNumber+1}">
-            <a th:href="@{'/approval/' + ${category} + '?page=0' + '&size=' + ${pSize}}" class="spanOn" data-ajax>◁◁</a>
+            <a th:href="@{'/approval/list/' + ${category} + '?page=0' + '&size=' + ${pSize}}" class="spanOn" data-ajax>◁◁</a>
           </span>
                     </li>
                     <li>
                         <span th:if="${1==approvalList.pageable.pageNumber+1}" class="spanOff">◁</span>
                         <span th:unless="${1==approvalList.pageable.pageNumber+1}">
-            <a th:href="@{'/approval/' + ${category} + '?page=' + ${approvalList.pageable.pageNumber-1} + '&size=' + ${pSize}}"
+            <a th:href="@{'/approval/list/' + ${category} + '?page=' + ${approvalList.pageable.pageNumber-1} + '&size=' + ${pSize}}"
                class="spanOn" data-ajax>◁</a>
           </span>
                     </li>
                     <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
                         <span th:if="${i==approvalList.pageable.pageNumber+1}" th:text="${i}" class="now"> </span>
                         <a th:unless="${i==approvalList.pageable.pageNumber+1}"
-                           th:href="@{'/approval/' + ${category} + '?page=' + ${i-1} + '&size=' + ${pSize}}" data-ajax
+                           th:href="@{'/approval/list/' + ${category} + '?page=' + ${i-1} + '&size=' + ${pSize}}" data-ajax
                            th:text="${i}"></a>
                     </li>
                     <li>
                                 <span th:if="${approvalList.totalPages==approvalList.pageable.pageNumber+1}"
                                       class="spanOff">▷</span>
                         <span th:unless="${approvalList.totalPages==approvalList.pageable.pageNumber+1}">
-            <a th:href="@{'/approval/' + ${category} + '?page=' + ${approvalList.pageable.pageNumber+1} + '&size=' + ${pSize}}"
+            <a th:href="@{'/approval/list/' + ${category} + '?page=' + ${approvalList.pageable.pageNumber+1} + '&size=' + ${pSize}}"
                class="spanOn" data-ajax>▷</a>
           </span>
                     </li>
@@ -84,7 +84,7 @@
                                 <span th:if="${approvalList.totalPages==approvalList.pageable.pageNumber+1}"
                                       class="spanOff">▷▷</span>
                         <span th:unless="${approvalList.totalPages==approvalList.pageable.pageNumber+1}">
-            <a th:href="@{'/approval/' + ${category} + '?page=' + ${approvalList.totalPages-1} + '&size=' + ${pSize}}"
+            <a th:href="@{'/approval/list/' + ${category} + '?page=' + ${approvalList.totalPages-1} + '&size=' + ${pSize}}"
                class="spanOn" data-ajax>▷▷</a>
           </span>
                     </li>

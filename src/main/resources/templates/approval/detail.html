@@ -47,7 +47,7 @@
                             <td class="th-last">
                                 <a th:href="@{/approval/delete/{id}(id=${approval.id})}">삭제</a>
                                 <a th:href="@{/approval/update/{id}(id=${approval.id})}">수정</a>
-                                <a th:href="@{/approval/list}">목록</a>
+                                <a th:href="@{/approval/create/list}">목록</a>
                             </td>
                         </tr>
                     </table>
@@ -58,8 +58,8 @@
                         <button type="button" id="approvalAnswerBtn">결재</button>
                     </div>
                     <div class="approval-write">
+                        <form th:action="@{/approval/ap}" method="post" th:object="${approvalDto}">
                         <table class="approval-table">
-                            <form th:action="@{/approval/ap}" method="post" th:object="${approvalDto}">
                                 <tr>
                                     <input type="hidden" readonly name="id" th:value="${approval.Id}"><br>
                                 </tr>
@@ -76,8 +76,8 @@
                                     <button type="button" id="XBtn">취소</button>
                                 </td>
                                 </tr>
-                            </form>
                         </table>
+                        </form>
                     </div>
                 </div>
             </div>
