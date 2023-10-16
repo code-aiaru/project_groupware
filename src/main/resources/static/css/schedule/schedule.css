@@ -11,8 +11,64 @@
     font-weight: normal;
     font-style: normal;
 }
-
+* {
+    font-family: Pretendard;
+}
 #calendar {
-    max-width: 1100px;
     margin: 0 auto;
+}
+
+.fc {
+    width: 80%;
+    min-width: 600px;
+    max-width: 800px;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+    margin-top: 50px;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.5em;
+}
+
+.fc-toolbar.fc-header-toolbar div:nth-child(2) {
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.fc-toolbar-chunk {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.fc .fc-button {
+    padding: 0.1em 0.3em;
+    white-space: nowrap;
+}
+
+.fc .fc-col-header-cell-cushion {
+    font-size: 14px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fc .fc-daygrid-day-number {
+    font-size: 12px;
+}
+
+thead {
+    background-color: #aaaaaa;
+}
+
+.fc .fc-view-harness-active > .fc-view {
+    background-color: #ffffff;
+    /* box-shadow: 0 0 3px 0 #444444; */
 }

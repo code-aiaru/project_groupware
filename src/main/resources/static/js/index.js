@@ -1,18 +1,41 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // html 로딩시 초기 설정
-    loadContent('/dashboard');
+    if (previousURL != null && previousURL !== "" ) {
+        console.log("새로고침 로딩");
+        loadContent(previousURL, true)
+    } else {
+        console.log("첫 로딩");
+        loadContent('/dashboard', true); 
+    }
+
+
+    // 이전, 이후 페이지 이동 처리
+    window.addEventListener('popstate', function(event) {
+        console.log('popstate event triggered', event.state);
+        if (event.state && event.state.path) {
+            loadContent(event.state.path, false, true);  // isPopstate를 true로 설정합니다.
+
+        }
+    });
 
     document.addEventListener('click', function(event) {
         const anchor = event.target.closest('a[data-ajax]');  
-        // 만약 <a> 태그가 있고, data-ajax 속성이 있다면 로직을 실행합니다.
+
         if (anchor) {
             event.preventDefault();
-            const url = anchor.getAttribute('href');
+            const hrefUrl = anchor.getAttribute('href');
+            console.log(hrefUrl);
             resetLoadedElements();
-            loadContent(url);
+            loadContent(hrefUrl);
         }
     });
+
+
+
+
+
+
+    // 기타 로직
 
     document.getElementById('size-control_btn').addEventListener('click', function(event) {
         var contractBtn = document.querySelector('.contract_btn');
@@ -111,17 +134,39 @@ function resetLoadedElements() {
 
 
 
-async function loadContent(url) {
+let isLoadingContent = false;
+let isAsyncUrlRequest = false;
+
+async function loadContent(url, initialLoad = false, isPopstate = false) {
+    
+    if (isLoadingContent) {
+        console.log('Content is loading, ignoring new request');
+        return;
+    }
+
+    isLoadingContent = true;
+
+    console.log("fetch전 url", url);
+
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                "AsyncUrlRequest": isAsyncUrlRequest,
+                "CurrentURL": url
+            }
+        });
+
         const html = await response.text();
 
         // html Parse
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        console.log('Parsed HTML:', doc.body.innerHTML);
-
-
+        
+        const loadedContent = doc.getElementById('loadedContent');
+        if (loadedContent) {
+            document.getElementById('contents').innerHTML = loadedContent.innerHTML;
+        }
+        
         // 외부 스타일 로드
         const loadedLinks = doc.querySelectorAll('link');
         for (const link of loadedLinks) {
@@ -130,23 +175,10 @@ async function loadContent(url) {
 
         // 인라인 스타일 로드
         const loadedStyles = doc.querySelectorAll('style');
-        for (const link of loadedStyles) {
+        for (const style of loadedStyles) {
             await loadLiStyle(style.textContent);
         }
 
-
-        // loadedStyles.forEach(style => {
-        //     const newStyle = document.createElement('style');
-        //     newStyle.textContent = style.textContent;
-        //     document.head.appendChild(newStyle);
-        // });
-    
-
-        const loadedContent = doc.getElementById('loadedContent');
-        
-        if (loadedContent) {
-            document.getElementById('contents').innerHTML = loadedContent.innerHTML;
-        }
 
         const loadedTitle = doc.querySelector('meta[name="page-title"]');
         if (loadedTitle) {
@@ -154,50 +186,133 @@ async function loadContent(url) {
         }
 
         const loadedScripts = doc.querySelectorAll('script');
-
         for (const script of loadedScripts) {
             if (script.src) {
                 console.log('Loading script:', script.src);
                 await loadScript(script.src);
             } else {
-                // 인라인 스크립트의 경우, 스크립트 내용을 실행합니다.
                 eval(script.textContent);
             }
         }
 
+        // history 업데이트
+        historyUpdate(url, initialLoad, isPopstate);
+
+        // 메뉴 아이템 하이라이트
+        highlightCurrentMenuItem();
+
+        isAsyncUrlRequest = true;
+
     } catch (error) {
         console.error('Error:', error);
+    } finally {
+        isLoadingContent = false;
     }
+
 }
+
+function saveState(state) {
+    localStorage.setItem('pageState', JSON.stringify(state));
+}
+
+
 
 async function loadScript(src) {
     return new Promise((resolve, reject) => {
         var script = document.createElement('script');
-        script.type = 'text/javascript';
+        // script.type = 'text/javascript';
         script.src = src;
-        script.onload = resolve; // 스크립트 로드가 완료되면 Promise를 resolve 합니다.
-        script.onerror = reject; // 에러 발생시 Promise를 reject 합니다.
+        script.onload = resolve;
+        script.onerror = reject; 
         document.head.appendChild(script);
     });
 }
 
 async function loadExtStyle(href) {
-    return new Promise((resolve, reject) => {  // Promise를 반환합니다.
+    return new Promise((resolve, reject) => { 
         const extStyle = document.createElement('link');
         extStyle.rel = "stylesheet";
         extStyle.href = href;
-        extStyle.onload = resolve;  // 로드 성공시 resolve를 호출합니다.
-        extStyle.onerror = reject;  // 로드 실패시 reject를 호출합니다.
+        extStyle.onload = resolve;  
+        extStyle.onerror = reject;  
         document.head.appendChild(extStyle);
     });
 }
 
 async function loadLiStyle(textContent) {
-    return new Promise((resolve, reject) => {  // Promise를 반환합니다.
+    return new Promise((resolve, reject) => { 
         const liStyle = document.createElement('style');
         liStyle.textContent = textContent;
-        liStyle.onload = resolve;  // 로드 성공시 resolve를 호출합니다.
-        liStyle.onerror = reject;  // 로드 실패시 reject를 호출합니다.
+        liStyle.onload = resolve;  
+        liStyle.onerror = reject; 
         document.head.appendChild(liStyle);
     });
 }
+
+
+
+
+function urlUpdate(url){
+    console.log("urlUpdate function called with url:", url);
+
+    if (url == null && url == "") {
+        url = '/dashboard';
+    } 
+
+    return url;
+}
+
+function historyUpdate(url, initialLoad, isPopstate) {
+
+    // URL 업데이트
+    if (initialLoad) {
+        console.log(`Replacing state with url: ${url}`);
+        history.replaceState({ path: url }, '', url);
+    } else if (!isPopstate) {
+
+        console.log(`Pushing state with url: ${url}`);
+        history.pushState({ path: url }, '', url);
+    }
+}
+
+
+// 하이라이트 관련
+function resetHighlight() {
+    // 모든 메뉴 아이템의 .select-highlight를 선택
+    const menuItems = document.querySelectorAll('.select-highlight');
+    
+    // 각 메뉴 아이템의 하이라이트를 제거
+    menuItems.forEach(item => {
+        const parentMenuItem = item.closest('a'); // 상위의 a 태그를 찾는다.
+        if (!parentMenuItem) return;  // a 태그가 없으면 다음 항목으로 넘어감
+        
+        const imgTag = parentMenuItem.querySelector('img');
+        const spanTag = parentMenuItem.querySelector('span');
+
+        item.style.display = 'none';
+        if (imgTag) imgTag.removeAttribute('style');
+        if (spanTag) spanTag.removeAttribute('style');
+    });
+}
+
+function highlightCurrentMenuItem() {
+
+    resetHighlight();
+
+    const currentUrl = window.location.pathname;
+    const menuItem = document.querySelector(`a[href="${currentUrl}"]`);
+    
+    if (menuItem) {
+        const imgTag = menuItem.querySelector('img');
+        const spanTag = menuItem.querySelector('span');
+
+        const highlightImage = menuItem.querySelector('.select-highlight');
+        if (highlightImage && imgTag && spanTag) {
+            highlightImage.style.display = 'inline-block';
+            imgTag.style.filter = 'invert(45%) sepia(95%) saturate(403%) hue-rotate(154deg) brightness(86%) contrast(88%)';
+            spanTag.style.color = '#2788b5';
+            spanTag.style = 'color: #2788b5; font-weight: bold';
+        }
+    }
+}
+
