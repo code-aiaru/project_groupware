@@ -73,7 +73,7 @@ document.getElementById('delete-button').addEventListener('click', function() {
     var formData = new FormData();
     formData.append('studentId', studentId); // studentId를 formData에 추가
 
-    fetch('/image/delete2', {
+    fetch('/images/delete2', {
       method: 'POST',
       body: formData, // formData를 body로 설정
     })
@@ -136,7 +136,7 @@ function uploadDefaultImage() {
   formData.append('file', defaultImageFile);
 
   // 기본 이미지 업로드 요청 보내기
-  fetch('/image/upload2', {
+  fetch('/images/upload2', {
     method: 'POST',
     body: formData,
   })

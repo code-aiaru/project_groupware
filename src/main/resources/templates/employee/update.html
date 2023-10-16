@@ -11,6 +11,7 @@
   <script th:src="@{/js/employee/update_birth.js}" defer="defer"></script>
 </head>
 <body>
+<div id="loadedContent">
 <div class="container">
   <div class="nav">
     <div class="update-con">
@@ -119,11 +120,13 @@
           </th:block>
           <button type="button" onclick="javascript:history.back()">수정취소</button>
           <input type="submit" value="수정실행">
-          <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}"><button type="button">비밀번호 변경</button></a>
+<!--          <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax><button type="button">비밀번호 변경</button></a>-->
+          <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax>비밀번호 변경</a>
         </ul>
       </form>
     </div>
   </div>
+</div>
 </div>
 <script>
   // 생년월일 유효성 검사 함수
