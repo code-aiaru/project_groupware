@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import spring.project.groupware.academy.approval.entity.ApprovalEntity;
 import spring.project.groupware.academy.approval.entity.ApprovalUserEntity;
-import spring.project.groupware.academy.attendance.Attendance;
+import spring.project.groupware.academy.attendance.entity.Attendance;
 import spring.project.groupware.academy.employee.constraint.Role;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.util.BaseEntity;
@@ -39,7 +39,7 @@ public class EmployeeEntity extends BaseEntity {
     @Column(name = "employee_phone", unique = true, nullable = false)
     private String employeePhone;
 
-    @Column(name = "employee_email", nullable = false)
+    @Column(name = "employee_email", nullable = false, unique = true)
     private String employeeEmail;
 
     // 부서
@@ -87,7 +87,6 @@ public class EmployeeEntity extends BaseEntity {
     // 연관 관계 - approvalUser
     @OneToMany(mappedBy = "employeeEntity", cascade = CascadeType.ALL)
     private List<ApprovalUserEntity> approvalUser = new ArrayList<>();
-
 
     // 연관 관계 - 일정 1:N
 

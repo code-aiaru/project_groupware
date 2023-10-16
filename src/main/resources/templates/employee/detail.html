@@ -16,17 +16,18 @@
                 <h1><span th:text="${employee.employeeName}" ></span>님 상세정보</h1>
             </div>
             <!-- 이미지 미리보기 영역 -->
-<!--            <div id="image-preview"><img id="preview-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>-->
-<!--            <th:block th:if="${#authentication.principal.username==employee.employeeId}">-->
-<!--            <span class="image_btn">-->
-<!--                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>-->
-<!--            </span>-->
-<!--            </th:block>-->
-<!--            <th:block th:unless="${#authentication.principal.username==employee.employeeId}">-->
-<!--            <span>-->
-<!--                본인글이 아닙니다-->
-<!--            </span>-->
-<!--            </th:block>-->
+            <div id="image-preview"><img id="preview-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
+            <th:block th:if="${#authentication.principal.username==employee.employeeId}">
+            <span class="image_btn">
+<!--                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>--> <!---->
+                <a th:href="@{/employee/updateImage/{employeeNo}(employeeNo=${employee.employeeNo})}">프로필 이미지 수정</a>
+            </span>
+            </th:block>
+            <th:block th:unless="${#authentication.principal.username==employee.employeeId}">
+            <span>
+                본인글이 아닙니다
+            </span>
+            </th:block>
             <div class="detail">
                 <ul>
 <!--                    <span th:if="${false}" th:text="${employee.employeeNo}"></span> <br> &lt;!&ndash; th:if="${false}" 입력 시 안보이게 처리 &ndash;&gt;-->
@@ -98,11 +99,17 @@
         </div>
     </div>
 </div>
-<button th:onclick="@{location.href='/index'}">홈</button>
+<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
+<a th:href="@{/index}">홈</a>
+<th:block sec:authorize="hasAnyRole('ADMIN')">
+    <a th:href="@{/employee/employeeList?page=0&subject=&search=}">인사조회</a>
+</th:block>
 <!-- Thymeleaf 표현식을 사용하여 employeeNo JavaScript 변수에 할당 -->
 <script th:inline="javascript">
     var employeeNo = /*[[${employee.employeeNo}]]*/ null;
 </script>
+
+
 <!-- 이동 버튼 클릭 시 지정된 URL로 이동 -->
 <script>
     function redirectToURL() {

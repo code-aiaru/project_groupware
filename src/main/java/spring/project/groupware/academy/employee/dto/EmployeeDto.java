@@ -61,11 +61,8 @@ public class EmployeeDto {
 
     // 생년월일(birthYear, birthMonth, birthDay 합쳐서 저장)
     private String employeeBirth;
-
     private int birthYear;
-
     private int birthMonth;
-
     private int birthDay;
 
     @NotBlank(message = "우편번호를 입력해주세요")
@@ -113,7 +110,7 @@ public class EmployeeDto {
         employeeDto.setCreateTime(employeeEntity.getCreateTime());
         employeeDto.setUpdateTime(employeeEntity.getUpdateTime());
 
-//        employeeDto.setImageUrl(employeeEntity.getImage().getImageUrl());
+        employeeDto.setImageUrl(employeeEntity.getImage().getImageUrl());
 
         return employeeDto;
     }

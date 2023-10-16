@@ -1,7 +1,7 @@
 const approvalAnswerBtn=document.querySelector('#approvalAnswerBtn');
 const XBtn=document.querySelector('#XBtn');
 const approvalAnswerForm=document.querySelector('.approval-write');
-
+const scriptBack=document.querySelector('.scriptBack');
 
 approvalAnswerBtn.addEventListener('click',approvalFn);
 XBtn.addEventListener('click',closeFn);

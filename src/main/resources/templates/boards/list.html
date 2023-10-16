@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- head 부분 내용 -->
+    <meta charset="UTF-8">
+    <title>게시판 목록</title>
+</head>
+<body>
+<h1>게시판 목록</h1>
+
+<ul id="boardList">
+   <li>
+       <a href="board.title"></a>
+   </li>
+
+</ul>
+
+
+<a th:href="@{/boards/create}">새로운 게시물 작성</a>
+
+
+
+<script>
+    // 페이지 로딩 시 JSON 데이터를 가져와서 게시물 목록을 동적으로 생성합니다.
+    fetch('/api/boards')
+        .then(response => response.json())
+        .then(data => {
+            const boardList = document.getElementById('boardList');
+
+            // JSON 데이터를 반복하여 게시물 목록을 생성합니다.
+            data.forEach(board => {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `javascript:void(0);`; // 기본 href를 사용하지 않음
+                link.innerText = board.title;
+                // data-id 속성을 사용하여 ID 값을 저장합니다.
+                link.setAttribute('data-id', board.id);
+                li.appendChild(link);
+                boardList.appendChild(li);
+            });
+        });
+
+    // 클릭 이벤트 처리
+    const boardList = document.getElementById('boardList');
+    boardList.addEventListener('click', (event) => {
+        // 클릭된 엘리먼트가 <a> 태그인지 확인합니다.
+        if (event.target.tagName === 'A') {
+            // data-id 속성을 사용하여 ID 값을 가져옵니다.
+            const id = event.target.getAttribute('data-id');
+
+            // boardId를 사용하여 상세 정보 페이지로 이동합니다.
+            window.location.href = `/boards/detail/${id}`;
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* 모달 스타일링 */
+.modalBackground {
+display: none;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.7);
+z-index: 1;
+justify-content: center;
+align-items: center;
+}
+
+.modal {
+display: none;
+/* 화면에 꽉 차게 하는 코드(여기서는 너비를 꽉 채우는 용도) */
+position: fixed;
+top: 50%;
+left: 50%;
+
+/* 위아래 너비를 준 상태에서 가로 50%, 세로 50%를 이동시킬 수 있다 (= 한가운데 배치) */
+transform: translate(-50%, -50%);
+
+/* 위의 overlay 배경보다 한 단계 더 높게 배치 */
+z-index: 300;
+}
+
+.modal-content {
+background-color: #fefefe;
+padding: 20px;
+border: 1px solid #888;
+border-radius: 5px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+/*width: 50%;*/ /* 모달 창의 너비 조절 */
+width: 500px;
+height: 500px;
+max-width: 800px; /* 모달 창의 최대 너비 설정 */
+margin: 0 auto;
+text-align: left;
+}
+
+/* 닫기 버튼 스타일링 */
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+/*'사원 추가' 제목 가운데 정렬*/
+h2 {
+text-align: center;
+}
+
+#openModalBtn:hover {
+  cursor: pointer;
+}
+
+#openDetailModalBtn:hover {
+  cursor: pointer;
+}
+

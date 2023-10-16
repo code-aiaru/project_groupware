@@ -82,26 +82,4 @@ public class FileStorageService {
         return filePath;
     }
 
-    // 송원철
-    // 사원 프로필 이미지 조회
-    public ImageResponseDto findImage(String employeeId){
-        EmployeeEntity employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->
-                new UsernameNotFoundException("아이디가 존재하지않습니다"));
-        ImageEntity image = imageRepository.findByEmployee(employee);
-
-//        String defaultImageUrl = "/employeeImages/default.png";
-        // 박상재 - 위 코드를 아래와 같이 수정했습니다.
-        // 필터를 적용했기 때문에 /images 아래에 위치해야 정상적으로 출력이 되니다. (정적 리소스이기 때문에 실제 경로와 동일하게 설정해놨습니다.)
-        String defaultImageUrl = "/images/employee/default.png";
-
-        if (image == null) {
-            return ImageResponseDto.builder()
-                    .imageUrl(defaultImageUrl)
-                    .build();
-        }else {
-            return ImageResponseDto.builder()
-                    .imageUrl(image.getImageUrl())
-                    .build();
-        }
-    }
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- head 부분 내용 -->
+  <meta charset="UTF-8">
+  <title>게시물 생성</title>
+</head>
+<body>
+<h1>게시물 생성</h1>
+<form id="createNoticeForm">
+  <label for="title">제목</label>
+  <input type="text" id="title" name="title" required>
+  <label for="writer">작성자</label>
+  <input type="text" id="writer" name="writer" required value="관리자">
+  <br>
+  <label for="content">공지사항</label>
+  <textarea id="content" name="content" required></textarea>
+  <br>
+  <button type="button" onclick="createNotice()">공지사항 등록</button>
+</form>
+<a href="/notice/list">게시판 목록으로 돌아가기</a>
+
+<script>
+function createNotice() {
+    // 입력된 제목, 작성자, 내용, 비밀번호를 가져옵니다.
+    var title = document.getElementById("title").value;
+    var content = document.getElementById("content").value;
+    var writer = document.getElementById("writer").value;
+    // JSON 데이터를 생성합니다.
+    var jsonData = {
+        title: title,
+        content: content,
+        writer: writer,
+    };
+
+    // 서버로 JSON 데이터를 전송합니다.
+    fetch("/api/boards/notice", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(function(response) {
+        if (response.ok) {
+            console.log("게시물이 성공적으로 생성되었습니다.");
+            window.location.href = "/notice/list";
+        } else {
+            console.error("게시물 생성 오류: " + response.status);
+        }
+    })
+    .catch(function(error) {
+        console.error("네트워크 오류: " + error);
+    });
+}
+</script>
+
+</body>
+</html>

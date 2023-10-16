@@ -8,11 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
-//import spring.project.groupware.academy.employee.entity.ImageEntity;
 import spring.project.groupware.academy.employee.entity.ImageEntity;
 import spring.project.groupware.academy.employee.repository.EmployeeRepository;
 import spring.project.groupware.academy.employee.repository.ImageRepository;
-//import spring.project.groupware.academy.employee.repository.ImageRepository;
+
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -92,9 +91,7 @@ public class EmployeeService {
 
         Page<EmployeeEntity> employeeEntities = null; // 기본 null값으로 설정
 
-        if(subject.equals("employeeNo")){
-            employeeEntities = employeeRepository.findByEmployeeNoContaining(pageable, search);
-        }else if(subject.equals("employeeName")){
+        if(subject.equals("employeeName")){
             employeeEntities = employeeRepository.findByEmployeeNameContaining(pageable, search);
         }else if(subject.equals("employeePhone")){
             employeeEntities = employeeRepository.findByEmployeePhoneContaining(pageable, search);
@@ -219,7 +216,6 @@ public class EmployeeService {
     public boolean existsByEmployeePhone(String employeePhone) {
         return employeeRepository.existsByEmployeePhone(employeePhone);
     }
-
 
 
 

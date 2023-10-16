@@ -1,6 +1,7 @@
 package spring.project.groupware.academy.approval.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,7 +23,8 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/approval")
+@Slf4j
+//@RequestMapping("/approval")
 @RequiredArgsConstructor
 public class ApprovalController {
 
@@ -30,8 +32,35 @@ public class ApprovalController {
     private final ApprovalService approvalService;
     private final ApprovalUserService approvalUserService;
 
+    @GetMapping({"/approval"})
+    public String getApprovalPage(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                                  @PageableDefault(page = 0, size = 10, sort = "approval_id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        log.info("approval method activated");
+        String employeeId = myUserDetails.getUsername();
+        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeId);
+        int totalPage = approvalDtoPage.getTotalPages();
+        int nowPage = approvalDtoPage.getNumber();
+        int blockNum = 5;
+        int pSize = approvalDtoPage.getSize();
 
-    @GetMapping("/write")
+        int startPage = (int) ((Math.ceil(nowPage / blockNum) * blockNum) + 1 <= totalPage ? (Math.ceil(nowPage / blockNum) * blockNum) + 1 : totalPage);
+        int endPage = (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+
+        if (!approvalDtoPage.isEmpty()) {
+            model.addAttribute("approvalList", approvalDtoPage);
+            model.addAttribute("myUserDetails", myUserDetails);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("pSize", pSize);
+//            model.addAttribute("subject", subject);
+//            model.addAttribute("search", search);
+            return "approval/list";
+        }
+        return "redirect:/approval/write";
+    }
+
+
+    @GetMapping({"/approval/write"})
     public String getwrite(@PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam(value = "search", required = false) String search,
@@ -44,7 +73,7 @@ public class ApprovalController {
         return "approval/write";
     }
 
-    @PostMapping("/write")
+    @PostMapping({"/approval/write"})
     public String postwrite(@AuthenticationPrincipal MyUserDetails myUserDetails, ApprovalDto approvalDto) {
         Long[] dataArray = approvalDto.getDataArray();
         int newApprovalUserArrayLength = dataArray.length / 2;
@@ -70,14 +99,13 @@ public class ApprovalController {
         List<ApprovalUserDto> approvalUserDtoList = new ArrayList<>();
 
         for (ApprovalUserDto approvalUserDto : newApprovalUserArray) {
-            // 객체를 복사하여 새로운 객체 생성
             ApprovalUserDto modifiedApprovalUser = new ApprovalUserDto();
             modifiedApprovalUser.setId(approvalUserDto.getId());
             modifiedApprovalUser.setAp(approvalUserDto.getAp());
             approvalUserDtoList.add(modifiedApprovalUser);
         }
-        Long employeeNo = myUserDetails.getEmployeeEntity().getEmployeeNo();
-        Long approvalId = approvalService.approvalWrite(approvalDto, employeeNo);
+        String employeeId = myUserDetails.getUsername();
+        Long approvalId = approvalService.approvalWrite(approvalDto, employeeId);
         approvalUserService.approvalUserCreate(approvalUserDtoList, approvalId);
         return "redirect:/approval/list";
 
@@ -86,8 +114,8 @@ public class ApprovalController {
     @GetMapping("/list")
     public String getlist(@AuthenticationPrincipal MyUserDetails myUserDetails,
                           @PageableDefault(page = 0, size = 10, sort = "approval_id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        Long employeeNo = myUserDetails.getEmployeeEntity().getEmployeeNo();
-        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeNo);
+        String employeeId = myUserDetails.getUsername();
+        Page<ApprovalDto> approvalDtoPage = approvalService.approvalListPage(pageable, employeeId);
         int totalPage = approvalDtoPage.getTotalPages();
         int nowPage = approvalDtoPage.getNumber();
         int blockNum = 5;
@@ -104,12 +132,12 @@ public class ApprovalController {
             model.addAttribute("pSize", pSize);
 //            model.addAttribute("subject", subject);
 //            model.addAttribute("search", search);
-            return "payment/list";
+            return "approval/list";
         }
-        return "redirect:/board/write";
+        return "redirect:/approval/write";
 
     }
-    @GetMapping("/detail/{id}")
+    @GetMapping({"/approval/detail/{id}"})
     public String getdetail(@PathVariable("id") Long id,
                             @AuthenticationPrincipal MyUserDetails myUserDetails,
                             Model model) {
@@ -123,4 +151,28 @@ public class ApprovalController {
         return "approval/detail";
     }
 
+    @GetMapping("/delete/{id}")
+    public String getdelete(@PathVariable("id") Long id,
+                            @AuthenticationPrincipal MyUserDetails myUserDetails,
+                            Model model) {
+        int rs = approvalService.approvalDelete(id);
+        if (rs == 1) {
+            System.out.println(("삭제 Success!"));
+        } else {
+            System.out.println(("삭제 Fail!"));
+        }
+        return "redirect:/approval/list";
+    }
+
+    @PostMapping("/ap")
+    public String getap(ApprovalDto approvalDto){
+        Long approvalId=approvalDto.getId();
+        int rs = approvalService.approvalAp(approvalDto);
+        if (rs == 1) {
+            System.out.println(("수정 Success!"));
+        } else {
+            System.out.println(("수정 Fail!"));
+        }
+        return "redirect:/approval/detail/"+approvalId;
+    }
 }

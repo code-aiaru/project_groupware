@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
+import spring.project.groupware.academy.employee.service.ImageService;
 import spring.project.groupware.academy.util.FileStorageService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class HomeController {
 
     private final EmployeeService employeeService;
     private final FileStorageService fileStorageService;
+    private final ImageService imageService;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -33,7 +35,7 @@ public class HomeController {
 
 //        if(myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
-            String employeeImageUrl = fileStorageService.findImage(employee.getEmployeeId()).getImageUrl();
+            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
             model.addAttribute("employee", employee);
             model.addAttribute("employeeImageUrl", employeeImageUrl);

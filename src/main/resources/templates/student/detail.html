@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>학생정보 상세보기</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/student/detail.js}" defer="defer"></script>
+    <script th:src="@{/js/student/delete.js}" defer="defer"></script>
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <div class="detail-con" id="loadedContent">
+            <div class="title">
+                <h1><span th:text="${student.studentName}" ></span>님 상세정보</h1>
+            </div>
+            <!-- 이미지 미리보기 영역 -->
+            <div id="image-preview"><img id="preview-image" th:src="${studentImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
+            <span class="image_btn">
+                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>
+            </span>
+            <div class="detail">
+                <ul>
+<!--                    <span th:if="${false}" th:text="${student.studentId}"></span> <br> &lt;!&ndash; th:if="${false}" 입력 시 안보이게 처리 &ndash;&gt;-->
+                    <li>
+                        <span>이름</span>
+                        <span th:text="${student.studentName}"></span>
+                    </li>
+                    <li>
+                        <span>성별</span>
+                        <span th:text="${student.studentGender}"></span>
+                    </li>
+                    <li>
+                        <span>수강중 강의</span>
+                        <span th:text="${student.studentClass}"></span>
+                    </li>
+                    <li>
+                        <span>휴대전화번호</span>
+                        <span th:text="${student.studentPhone}"></span>
+                    </li>
+                    <li>
+                        <span>이메일</span>
+                        <span th:text="${student.studentEmail}"></span>
+                    </li>
+                    <li>
+                        <span>생년월일</span>
+                        <span th:text="${student.studentBirth}"></span>
+                    </li>
+                    <li>
+                        <span>주소</span>
+                        <span th:text="${student.studentStreetAddress + ', ' + student.studentDetailAddress}"></span>
+                    </li>
+<!--                    <li>-->
+<!--                        <span>권한</span> &lt;!&ndash; 필요없으면 숨기기 &ndash;&gt;-->
+<!--                        <span th:text="${employee.role}"></span>-->
+<!--                    </li>-->
+                    <li>
+                        <span>등록일</span>
+                        <span th:text="${#temporals.format(student.createTime, 'yyyy-MM-dd')}"></span>
+                    </li>
+                    <li class="update">
+                        <span>
+                            <div class="update">
+                                <li>
+                                    <a th:href="@{/student/update/{studentId}(studentId=${student.studentId})}">수정</a>
+                                </li>
+                            </div>
+                        </span>
+                    </li>
+                    <li class="delete">
+                        <span>
+                            <div class="delete">
+                                <li>
+                                    <input type="button" id="deleteButton" th:value="삭제" th:data-student-id="${student.studentId}" onclick="confirmDelete()">
+                                </li>
+                            </div>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
+<a th:href="@{/index}">홈</a>
+<a th:href="@{/student/studentList?page=0&subject=&search=}">수강생조회</a>
+<!-- Thymeleaf 표현식을 사용하여 employeeNo JavaScript 변수에 할당 -->
+<script th:inline="javascript">
+    var studentId = /*[[${student.studentId}]]*/ null;
+</script>
+<!-- 이동 버튼 클릭 시 지정된 URL로 이동 -->
+<script>
+    function redirectToURL() {
+         if (studentId !== null) {
+           var dynamicURL = "/student/updateImage/" + studentId;
+           window.location.href = dynamicURL;
+         }
+    }
+</script>
+</body>
+</html>

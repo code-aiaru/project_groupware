@@ -100,7 +100,8 @@
                 <select id="employeeDep" name="employeeDep" required="required" class="box">
                     <option value="영업부">영업부</option>
                     <option value="총무부">총무부</option>
-                    <option value="마케팅부">교육부</option>
+                    <option value="교육부">교육부</option>
+                    <option value="마케팅부">마케팅부</option>
                 </select>
             </li>
 
@@ -158,6 +159,10 @@
         </ul>
     </form>
 </div>
-<button th:onclick="@{location.href='/index'}">홈</button>
+<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
+<a th:href="@{/index}">홈</a>
+<th:block sec:authorize="hasAnyRole('ADMIN')">
+    <a th:href="@{/employee/employeeList?page=0&subject=&search=}">인사조회</a>
+</th:block>
 </body>
 </html>

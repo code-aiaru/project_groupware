@@ -1,6 +1,7 @@
 package spring.project.groupware.academy.employee.entity;
 
 import lombok.*;
+import spring.project.groupware.academy.student.entity.StudentEntity;
 import spring.project.groupware.academy.util.BaseEntity;
 
 import javax.persistence.*;
@@ -25,6 +26,10 @@ public class ImageEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_no")
     private EmployeeEntity employee;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private StudentEntity student;
 
     public void updateUrl(String imageUrl){
         this.imageUrl=imageUrl;

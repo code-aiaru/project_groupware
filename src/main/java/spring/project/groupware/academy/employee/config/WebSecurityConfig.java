@@ -30,10 +30,10 @@ public class WebSecurityConfig {
         @Bean
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests()
-                    .antMatchers("/", "/employee/join", "/login").permitAll() // "/employee/join" 테스트용으로 둔것, 삭제해야함
-                    .antMatchers("/logout", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
-                            "/board/**", "/employee/inquiry**", "/student/join", "/inquiry/**").authenticated()
-                    .antMatchers("/employee/join", "/employee/employeeList**").hasAnyRole("ADMIN")
+                    .antMatchers("/", "/login").permitAll()
+                    .antMatchers("/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
+                            "/student/**", "/boards/**", "/notice/detail/**", "/notice/list").authenticated()
+                    .antMatchers("/employee/join", "/employee/employeeList**", "/notice/create", "/notice/edit/**").hasAnyRole("ADMIN")
 
                     .and()
                     .formLogin()
@@ -48,9 +48,8 @@ public class WebSecurityConfig {
             http.rememberMe()
                     .rememberMeParameter("rememberMe")
                     .tokenValiditySeconds(86400 * 7) // 7일
-                    .alwaysRemember(false) // true 시 무조건 자동로그인
+                    .alwaysRemember(false) // true 시 무조건 자동로그인, 기본값은 false
                     .userDetailsService(userDetailsService());
-
 
             http.logout()
                     .logoutUrl("/logout")

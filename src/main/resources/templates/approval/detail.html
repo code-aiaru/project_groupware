@@ -3,78 +3,82 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
+    <meta name="page-title" title="결재 문서 상세조회">
     <title>결재 문서 상세조회</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}" data-static>
-    <script th:src="@{/js/approval/approvalAnswer.js}" defer></script>
+    <!--    <link rel="stylesheet" th:href="@{/css/approval/detail.css}">-->
+    <script src="/js/approval/approvalAnswer.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="approvalDetail_root" id="loadedContent">
     <div class="approval-con">
-        <div class="approval-title">
-            <h1>결재 문서 상세조회</h1>
-            <div class="approval-detail">
-                <table class="approval-table">
-                    <tr>
-                        <td class="td-title"><span th:text="${approval.ApprovalTitle}"></span></td>
-                    </tr>
-                    <tr>
-                        <td><span>작성자 | </span><span th:text="${approval.EmployeeEntity.employeeName}"></span></td>
-                    </tr>
-                    <tr>
-                        <td><span>작성일자 | </span><span
-                                th:text="${#temporals.format(approval.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
-                    </tr>
-                    <tr>
-                        <td><span>상태 | </span><span th:text="${approval.ApprovalStatus}"></span></td>
-                    </tr>
-                    <tr>
-                        <td><span>결제자 | </span></br>
-                            <th:block th:each="approvalUser: ${approvalUserList}">
-                                <span th:text="|${approvalUser.employeeName} - ${employee.employeeDep} - ${employee.employeePosition}|"></span>
-                                <span th:if="${approvalUser.Ap == 0}">결제</span>
-                                <span th:if="${approvalUser.Ap == 1}">참조</span>
-                                </br>
-                            </th:block>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-content"><span th:text="${paymail.PayContent}"></span></td>
-                    </tr>
-                    <tr>
-                        <td class="th-last">
-                            <a th:href="@{/approval/delete/{id}(id=${approval.id})}">삭제</a>
-                            <a th:href="@{/approval/update/{id}(id=${approval.id})}">수정</a>
-                            <a th:href="@{/approval/list}">목록</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="approval-Answer">
-                <div class="approval-divide">
-                    <hr class="divide">
-                    <button type="button" id="approvalAnswerBtn">결제</button>
-                </div>
-                <div class="approval-write">
+        <div class="scriptBack">
+            <div class="approval-title">
+                <h1>결재 문서 상세조회</h1>
+                <div class="approval-detail">
                     <table class="approval-table">
-                        <form th:action="@{/approval/ap}" method="post" th:object="${approvalDto}">
-                            <tr>
-                                <input type="hidden" readonly name="id" th:value="${approval.Id}"><br>
-                            </tr>
-                            <tr>
-                                <td class="td-content"><textarea name="ApprovalAnswer" style=" resize: none;"
-                                                                 cols="30" rows="3"
-                                                                 placeholder="결제 의견"></textarea>
-                            </tr>
-                            <td>
-                                <tr>
-                            <td class="td-submit">
-                                <input type="submit" name="ApprovalStatus" value="승인">
-                                <input type="submit" name="ApprovalStatus" value="거부">
-                                <button type="button" id="XBtn">취소</button>
+                        <tr>
+                            <td class="td-title"><span th:text="${approval.ApprovalTitle}"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>작성자 | </span><span th:text="${approval.EmployeeEntity.employeeName}"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>작성일자 | </span><span
+                                    th:text="${#temporals.format(approval.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                             </td>
-                            </tr>
-                        </form>
+                        </tr>
+                        <tr>
+                            <td><span>상태 | </span><span th:text="${approval.ApprovalStatus}"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>결제자 | </span></br>
+                                <th:block th:each="approvalUser: ${approvalUserList}">
+                                    <span th:text="|${approvalUser.employeeEntity.employeeName} - ${approvalUser.employeeEntity.employeeDep} - ${approvalUser.employeeEntity.employeePosition}|"></span>
+                                    <span th:if="${approvalUser.Ap == 0}">결재</span>
+                                    <span th:if="${approvalUser.Ap == 1}">참조</span>
+                                    </br>
+                                </th:block>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-content"><span th:text="${approval.ApprovalContent}"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="th-last">
+                                <a th:href="@{/approval/delete/{id}(id=${approval.id})}">삭제</a>
+                                <a th:href="@{/approval/update/{id}(id=${approval.id})}">수정</a>
+                                <a th:href="@{/approval/list}">목록</a>
+                            </td>
+                        </tr>
                     </table>
+                </div>
+                <div class="approval-Answer">
+                    <div class="approval-divide">
+                        <hr class="divide">
+                        <button type="button" id="approvalAnswerBtn">결재</button>
+                    </div>
+                    <div class="approval-write">
+                        <table class="approval-table">
+                            <form th:action="@{/approval/ap}" method="post" th:object="${approvalDto}">
+                                <tr>
+                                    <input type="hidden" readonly name="id" th:value="${approval.Id}"><br>
+                                </tr>
+                                <tr>
+                                    <td class="td-content"><textarea name="ApprovalAnswer" style=" resize: none;"
+                                                                     cols="30" rows="3"
+                                                                     placeholder="결제 의견"></textarea>
+                                </tr>
+                                <td>
+                                    <tr>
+                                <td class="td-submit">
+                                    <input type="submit" name="ApprovalStatus" value="승인">
+                                    <input type="submit" name="ApprovalStatus" value="거부">
+                                    <button type="button" id="XBtn">취소</button>
+                                </td>
+                                </tr>
+                            </form>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

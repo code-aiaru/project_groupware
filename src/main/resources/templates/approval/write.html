@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="page-title" title="결재 문서 작성">
     <title>결재 문서 작성</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}" data-static>
-    <script th:src="@{/js/approval/approvalUser.js}" defer></script>
+    <link rel="stylesheet" th:href="@{/css/approval/write.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="/js/approval/approvalSearch.js"></script>
+    <script src="/js/approval/approvalUser.js"></script>
+    <script src="/js/approval/approvalForm.js"></script>
 </head>
 <body>
-    <div class="container">
+<div class="approvalWrite_root" id="loadedContent">
     <div class="approval-con">
         <div class="approval-title">
-            <h1>결재 문서</h1>
+            <h1>결재 작성</h1>
         </div>
         <div class="approval-write">
             <div class="approval-form">
@@ -24,9 +27,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label>결제자</label></th>
+                            <th scope="row"><label>결재선</label></th>
                             <td>
-                                <th:block>
+                                <input type="text" name="nameSearch" id="nameSearch" class="inputSearch">
+                                <div class="searchBox">
                                     <ul>
                                         <li th:each="employee: ${employeePage}">
                                                 <span class="userAddBtn"
@@ -35,7 +39,7 @@
                                                       th:text="|${employee.employeeName} - ${employee.employeeDep} - ${employee.employeePosition}|"></span>
                                         </li>
                                     </ul>
-                                </th:block>
+                                </div>
                                 </br>
                                 <div id="ApprovalUserData">
                                 </div>
@@ -52,7 +56,7 @@
                             <th scope="row" class="th-last"></th>
                             <td class="td-last">
                                 <input type="submit" value="상신">
-                                <a th:href="@{/Approval/list}">목록</a>
+                                <a th:href="@{/approval/list}">목록</a>
                             </td>
                         </tr>
                     </table>
