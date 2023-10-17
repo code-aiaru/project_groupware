@@ -24,6 +24,7 @@
                 </ul>
             </div>
         </div>
+        <th:block th:if="${not #lists.isEmpty(approvalList)}">
         <div class="approval-list">
             <div class="approval-list-con">
                 <table border="1">
@@ -91,6 +92,10 @@
                 </ul>
             </div>
         </div>
+        </th:block>
+        <th:block th:unless="${not #lists.isEmpty(approvalList)}">
+            <p>결재문서 존재하지않음</p>
+        </th:block>
     </div>
 </div>
 </body>

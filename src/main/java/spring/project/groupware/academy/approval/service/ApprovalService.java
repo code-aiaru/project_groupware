@@ -61,7 +61,8 @@ public class ApprovalService {
         });
         Long ap=0L;
         String status="대기";
-        Page<ApprovalEntity> approvalEntityPage = approvalRepository.findByApprovalList(pageable, employeeEntity.getEmployeeNo(), ap, status);        Page<ApprovalDto> approvalDtoPage=approvalEntityPage.map(ApprovalDto::toapprovalDto);
+        Page<ApprovalEntity> approvalEntityPage = approvalRepository.findByApprovalList(pageable, employeeEntity.getEmployeeNo(), ap, status);
+        Page<ApprovalDto> approvalDtoPage=approvalEntityPage.map(ApprovalDto::toapprovalDto);
 
         return approvalDtoPage;
     }

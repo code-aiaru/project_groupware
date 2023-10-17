@@ -68,12 +68,7 @@ public class ApprovalController {
 //            model.addAttribute("search", search);
             return "approval/list";
         }
-        model.addAttribute("approvalList", approvalDtoPage);
         model.addAttribute("myUserDetails", myUserDetails);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("pSize", pSize);
-        model.addAttribute("category", category);
         return "approval/list";
     }
 
