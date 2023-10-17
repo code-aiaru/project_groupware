@@ -26,7 +26,8 @@
                     </li>
                     <li>
                         <button type="submit" id="upload-button" disabled>적용</button>
-                        <button type="button" id="cancel" onclick="goBack()">취소</button>
+                        <button type="button" onclick="javascript:history.back()">수정취소</button>
+                        <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" id="redirection" style="display: none" data-ajax></a>
                     </li>
                 </ul>
             </form>
@@ -34,10 +35,5 @@
     </div>
 </div>
 </div>
-<script>
-    function goBack() {
-      window.history.back();
-    }
-</script>
 </body>
 </html>

@@ -84,7 +84,7 @@
                         <option value="nate.com">nate.com</option>
                         <option value="daum.net">daum.net</option>
                     </select>
-                    <input type="text" id="employeeEmail" name="employeeEmail" value="">
+                    <input type="hidden" id="employeeEmail" name="employeeEmail" value="">
                     <button type="button" id="emailCheckButton">이메일 중복 확인</button>
                 </div>
             </li>
@@ -141,7 +141,8 @@
             <div class="form-group">
                 <label th:for="employeePostCode">우편번호</label>
                 <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호 필수로 입력해주세요" name="employeePostCode" id="employeePostCode" type="text" readonly="readonly" >
-                <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
+<!--                <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>-->
+                <button type="button" class="btn btn-default" id="findPostcodeButton"><i class="fa fa-search"></i> 우편번호 찾기</button>
             </div>
             <div class="form-group">
                 <label th:for="employeeStreetAddress">도로명주소</label>
@@ -162,9 +163,9 @@
     </form>
 </div>
 <!--<button th:onclick="@{location.href='/index'}">홈</button>-->
-<a th:href="@{/index}">홈</a>
+<a th:href="@{/index}" data-ajax>홈</a>
 <th:block sec:authorize="hasAnyRole('ADMIN')">
-    <a th:href="@{/employee/employeeList?page=0&subject=&search=}">인사조회</a>
+    <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>인사조회</a>
 </th:block>
 </body>
 </html>

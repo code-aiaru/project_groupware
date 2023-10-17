@@ -20,10 +20,8 @@ import spring.project.groupware.academy.employee.config.UserDetailsServiceImpl;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 import spring.project.groupware.academy.employee.service.ImageService;
-import spring.project.groupware.academy.util.FileStorageService;
 //import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +31,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/employee")
+//@RequestMapping("/employee")
 public class EmployeeController {
 
     // 사원 Controller
@@ -42,10 +40,10 @@ public class EmployeeController {
     private final ImageService imageService;
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
-    private final FileStorageService fileStorageService;
+
 
     // Create
-    @GetMapping({"/join"})
+    @GetMapping({"/employee/join"})
     public String getJoin(EmployeeDto employeeDto, Model model){
 
         // 연도, 월, 일 데이터를 모델에 추가하여 뷰로 전달
@@ -71,7 +69,7 @@ public class EmployeeController {
         return "employee/join";
     }
 
-    @PostMapping("/join")
+    @PostMapping("/employee/join")
     public String postJoin(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult){
 
         if (bindingResult.hasErrors()) {
@@ -101,14 +99,14 @@ public class EmployeeController {
 //    }
 
     // 인사관리 화면
-    @GetMapping({"/manage"})
+    @GetMapping({"/employee/manage"})
     public String getEmployeeManage(){
         log.info("employee method activated");
         return "employee/manage";
     }
 
     // Read - 사원 목록(admin만 조회 가능)
-    @GetMapping("/employeeList")
+    @GetMapping("/employee/employeeList")
     public String getEmployeeList(
             @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
@@ -142,28 +140,11 @@ public class EmployeeController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        // 모달창으로 사원추가 시 생년월일 기입 위해 필요
-//        List<Integer> birthYears = new ArrayList<>();
-//        for (int year = 2023; year >= 1900; year--) { // 2023부터 1900까지 역순으로 추가
-//            birthYears.add(year);
-//        }
-//        List<Integer> birthMonths = new ArrayList<>();
-//        for (int month = 1; month <= 12; month++) {
-//            birthMonths.add(month);
-//        }
-//        List<Integer> birthDays = new ArrayList<>();
-//        for (int day = 1; day <= 31; day++) {
-//            birthDays.add(day);
-//        }
-//        model.addAttribute("birthYears", birthYears);
-//        model.addAttribute("birthMonths", birthMonths);
-//        model.addAttribute("birthDays", birthDays);
-
         return "employee/employeeList";
     }
 
     // 간단한 사원목록(일반사원 조회 가능)
-    @GetMapping("/simpleEmployeeList")
+    @GetMapping("/employee/simpleEmployeeList")
     public String getSimpleEmployeeList(
             @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
@@ -202,7 +183,7 @@ public class EmployeeController {
 
 
     // Detail - 사원 상세 보기
-    @GetMapping("/detail/{employeeNo}")
+    @GetMapping("/employee/detail/{employeeNo}")
     public String getDetail(@PathVariable("employeeNo") Long employeeNo, Model model,
                             @AuthenticationPrincipal MyUserDetails myUserDetails){
 
@@ -225,7 +206,7 @@ public class EmployeeController {
 
 
     // Update - 회원 수정 화면
-    @GetMapping("/update/{employeeNo}")
+    @GetMapping("/employee/update/{employeeNo}")
     public String getUpdate(@PathVariable("employeeNo") Long employeeNo, EmployeeDto employeeDto, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         if (!myUserDetails.getAuthorities().stream()
@@ -267,12 +248,12 @@ public class EmployeeController {
 
 
     // Update - 실제 실행
-    @PostMapping("/update")
+    @PostMapping("/post/employee/update")
     public String postUpdate(@Valid EmployeeDto employeeDto, BindingResult bindingResult, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
         if (bindingResult.hasErrors()) {
             System.out.println("유효성 검증 관련 오류 발생");
-            return "redirect:/";
+            return "redirect:/employee/update/" + employeeDto.getEmployeeNo();
         }
 
         // 생년월일 정보를 조합하여 하나의 문자열로 만듭니다.
@@ -285,19 +266,17 @@ public class EmployeeController {
 
         if (rs == 1) {
             System.out.println("회원정보 수정 성공");
-
-            return "redirect:/employee/detail/" + employeeDto.getEmployeeNo(); // 수정된 정보를 보여주는 상세 페이지로 이동
+            return "redirect:/employee/detail/" + employeeDto.getEmployeeNo();
 
         } else {
             System.out.println("회원정보 수정 실패");
-//            return "redirect:/";
-            return "employee/employeeList";
+            return "employee/update";
         }
     }
 
 
     // Delete - 사원 삭제(관리자(admin 권한)만 가능)
-    @GetMapping("/delete/{employeeNo}")
+    @GetMapping("/employee/delete/{employeeNo}")
     public String getDelete(@PathVariable("employeeNo") Long employeeNo, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         if (!myUserDetails.getAuthorities().stream()
@@ -322,7 +301,7 @@ public class EmployeeController {
 
 
     // 프로필 이미지 변경 페이지
-    @GetMapping("/updateImage/{employeeNo}")
+    @GetMapping("/employee/updateImage/{employeeNo}")
     public String getUpdateImage(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
@@ -342,7 +321,7 @@ public class EmployeeController {
 
 
     // 정보 수정 전 비밀번호 확인(비밀번호 변경) - 입력 화면
-    @GetMapping("/confirmPassword/password/{employeeNo}")
+    @GetMapping("/employee/confirmPassword/password/{employeeNo}")
     public String getConfirmPasswordView(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
@@ -358,7 +337,7 @@ public class EmployeeController {
     }
 
     // 사원 삭제 전 비밀번호 확인(사원 삭제) - 입력 화면
-    @GetMapping("/confirmPassword/delete/{employeeNo}")
+    @GetMapping("/employee/confirmPassword/delete/{employeeNo}")
     public String getConfirmPasswordDeleteView(@PathVariable("employeeNo") Long employeeNo, Model model,
                                                @AuthenticationPrincipal MyUserDetails myUserDetails){
 
@@ -379,48 +358,48 @@ public class EmployeeController {
     }
 
     // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
-//    @PostMapping("/checkCurrentPassword")
-//    @ResponseBody
-//    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
-//                                                         @RequestParam("employeeNo") Long employeeNo) {
-//
-//        boolean valid = employeeService.checkCurrentPassword(employeeNo, currentPassword);
-//
-//        Map<String, Boolean> response = new HashMap<>();
-//        response.put("valid", valid);
-//        return response;
-//    }
+    @PostMapping("/api/employee/checkCurrentPassword")
+    @ResponseBody
+    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
+                                                         @RequestParam("employeeNo") Long employeeNo) {
+
+        boolean valid = employeeService.checkCurrentPassword(employeeNo, currentPassword);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("valid", valid);
+        return response;
+    }
 
     // 현재 관리자의 비밀번호와 DB에 있는 관리자 비밀번호 일치하는지
-//    @PostMapping("/checkAdminPassword")
-//    @ResponseBody
-//    public Map<String, Boolean> postCheckAdminPassword(@RequestParam("currentPassword") String currentPassword) {
-//
-//        // 현재 로그인한 유저의 정보를 가져옴
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//            String employeeId = userDetails.getUsername();
-//
-//            // username을 이용하여 현재 로그인한 유저의 정보를 가져옴 (UserDetailsService 사용)
-//            MyUserDetails currentUserDetails = (MyUserDetails) userDetailsService.loadUserByUsername(employeeId);
-//
-//            // 현재 입력한 비밀번호와 현재 로그인한 유저의 비밀번호를 비교
-//            boolean valid = passwordEncoder.matches(currentPassword, currentUserDetails.getPassword());
-//
-//            Map<String, Boolean> response = new HashMap<>();
-//            response.put("valid", valid);
-//            return response;
-//        } else {
-//            // 사용자가 로그인하지 않은 경우 또는 인증이 실패한 경우
-//            Map<String, Boolean> response = new HashMap<>();
-//            response.put("valid", false);
-//            return response;
-//        }
-//    }
+    @PostMapping("/api/employee/checkAdminPassword")
+    @ResponseBody
+    public Map<String, Boolean> postCheckAdminPassword(@RequestParam("currentPassword") String currentPassword) {
 
-    @PostMapping("/confirmPassword")
+        // 현재 로그인한 유저의 정보를 가져옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String employeeId = userDetails.getUsername();
+
+            // username을 이용하여 현재 로그인한 유저의 정보를 가져옴 (UserDetailsService 사용)
+            MyUserDetails currentUserDetails = (MyUserDetails) userDetailsService.loadUserByUsername(employeeId);
+
+            // 현재 입력한 비밀번호와 현재 로그인한 유저의 비밀번호를 비교
+            boolean valid = passwordEncoder.matches(currentPassword, currentUserDetails.getPassword());
+
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("valid", valid);
+            return response;
+        } else {
+            // 사용자가 로그인하지 않은 경우 또는 인증이 실패한 경우
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("valid", false);
+            return response;
+        }
+    }
+
+    @PostMapping("/post/employee/confirmPassword")
     public String postConfirmPassword(@RequestParam("currentPassword") String currentPassword,
                                       @RequestParam("employeeNo") Long employeeNo,
                                       EmployeeDto employeeDto){
@@ -435,7 +414,7 @@ public class EmployeeController {
     }
 
     // 비밀번호 변경 페이지
-    @GetMapping("/changePassword/{employeeNo}")
+    @GetMapping("/employee/changePassword/{employeeNo}")
     public String getChangePasswordPage(@PathVariable("employeeNo") Long employeeNo, Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
         if (!myUserDetails.getEmployeeEntity().getEmployeeNo().equals(employeeNo)) {
@@ -447,11 +426,11 @@ public class EmployeeController {
         model.addAttribute("employeeNo", employeeNo);
         model.addAttribute("employee", employee);
 
-        return "employee/changePassword"; // changePassword.html 페이지로 이동
+        return "employee/changePassword";
     }
 
     // 비밀번호 변경 실행
-    @PostMapping("/changePassword")
+    @PostMapping("/post/employee/changePassword")
     public String postChangePassword(@RequestParam("employeeNo") Long employeeNo,
                                      @RequestParam("currentPassword") String currentPassword,
                                      @RequestParam("newPassword") String newPassword,
