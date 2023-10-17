@@ -8,7 +8,7 @@
 <div id="loadedContent">
 <h1>게시물 수정</h1>
 <div>
-  <form id="updateForm" th:action="@{'/api/boards/'+${board.id}}" method="post">
+  <form id="updateForm" th:action="@{'/api/boards/'+${board.id}}" method="post" data-ajax>
 
     <div>
       <label for="title">제목:</label>
@@ -26,13 +26,12 @@
     <button type="submit">게시물 수정</button>
   </form>
 </div>
-<a href="/boards/list">게시판 목록으로 돌아가기</a>
+  <a href="/boards/list" id="redirection" data-ajax>게시판 목록으로 돌아가기</a>
 
 <script th:inline="javascript">
     let id = /*[[${board.id}]]*/ null; // 상세 페이지에서 id를 JavaScript 변수에 할당
-</script>
 
-<script>
+
 const updateForm = document.getElementById('updateForm');
 updateForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -54,7 +53,8 @@ updateForm.addEventListener('submit', (e) => {
     .then(response => {
         if (response.status === 200) {
             alert('게시물이 성공적으로 수정되었습니다.');
-            window.location.href = '/boards/list';
+                           const redirection = document.getElementById('redirection');
+                redirection.click();
         } else if (response.status === 404) {
             alert('게시물 수정에 실패했습니다. 게시물이 존재하지 않습니다.');
         } else {

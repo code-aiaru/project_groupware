@@ -88,16 +88,19 @@ public class BoardService {
         }
     }
 
-    public boolean validatePassword(Long id,String clientPassword) {
+    public boolean validatePassword(Long id, String clientPassword) {
         Optional<BoardEntity> optionalBoard = boardRepository.findById(id);
 
-        String pw = optionalBoard.get().getBoardPw();
-        if (pw.equals(clientPassword)) {
-            return true;
+        if (optionalBoard.isPresent()) {
+            String storedPassword = optionalBoard.get().getBoardPw();
+
+            // 비밀번호 일치 여부를 검사합니다.
+            if (storedPassword.equals(clientPassword)) {
+                return true;
+            }
         }
         return false;
     }
-
 
     public Page<BoardDto> getBoardsByPage(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
