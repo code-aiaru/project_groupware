@@ -44,16 +44,30 @@ public class Board {
         Page<BoardDto> boardPage = boardService.getBoardsByPage(page, pageSize);
         return ResponseEntity.ok(boardPage);
     }
+    @GetMapping("/{id}")
+    public BoardDto detail(@PathVariable Long id) {
+        return boardService.getBoardById(id);
+    }
 
     @PostMapping
     public BoardDto createBoard(@RequestBody BoardDto boardDTO) {
         return boardService.createBoard(boardDTO);
     }
 
-    @GetMapping("/{id}")
-    public BoardDto detail(@PathVariable Long id) {
-        return boardService.getBoardById(id);
+    @PostMapping("/verify/{id}")
+    public String verifyPassword(@PathVariable Long id, HttpSession session, @RequestParam String clientPassword) {
+        boolean isPasswordValid = boardService.validatePassword(id, clientPassword);
+        if (isPasswordValid) {
+
+            session.setAttribute("editPageId",id);// 세션에 id 저장
+            session.setAttribute("clientPassword", clientPassword); // 세션에 clientPassword 저장
+            return "success";
+        } else {
+            return "error"; // 비밀번호가 일치하지 않는 경우
+        }
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateBoard(@PathVariable Long id, @RequestBody BoardDto boardDTO ,HttpSession session) {
