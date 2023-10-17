@@ -58,4 +58,25 @@ $(function(){
             alert('신규 비밀번호는 알파벳, 특수문자, 숫자를 최소 하나씩 포함하고 최소 8자 이상 입력해야 합니다.');
         }
     });
+
+    $('form').submit(function (event) {
+        event.preventDefault(); // 기본 제출 방지
+
+        var formData = $(this).serialize();
+
+        $.ajax({
+          type: 'POST',
+          url: '/post/employee/changePassword',
+          data: formData,
+          success: function (response) {
+            console.log(response);
+
+            const redirection = document.getElementById('redirection');
+            redirection.click();
+          },
+          error: function (error) {
+            console.error("Error:", error);
+          }
+        });
+    });
 });

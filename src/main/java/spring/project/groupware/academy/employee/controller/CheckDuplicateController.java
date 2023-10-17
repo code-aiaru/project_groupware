@@ -114,48 +114,6 @@ public class CheckDuplicateController {
     }
 
 
-    // 관리자 비밀번호 확인
-    @PostMapping("/checkAdminPassword")
-    @ResponseBody
-    public Map<String, Boolean> postCheckAdminPassword(@RequestParam("currentPassword") String currentPassword) {
-
-        // 현재 로그인한 유저의 정보를 가져옴
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String employeeId = userDetails.getUsername();
-
-            // username을 이용하여 현재 로그인한 유저의 정보를 가져옴 (UserDetailsService 사용)
-            MyUserDetails currentUserDetails = (MyUserDetails) userDetailsService.loadUserByUsername(employeeId);
-
-            // 현재 입력한 비밀번호와 현재 로그인한 유저의 비밀번호를 비교
-            boolean valid = passwordEncoder.matches(currentPassword, currentUserDetails.getPassword());
-
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("valid", valid);
-            return response;
-        } else {
-            // 사용자가 로그인하지 않은 경우 또는 인증이 실패한 경우
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("valid", false);
-            return response;
-        }
-    }
-
-    // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
-    @PostMapping("/checkCurrentPassword")
-    @ResponseBody
-    public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
-                                                         @RequestParam("employeeNo") Long employeeNo) {
-
-        boolean valid = employeeService.checkCurrentPassword(employeeNo, currentPassword);
-
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("valid", valid);
-        return response;
-    }
-
 
 
 }

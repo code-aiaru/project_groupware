@@ -42,8 +42,8 @@
   document.getElementById('upload-button').addEventListener('click', function(event) {
       if (!showConfirmationPopup()) {
           event.preventDefault(); // 확인을 선택하지 않은 경우 폼 제출을 막음
-        }
-      });
+      }
+  });
 
   // 이미지가 삭제되었는지 확인하는 함수
   function isImageDeleted() {
@@ -140,6 +140,7 @@ function uploadDefaultImage() {
     if (response.ok) {
       // 기본 이미지 업로드 성공 시 처리
       console.log('기본 이미지 업로드 성공');
+      document.getElementById('redirection').click();
     } else {
       // 기본 이미지 업로드 실패 시 처리
       console.error('기본 이미지 업로드 실패');

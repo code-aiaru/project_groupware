@@ -18,7 +18,7 @@
       <div class="title">
         <h1><span th:text="${employeeDto.employeeName}" ></span>님 정보 수정</h1>
       </div>
-      <form th:action="@{/employee/update}" method="post" th:object="${employeeDto}" onsubmit="return onSubmitForm()">
+      <form th:action="@{/post/employee/update}" method="post" th:object="${employeeDto}">
         <ul>
           <li>
             사원번호 : <input type="text" name="employeeNo" th:value="${employeeDto.employeeNo}" id="employeeNo" readonly> <br>
@@ -122,6 +122,7 @@
           <input type="submit" value="수정실행">
 <!--          <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax><button type="button">비밀번호 변경</button></a>-->
           <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax>비밀번호 변경</a>
+          <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" id="redirection" data-ajax style="display: none;"></a>
         </ul>
       </form>
     </div>
@@ -141,6 +142,28 @@
   }
   // 페이지 로드 시 유효성 검사 수행
   window.onload = validateBirth;
+
+  // form 제출 시 리디렉트 수행
+  $('form').submit(function (event) {
+    event.preventDefault(); // 기본 제출 방지
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: 'POST',
+      url: '/post/employee/update',
+      data: formData,
+      success: function (response) {
+        console.log(response);
+
+        const redirection = document.getElementById('redirection');
+        redirection.click();
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      }
+    });
+  });
 </script>
 </body>
 </html>
