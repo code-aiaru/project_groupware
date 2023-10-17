@@ -2,6 +2,9 @@ package spring.project.groupware.academy.board.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import spring.project.groupware.academy.board.dto.BoardDto;
 import spring.project.groupware.academy.board.entity.BoardEntity;
@@ -94,4 +97,32 @@ public class BoardService {
         }
         return false;
     }
+
+
+    public Page<BoardDto> getBoardsByPage(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<BoardEntity> boardPage = boardRepository.findAll(pageable);
+
+        if (boardPage.isEmpty()) {
+            // 로깅: log.error("게시물 목록이 없습니다.");
+            throw new IllegalArgumentException("게시물 목록이 없습니다.");
+        }
+
+        return boardPage.map(this::convertToDto);
     }
+    private BoardDto convertToDto(BoardEntity boardEntity) {
+        return BoardDto.builder()
+                .id(boardEntity.getId())
+                .title(boardEntity.getTitle())
+                .content(boardEntity.getContent())
+                .writer(boardEntity.getWriter())
+                .boardPw(boardEntity.getBoardPw())
+                .build();
+    }
+
+
+
+
+
+
+}

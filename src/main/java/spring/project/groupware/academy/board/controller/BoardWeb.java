@@ -1,6 +1,7 @@
 package spring.project.groupware.academy.board.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +35,11 @@ public class BoardWeb {
     }
 
     @GetMapping("/list")
-    public String showBoardList(Model model) {
-        List<BoardDto> boards = boardService.getAllBoards();
-        model.addAttribute("boardList", boards);
-        return "boards/list";
+    public String showBoardList(@RequestParam(defaultValue = "1") int page, Model model) {
+        int pageSize = 10; // 페이지당 보여줄 게시물 수
+        Page<BoardDto> boardPage = boardService.getBoardsByPage(page, pageSize);
+        model.addAttribute("boardPage", boardPage);
+        return "boards/list"; // Thymeleaf 템플릿 파일의 이름
     }
 
 

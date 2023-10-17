@@ -1,5 +1,6 @@
 package spring.project.groupware.academy.board.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +38,11 @@ public class Board {
         this.randomNameGenerator = randomNameGenerator;
     }
 
-    @GetMapping
-    public List<BoardDto> getAllBoards() {
-        return boardService.getAllBoards();
+    @GetMapping("/{page}")
+    public ResponseEntity<Page<BoardDto>> getBoardsByPage(@PathVariable int page) {
+        int pageSize = 10; // 페이지당 보여줄 게시물 수
+        Page<BoardDto> boardPage = boardService.getBoardsByPage(page, pageSize);
+        return ResponseEntity.ok(boardPage);
     }
 
     @PostMapping
