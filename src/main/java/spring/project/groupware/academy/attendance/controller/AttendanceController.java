@@ -59,12 +59,16 @@ public class AttendanceController {
 
     //    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @GetMapping("/list2")
-    public String attPageList(@PageableDefault(page = 0, size = 30, sort = "id",
-            direction = Sort.Direction.DESC) Pageable pageable,
-                              @RequestParam(value = "subject", required = false) String subject,
-                              @RequestParam(value = "term", required = false) String term,
-                              Model model){
-        Page<AttendanceDto> attPageList = attendanceService.attendancePagingList(pageable, subject, term);
+    public String attPageList1(@PageableDefault(page = 0, size = 30, sort = "attDate",
+            direction = Sort.Direction.ASC) Pageable pageable,
+                               @RequestParam(value = "subject", required = false) String subject,
+                               @RequestParam(value = "set", required = false) String set,
+                               @RequestParam(value = "first", required = false) String first,
+                               @RequestParam(value = "last", required = false) String last,
+                               Model model){
+
+
+        Page<AttendanceDto> attPageList = attendanceService.attendancePagingList1(pageable, subject, set,first, last);
 
         Long totalCount = attPageList.getTotalElements();
         int pagesize = attPageList.getSize();
@@ -90,6 +94,45 @@ public class AttendanceController {
         return "/attendanceList2";
     }
 
+////    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+//    @GetMapping("/list2")
+//    public String attPageList2(@PageableDefault(page = 0, size = 30, sort = "attDate",
+//            direction = Sort.Direction.ASC) Pageable pageable,
+//            @PathVariable("id") Long id,
+//            @RequestParam(value = "subject", required = false) String subject,
+//            @RequestParam(value = "set", required = false) String set,
+//            @RequestParam(value = "first", required = false) String first,
+//            @RequestParam(value = "last", required = false) String last,
+//            Model model){
+//
+//
+//        Page<AttendanceDto> attPageList = attendanceService.attendancePagingList2(pageable, id, subject, set,first, last);
+//
+//        Long totalCount = attPageList.getTotalElements();
+//        int pagesize = attPageList.getSize();
+//        int nowPage = attPageList.getNumber();
+//        int totalPage = attPageList.getTotalPages();
+//        int blockNum = 5;
+//
+//        int startPage =
+//                (int) ((Math.floor(nowPage / blockNum) * blockNum) + 1 <= totalPage ? (Math.floor(nowPage / blockNum) * blockNum) + 1 : totalPage);
+//        int endPage =
+//                (startPage + blockNum - 1 < totalPage ? startPage + blockNum - 1 : totalPage);
+//        for (int i = startPage; i <= endPage; i++) {
+//            System.out.println(i + " , ");
+//        }
+//
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("attPageNo", attPageList);
+//
+//
+//        model.addAttribute("attPageList", attPageList);
+//
+//        return "/attendanceList2";
+//    }
+
+
 //    @GetMapping("/sick/{id}")
 //    public String sickAttendG() {
 //        return "";
@@ -104,20 +147,6 @@ public class AttendanceController {
 //    public void vacationAttend() {
 //        attendanceService.vacationAttend();
 //    }
-
-
-
-//    @PostMapping("/sick")
-//    public void sickAttend() {
-//        attendanceService.sickAttend(LocalDateTime.now());
-//    }
-
-//    @PostMapping("/vacation")
-//    public void vacationAttend() {
-//        attendanceService.vacationAttend(LocalDateTime.now());
-//    }
-
-
 
 
 }

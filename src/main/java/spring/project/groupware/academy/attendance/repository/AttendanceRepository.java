@@ -15,7 +15,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
+public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
+
 
 //    // 정상 작동함
 //    List<Attendance> findByAttDate(LocalDate now);
@@ -74,6 +75,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
 
     // 해당 사원 정해진 기간동안 출결 조회     >> 상세 누르면 나오는 부분 // 일단 detail
     List<Attendance> findByEmployeeAndAttDateBetween(EmployeeEntity employee, LocalDate date1, LocalDate date2);
+    Page<Attendance> findByEmployeeAndAttDateBetween(Pageable pageable, EmployeeEntity employee, LocalDate date1, LocalDate date2);
 
 //    List<Attendance> findByAttendanceStatusContains(@Param("attendanceStatus")AttendanceStatus attendanceStatus);
 
@@ -95,11 +97,41 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
     @Query("SELECT a FROM Attendance a WHERE (a.attendanceStatus =:attStatus1 OR a.attendanceStatus =:attStatus2 ) AND a.attDate BETWEEN :startDate AND :endDate")
     List<Attendance> customAttDate(@Param("attStatus1") AttendanceStatus attStatus1, @Param("attStatus2") AttendanceStatus attStatus2, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+    //추가 예시 msql
+    // 해당 사원 , 설정한 출근상태 기준으로, 정해진 기간1 ~ 기간2 까지
+    //select * from attendance where employee_no='3' and attendance_status = 'OUT' and att_date between '2023-10-01' and '2023-10-10';
+    List<Attendance> findByEmployeeAndAttendanceStatusAndAttDateBetween(EmployeeEntity emp, AttendanceStatus attendanceStatus, LocalDate of, LocalDate of1);
+    // paging
+    Page<Attendance> findByEmployeeAndAttendanceStatusAndAttDateBetween(Pageable pageable, EmployeeEntity emp, AttendanceStatus attendanceStatus, LocalDate of, LocalDate of1);
+
+    Page<Attendance> findByEmployeeAndAttendanceStatus(Pageable pageable, EmployeeEntity emp, AttendanceStatus attendanceStatus);
+
+    Page<Attendance> findAllByEmployee(Pageable pageable, EmployeeEntity employee);
+
     //nativeQuery
     //nativeQuery = true
 //    @Modifying
 //    @Query(value = "SELECT * FROM attendance WHERE (attendance_status = :attStatus1 OR attendance_status = :attStatus2) AND att_date BETWEEN :attDate1 AND :attDate2")
 //    List<Attendance> customAttDate(@Param("attStatus1") String attStatus1, @Param("attStatus2") String attStatus2, @Param("attDate1") LocalDate date1, @Param("attDate2") LocalDate date2);
+
+
+//    쿼리메서드,네이티브,jpql, 쿼리dsl
+////    @Transactional
+
+
+//    select count(*) from Attendance where 출석=:1 and 날짜~ 비트윈 ~날짜
+
+//    countBy, existsBy
+//    Long countByAttDate(String AttDate);
+//    boolean existsByAttDate(String str);
+
+//    SELECT *
+//    FROM dept a
+//    WHERE a.deptno IN (20, 30, 40)
+//    AND EXISTS (SELECT 1
+//            FROM emp b
+//            WHERE b.sal between 500 and 1300
+//            AND b.deptno = a.deptno)
 
 
 }

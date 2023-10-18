@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>근태관리 리스트</title>
+    <link rel="stylesheet" th:href="@{/css/attendance/attendanceList2.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/attendance/attendanceList.js}" defer="defer"></script>
+</head>
+<body>
+<div id="loadedContent">
+    <div class="container">
+        <div class="attendanceList">
+            <div class="attendanceList-con">
+                <div class="search">
+                    <div class="search-con">
+                        <form th:action="@{/attendance/list2}" method="get" class="search">
+                            <select name="subject" id="subject" th:value="${param.subject}">
+                                <option value="ALL">전체</option>
+                                <option value="IN">출근</option>
+                                <option value="OUT">퇴근</option>
+                                <option value="OUTING">외출</option>
+                                <option value="ABSENT">결석</option>
+                                <option value="SICK">병가</option>
+                                <option value="VACATION">휴가</option>
+                            </select>
+
+                            <select name="set" id="set" th:value="${param.set}">
+                                <option value="0">전체</option>
+                                <option value="99">직접입력</option>
+                                <option value="100">오늘</option>
+                                <option value="77">일주일</option>
+                                <option value="30">한달</option>
+                                <option value="90">세달</option>
+                                <option value="1">1월</option>
+                                <option value="2">2월</option>
+                                <option value="3">3월</option>
+                                <option value="4">4월</option>
+                                <option value="5">5월</option>
+                                <option value="6">6월</option>
+                                <option value="7">7월</option>
+                                <option value="8">8월</option>
+                                <option value="9">9월</option>
+                                <option value="10">10월</option>
+                                <option value="11">11월</option>
+                                <option value="12">12월</option>
+                            </select>
+                            <!--            표현식설정-->
+                            <!--                        <input type="text" name="first" id="first" th:value="${param.first}" placeholder="시작일">-->
+                            <!--                        <input type="text" name="last" id="last" th:value="${param.last}" placeholder="끝일">-->
+
+                            <input type="date" name="first" id="first" th:value="${param.first}" placeholder="시작일">
+                            <!--                        min="2019-09-10" max="2019-09-25"-->
+                            <input type="date" name="last" id="last" th:value="${param.last}" placeholder="끝일">
+                            <!--                        min="2019-09-10" max="2019-09-25"-->
+                            <input type="submit" value="검색">
+                        </form>
+                    </div>
+                </div>
+
+
+                <table>
+                    <thead>
+                    <tr class="th1">
+                        <th colspan="8">근태 페이징 리스트</th>
+                        <!--                    <br>-->
+                        <!--                    <th colspan="8"><a th:href="@{/attendance/list}">근태 일반 리스트</a></th>-->
+                    </tr>
+                    <tr class="th2">
+                        <th> id</th>
+                        <th> 사원</th>
+                        <th> 날짜</th>
+                        <th> 출근시간</th>
+                        <th> 퇴근시간</th>
+                        <th> 출결상태</th>
+                        <!--                    <th>출근</th>-->
+                        <!--                    <th>퇴근</th>-->
+                        <th>상세</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="attendance :${attPageList}">
+                        <td th:text="${attendance.id}"></td>
+                        <td th:text="${attendance.employee.employeeName}"></td>
+                        <td th:text="${attendance.attDate}"></td>
+                        <td th:text="${#temporals.format(attendance.inAtt, 'yy.MM.dd/HH:mm')}"></td>
+                        <td th:text="${#temporals.format(attendance.outAtt, 'yy.MM.dd/HH:mm')}"></td>
+                        <td th:text="${attendance.attendanceStatus}"></td>
+                        <!--            <td th:text="${#temporals.format(attendance, 'yy-MM-dd HH:mm')}"></td>-->
+                        <!--            <td th:text="${#temporals.format(attendance, 'yy-MM-dd HH:mm')}"></td>-->
+                        <!--            <a th:href="@{/attendance/in/{id}(id=${#authentication.principal.employee.id})}">출근</a>-->
+                        <!--            <a th:href="@{/attendance/out/{id}(id=${#authentication.principal.employee.id})}">퇴근</a>-->
+                        <td>
+                            <!--                <a th:href="@{/attendance/in/{id}(id=${#authentication.principal.employee.id})}">출근</a>-->
+                            <!--                <a th:href="@{/attendance/out/{id}(id=${#authentication.principal.employee.id})}">퇴근</a>-->
+                            <!--                <a th:href="@{/attendance/detail/{id}(id=${#authentication.principal.employee.id})}">상세</a>-->
+                            <a th:href="@{/attendance/in/{id}(id=${attendance.id})}">출근</a>
+                            <a th:href="@{/attendance/out/{id}(id=${attendance.id})}">퇴근</a>
+                            <a th:href="@{/attendance/detail/{id}(id=${attendance.id})}">상세(이번달)</a>
+                            <!--                <a th:href="@{/attendance/vacation/{id}(id=${attendance.employee.employeeNo})}">휴가</a>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="paging">
+                    <ul>
+                        <li>
+                            <span th:if="${1==attPageNo.pageable.pageNumber+1}" class="span0">처음</span>
+                            <span th:unless="${1==attPageNo.pageable.pageNumber+1}">
+                                    <a th:href="@{/attendance/list2(page=0,set=${param.set} ,subject=${param.subject})}"
+                                       class="span1">처음</a>
+                                    </span>
+                        </li>
+
+                        <li>
+                            <!-- 첫페이지 -->
+                            <span th:if="${1==attPageNo.pageable.pageNumber+1}" class="span0">이전</span>
+                            <span th:unless="${1==attPageNo.pageable.pageNumber+1}">
+                                        <a th:href="@{/attendance/list2(page=${attPageNo.pageable.pageNumber-1},set=${param.set} ,subject=${param.subject})}"
+                                           class="span1">이전</a>
+                                     </span>
+                        </li>
+
+
+                        <li th:each="i : ${#numbers.sequence(startPage, endPage)}" class="block">
+                                    <span th:if="${i == attPageNo.pageable.pageNumber+1}" th:text="${i}"
+                                          class="now"></span>
+
+                            <a th:unless="${i == attPageNo.pageable.pageNumber+1}"
+                               th:href="@{/attendance/list2(page=${i - 1},set=${param.set} ,subject=${param.subject})}"
+                               th:text="${i}"></a>
+                        </li>
+
+                        <li>
+                        <span th:if="${attPageNo.totalPages == attPageNo.pageable.pageNumber + 1}"
+                              class="span0">다음</span>
+
+                            <span th:unless="${attPageNo.totalPages == attPageNo.pageable.pageNumber + 1}">
+                            <a th:href="@{/attendance/list2(page=${attPageNo.pageable.pageNumber + 1},set=${param.set} ,subject=${param.subject} )}"
+                               class="span1">다음</a>
+                        </span>
+                        </li>
+
+
+                        <li>
+                        <span th:if="${attPageNo.totalPages == attPageNo.pageable.pageNumber + 1}"
+                              class="span0">끝</span>
+
+                            <span th:unless="${attPageNo.totalPages == attPageNo.pageable.pageNumber+1}">
+                            <a th:href="@{/attendance/list2(page=${attPageNo.totalPages}-1,set=${param.set} ,subject=${param.subject})}"
+                               class="span1">끝</a>
+                        </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
