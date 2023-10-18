@@ -49,4 +49,25 @@ public class ApprovalUserService  {
         }
         return approvalUserDtoList;
     }
+
+    public void approvalUserUpdate(List<ApprovalUserDto> approvalUserDtoList, Long approvalId) {
+        for(ApprovalUserDto approvalUserDto : approvalUserDtoList){
+            ApprovalEntity approvalEntity = approvalRepository.findById(approvalId).orElseThrow(()->{
+                throw new IllegalArgumentException("결제메일 존재하지 않음");
+            });
+            EmployeeEntity employeeEntity = employeeRepository.findById(approvalUserDto.getId()).orElseThrow(()->{
+                throw new IllegalArgumentException("회원 존재하지 않음");
+            });
+            ApprovalUserEntity approvalUserEntity = approvalUserRepository.findByNo(approvalEntity.getId(), employeeEntity.getEmployeeNo()).orElseThrow(()->{
+                throw new IllegalArgumentException("결재선 존재하지 않음");
+            });
+
+            approvalUserRepository.save(ApprovalUserEntity.builder()
+                    .id(approvalUserEntity.getId())
+                    .Ap(approvalUserDto.getAp())
+                    .approvalEntity(approvalEntity)
+                    .employeeEntity(employeeEntity)
+                    .build());
+        }
+    }
 }

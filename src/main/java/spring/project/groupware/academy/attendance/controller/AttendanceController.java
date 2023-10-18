@@ -91,7 +91,7 @@ public class AttendanceController {
 
         model.addAttribute("attPageList", attPageList);
 
-        return "/attendanceList2";
+        return "/attendance/attendanceList2";
     }
 
 ////    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")

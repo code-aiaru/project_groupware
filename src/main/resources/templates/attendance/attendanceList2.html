@@ -16,7 +16,7 @@
             <div class="attendanceList-con">
                 <div class="search">
                     <div class="search-con">
-                        <form th:action="@{/attendance/list2}" method="get" class="search">
+                        <form th:action="@{/attendance/list2}" method="get" class="search" data-ajax>
                             <select name="subject" id="subject" th:value="${param.subject}">
                                 <option value="ALL">전체</option>
                                 <option value="IN">출근</option>
@@ -83,7 +83,7 @@
                     <tbody>
                     <tr th:each="attendance :${attPageList}">
                         <td th:text="${attendance.id}"></td>
-                        <td th:text="${attendance.employee.employeeName}"></td>
+                        <td th:text="${attendance.employee?.employeeName}"></td>
                         <td th:text="${attendance.attDate}"></td>
                         <td th:text="${#temporals.format(attendance.inAtt, 'yy.MM.dd/HH:mm')}"></td>
                         <td th:text="${#temporals.format(attendance.outAtt, 'yy.MM.dd/HH:mm')}"></td>

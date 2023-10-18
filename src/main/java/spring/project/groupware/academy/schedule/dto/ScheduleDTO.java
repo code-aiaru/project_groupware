@@ -1,6 +1,7 @@
 package spring.project.groupware.academy.schedule.dto;
 
 import lombok.*;
+import spring.project.groupware.academy.employee.entity.EmployeeEntity;
 import spring.project.groupware.academy.schedule.entity.ScheduleEntity;
 
 import java.time.LocalDateTime;
@@ -12,34 +13,35 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ScheduleDTO {
 
-    private Long id;
+    private Integer id;
     private String title;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private String target;
+    private String start;
+    private String end;
+    private Boolean allDay;
+    private String color;
+
     private LocalDateTime createTime; // from BaseEntity
     private LocalDateTime updateTime; // from BaseEntity
 
+    private EmployeeEntity employeeEntity;
+
     // getters and setters
 
-    public static ScheduleDTO fromEntity(ScheduleEntity scheduleEntity) {
-        ScheduleDTO dto = new ScheduleDTO();
-        dto.setId(scheduleEntity.getId());
-        dto.setTitle(scheduleEntity.getTitle());
-        dto.setStart(scheduleEntity.getStart());
-        dto.setEnd(scheduleEntity.getEnd());
-        dto.setCreateTime(scheduleEntity.getCreateTime());
-        dto.setUpdateTime(scheduleEntity.getUpdateTime());
-        return dto;
+    public static ScheduleDTO toDTO(ScheduleEntity scheduleEntity) {
+        ScheduleDTO scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setId(scheduleEntity.getId());
+        scheduleDTO.setTitle(scheduleEntity.getTitle());
+        scheduleDTO.setTarget(scheduleEntity.getTarget());
+        scheduleDTO.setStart(scheduleEntity.getStart());
+        scheduleDTO.setEnd(scheduleEntity.getEnd());
+        scheduleDTO.setAllDay(scheduleEntity.getAllDay());
+        scheduleDTO.setColor(scheduleEntity.getColor());
+        scheduleDTO.setCreateTime(scheduleEntity.getCreateTime());
+        scheduleDTO.setUpdateTime(scheduleEntity.getUpdateTime());
+        return scheduleDTO;
     }
 
-    public ScheduleEntity toEntity() {
-        ScheduleEntity scheduleEntity = new ScheduleEntity();
-        scheduleEntity.setId(this.id);
-        scheduleEntity.setTitle(this.title);
-        scheduleEntity.setStart(this.start);
-        scheduleEntity.setEnd(this.end);
-        // Note: createTime and updateTime should be managed by JPA, not set manually
-        return scheduleEntity;
-    }
+
 
 }

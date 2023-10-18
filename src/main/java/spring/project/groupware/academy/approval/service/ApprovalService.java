@@ -104,4 +104,20 @@ public class ApprovalService {
         }
         return 0;
     }
+
+    public Long approvalUpdate(ApprovalDto approvalDto, String employeeId) {
+        EmployeeEntity employeeEntity = employeeRepository.findByEmployeeId(employeeId).orElseThrow(()->{
+            throw new IllegalArgumentException("회원 존재하지 않음");
+        });
+
+        Long approvalId = approvalRepository.save(ApprovalEntity.builder()
+                .Id(approvalDto.getId())
+                .ApprovalStatus("대기")
+                .ApprovalTitle(approvalDto.getApprovalTitle())
+                .ApprovalContent(approvalDto.getApprovalContent())
+                .employeeEntity(employeeEntity)
+                .build()).getId();
+
+        return approvalId;
+    }
 }
