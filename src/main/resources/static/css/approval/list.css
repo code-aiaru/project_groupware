@@ -1,0 +1,73 @@
+@import url(/css/common/reset.css);
+
+/* paging */
+.paging{
+    display: flex;
+    justify-content: center;
+    padding: 30px 0 30px 0;
+}
+
+.paging >ul{
+    display: flex;
+    justify-content: space-between;
+}
+
+.paging >ul >li a{
+    background:#0A2647;
+    color:#FFF;
+    margin-right:.6em;
+    text-decoration:none;
+    font-size:14px;
+    font-style:italic;
+
+    text-align:center;
+    padding: 5px 10px;
+    -moz-border-radius:36px;
+    -webkit-border-radius:36px;
+    border-radius:36px;
+}
+
+.paging >ul >li .span0{
+    background:#c7cdda;
+    color:#FFF;
+    margin-right:.6em;
+    text-decoration:none;
+    font-size:14px;
+    font-style:italic;
+
+    text-align:center;
+    padding: 5px 10px;
+    -moz-border-radius:36px;
+    -webkit-border-radius:36px;
+    border-radius:36px;
+}
+
+.paging >ul >li .now{
+    background: #BB2525;
+    color:#FFF;
+    margin-right:.6em;
+    text-decoration:none;
+    font-size:14px;
+    font-style:italic;
+
+    text-align:center;
+    padding: 5px 10px;
+    -moz-border-radius:36px;
+    -webkit-border-radius:36px;
+    border-radius:36px;
+}
+
+.paging >ul >li a:hover{
+    background:#BB2525;
+    color:#FFF;
+    margin-right:.6em;
+    text-decoration:none;
+    font-size:14px;
+    font-style:italic;
+    line-height:0;
+    text-align:center;
+    padding: 5px 10px;
+    -moz-border-radius:36px;
+    -webkit-border-radius:36px;
+    border-radius:36px;
+}

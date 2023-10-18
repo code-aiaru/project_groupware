@@ -74,7 +74,7 @@ public class ApprovalController {
 
 
     @GetMapping({"/approval/write"})
-    public String getwrite(@PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+    public String getwrite(@PageableDefault(page=0, size=10, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
                            @RequestParam(value = "subject", required = false) String subject,
                            @RequestParam(value = "search", required = false) String search,
                            ApprovalDto approvalDto, Model model) {
@@ -117,8 +117,16 @@ public class ApprovalController {
             approvalUserDtoList.add(modifiedApprovalUser);
         }
         String employeeId = myUserDetails.getUsername();
-        Long approvalId = approvalService.approvalWrite(approvalDto, employeeId);
-        approvalUserService.approvalUserCreate(approvalUserDtoList, approvalId);
+        Long approvalDtoId = approvalDto.getId();
+        Long approvalId;
+
+        if(approvalDtoId==null) {
+            approvalId = approvalService.approvalWrite(approvalDto, employeeId);
+            approvalUserService.approvalUserCreate(approvalUserDtoList, approvalId);
+        }else {
+            approvalId = approvalService.approvalUpdate(approvalDto, employeeId);
+            approvalUserService.approvalUserUpdate(approvalUserDtoList, approvalId);
+        }
 
         return "redirect:/approval/list/create";
     }
@@ -160,5 +168,21 @@ public class ApprovalController {
             System.out.println(("수정 Fail!"));
         }
         return "redirect:/approval/detail/"+approvalId;
+    }
+
+    @GetMapping({"/approval/update/{id}"})
+    public String getupdate(@PathVariable("id") Long id,
+                            @AuthenticationPrincipal MyUserDetails myUserDetails,
+                            @PageableDefault(page=0, size=10, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+                            @RequestParam(value = "subject", required = false) String subject,
+                            @RequestParam(value = "search", required = false) String search,
+                            Model model) {
+        ApprovalDto approvalDto = approvalService.approvalDetail(id);
+        subject="";
+        search="";
+        Page<EmployeeDto> employeeDtoPage = employeeService.employeeList(pageable, subject, search);
+        model.addAttribute("employeePage", employeeDtoPage);
+        model.addAttribute("approvalDto", approvalDto);
+        return "approval/write";
     }
 }
