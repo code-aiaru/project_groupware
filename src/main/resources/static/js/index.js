@@ -33,18 +33,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(event) {
         // input[type="submit"] 요소를 클릭한 경우를 확인
         if (event.target.tagName === 'INPUT' && event.target.type === 'submit') {
-            event.preventDefault();
-    
             // 부모 폼 요소를 찾습니다.
             const form = event.target.closest('form');
     
-            if (form) {
+            // 폼이 있고, method가 GET인 경우에만 작동합니다.
+            if (form && form.method.toUpperCase() === 'GET') {
+                event.preventDefault();
+                
                 const actionUrl = form.getAttribute('action');
                 let formData = new FormData(form);
                 let queryString = new URLSearchParams(formData).toString();
-
+    
                 let formRequestUrl = actionUrl + '?' + queryString;
-
+    
                 if (formRequestUrl) {
                     console.log(formRequestUrl);
                     resetLoadedElements();
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
 
 
 
