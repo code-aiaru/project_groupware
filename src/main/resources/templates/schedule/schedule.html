@@ -12,13 +12,84 @@
     <script src="/js/schedule/schedule.js"></script>
 
 </head>
-
 <body>
 
     <div class="schedule_root" id="loadedContent">
+       
         <div id="calendar"></div>
+        
+
+        <div class="context-menu" id="context-menu">
+            <button data-role = "addSchedule">
+                <div>
+                    <img src="/images/schedule/plus.svg" alt="추가 아이콘">
+                    <span>일정추가</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="modal" id="modal">
+            <div class="modal_contents">
+                <div class="modal-title">
+                    <span>일정 추가</span>
+                </div>
+                <div class="time-info">
+                    <div>
+                        <span>시작시간</span>
+                        <input type="date" class="start-date">
+                        <input type="time" class="start-time">
+                    </div>
+                    <div>
+                        <img src="/images/schedule/chevron-right.svg" alt="방향 아이콘">
+                    </div>
+                    <div>
+                        <span>종료시간</span>
+                        <input type="date" class="end-date">
+                        <input type="time" class="end-time">
+                    </div>
+                </div>
+
+                <div class="modal_body">
+                    <div class="isAllDay">
+                        <input type="checkbox" id="schedule-isAllDay">
+                        <span>하루종일</span>
+                    </div>
+                    <div>
+                        <span>일정명</span>
+                        <input type="text" class="schedule-name" id="schedule-name">
+                    </div>
+                    <div>
+                        <span>공지대상</span>
+                        <select name="target" class="select" id="schedule-target">
+                            <option disabled selected>대상선택</option>
+                            <option value="all">전체</option>
+                            <option value="admin">관리자</option>
+                            <option value="employee">사원</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span>색상</span>
+                        <select name="color" class="select" id="schedule-color">
+                            <option disabled selected>색상선택</option>
+                            <option value="red">빨간색</option>
+                            <option value="orange">주황색</option>
+                            <option value="yellow">노란색</option>
+                            <option value="green">초록색</option>
+                            <option value="blue">파란색</option>
+                            <option value="navy">남색</option>
+                            <option value="purple">보라색</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal_submit">
+                    <button id="submit-schedule-cancel_btn">취소</button>
+                    <button id="submit-schedule_btn">추가</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </body>
-
 </html>
