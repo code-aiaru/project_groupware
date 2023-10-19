@@ -169,6 +169,20 @@
                             </ul>
                         </div>
                     </th:block>
+                    <th:block sec:authorize="hasAnyRole('EMPLOYEE')">
+                        <div class="human-resource">
+                            <span>H.R</span>
+                            <ul>
+                                <li>
+                                    <a th:href="@{/employee/simpleEmployeeList?page=0&subject=&search=}" data-ajax>
+                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        <span>인사조회</span>
+                                        <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </th:block>
                         
                     <div class="community">
                         <span>COMMUNITY</span>

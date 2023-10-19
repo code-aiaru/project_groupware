@@ -32,34 +32,34 @@ class AcademyApplicationTests {
 	private PasswordEncoder passwordEncoder;
 
 	@Test
-	void contextLoads() {
+	void admin() {
 
 		// 임시계정 생성(admin)
-//		EmployeeDto tempEmployeeDto = EmployeeDto.builder()
-//				.employeeId("admin")
-//				.employeePassword("111")
-//				.employeeName("관리자")
-//				.employeePhone("01012341234")
-//				.employeeEmail("admin@email.com")
-//				.employeeDep("총무부")
-//				.employeePosition("원장")
-//				.employeeBirth("21001231")
-//				.employeePostCode("12345")
-//				.employeeStreetAddress("도로명주소")
-//				.employeeDetailAddress("상세주소")
-//				.role(Role.ADMIN)
-//				.build();
+		EmployeeDto tempEmployeeDto = EmployeeDto.builder()
+				.employeeId("admin")
+				.employeePassword("111")
+				.employeeName("관리자")
+				.employeePhone("01012341234")
+				.employeeEmail("admin@email.com")
+				.employeeDep("총무부")
+				.employeePosition("원장")
+				.employeeBirth("21001231")
+				.employeePostCode("12345")
+				.employeeStreetAddress("도로명주소")
+				.employeeDetailAddress("상세주소")
+				.role(Role.ADMIN)
+				.build();
 
-		// 임시계정을 Entity로 변환
-//		EmployeeEntity tempEmployeeEntity = EmployeeEntity.toEmployeeEntityInsert(tempEmployeeDto, passwordEncoder);
+//		 임시계정을 Entity로 변환
+		EmployeeEntity tempEmployeeEntity = EmployeeEntity.toEmployeeEntityInsert(tempEmployeeDto, passwordEncoder);
 
-		// Entity를 저장
-//		employeeRepository.save(tempEmployeeEntity);
+//		 Entity를 저장
+		employeeRepository.save(tempEmployeeEntity);
+	}
 
-
-
-
-// 한 사원 한달치 확인용 생성
+	@Test
+	void employee() {
+	// 한 사원 한달치 확인용 생성
 		EmployeeEntity emp99= employeeRepository.save(
 				EmployeeEntity.builder()
 						.employeeId("lee9")                                                                //
