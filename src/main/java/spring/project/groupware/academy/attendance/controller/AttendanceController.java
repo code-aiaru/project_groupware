@@ -70,8 +70,8 @@ public class AttendanceController {
 
         Page<AttendanceDto> attPageList = attendanceService.attendancePagingList1(pageable, subject, set,first, last);
 
-        Long totalCount = attPageList.getTotalElements();
-        int pagesize = attPageList.getSize();
+//        Long totalCount = attPageList.getTotalElements();
+//        int pagesize = attPageList.getSize();
         int nowPage = attPageList.getNumber();
         int totalPage = attPageList.getTotalPages();
         int blockNum = 5;

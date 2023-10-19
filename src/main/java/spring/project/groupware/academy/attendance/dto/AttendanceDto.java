@@ -39,6 +39,8 @@ public class AttendanceDto {
                 .inAtt(attendance.getInAtt())
                 .outAtt(attendance.getOutAtt())
                 .attendanceStatus(attendance.getAttendanceStatus())
+                .employee(attendance.getEmployee())
+                .student(attendance.getStudent())
                 .build();
         return attendanceDto;
     }

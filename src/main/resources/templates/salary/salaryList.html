@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>급여 리스트</title>
+    <link rel="stylesheet" th:href="@{/css/salary/salaryList.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/salary/salaryList.js}" defer="defer"></script>
+</head>
+<body>
+<div id="loadedContent">
+<table>
+    <thead>
+    <tr class="th1">
+        <th colspan="8">급여 리스트</th>
+    </tr>
+    <tr class="th2">
+        <th> id</th>
+        <th> 사원</th>
+        <!--                        <th> 학생</th>-->
+        <th> 기본급</th>
+<!--        <th> 추가급</th>-->
+        <th> 지급일</th>
+        <th> 상세</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="salaryDto :${salaryDtoList}">
+        <td th:text="${salaryDto.id}"></td>
+        <td th:text="${salaryDto.employee?.employeeName}"></td>
+        <!--                        <td th:text="${salaryDto.student?.studentName}"></td>-->
+        <td th:text="${salaryDto.baseSalary}"></td>
+<!--        <td th:text="${salaryDto.extraSalary}"></td>-->
+        <td th:text="${salaryDto.salaryDate}"></td>
+        <td>
+            <a th:href="@{/salary/page}" data-ajax>상세조회</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>
