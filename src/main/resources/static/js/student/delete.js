@@ -14,7 +14,8 @@ $(document).ready(function () {
                 url: "/student/delete/" + studentId,
                 success: function (data) {
 //                    alert("수강생이 삭제되었습니다.");
-                    window.location.href = "/student/studentList?page=0&subject=&search=";
+                    const redirection = document.getElementById('redirection');
+                    redirection.click();
                 },
                 error: function () {
                     alert("수강생 삭제에 실패했습니다.");

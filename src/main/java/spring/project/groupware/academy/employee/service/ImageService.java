@@ -206,7 +206,8 @@ public class ImageService {
                 new UsernameNotFoundException("아이디가 존재하지않습니다"));
         ImageEntity image = imageRepository.findByStudent(student);
 
-        String defaultImageUrl2 = "/studentImages/default.png";
+//        String defaultImageUrl2 = "/studentImages/default.png";
+        String defaultImageUrl2 = "/images/student/default.png";
 
         if (image == null) {
             return ImageResponseDto.builder()

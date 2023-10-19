@@ -11,13 +11,14 @@
   <script th:src="@{/js/student/update_birth.js}" defer="defer"></script>
 </head>
 <body>
+<div id="loadedContent">
 <div class="container">
   <div class="nav">
     <div class="update-con">
       <div class="title">
         <h1><span th:text="${studentDto.studentName}" ></span>님 정보 수정</h1>
       </div>
-      <form th:action="@{/student/update}" method="post" th:object="${studentDto}" onsubmit="return onSubmitForm()">
+      <form th:action="@{/post/student/update}" method="post" th:object="${studentDto}" onsubmit="return onSubmitForm()">
         <ul>
           <li>
             학생번호 : <input type="text" name="studentId" th:value="${studentDto.studentId}" id="studentId" readonly> <br>
@@ -73,7 +74,7 @@
           </div>
           <li>
             <label th:for="studentPostCode">우편번호</label>
-            <input type="text" th:field="*{studentPostCode}" th:value="${studentDto.studentPostCode}" required="required" readonly="readonly"> <br>
+            <input type="text" th:field="*{studentPostCode}" th:value="${studentDto.studentPostCode}" readonly="readonly"> <br>
             <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
           </li>
           <p th:if="${#fields.hasErrors('studentPostCode')}" th:errors="*{studentPostCode}" class="error"></p>
@@ -83,14 +84,16 @@
           </li>
           <li>
             <label th:for="studentDetailAddress">상세주소</label>
-            <input type="text" th:field="*{studentDetailAddress}" th:value="${studentDto.studentDetailAddress}" required="required" placeholder="상세주소를 입력하세요"> <br>
+            <input type="text" th:field="*{studentDetailAddress}" th:value="${studentDto.studentDetailAddress}" placeholder="상세주소를 입력하세요"> <br>
           </li>
           <button type="button" onclick="javascript:history.back()">수정취소</button>
           <input type="submit" value="수정실행">
+          <a th:href="@{/student/detail/{studentId}(studentId=${studentDto.studentId})}" id="redirection" data-ajax style="display: none;"></a>
         </ul>
       </form>
     </div>
   </div>
+</div>
 </div>
 <script>
   // 생년월일 유효성 검사 함수
@@ -105,6 +108,28 @@
   }
   // 페이지 로드 시 유효성 검사 수행
   window.onload = validateBirth;
+
+  $('form').submit(function (event) {
+    event.preventDefault(); // 기본 제출 방지
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: 'POST',
+      url: '/post/student/update',
+      data: formData,
+      success: function (response) {
+        console.log(response);
+
+        const redirection = document.getElementById('redirection');
+        redirection.click();
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      }
+    });
+  });
+
 </script>
 </body>
 </html>

@@ -10,16 +10,18 @@
     <script th:src="@{/js/student/delete.js}" defer="defer"></script>
 </head>
 <body>
+<div id="loadedContent">
 <div class="container">
     <div class="nav">
-        <div class="detail-con" id="loadedContent">
+        <div class="detail-con">
             <div class="title">
                 <h1><span th:text="${student.studentName}" ></span>님 상세정보</h1>
             </div>
             <!-- 이미지 미리보기 영역 -->
             <div id="image-preview"><img id="preview-image" th:src="${studentImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <span class="image_btn">
-                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>
+<!--                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>-->
+                <a th:href="@{/student/updateImage/{studentId}(studentId=${student.studentId})}" data-ajax>프로필 이미지 수정</a>
             </span>
             <div class="detail">
                 <ul>
@@ -73,7 +75,8 @@
                         <span>
                             <div class="delete">
                                 <li>
-                                    <input type="button" id="deleteButton" th:value="삭제" th:data-student-id="${student.studentId}" onclick="confirmDelete()">
+                                    <input type="button" id="deleteButton" th:value="삭제" th:data-student-id="${student.studentId}">
+                                    <a th:href="@{/student/studentList?page=0&subject=&search=}" id="redirection" data-ajax style="display: none;"></a>
                                 </li>
                             </div>
                         </span>
@@ -82,6 +85,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <!--<button th:onclick="@{location.href='/index'}">홈</button>-->
 <a th:href="@{/index}">홈</a>
