@@ -1,25 +1,42 @@
 package spring.project.groupware.academy.salary.entity;
 
 import lombok.*;
+import spring.project.groupware.academy.employee.entity.EmployeeEntity;
+import spring.project.groupware.academy.student.entity.StudentEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@Entity
 @Builder
-@Getter
-@Setter
+@NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
+@Entity
+@Table(name = "salary")
 public class Salary {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate salaryday;
+    // 지급일
+    private LocalDate salaryDate;
 
-    private int salary;
+    // 기본, 고정급
+    private int baseSalary;
+
+//    // 추가 급여
+//    @ElementCollection
+//    private List<String> extraSalary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_no")
+    private EmployeeEntity employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private StudentEntity student;
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "employee")

@@ -260,7 +260,7 @@ public class AttendanceService{
             end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(set.equals("90")){     // 세달
             start = LocalDate.now().withDayOfMonth(1).minusMonths(3);
-            end = YearMonth.from(LocalDate.now().minusMonths(3)).atEndOfMonth();
+            end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(0<Integer.parseInt(set) && Integer.parseInt(set)<13){  // 월 선택
             start = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), 1);
             end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.MAX.getDayOfMonth());
@@ -382,7 +382,7 @@ public class AttendanceService{
             end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(set.equals("90")){     // 세달
             start = LocalDate.now().withDayOfMonth(1).minusMonths(3);
-            end = YearMonth.from(LocalDate.now().minusMonths(3)).atEndOfMonth();
+            end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(0<Integer.parseInt(set) && Integer.parseInt(set)<13){  // 월 선택
             start = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), 1);
             end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.MAX.getDayOfMonth());

@@ -190,9 +190,53 @@
                         </ul>
                     </div>
 
+                    <div class="salary">
+                        <span>SALARY</span>
+                        <ul>
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
+                                <li>
+                                    <a th:href="@{/salary/list}" data-ajax>
+                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        <span>일반목록#</span>
+                                        <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
+                                    </a>
+                                </li>
+                            </th:block>
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
+                                <li>
+                                    <a th:href="@{/salary/page}" data-ajax>
+<!--                                    <a th:href="@{/salary/page/{id}(id=${attendance.id})}" data-ajax>-->
+<!--                                    <a th:href="@{/salary/page/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>-->
+<!--                                    <a th:href="@{/salary/page/{id}(id={#authentication.principal.employee.employeeNo})}" data-ajax>-->
+<!--                                        <a th:href="@{/salary/page/{id}(id={#authentication.principal.student.studentId})}" data-ajax>-->
+                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        <span>급여조회#page</span>
+                                        <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
+                                    </a>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+
+                    <div class="attendance">
+                        <span>ATTENDANCE</span>
+                        <ul>
+                            <th:block sec:authorize="hasAnyRole('ADMIN')">
+                                <li>
+                                    <a th:href="@{/attendance/list2}" data-ajax>
+                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        <span>근태조회</span>
+                                        <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
+                                    </a>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+
                 </div>
                 <!--  -->
                     <a href="/attendance/list2" data-ajax>응애</a>
+                    <a href="/salary/page/2" data-ajax>응애2</a>
                 <!--  -->
                 <div class="contract-shown">
                     <div class="index-icon_section">
