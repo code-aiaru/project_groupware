@@ -35,6 +35,7 @@ $(function() {
      if (isPasswordValid && confirm("삭제 후 복구할 수 없습니다. 정말 삭제하시겠습니까?")) {
          // '확인'을 선택한 경우 폼 제출
          $('#deleteForm').submit();
+         $('#redirection').click();
      }
  });
 });

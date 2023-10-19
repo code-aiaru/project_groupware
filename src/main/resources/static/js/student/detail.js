@@ -144,6 +144,7 @@ function uploadDefaultImage() {
     if (response.ok) {
       // 기본 이미지 업로드 성공 시 처리
       console.log('기본 이미지 업로드 성공');
+//      document.getElementById('redirection').click();
     } else {
       // 기본 이미지 업로드 실패 시 처리
       console.error('기본 이미지 업로드 실패');

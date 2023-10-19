@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/student")
+//@RequestMapping("/student")
 public class StudentController {
 
     // 학생 Controller
@@ -35,7 +35,7 @@ public class StudentController {
 
 
     // Create
-    @GetMapping("/join")
+    @GetMapping("/student/join")
     public String getJoin(StudentDto studentDto, Model model) {
 
         List<Integer> birthYears = new ArrayList<>();
@@ -58,7 +58,7 @@ public class StudentController {
         return "student/join";
     }
 
-    @PostMapping("/join")
+    @PostMapping("/post/student/join")
     public String postJoin(@ModelAttribute StudentDto studentDto) {
 
         String birthDate = String.format("%04d%02d%02d", studentDto.getBirthYear(), studentDto.getBirthMonth(), studentDto.getBirthDay());
@@ -69,13 +69,13 @@ public class StudentController {
     }
 
     // 수강생관리 화면
-    @GetMapping("/manage")
+    @GetMapping("/student/manage")
     public String getStudentManage(){
         return "student/manage";
     }
 
     // Read - 수강생 목록
-    @GetMapping("/studentList")
+    @GetMapping("/student/studentList")
     public String getStudentList(
             @PageableDefault(page=0, size=2, sort = "studentId", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
@@ -113,7 +113,7 @@ public class StudentController {
     }
 
     // Detail - 학생 상세 보기
-    @GetMapping("/detail/{studentId}")
+    @GetMapping("/student/detail/{studentId}")
     public String getDetail(@PathVariable("studentId") Long studentId, Model model){
 
         StudentDto student = studentService.detailStudent(studentId);
@@ -128,7 +128,7 @@ public class StudentController {
     }
 
     // Update - 회원 수정 화면
-    @GetMapping("/update/{studentId}")
+    @GetMapping("/student/update/{studentId}")
     public String getUpdate(@PathVariable("studentId") Long studentId, StudentDto studentDto, Model model){
 
         // 연도, 월, 일 데이터를 모델에 추가하여 뷰로 전달
@@ -157,7 +157,7 @@ public class StudentController {
 
 
     // Update - 실제 실행
-    @PostMapping("/update")
+    @PostMapping("/post/student/update")
     public String postUpdate(StudentDto studentDto) {
 
         // 생년월일 정보를 조합하여 하나의 문자열로 만듭니다.
@@ -169,8 +169,8 @@ public class StudentController {
 
         if (rs == 1) {
             System.out.println("학생정보 수정 성공");
-
             return "redirect:/student/detail/" + studentDto.getStudentId(); // 수정된 정보를 보여주는 상세 페이지로 이동
+
         } else {
             System.out.println("학생정보 수정 실패");
             return "redirect:/";
@@ -179,7 +179,7 @@ public class StudentController {
 
 
     // Delete - 학생 삭제(일반 사원도 가능)
-    @GetMapping("/delete/{studentId}")
+    @GetMapping("/student/delete/{studentId}")
     public String getDelete(@PathVariable("studentId") Long studentId){
 
         int rs=studentService.deleteStudent(studentId);
@@ -196,7 +196,7 @@ public class StudentController {
 
 
     // 프로필 이미지 변경 페이지
-    @GetMapping("/updateImage/{studentId}")
+    @GetMapping("/student/updateImage/{studentId}")
     public String getUpdateImage(@PathVariable("studentId") Long studentId, Model model){
 
         StudentDto student = studentService.detailStudent(studentId);

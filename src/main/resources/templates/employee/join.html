@@ -155,6 +155,9 @@
             <li class="submitLi">
                 <div class="joinBtn">
                     <input type="submit" value="사원 추가" onclick="validateAndSubmit();">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>사원 목록</a>
+                    </th:block>
                 </div>
             </li>
             <a th:href="@{/employee/employeeList?page=0&subject=&search=}" id="redirection" data-ajax style="display: none;"></a>

@@ -14,7 +14,7 @@
 <body>
 <h1>수강생 추가</h1>
 <div id="loadedContent">
-    <form th:action="@{/student/join}" method="post" id="signupForm" th:object="${studentDto}">
+    <form th:action="@{/post/student/join}" method="post" id="signupForm" th:object="${studentDto}">
         <ul>
             <!-- 이름 -->
             <li>
@@ -122,16 +122,14 @@
             <!-- 학생추가 버튼 -->
             <li class="submitLi">
                 <div class="joinBtn">
-                    <input type="submit" value="학생 추가" onclick="validateAndSubmit();">
+                    <input type="submit" value="수강생 추가" onclick="validateAndSubmit();">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>수강생 목록</a>
+                    </th:block>
                 </div>
             </li>
         </ul>
     </form>
 </div>
-<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
-<a th:href="@{/index}">홈</a>
-<th:block sec:authorize="isAuthenticated()">
-    <a th:href="@{/student/studentList?page=0&subject=&search=}">수강생조회</a>
-</th:block>
 </body>
 </html>

@@ -44,6 +44,7 @@ public class ImageController {
     // 학생 이미지 등록
     @PostMapping("/upload2")
     public String upload2(@ModelAttribute ImageUploadDto imageUploadDto, @RequestParam("studentId") Long studentId, Model model) {
+
         StudentEntity studentEntity = studentRepository.findByStudentId(studentId);
         imageService.upload2(imageUploadDto, studentId);
 

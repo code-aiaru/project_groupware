@@ -111,7 +111,7 @@ public class EmployeeController {
     // Read - 사원 목록(admin만 조회 가능)
     @GetMapping("/employee/employeeList")
     public String getEmployeeList(
-            @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page=0, size=5, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
             @RequestParam(value = "subject", required = false) String subject,
             @RequestParam(value = "search", required = false) String search,

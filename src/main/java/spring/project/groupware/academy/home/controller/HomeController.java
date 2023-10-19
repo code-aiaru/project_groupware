@@ -13,6 +13,8 @@ import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 import spring.project.groupware.academy.employee.service.ImageService;
+import spring.project.groupware.academy.student.dto.StudentDto;
+import spring.project.groupware.academy.student.service.StudentService;
 import spring.project.groupware.academy.util.FileStorageService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     private final EmployeeService employeeService;
+    private final StudentService studentService;
     private final FileStorageService fileStorageService;
     private final ImageService imageService;
 
@@ -31,11 +34,14 @@ public class HomeController {
 
     @GetMapping({"", "/index"})
     public String index(@AuthenticationPrincipal MyUserDetails myUserDetails,
-                        HttpServletRequest request, Model model){
+                        HttpServletRequest request,  Model model){
 
 //        if(myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
             String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
+
+//            StudentDto student = studentService.detailStudent();
+//            String studentImageUrl = imageService.findImage2(student.getStudentId()).getImageUrl();
 
             model.addAttribute("employee", employee);
             model.addAttribute("employeeImageUrl", employeeImageUrl);
