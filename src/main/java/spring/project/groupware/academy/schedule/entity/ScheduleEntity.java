@@ -24,7 +24,7 @@ public class ScheduleEntity extends BaseEntity {
     private String target;
     private String start;
     private String end;
-    private Boolean allDay;
+    private Boolean isAllDay;
     private String color;
 
 
@@ -39,7 +39,7 @@ public class ScheduleEntity extends BaseEntity {
         scheduleEntity.setTarget(scheduleDTO.getTarget());
         scheduleEntity.setStart(scheduleDTO.getStart());
         scheduleEntity.setEnd(scheduleDTO.getEnd());
-        scheduleEntity.setAllDay(scheduleDTO.getAllDay());
+        scheduleEntity.setIsAllDay(scheduleDTO.getIsAllDay());
         scheduleEntity.setColor(scheduleDTO.getColor());
 
         if (scheduleDTO.getEmployeeEntity() != null) {
@@ -51,6 +51,15 @@ public class ScheduleEntity extends BaseEntity {
         return scheduleEntity;
     }
 
+    public void updateFromDTO(ScheduleDTO scheduleDTO) {
+        this.setTitle(scheduleDTO.getTitle());
+        this.setTarget(scheduleDTO.getTarget());
+        this.setStart(scheduleDTO.getStart());
+        this.setEnd(scheduleDTO.getEnd());
+        this.setIsAllDay(scheduleDTO.getIsAllDay());
+        this.setColor(scheduleDTO.getColor());
+        // 다른 필요한 필드도 여기서 업데이트할 수 있습니다.
+    }
 
 
 

@@ -8,6 +8,6 @@ import spring.project.groupware.academy.schedule.entity.ScheduleEntity;
 import java.util.List;
 
 @Repository
-public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> {
+public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Integer> {
 
 }

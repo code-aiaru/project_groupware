@@ -20,18 +20,33 @@
         
 
         <div class="context-menu" id="context-menu">
-            <button data-role = "addSchedule">
-                <div>
-                    <img src="/images/schedule/plus.svg" alt="추가 아이콘">
-                    <span>일정추가</span>
-                </div>
-            </button>
+            <div class="context-menu_style">
+                <button data-role="addSchedule" id="schedule-add-btn">
+                    <div>
+                        <img src="/images/schedule/plus.svg" alt="추가 아이콘">
+                        <span>일정추가</span>
+                    </div>
+                </button>
+                <button data-role="updateSchedule" id="schedule-update-btn">
+                    <div>
+                        <img src="/images/schedule/clockwise.svg" alt="수정 아이콘">
+                        <span>일정수정</span>
+                    </div>
+                </button>
+                <button data-role="deleteSchedule" id="schedule-delete-btn">
+                    <div>
+                        <img src="/images/schedule/minus.svg" alt="삭제 아이콘">
+                        <span>일정삭제</span>
+                    </div>
+                </button>
+            </div>
         </div>
 
         <div class="modal" id="modal">
             <div class="modal_contents">
                 <div class="modal-title">
-                    <span>일정 추가</span>
+                    <span id="add-schedule-title">일정추가</span>
+                    <span id="update-schedule-title">일정수정</span>
                 </div>
                 <div class="time-info">
                     <div>
@@ -84,7 +99,10 @@
 
                 <div class="modal_submit">
                     <button id="submit-schedule-cancel_btn">취소</button>
-                    <button id="submit-schedule_btn">추가</button>
+                    <button id="submit-schedule_btn">
+                        <span id="add-submit-text">추가</span>
+                        <span id="update-submit-text">수정</span>
+                    </button>
                 </div>
             </div>
         </div>

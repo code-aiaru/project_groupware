@@ -1,5 +1,4 @@
-var startDate = null; 
-var endDate = null;
+
 var calendar = null;
 
 initializeScript();
@@ -14,15 +13,13 @@ function initializeScript() {
         ===================== */
 
         locale                      : 'ko',    
-        // nextDayThreshold            : "09:00:00",
-        // defaultTimedEventDuration   : '01:00:00',
-        allDaySlot                  : true,
+        // allDaySlot                  : true,
         displayEventTime            : true,
         displayEventEnd             : true,
         firstDay                    : 0, //월요일이 먼저 오게 하려면 1
         weekends                    : false,
         selectable                  : true,
-        editable                    : true,
+        // editable                    : true,
         slotLabelFormat             : 'HH:mm',
         dayPopoverFormat            : 'MM/DD dddd',
         longPressDelay              : 0,
@@ -45,27 +42,14 @@ function initializeScript() {
         ===================== */
 
         select: function (info) {
-            showContextMenu(info.jsEvent, info.start, info.end);
+            initializeContextMenu(info, 'select');
         },
-
+        eventClick: function(info) {
+            initializeContextMenu(info, 'eventClick');
+        },    
         events: function(fetchInfo, successCallback, failureCallback) {
-            $.ajax({
-                url: '/api/full-calendar',
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    successCallback(response);
-                },
-                error: function() {
-                    failureCallback('There was an error while fetching events.');
-                }
-            });
+            readAllScheduleRequest(fetchInfo, successCallback, failureCallback);
         },
-
-
-
-
-
 
 
 	});
@@ -75,34 +59,237 @@ function initializeScript() {
 
     // 모달 관련 로직 ==========================================================================
 
-    // '하루종일' 체크박스의 변경 이벤트에 리스너를 추가합니다.
-    $('#schedule-isAllDay').on('change', function() {
-        if ($(this).prop('checked')) {
+
+    function initializeContextMenu(info, sourceType) {
+
+        var $contextMenu = $("#context-menu");
+        $contextMenu.css({
+            display: "block",
+            left: info.jsEvent.pageX,
+            top: info.jsEvent.pageY
+        });
+        var $scheduleAddBtn = $("#schedule-add-btn");
+        $scheduleAddBtn.css({
+            display: "none"
+        });  
+        var $scheduleUpdateBtn = $("#schedule-update-btn");
+        $scheduleUpdateBtn.css({
+            display: "none"
+        });
+        var $scheduleDeleteBtn = $("#schedule-delete-btn");
+        $scheduleDeleteBtn.css({
+            display: "none"
+        });
+ 
+        // calendar 영역을 클릭해도 닫히지 않도록 (안정성)
+        var $calendar = $("#calendar");
+        $calendar.on("click", function(event) {
+            event.stopPropagation();
+        });
+
+        // contextMenu 영역을 클릭해도 닫히지 않도록 (안정성)
+        $contextMenu.on("click", function(event) {
+            event.stopPropagation();
+        });
+
+        showContextMenu(info, sourceType);
+
+    }
+    
+    function showContextMenu(info, sourceType) {
+
+        if (sourceType === 'select') {
+            console.log('select activated');
+            var $scheduleAddBtn = $("#schedule-add-btn");
+            $scheduleAddBtn.css({
+                display: "inline-block"
+            });    
+        } else if (sourceType === 'eventClick') {
+            console.log('eventClick activated');
+            var $scheduleUpdateBtn = $("#schedule-update-btn");
+            $scheduleUpdateBtn.css({
+                display: "inline-block"
+            });
+            var $scheduleDeleteBtn = $("#schedule-delete-btn");
+            $scheduleDeleteBtn.css({
+                display: "inline-block"
+            });
+        }
+
+
+        var $contextMenu = $("#context-menu");
+        $contextMenu.off("click").on("click", "button", function(event) {
+            event.preventDefault();
+    
+            if ($(this).data('role') == 'addSchedule') {
+                console.log('initializeModalMenu(addSchedule) activated')
+                initializeModalMenu(info, 'addSchedule');
+
+            } else if ($(this).data('role') == 'updateSchedule') { 
+                console.log('initializeModalMenu(updateSchedule) activated')
+                initializeModalMenu(info, 'updateSchedule');
+
+            } else if ($(this).data('role') == 'deleteSchedule') {
+                console.log('deleteSchedule activated')
+                deleteScheduleRequest(info.event.id);
+
+            }
+
+            $contextMenu.hide();
+        });
+
+        $("body").on("click", function(event) {
+            $contextMenu.hide();
+        });    
+        
+    }
+
+    function initializeModalMenu(info, submitType) {
+        
+        var $addSubmitText = $("#add-submit-text");
+        var $updateSubmitText = $("#update-submit-text");
+        var $addScheduleTitle = $("#add-schedule-title");
+        var $updateScheduleTitle = $("#update-schedule-title");
+    
+        if (submitType === 'addSchedule') {
+            $addScheduleTitle.css({
+                display: "block"
+            });
+            $addSubmitText.css({
+                display: "block"
+            });
+            $updateScheduleTitle.css({
+                display: "none"
+            });    
+            $updateSubmitText.css({
+                display: "none"
+            });
+
+        } else if (submitType === 'updateSchedule') {
+            $updateScheduleTitle.css({
+                display: "block"
+            });
+            $updateSubmitText.css({
+                display: "block"
+            });
+            $addSubmitText.css({
+                display: "none"
+            });
+            $addScheduleTitle.css({
+                display: "none"
+            });
+        }
+
+        showModalMenu(info, submitType);
+    }
+
+
+
+    function showModalMenu(info, submitType) {
+
+        if (submitType === 'addSchedule') {
+            setAddScheduleModalData(info);
+
+        } else if (submitType === 'updateSchedule') {
+            setUpdateScheduleModalData(info);
+        }
+
+        var $modalMenu = $("#modal");
+        $modalMenu.css({
+            display: "block",
+        });
+
+         // "취소" 버튼 클릭 시 로직
+        $('#submit-schedule-cancel_btn').on('click', function() {
+            resetModal();
+        });
+
+        // "추가" 혹은 "수정" 버튼 클릭 시 로직
+        $('#submit-schedule_btn').on('click', function() {
+            submitSchedule(info, submitType);
+        });
+        
+        // '하루종일' 체크박스의 변경 이벤트에 리스너를 추가합니다.
+        $('#schedule-isAllDay').on('change', function() {
+            if ($(this).prop('checked')) {
+                // 체크박스가 체크되면 startTime과 endTime 입력란을 비활성화하고 값을 지웁니다.
+                $(".start-time").prop('disabled', true).val('00:00');
+                $(".end-time").prop('disabled', true).val('23:59');
+            } else {
+                // 체크박스가 해제되면 startTime과 endTime 입력란을 활성화하고 초기값으로 설정합니다.
+                $(".start-time").prop('disabled', false).val("00:00");
+                $(".end-time").prop('disabled', false).val("23:59");
+            }
+        });
+
+    }
+
+    function setAddScheduleModalData(info) {
+        // info.start의 날짜를 하루 감소
+        var endDate = new Date(info.end);
+        endDate.setDate(endDate.getDate() - 1);
+
+        $(".start-date").val(formatDate(info.start));
+        $(".end-date").val(formatDate(endDate));
+        $(".start-time").val("00:00");
+        $(".end-time").val("23:59");
+    }
+
+    function setUpdateScheduleModalData(info) {
+
+        console.log('isAllDay DB에서 가져온 값', info.event.extendedProps.isAllDay)
+
+        $('#schedule-name').val(info.event.title);
+        $('#schedule-isAllDay').prop('checked', info.event.extendedProps.isAllDay);
+        if ($('#schedule-isAllDay').prop('checked')) {
             // 체크박스가 체크되면 startTime과 endTime 입력란을 비활성화하고 값을 지웁니다.
             $(".start-time").prop('disabled', true).val('00:00');
-            $(".end-time").prop('disabled', true).val('00:00');
+            $(".end-time").prop('disabled', true).val('23:59');
         } else {
-            // 체크박스가 해제되면 startTime과 endTime 입력란을 활성화하고 초기값으로 설정합니다.
-            $(".start-time").prop('disabled', false).val("00:00");
-            $(".end-time").prop('disabled', false).val("23:59");
+            $(".start-date").val(formatDate(info.event.start));
+            $(".end-date").val(formatDate(info.event.end));
         }
-    });
 
-    // "취소" 버튼 클릭 시 로직
-    $('#submit-schedule-cancel_btn').on('click', function() {
-        $('#modal').hide(); // 모달 창 숨기기
+        $('#schedule-target').val(info.event.extendedProps.target);
+        $('#schedule-color').val(info.event.backgroundColor);
+
+        // Start time 설정 for KST (Korea Standard Time)
+        const kstStart = new Date(info.event.start.getTime() + (9 * 60 * 60 * 1000)); // Add 9 hours in milliseconds
+        $(".start-time").val(kstStart.getUTCHours().toString().padStart(2, '0') + ':' + kstStart.getUTCMinutes().toString().padStart(2, '0'));
+
+        // End time 설정 for KST (Korea Standard Time)
+        const kstEnd = new Date(info.event.end.getTime() + (9 * 60 * 60 * 1000)); // Add 9 hours in milliseconds
+        $(".end-time").val(kstEnd.getUTCHours().toString().padStart(2, '0') + ':' + kstEnd.getUTCMinutes().toString().padStart(2, '0'));
+    }
+
+    function formatDate(date) {
+        var yyyy = date.getFullYear().toString();
+        var mm = (date.getMonth() + 1).toString(); // 0-based index
+        var dd = date.getDate().toString();
+        return yyyy + '-' + (mm[1] ? mm : '0' + mm[0]) + '-' + (dd[1] ? dd : '0' + dd[0]);
+    }
+
+    function resetModal() {
+        $('#modal').hide();
+
+        // 입력 정보 초기화
+        $(".start-time").prop('disabled', false).val("00:00");
+        $(".end-time").prop('disabled', false).val("23:59");
         $('#schedule-isAllDay').prop('checked', false);
         $('#schedule-name').val(''); 
         $('#schedule-target').prop('selectedIndex', 0);
         $('#schedule-color').prop('selectedIndex', 0);
-        $(".start-time").prop('disabled', false).val("00:00");
-        $(".end-time").prop('disabled', false).val("23:59");
-    });
 
-    // "추가" 버튼 클릭 시 로직 (이벤트 추가)
-    $('#submit-schedule_btn').on('click', function() {
+        // 리스너 초기화
+        $('#submit-schedule-cancel_btn').off('click');
+        $('#submit-schedule_btn').off('click');
+    }
 
+    function submitSchedule(info, submitType) {
+        // "추가" 버튼 클릭 시 로직 (이벤트 추가)
+            
         console.log("submit activated");
+        console.log(submitType);
 
         // 사용자 입력 정보 가져오기
         var isAllDay = $('#schedule-isAllDay').prop('checked');
@@ -110,31 +297,80 @@ function initializeScript() {
         var target = $('#schedule-target').val();
         var color = $('#schedule-color').val();
 
-        // 사용자가 입력한 시간 가져오기
-        var startTime = $(".start-time").val().split(':'); // ["HH", "mm"]
-        var endTime = $(".end-time").val().split(':');     // ["HH", "mm"]
+        console.log(isAllDay);
+        console.log(title);
+        console.log(target);
+        console.log(color);
 
-        // startDate와 endDate에 시간 반영
-        startDate.setHours(parseInt(startTime[0]), parseInt(startTime[1]));
-        endDate.setHours(parseInt(endTime[0]), parseInt(endTime[1]));
+        // 사용자가 입력한 날짜 및 시간 가져오기
+        var startDate = $(".start-date").val(); 
+        var endDate = $(".end-date").val();     
+        var startTime = $(".start-time").val().split(':'); 
+        var endTime = $(".end-time").val().split(':');     
         
-        // 이벤트 객체 생성
-        var newEvent = {
-            title: title,
-            start: startDate,
-            end: endDate,
-            allDay: isAllDay,
-            target: target,
-            color: color
-        };
+        console.log('startDate: ', startDate);
+        console.log('endDate: ', endDate);
+        console.log('startTime: ', startTime);
+        console.log('endTime: ', endTime);
+
+        // fullcalendar의 allDay 로직 상으론, 하루를 뒤로 밀어놓아야 올바른 값으로 저장 및 출력이 된다.
+        // if (isAllDay) {
+        //     console.log('allDay: true');
+        //     endDate = new Date(endDate);
+        //     endDate.setDate(endDate.getDate() + 1);
+        // }
         
-        // allDay 로직상, 하루를 늘려주어야 정상적으로 저장, 출력이 된다.
-        if (newEvent.allDay) {
-            newEvent.end = new Date(newEvent.end);
-            newEvent.end.setDate(newEvent.end.getDate() + 1);
+        // startDate와 endDate에 시간 반영      
+        var start = mergeDateTimeAsISO8601(startDate, startTime);
+        var end = mergeDateTimeAsISO8601(endDate, endTime);
+
+        console.log('start: ', start);
+        console.log('end: ', end);
+
+        
+
+        if (submitType === 'addSchedule') {
+            var newEvent = {
+                title: title,
+                start: start,
+                end: end,
+                isAllDay: isAllDay,
+                target: target,
+                color: color
+            };
+            addScheduleRequest(newEvent);
+        } else if (submitType === 'updateSchedule') {
+            console.log('subbbbbbb: ', submitType);
+            var updatedEvent = {
+                title: title,
+                start: start,
+                end: end,
+                isAllDay: isAllDay,
+                target: target,
+                color: color
+            };
+            console.log('updatedEvent: ', updatedEvent);
+            updateScheduleRequest(info.event.id, updatedEvent);
         }
+        resetModal();
+    }
 
-        // AJAX call to send the newEvent object as JSON to the server
+    // ISO8601 형식으로 날짜를 변환
+    function mergeDateTimeAsISO8601(date, time) {
+        // 날짜와 시간을 Date 객체로 변환합니다.
+        const dateTime = new Date(`${date}T${time[0]}:${time[1]}:00Z`);
+    
+        // 9시간(= 32400000 밀리초)을 뺍니다.
+        dateTime.setTime(dateTime.getTime() - 9 * 60 * 60 * 1000);
+    
+        // Date 객체를 ISO 8601 형식 문자열로 변환합니다.
+        return dateTime.toISOString();
+    }
+
+
+
+    // 스케줄 생성
+    function addScheduleRequest(newEvent) {
         $.ajax({
             url: '/api/full-calendar',
             type: 'POST',
@@ -142,91 +378,72 @@ function initializeScript() {
             data: JSON.stringify(newEvent),
             success: function(response) {
                 console.log('Event data sent successfully:', response);
-                // 다른 후속 처리 로직
+                calendar.refetchEvents();
             },
             error: function(error) {
                 console.error('Error sending event data:', error);
             }
         });
-
-        // 이벤트 추가
-        calendar.addEvent(newEvent);
-        calendar.render();
-
-        // 모달 창 숨기기
-        $('#modal').hide();
-
-        // 입력 정보 초기화
-        $('#schedule-isAllDay').prop('checked', false);
-        $('#schedule-name').val(''); 
-        $('#schedule-target').prop('selectedIndex', 0);
-        $('#schedule-color').prop('selectedIndex', 0);
-    });
-
-}
-
-
-function showContextMenu(e, start, end) {
-    startDate = start;
-    endDate = end;
-    var $contextMenu = $("#context-menu");
-
-    $contextMenu.css({
-        display: "block",
-        left: e.pageX,
-        top: e.pageY
-    });
-
-    // context-menu의 버튼을 클릭할 시
-    $contextMenu.off("click").on("click", "button", function(event) {
-        event.preventDefault();
-
-        if ($(this).data('role') == 'addSchedule') {
-            
-
-            $(".start-date").val(formatDate(startDate));
-            endDate.setDate(endDate.getDate() - 1);
-            $(".end-date").val(formatDate(endDate));
-
-            // 시간을 설정하고 싶다면 아래와 같이 할 수 있습니다.
-            $(".start-time").val("00:00");
-            $(".end-time").val("23:59");
-            showModalMenu();
-        }
-
-        $contextMenu.hide();
-        $("body").off("click", bodyClickHandler);
-    });
-
-    // context-menu 외의 엘레멘트를 클릭할 시
-    function bodyClickHandler() {
-        $contextMenu.hide();
-        $("body").off("click", bodyClickHandler);
     }
 
-    setTimeout(function() {
-        $("body").on("click", bodyClickHandler);
-    }, 0);
+    // 스케줄 조회
+    function readAllScheduleRequest(fetchInfo, successCallback, failureCallback) {
+        $.ajax({
+            url: '/api/full-calendar',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                successCallback(response);
+            },
+            error: function() {
+                failureCallback('There was an error while fetching events.');
+            }
+        });
+    }
 
-    e.stopPropagation();
+    // 스케줄 수정
+    function updateScheduleRequest(eventId, updatedEvent) {
+        $.ajax({
+            url: '/api/full-calendar/' + eventId,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(updatedEvent),
+            success: function(response) {
+                console.log('Event updated successfully:', response);
+                calendar.refetchEvents();  // 이벤트를 업데이트 한 후 캘린더 이벤트를 다시 가져옴
+            },
+            error: function(error) {
+                console.error('Error updating event:', error);
+            }
+        });
+    }
 
-    $contextMenu.on("click", function(event) {
-        event.stopPropagation();
-    });
+    // 스케줄 삭제
+    function deleteScheduleRequest(id) {
+        if (id) {
+            $.ajax({
+                url: '/api/full-calendar/' + id,
+                type: 'DELETE',
+                success: function(response) {
+                    console.log('Event deleted successfully:', response);
+                    var eventToDelete = calendar.getEventById(id);
+                    if (eventToDelete) {
+                        eventToDelete.remove();
+                    }
+                },
+                error: function(error) {
+                    console.error('Error deleting event:', error);
+                }
+            });
+        } else {
+            console.error('No event selected to delete.');
+        }
+    }
+
+
+
+
+
+
 }
 
-function showModalMenu() {
-    var $modalMenu = $("#modal");
-
-    $modalMenu.css({
-        display: "block",
-    });
-}
-
-function formatDate(date) {
-    var yyyy = date.getFullYear().toString();
-    var mm = (date.getMonth() + 1).toString(); // 0-based index
-    var dd = date.getDate().toString();
-
-    return yyyy + '-' + (mm[1] ? mm : '0' + mm[0]) + '-' + (dd[1] ? dd : '0' + dd[0]);
-}

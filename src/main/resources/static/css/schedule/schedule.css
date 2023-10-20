@@ -25,34 +25,67 @@
     background-color: white; 
     border: 1px solid #ccc; 
     border-radius: 7px;
+    overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
-    padding: 10px 16px 6px 10px;
+    /* padding: 10px 14px 9px 10px; */
 }
-.context-menu img {
+.context-menu_style {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: self-end;
+}
+.context-menu_style > button:nth-child(2) {
+    border-bottom: 1px solid #dddddd;
+}
+#schedule-add-btn {
+    display: none;
+}
+#schedule-update-btn {
+    display: none;
+}
+#schedule-delete-btn {
+    display: none;
+}
+.context-menu #schedule-add-btn img {
     height: 19px;
     width: 19px;
-    margin-right: 2px;
+    /* margin-right: 2px; */
 }
-.context-menu:hover {
+.context-menu #schedule-update-btn img {
+    height: 14px;
+    width: 14px;
+    /* margin-right: 4px; */
+    margin-left: 3px;
+}
+.context-menu #schedule-delete-btn img {
+    height: 19px;
+    width: 19px;
+    /* margin-right: 2px; */
+}
+.context-menu button:hover {
     background-color: #e4f1f7;
 }
-.context-menu:hover span {
+.context-menu button span {
+    padding-right: 7px;
+}
+.context-menu button:hover span {
     color: #2788b5;
     font-weight: bold;
 }
-.context-menu:hover img {
+.context-menu button:hover img {
     filter: invert(45%) sepia(95%) saturate(403%) hue-rotate(154deg) brightness(86%) contrast(88%);
 }
 .context-menu button {
-    display: inline-block;
-    padding: 0;
-    border: none;
+    padding: 5px 10px 5px 10px;
+    /* border: none; */
     background: none;
     cursor: pointer;
 }
-.context-menu div {
+.context-menu button div {
+    width: 75px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -84,6 +117,12 @@
 }
 .modal-title {
     margin-bottom: 18px;
+}
+.modal-title #add-schedule-title {
+    display: none;
+}
+.modal-title #update-schedule-title {
+    display: none;
 }
 .modal-title span {
     font-size: 20px;
@@ -162,7 +201,7 @@
     width: 235px;
     margin-top: 20px;
 }
-.modal_submit button:nth-child(1) {
+.modal_submit > button:nth-child(1) {
     height: 35px;
     width: 115px;
     background-color: #aaaaaa;
@@ -173,7 +212,18 @@
     box-shadow: 0px 0px 3px 0px #d0d0d0;
     cursor: pointer;
 }
-.modal_submit button:nth-child(2) {
+.modal_submit > button:nth-child(2) {
+    height: 35px;
+    width: 115px;
+    background-image: linear-gradient(to right, #6eaebe, #88c6af);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0px 0px 3px 0px #d0d0d0;
+    cursor: pointer;
+}
+.modal_submit > button:nth-child(3) {
     height: 35px;
     width: 115px;
     background-image: linear-gradient(to right, #6eaebe, #88c6af);

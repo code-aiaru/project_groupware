@@ -23,12 +23,14 @@ public class ScheduleRestController {
     private final ScheduleService scheduleService;
 
 
+    // 스케줄 조회 (ALL)
     @GetMapping
     public ResponseEntity<List<ScheduleDTO>> getAllEvents() {
         List<ScheduleDTO> events = scheduleService.getAllEvents();
         return ResponseEntity.ok(events);
     }
 
+    // 스케줄 추가
     @PostMapping
     public ResponseEntity<?> addEvent(@RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
@@ -47,4 +49,39 @@ public class ScheduleRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save the event");
         }
     }
+
+    // 스케줄 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<ScheduleDTO> updateEvent(@PathVariable Integer id, @RequestBody ScheduleDTO scheduleDTO) {
+        ScheduleDTO updatedSchedule = scheduleService.updateEvent(id, scheduleDTO);
+        return new ResponseEntity<>(updatedSchedule, HttpStatus.OK);
+    }
+    
+    // 스케줄 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Integer id) {
+        try {
+            scheduleService.deleteEvent(id);
+            return ResponseEntity.ok("Event deleted successfully.");
+        } catch (Exception e) {
+            log.error("Failed to delete the event with id: " + id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete the event");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
