@@ -49,7 +49,7 @@
                                 <a th:href="@{/approval/delete/{id}(id=${approval.id})}" data-ajax>삭제</a>
                                 <a th:href="@{/approval/update/{id}(id=${approval.id})}" data-ajax>수정</a>
                             </th:block>
-                            <a th:href="@{/approval/list/create}" data-ajax>목록</a>
+                            <button id="goBackButton">목록</button>
                         </td>
                     </tr>
                 </table>
