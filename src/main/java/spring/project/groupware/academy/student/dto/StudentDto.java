@@ -70,10 +70,11 @@ public class StudentDto {
         studentDto.setCreateTime(studentEntity.getCreateTime());
         studentDto.setUpdateTime(studentEntity.getUpdateTime());
 
-        studentDto.setImageUrl(studentEntity.getImage().getImageUrl());
+        if (studentEntity.getImage() != null && studentEntity.getImage().getImageUrl() != null) {
+            studentDto.setImageUrl(studentEntity.getImage().getImageUrl());
+        }
 
         return studentDto;
-
     }
 
 }

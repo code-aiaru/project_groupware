@@ -36,6 +36,9 @@ public class EmployeeEntity extends BaseEntity {
     @Column(name = "employee_name", nullable = false)
     private String employeeName;
 
+    @Column(name = "employee_gender", nullable = false)
+    private String employeeGender;
+
     @Column(name = "employee_phone", unique = true, nullable = false)
     private String employeePhone;
 
@@ -99,6 +102,7 @@ public class EmployeeEntity extends BaseEntity {
         employeeEntity.setEmployeeId(employeeDto.getEmployeeId());
         employeeEntity.setEmployeePassword(passwordEncoder.encode(employeeDto.getEmployeePassword()));
         employeeEntity.setEmployeeName(employeeDto.getEmployeeName());
+        employeeEntity.setEmployeeGender(employeeDto.getEmployeeGender());
         employeeEntity.setEmployeePhone(employeeDto.getEmployeePhone());
         employeeEntity.setEmployeeEmail(employeeDto.getEmployeeEmail());
         employeeEntity.setEmployeeDep(employeeDto.getEmployeeDep());
@@ -120,6 +124,7 @@ public class EmployeeEntity extends BaseEntity {
         employeeEntity.setEmployeeId(employeeDto.getEmployeeId());
         employeeEntity.setEmployeePassword(employeeDto.getEmployeePassword());
         employeeEntity.setEmployeeName(employeeDto.getEmployeeName());
+        employeeEntity.setEmployeeGender(employeeDto.getEmployeeGender());
         employeeEntity.setEmployeePhone(employeeDto.getEmployeePhone());
         employeeEntity.setEmployeeEmail(employeeDto.getEmployeeEmail());
         employeeEntity.setEmployeeDep(employeeDto.getEmployeeDep());
