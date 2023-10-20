@@ -8,15 +8,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
-import spring.project.groupware.academy.employee.dto.ImageUploadDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 import spring.project.groupware.academy.employee.service.ImageService;
-import spring.project.groupware.academy.student.dto.StudentDto;
-import spring.project.groupware.academy.student.entity.StudentEntity;
 import spring.project.groupware.academy.student.service.StudentService;
 import spring.project.groupware.academy.util.FileStorageService;
 
@@ -28,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     private final EmployeeService employeeService;
-    private final StudentService studentService;
     private final FileStorageService fileStorageService;
     private final ImageService imageService;
 
