@@ -6,6 +6,7 @@
     <title>INDEX</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" data-static>
     <script th:src="@{/js/index.js}" data-static></script>
+    <script th:src="@{/js/naver/naver.js}" defer="defer"></script>
     <script>
             // 새로고침용 url 
             var previousURL = "[[${previousURL}]]";
@@ -134,7 +135,7 @@
                             <li>
                                 <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>
                                     <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
-                                    <span>수강생 조회</span>
+                                    <span>수강생관리</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
                             </li>
@@ -155,7 +156,7 @@
                                 <li>
                                     <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>
                                         <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
-                                        <span>인사조회</span>
+                                        <span>인사관리</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
                                 </li>
@@ -176,7 +177,7 @@
                                 <li>
                                     <a th:href="@{/employee/simpleEmployeeList?page=0&subject=&search=}" data-ajax>
                                         <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
-                                        <span>인사조회</span>
+                                        <span>인사관리</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
                                 </li>
@@ -247,6 +248,37 @@
                         </ul>
                     </div>
 
+                    <div class="naver">
+                        <span>NAVER</span>
+                        <ul>
+                            <li>
+<!--                                <span>조직도</span>-->
+<!--                                <form action="https://auth.worksmobile.com/oauth2/v2.0/authorize" method="get">-->
+<!--                                    <input type="hidden" name="client_id" value="3vMIH0YezVUDZ6Ablmdw">-->
+<!--                                    <input type="hidden" name="redirect_uri" value="http://localhost:8095/naver/auth2">-->
+<!--                                    <input type="hidden" name="scope" value="directory,directory.read,orgunit,orgunit.read,user,user.read">-->
+<!--                                    <input type="hidden" name="response_type" value="code">-->
+<!--                                    <input type="hidden" name="state" value="test">-->
+<!--                                    <input type="submit" value="조직인증"  class="naverBtn">-->
+<!--                                </form>-->
+                                <a href="https://auth.worksmobile.com/oauth2/v2.0/authorize?client_id=3vMIH0YezVUDZ6Ablmdw&redirect_uri=http://localhost:8095/naver/auth2&scope=directory,directory.read,orgunit,orgunit.read,user,user.read&response_type=code&state=test" class="naverBtn">
+                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <span>조직인증</span>
+                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
+                                </a>
+                            </li>
+                            <li>
+                                <!-- naver 이메일 연동 기본 주소 -->
+                                <a href="https://mail.worksmobile.com/write/popup" onclick="openPopup(); return false;">
+                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <span>메일연동</span>
+                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
+<!--                                    <input type="button" value="메일연동" class="naverBtn">-->
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
 
                 <div class="contract-shown">
@@ -290,5 +322,10 @@
 
 
     </div>
+<script>
+function openPopup() {
+    window.open('https://mail.worksmobile.com/write/popup', '_blank', 'width=400, height=300');
+}
+</script>
 </body>
 </html>

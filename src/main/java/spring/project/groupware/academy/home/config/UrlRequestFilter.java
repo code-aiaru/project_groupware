@@ -26,7 +26,7 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/css/");
         excludedUrl.add("/images/");
         excludedUrl.add("/employeeImages/"); // 추가 - 송원철, 프로필 이미지 업로드 시 사용
-        excludedUrl.add("/studentImages/"); // 추가 - 송원철, 프로필 이미지 업로드 시 사용
+        excludedUrl.add("/studentImages/"); // 추가 - 송원철, 수강생 프로필 이미지 업로드 시 사용
         excludedUrl.add("/login");
         excludedUrl.add("/favicon.ico");
         excludedUrl.add("/api/");
@@ -35,6 +35,7 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/tempPassword"); // 추가 - 송원철, 비밀번호 찾기
         excludedUrl.add("/check-emailPhoneMatching"); // 추가 - 송원철, 비밀번호 찾기 로직
         excludedUrl.add("/send-mail/password"); // 추가 - 송원철, 임시비밀번호
+        excludedUrl.add("/naver/"); // 추가 - 송원철, 조직도 불러오기
 //        excludedUrl.add("/login/post");
     }
 
