@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <title>급여 페이지 리스트</title>
     <link rel="stylesheet" th:href="@{/css/salary/salaryPageList.css}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script th:src="@{/js/salary/salaryPageList.js}" defer="defer"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--    <script th:src="@{/js/salary/salaryPageList.js}" defer="defer"></script>-->
 </head>
 <body>
 <div id="loadedContent">
@@ -30,7 +30,7 @@
                                 <option value="30">이번달</option>
                                 <option value="100">상반기</option>
                                 <option value="77">하반기</option>
-<!--                                <option value="90">세달</option>-->
+                                <!--                                <option value="90">세달</option>-->
                                 <option value="1">1월</option>
                                 <option value="2">2월</option>
                                 <option value="3">3월</option>
@@ -48,9 +48,9 @@
                             <!--                        <input type="text" name="first" id="first" th:value="${param.first}" placeholder="시작일">-->
                             <!--                        <input type="text" name="last" id="last" th:value="${param.last}" placeholder="끝일">-->
 
-                            <input type="date" name="first" id="first" th:value="${param.first}" placeholder="시작일">
+                            <input type="date" name="first" id="first"  placeholder="시작일">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
-                            <input type="date" name="last" id="last" th:value="${param.last}" placeholder="끝일">
+                            <input type="date" name="last" id="last"  placeholder="끝일">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
                             <input type="submit" value="검색">
                         </form>
@@ -66,9 +66,9 @@
                     <tr class="th2">
                         <th> id</th>
                         <th> 사원</th>
-<!--                        <th> 학생</th>-->
+                        <!--                        <th> 학생</th>-->
                         <th> 기본급</th>
-<!--                        <th> 추가급</th>-->
+                        <!--                        <th> 추가급</th>-->
                         <th> 지급일</th>
                         <th> 상세</th>
                     </tr>
@@ -77,13 +77,13 @@
                     <tr th:each="salaryDto :${salaryDtoPage}">
                         <td th:text="${salaryDto.id}"></td>
                         <td th:text="${salaryDto.employee?.employeeName}"></td>
-<!--                        <td th:text="${salaryDto.student?.studentName}"></td>-->
+                        <!--                        <td th:text="${salaryDto.student?.studentName}"></td>-->
                         <td th:text="${salaryDto.baseSalary}"></td>
-<!--                        <td th:text="${salaryDto.extraSalary}"></td>-->
+                        <!--                        <td th:text="${salaryDto.extraSalary}"></td>-->
                         <td th:text="${salaryDto.salaryDate}"></td>
-<!--                        <td th:text="${#temporals.format(salaryDto.salaryDate, 'yy.MM.dd/HH:mm')}"></td>-->
+                        <!--                        <td th:text="${#temporals.format(salaryDto.salaryDate, 'yy.MM.dd/HH:mm')}"></td>-->
                         <td>
-                            <a th:href="@{salary/detail/{id}(id=${salaryDto.id})}" data-ajax>상세조회</a>
+                            <a th:href="@{/salary/detail/{id}(id=${salaryDto.employee?.employeeNo})}" data-ajax>상세조회</a>
                         </td>
                     </tr>
                     </tbody>

@@ -5,14 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import spring.project.groupware.academy.attendance.dto.AttendanceDto;
 import spring.project.groupware.academy.attendance.repository.AttendanceRepository;
 import spring.project.groupware.academy.attendance.service.AttendanceService;
+import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.repository.EmployeeRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -25,19 +28,48 @@ public class AttendanceController {
 
     private final EmployeeRepository employeeRepository;
 
-// 인트로 존재 유무 받아서 조건문 추가
+
+
+    @GetMapping("/create")
+    public String create(
+            LocalDate start, LocalDate end,
+            Model model) {
+//        attendanceService.CreateAttendanceCustom(start, end);
+        model.addAttribute("start", start);
+        model.addAttribute("end", end);
+//        return "redirect:/attendance/list2";
+//        return "attendance/attendanceOutIn";
+        return "attendance/attendanceOutIn";
+    }
+
+    @PostMapping("/join")
+    public String join(
+//            @PathVariable("id") Long id,
+            @PathVariable("start") LocalDate start, @PathVariable("end") LocalDate end, Model model) {
+        attendanceService.CreateAttendanceCustom(start, end);
+//        model.addAttribute("id", id);
+//        model.addAttribute("start", start);
+//        model.addAttribute("end", end);
+//        return "redirect:/attendance/list2";
+//        return "attendance/attendanceOutIn";
+        return "attendance/list2";
+    }
 
     @GetMapping("/in/{id}")
     public String inAttend(@PathVariable("id") Long id) {
         attendanceService.inAttend(id);
 
-        return "redirect:/attendance/list2";
+//        return "redirect:/attendance/list2";
+//        return "attendance/attendanceOutIn";
+        return "attendance/list2";
     }
 
     @GetMapping("/out/{id}")
     public String outAttend(@PathVariable("id") Long id) {
         attendanceService.outAttend(id);
-        return "redirect:/attendance/list2";
+//        return "redirect:/attendance/list2";
+//        return "attendance/attendanceOutIn";
+        return "attendance/list2";
     }
 
     @GetMapping("/list")
@@ -94,10 +126,12 @@ public class AttendanceController {
         return "/attendance/attendanceList2";
     }
 
-////    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
-//    @GetMapping("/list2")
+
+//    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+//    @GetMapping("/list2/{id}")
 //    public String attPageList2(@PageableDefault(page = 0, size = 30, sort = "attDate",
 //            direction = Sort.Direction.ASC) Pageable pageable,
+//            @AuthenticationPrincipal MyUserDetails myUserDetails,
 //            @PathVariable("id") Long id,
 //            @RequestParam(value = "subject", required = false) String subject,
 //            @RequestParam(value = "set", required = false) String set,
@@ -105,11 +139,13 @@ public class AttendanceController {
 //            @RequestParam(value = "last", required = false) String last,
 //            Model model){
 //
+//        if (id==null) id = myUserDetails.getEmployeeEntity().getEmployeeNo();
+//
 //
 //        Page<AttendanceDto> attPageList = attendanceService.attendancePagingList2(pageable, id, subject, set,first, last);
 //
-//        Long totalCount = attPageList.getTotalElements();
-//        int pagesize = attPageList.getSize();
+////        Long totalCount = attPageList.getTotalElements();
+////        int pagesize = attPageList.getSize();
 //        int nowPage = attPageList.getNumber();
 //        int totalPage = attPageList.getTotalPages();
 //        int blockNum = 5;
@@ -132,20 +168,26 @@ public class AttendanceController {
 //        return "/attendanceList2";
 //    }
 
-
 //    @GetMapping("/sick/{id}")
 //    public String sickAttendG() {
 //        return "";
 //    }
-//
+
 //    @PostMapping("/sick")
 //    public String sickAttendP() {
+//    attendanceService.sickApply(id,start,end);
+//        return "";
+//    }
+
+//    @GetMapping("/vacation/{id}")
+//    public String sickAttendG() {
 //        return "";
 //    }
 
 //    @PostMapping("/vacation")
-//    public void vacationAttend() {
-//        attendanceService.vacationAttend();
+//    public String vacationAttend() {
+//        attendanceService.vacationApply(id,start,end);
+//        return "";
 //    }
 
 

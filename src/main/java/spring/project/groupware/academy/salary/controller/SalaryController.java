@@ -19,6 +19,7 @@ import spring.project.groupware.academy.salary.service.SalaryService;
 
 import java.util.List;
 
+//@RestController
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/salary")
@@ -44,27 +45,31 @@ public class SalaryController {
     //구분/성명/부서(수업)/지급총액/공제총액/실지급액
     //해당 사원만 보이게 //나중에 paging 추가 고민
     @GetMapping("/detail/{id}")
-    public String detailSalary(@PathVariable("id") Long id,Model model) {
-        List<SalaryDto> salaryDtoList = salaryService.detailSalary(id);
+    public String detailSalary(@PathVariable("id") Long id, Model model) {
+//        List<SalaryDto> salaryDtoList = salaryService.salaryDetail(id);
+        SalaryDto salaryDto = salaryService.salaryDetail(id);
 
-        model.addAttribute("salaryDtoList",salaryDtoList);
+//        model.addAttribute("salaryDtoList", salaryDtoList);
+        model.addAttribute("salaryDto", salaryDto);
         return "salary/salaryDetail";
     }
 
-    // 일반 list에서 페이지 추가
-    @GetMapping("/page")
-//    @GetMapping("/page/{id}")
-    public String SalaryPageList(@PageableDefault(page = 0, size = 30, sort = "salaryDate",
-            direction = Sort.Direction.ASC) Pageable pageable,
-                                 @AuthenticationPrincipal MyUserDetails myUserDetails,
-//                               @RequestParam(value = "id", required = false) Long id,
-                               @RequestParam(value = "subject", required = false) String subject,
-                               @RequestParam(value = "set", required = false) String set,
-                               @RequestParam(value = "first", required = false) String first,
-                               @RequestParam(value = "last", required = false) String last,
-                               Model model){
 
-        Long id = myUserDetails.getEmployeeEntity().getEmployeeNo();
+    @GetMapping("/page/{id}")
+    public String SalaryPageListId(@PageableDefault(page = 0, size = 30, sort = "salaryDate",
+            direction = Sort.Direction.ASC) Pageable pageable,
+                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
+//                               @RequestParam
+                                   @PathVariable(value = "id", required = false) Long id,
+                                   @RequestParam(value = "subject", required = false) String subject,
+                                   @RequestParam(value = "set", required = false) String set,
+                                   @RequestParam(value = "first", required = false) String first,
+                                   @RequestParam(value = "last", required = false) String last,
+                                   Model model) {
+
+        if (id == null) {
+            id = myUserDetails.getEmployeeEntity().getEmployeeNo();
+        }
 
         Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, id, subject, set, first, last);
 

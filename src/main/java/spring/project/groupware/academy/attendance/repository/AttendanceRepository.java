@@ -47,7 +47,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
     // 해당 사원 출결 조회 >> 상세 누르면 나옴 // 일단 detail
     List<Attendance> findByEmployee(@Param("employee") EmployeeEntity employee);
 
-    Attendance findByAttendanceStatusAndEmployeeAndAttDate(@Param("attendanceStatus")AttendanceStatus attendanceStatus, @Param("employee") EmployeeEntity employee, @Param("attDate")LocalDate attDate);
+    LocalDate findByAttendanceStatusAndEmployeeAndAttDate(@Param("attendanceStatus")AttendanceStatus attendanceStatus, @Param("employee") EmployeeEntity employee, @Param("attDate")LocalDate attDate);
 
     List<Attendance> findByAttDateAndAttendanceStatus(@Param("attDate")LocalDate attDate, @Param("attendanceStatus")AttendanceStatus attendanceStatus);
 

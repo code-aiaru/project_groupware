@@ -51,9 +51,11 @@
                             <!--                        <input type="text" name="first" id="first" th:value="${param.first}" placeholder="시작일">-->
                             <!--                        <input type="text" name="last" id="last" th:value="${param.last}" placeholder="끝일">-->
 
-                            <input type="date" name="first" id="first" th:value="${param.first}" placeholder="시작일">
+                            <!--th:value="${param.first}"-->
+                            <input type="date" name="first" id="first" placeholder="시작일">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
-                            <input type="date" name="last" id="last" th:value="${param.last}" placeholder="끝일">
+                            <!--th:value="${param.last}"-->
+                            <input type="date" name="last" id="last"  placeholder="끝일">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
                             <input type="submit" value="검색">
                         </form>
@@ -96,8 +98,8 @@
                             <!--                <a th:href="@{/attendance/in/{id}(id=${#authentication.principal.employee.id})}">출근</a>-->
                             <!--                <a th:href="@{/attendance/out/{id}(id=${#authentication.principal.employee.id})}">퇴근</a>-->
                             <!--                <a th:href="@{/attendance/detail/{id}(id=${#authentication.principal.employee.id})}">상세</a>-->
-                            <a th:href="@{/attendance/in/{id}(id=${attendance.id})}">출근</a>
-                            <a th:href="@{/attendance/out/{id}(id=${attendance.id})}">퇴근</a>
+<!--                            <a th:href="@{/attendance/in/{id}(id=${attendance.id})}">출근</a>-->
+<!--                            <a th:href="@{/attendance/out/{id}(id=${attendance.id})}">퇴근</a>-->
                             <a th:href="@{/attendance/detail/{id}(id=${attendance.id})}">상세(이번달)</a>
                             <!--                <a th:href="@{/attendance/vacation/{id}(id=${attendance.employee.employeeNo})}">휴가</a>-->
                         </td>

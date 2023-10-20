@@ -3,6 +3,8 @@ package spring.project.groupware.academy.salary.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
 import spring.project.groupware.academy.salary.entity.Salary;
@@ -19,4 +21,29 @@ public interface SalaryRepository extends JpaRepository<Salary, Long> {
 
     Page<Salary> findByEmployeeAndSalaryDateBetween(Pageable pageable, EmployeeEntity employee, LocalDate start, LocalDate end);
 
+//    @Query("SELECT MIN(s.salaryDate) FROM Salary s AND s.employee_no:=employeeNo")
+//    LocalDate findOldestSalaryDate(@Param("employeeNo") Long employeeNo);
+
+    // 이 문구로 해야하는듯 함
+//    select * from salary where min(salary_date) and employee_no='3';
+
+//    @Query(value = "SELECT * FROM salary WHERE MIN(salary_date) AND employee_no =:employeeNo", nativeQuery = true)
+//    Salary findOldestSalaryDateByEmployee(@Param("employeeNo") Long employeeNo);
+
+    //nativeQuery
+    @Query(value = "SELECT MIN(salary_date) FROM salary WHERE employee_no=:employeeNo", nativeQuery = true)
+    LocalDate findOldestSalaryDateByEmployeeNo(@Param("employeeNo") Long employeeNo);
+
+
+    // LocalDate는 ASC가 불가? >> Desc
+//    LocalDate findTopSalaryDateOrderBySalaryDateAsc();
+//    LocalDate findTopEmployeeOrderBySalaryDateAsc(EmployeeEntity employee);
+
+    //jpql
+//    @Query("SELECT a FROM Salary a WHERE a.employee =:employee ORDER BY a.salary_date")
+//    LocalDate customSalaryDate(@Param("employee") EmployeeEntity employee);
+
+//    Page<Salary> findSalariesWithFilters(Pageable pageable, Long id, String subject, String set, String first, String last);
+
 }
+

@@ -31,49 +31,72 @@ public class AttendanceService{
     // 휴일, 토, 일, 공휴일 , 병가,휴가 제외  추가하기
     @Transactional
     public void CreateAttendance(){
-
         List<Attendance> vacationList = attendanceRepository.findByAttDateAndAttendanceStatus(LocalDate.now(), AttendanceStatus.VACATION);
         List<Attendance> sickList = attendanceRepository.findByAttDateAndAttendanceStatus(LocalDate.now(), AttendanceStatus.SICK);
 //        List<Attendance> attList = attendanceRepository.findByAttDateAndAttendanceStatusOrAttendanceStatus(LocalDate.now(), AttendanceStatus.SICK, AttendanceStatus.VACATION);
 
         for (EmployeeEntity emp : employeeRepository.findAll()){
-//            Attendance vacation = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.VACATION, e,LocalDate.now());
-//            Attendance sick = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.SICK, e,LocalDate.now());
-//            for (Attendance a : vacationList){
-//                if(a.getEmployee().equals(emp)){
-//                    attendanceRepository.save(
-//                            Attendance.builder()
-//                                    .inAtt(a.getInAtt())
-//                                    .outAtt(a.getOutAtt())
-//                                    .attDate(LocalDate.now())
-//                                    .employee(emp)
-//                                    .attendanceStatus(AttendanceStatus.VACATION)
-//                                    .build());
-//                }
-//            }
-//            for (Attendance a : sickList){
-//                if(a.getEmployee().equals(emp)){
-//                    attendanceRepository.save(
-//                            Attendance.builder()
-//                                    .inAtt(a.getInAtt())
-//                                    .outAtt(a.getOutAtt())
-//                                    .attDate(LocalDate.now())
-//                                    .employee(emp)
-//                                    .attendanceStatus(AttendanceStatus.SICK)
-//                                    .build());
-//                }
-//            }
 
-            attendanceRepository.save(
-                    Attendance.builder()
-                            .attDate(LocalDate.now())
-                            .employee(emp)
-                            .attendanceStatus(AttendanceStatus.ABSENT)
-                            .build());
+            LocalDate vacationDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.VACATION, emp,LocalDate.now());
+            LocalDate sickDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.SICK, emp,LocalDate.now());
+
+            if (LocalDate.now()==vacationDate||LocalDate.now()==sickDate){
+
+            }else {
+                if (LocalDate.now().getDayOfWeek()==DayOfWeek.SATURDAY || LocalDate.now().getDayOfWeek()==DayOfWeek.SUNDAY){
+                }else {
+                    attendanceRepository.save(
+                            Attendance.builder()
+                                    .attDate(LocalDate.now())
+                                    .employee(emp)
+                                    .attendanceStatus(AttendanceStatus.ABSENT)
+                                    .build());
+                }
+            }
         }
 
 //        return attendanceRepository.findAllDate(LocalDate.now());
     }
+
+    @Transactional
+    public void CreateAttendanceCustom(LocalDate start, LocalDate end){
+//        List<Attendance> vacationList = attendanceRepository.findByAttDateAndAttendanceStatus(LocalDate.now(), AttendanceStatus.VACATION);
+//        List<Attendance> sickList = attendanceRepository.findByAttDateAndAttendanceStatus(LocalDate.now(), AttendanceStatus.SICK);
+//        List<Attendance> attList = attendanceRepository.findByAttDateAndAttendanceStatusOrAttendanceStatus(LocalDate.now(), AttendanceStatus.SICK, AttendanceStatus.VACATION);
+        for (EmployeeEntity emp : employeeRepository.findAll()){
+
+            LocalDate vacationDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.VACATION, emp,LocalDate.now());
+            LocalDate sickDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.SICK, emp,LocalDate.now());
+
+            int day = end.getDayOfYear()-start.getDayOfYear();
+
+            for (int i=0;i<day;i++) {
+                LocalDate date = start.plusDays(i);
+                if (date == vacationDate || date == sickDate) {
+                    continue;
+                } else {
+                    if (date.getDayOfWeek()==DayOfWeek.SATURDAY || date.getDayOfWeek()==DayOfWeek.SUNDAY){
+                        continue;
+                    }else {
+//                        if (emp.getCreateTime().toLocalDate().isBefore(date))     // empDate(사원생성일) < date(비교일) 사원 생성일 기준보다 작으면 넘어감
+//                        {}else {
+                            attendanceRepository.save(
+                                    Attendance.builder()
+                                            .attDate(date)
+                                            .employee(emp)
+                                            .attendanceStatus(AttendanceStatus.ABSENT)
+                                            .build());
+//                        }
+
+
+                    }
+                }
+            }
+        }
+
+//        return attendanceRepository.findAllDate(LocalDate.now());
+    }
+
 
     //출석
     public void inAttend(Long attId) {
@@ -91,6 +114,27 @@ public class AttendanceService{
 
         attendanceRepository.save(attendance);
     }
+
+    // 출석2
+//    public void inAttend(AttendanceDto attendanceDto) {
+////        Attendance attendance = attendanceRepository.findById(attId)
+////                .orElseThrow(() -> new EntityNotFoundException("근태관리 테이블 id에 해당하는 데이터가 없음"));
+//        Attendance attendance = Attendance.toAttendance(attendanceDto);
+//
+//        Long id = attendanceRepository.save(attendance).getId();
+//
+//        if (LocalDateTime.now().isBefore(LocalDateTime.of(LocalDate.now(),LocalTime.of(9,30,0)))){
+//
+//            attendance.changeInTime(LocalDateTime.now());
+//            attendance.changeAttStatus(AttendanceStatus.IN);
+//        }else {
+//            attendance.changeInTime(LocalDateTime.now());
+//            attendance.changeAttStatus(AttendanceStatus.LATE);
+//        }
+//
+//
+////        return 0;
+//    }
 
     //퇴근
     public void outAttend(Long attId) {
@@ -115,37 +159,72 @@ public class AttendanceService{
         EmployeeEntity employee = employeeRepository.findById(empId)
                 .orElseThrow(()->new EntityNotFoundException("사원정보가 없음!"));
 
-        Attendance attendance = attendanceRepository.findByAttDateAndEmployee(LocalDate.now(),employee);
+        LocalDate vacationDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.VACATION, employee,LocalDate.now());
+        LocalDate sickDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.SICK, employee,LocalDate.now());
 
-//        Attendance attendance = attendanceRepository.findByAttDate(attId)
-//                .orElseThrow(() -> new EntityNotFoundException("근태관리 테이블 id에 해당하는 데이터가 없음"));
+        int day = end.getDayOfYear()-start.getDayOfYear();
+
+        for (int i=0;i<day;i++) {
+            LocalDate date = start.plusDays(i).toLocalDate();
+            if (date == vacationDate || date == sickDate) {
+                continue;
+            } else {
+                if (date.getDayOfWeek()==DayOfWeek.SATURDAY || date.getDayOfWeek()==DayOfWeek.SUNDAY){
+                    continue;
+                }else {
+//                        if (emp.getCreateTime().toLocalDate().isBefore(date))     // empDate(사원생성일) < date(비교일) 사원 생성일 기준보다 작으면 넘어감
+//                        {}else {
+                    attendanceRepository.save(
+                            Attendance.builder()
+                                    .attDate(date)
+                                    .employee(employee)
+//                                    .inAtt()          // 시작날 추가
+//                                    .outAtt()         // 끝날 추가
+                                    .attendanceStatus(AttendanceStatus.SICK)
+                                    .build());
+//                        }
 
 
-        attendanceRepository.save(
-                attendance.builder()
-                        .employee(employee)
-                        .attDate(LocalDate.now())   // 신청일
-                        .inAtt(start)               // 시작일
-                        .outAtt(end)                // 종료일
-                        .attendanceStatus(AttendanceStatus.SICK)
-                        .build());
+                }
+            }
+        }
+
+
     }
 
     public void vacationApply(Long empId, LocalDateTime start, LocalDateTime end) {
         EmployeeEntity employee = employeeRepository.findById(empId)
                 .orElseThrow(()->new EntityNotFoundException("사원정보가 없음!"));
 
+        LocalDate vacationDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.VACATION, employee,LocalDate.now());
+        LocalDate sickDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.SICK, employee,LocalDate.now());
 
-        Attendance attendanceList = attendanceRepository.findByAttDateAndEmployee(LocalDate.now(),employee);
+        int day = end.getDayOfYear()-start.getDayOfYear();
 
-        attendanceRepository.save(
-                Attendance.builder()
-                        .employee(employee)
-                        .attDate(LocalDate.now())   // 신청일
-                        .inAtt(start)               // 시작일
-                        .outAtt(end)                // 종료일
-                        .attendanceStatus(AttendanceStatus.VACATION)
-                        .build());
+        for (int i=0;i<day;i++) {
+            LocalDate date = start.plusDays(i).toLocalDate();
+            if (date == vacationDate || date == sickDate) {
+                continue;
+            } else {
+                if (date.getDayOfWeek()==DayOfWeek.SATURDAY || date.getDayOfWeek()==DayOfWeek.SUNDAY){
+                    continue;
+                }else {
+//                        if (emp.getCreateTime().toLocalDate().isBefore(date))     // empDate(사원생성일) < date(비교일) 사원 생성일 기준보다 작으면 넘어감
+//                        {}else {
+                    attendanceRepository.save(
+                            Attendance.builder()
+                                    .attDate(date)
+                                    .employee(employee)
+//                                    .inAtt()          // 시작날 추가
+//                                    .outAtt()         // 끝날 추가
+                                    .attendanceStatus(AttendanceStatus.VACATION)
+                                    .build());
+//                        }
+
+
+                }
+            }
+        }
     }
 
 
@@ -171,12 +250,12 @@ public class AttendanceService{
 //        List<Attendance> attendanceList = attendanceRepository.findByEmployee(employee);
 
 //        // 해당 사원  당월 모든 일수 출결 조회
-//        LocalDate(LocalDate.now().getYear(), LocalDate.now().getMonth() , LocalDate.MAX.getDayOfMonth())
-//        List<Attendance> attendanceList = attendanceRepository.findByEmployeeAndAttDateBetween(employee, LocalDate.now(), LocalDate(LocalDate.now().getYear() , LocalDate.now().getMonth() , LocalDate.MAX.getDayOfMonth()));
+//        LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth() , LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),1).lengthOfMonth());
+//        List<Attendance> attendanceList = attendanceRepository.findByEmployeeAndAttDateBetween(employee, LocalDate.now(), LocalDate(LocalDate.now().getYear() , LocalDate.now().getMonth() , LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),1).lengthOfMonth());
 
         // 현재 사용중
         // 해당 사원 오늘 부터~ 이번달 마지막 일까지         // 변경 달 초 부터~ LocalDate.now().withDayOfMonth(1)
-        List<Attendance> attendanceList = attendanceRepository.findByEmployeeAndAttDateBetween(employee1, LocalDate.now().withDayOfMonth(1), LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),LocalDate.MAX.getDayOfMonth()));
+        List<Attendance> attendanceList = attendanceRepository.findByEmployeeAndAttDateBetween(employee1, LocalDate.now().withDayOfMonth(1), LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),1).lengthOfMonth()));
 
 
 
@@ -230,7 +309,9 @@ public class AttendanceService{
     }
 
     public Page<AttendanceDto> attendancePagingList1(Pageable pageable, String subject, String set, String first, String last) {
-        if(subject==null) subject="";   //subject="ALL"
+        if(subject==null)
+//            subject="";
+        subject="ALL";
         if(first==null||first=="") first=LocalDate.now().toString();
         if(last==null||last=="") last=LocalDate.now().toString();
         if(set==null||set=="") set="0";
@@ -243,13 +324,17 @@ public class AttendanceService{
         // 8자리or6자리 20231010 , 231010
         // 7, 30, 90,    달선택, 직접입력
         // 입사일부터 현재까지 조회 하도록 예정
+
+        // 그달의 마지막일 LocalDate~.lengthOfMonth()
+//        int lastDayOfMonth = LocalDate.of(LocalDate.MAX.getYear(), LocalDate.MAX.getMonth(), 1).lengthOfMonth();
+
         if(set.equals("0")||set.equals("100")){    // 기간옵션 설정(set) 전체 0 , 오늘 100, 직접 입력 99  >> 기간 적나, 안적나
             if (first.equals(LocalDate.now())&&last.equals(LocalDate.now())){   // 기간 미입력 >> 전체
                 // 아래 출결 상태 조건문에 설정
             }else{                                                              // 기간 입력 >> 기간 설정
-                set = "99";
-                start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
-                end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
+//                set = "99";
+//                start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
+//                end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
             }
 
         }else if(set.equals("77")){   // 이번 주
@@ -263,7 +348,7 @@ public class AttendanceService{
             end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(0<Integer.parseInt(set) && Integer.parseInt(set)<13){  // 월 선택
             start = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), 1);
-            end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.MAX.getDayOfMonth());
+            end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set),1).lengthOfMonth());
         }else if(set.equals("99")) {     // 직접 입력 (일단 예시)
             start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
             end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
@@ -343,7 +428,7 @@ public class AttendanceService{
     }
 
 
-    public Page<AttendanceDto> attendancePagingList2(Pageable pageable, Long id, String subject, String set, String first, String last) {
+    public Page<AttendanceDto>                                                                                                                 attendancePagingList2(Pageable pageable, Long id, String subject, String set, String first, String last) {
         // 사원 목록 >> 해당 사원 선택 >> id:해당 사원 아이디(employee_no) >> 변환 필요
 
 //        EmployeeEntity employee = attendanceRepository.findById(id)
@@ -385,7 +470,8 @@ public class AttendanceService{
             end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(0<Integer.parseInt(set) && Integer.parseInt(set)<13){  // 월 선택
             start = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), 1);
-            end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.MAX.getDayOfMonth());
+            //
+            end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(), 1).lengthOfMonth());
         }else if(set.equals("99")) {     // 직접 입력 (일단 예시)
             start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
             end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
@@ -465,3 +551,4 @@ public class AttendanceService{
         return attendanceDtoPageList;
     }
 }
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>근태 처리 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/attendance/attendanceOutIn.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/attendance/attendanceOutIn.js}" defer="defer"></script>
+</head>
+<body>
+<div id="loadedContent">
+
+<div class="attendance-create">
+    <span>ATTENDANCE</span>
+<!--        <th:block sec:authorize="hasAnyRole('ADMIN')">-->
+            <form th:action="@{/attendance/join}" method="post" data-ajax>
+                <input type="date" name="start" id="start"  placeholder="시작날">
+                <input type="date" name="end" id="end"  placeholder="끝날">
+                <input type="submit" value="생성">
+            </form>
+<!--        </th:block>-->
+</div>
+
+<!--    {id}(id=${#authentication.principal.employee?.employeeNo}-->
+<div class="attendance-in">
+<!--    <form th:action="@{/attendance/in}" method="get" data-ajax>-->
+        <button type="submit">
+            <a th:href="@{/attendance/in/{id}(id=${#authentication.principal.employee?.employeeNo}}">출근</a>
+            </button>
+<!--    </form>-->
+</div>
+
+<div class="attendance-out">
+    <!--    <form th:action="@{/attendance/in}" method="get" data-ajax>-->
+    <button type="submit">
+        <a th:href="@{/attendance/out/{id}(id=${#authentication.principal.employee?.employeeNo}}">퇴근</a>
+        </button>
+    <!--    </form>-->
+</div>
+
+</div>
+</body>
+</html>
