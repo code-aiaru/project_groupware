@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <link rel="stylesheet" href="/css/naver/naver_auth2.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+	$(function(){
+		$.each($(".group"),function(index,item){
+			if($(item).children().length == 0){
+				$(item).remove();
+			}
+		})
+	});
+  </script>
+</head>
+<body>
+<div class="naver-group">
+  <h1>그린컴퓨터아카데미</h1>
+  <ul class="parent-node">
+    <!-- 조직 연동 기본 구조 -->
+    <li class="node" th:each="dto1:${list}" th:if="${#strings.isEmpty(dto1.parentOrgUnitId)}">
+      <a th:text="${dto1.orgUnitName}"></a>
+      <ul class="group">
+        <li class="tree-node node" th:each="dto2:${list}" th:if="${dto1.orgUnitId eq dto2.parentOrgUnitId}">
+          <a th:text="${dto2.orgUnitName}"></a>
+          <ul class="group">
+            <li class="tree-node node" th:each="dto3:${list}" th:if="${dto2.orgUnitId eq dto3.parentOrgUnitId}">
+              <a th:text="${dto3.orgUnitName}"></a>
+              <ul class="group">
+                <li class="tree-node node" th:each="dto4:${list}" th:if="${dto3.orgUnitId eq dto4.parentOrgUnitId}">
+                  <a th:text="${dto4.orgUnitName}"></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <a th:href="@{/}">돌아가기</a>
+  </ul>
+</div>
+</body>
+</html>

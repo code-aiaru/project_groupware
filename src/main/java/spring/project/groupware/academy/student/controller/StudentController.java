@@ -77,7 +77,7 @@ public class StudentController {
     // Read - 수강생 목록
     @GetMapping("/student/studentList")
     public String getStudentList(
-            @PageableDefault(page=0, size=2, sort = "studentId", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page=0, size=5, sort = "studentId", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
             @RequestParam(value = "subject", required = false) String subject,
             @RequestParam(value = "search", required = false) String search,
@@ -118,7 +118,6 @@ public class StudentController {
 
         StudentDto student = studentService.detailStudent(studentId);
         // 이미지 url을 db에서 가져오기
-//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
         String studentImageUrl = imageService.findImage2(student.getStudentId()).getImageUrl();
 
         model.addAttribute("student", student);

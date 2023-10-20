@@ -1,6 +1,11 @@
 initializeScriptAW();
 
 function initializeScriptAW(){
+
+document.getElementById("goBackButton").addEventListener("click", function() {
+            window.history.back();
+        });
+
 const approvalAnswerBtn=document.querySelector('#approvalAnswerBtn');
 const XBtn=document.querySelector('#XBtn');
 const approvalResultForm=document.querySelector('.approval-Result');

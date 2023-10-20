@@ -42,6 +42,10 @@
                         <span th:text="${employee.employeeName}"></span>
                     </li>
                     <li>
+                        <span>성별</span>
+                        <span th:text="${employee.employeeGender}"></span>
+                    </li>
+                    <li>
                         <span>휴대전화번호</span>
                         <span th:text="${employee.employeePhone}"></span>
                     </li>
@@ -65,10 +69,12 @@
                         <span>주소</span>
                         <span th:text="${employee.employeeStreetAddress + ', ' + employee.employeeDetailAddress}"></span>
                     </li>
-<!--                    <li>-->
-<!--                        <span>권한</span> &lt;!&ndash; 필요없으면 숨기기 &ndash;&gt;-->
-<!--                        <span th:text="${employee.role}"></span>-->
-<!--                    </li>-->
+                    <th:block sec:authorize="hasAnyRole('ADMIN')">
+                        <li>
+                            <span>권한</span>
+                            <span th:text="${employee.role}"></span>
+                        </li>
+                    </th:block>
                     <li>
                         <span>입사일</span>
                         <span th:text="${#temporals.format(employee.createTime, 'yyyy-MM-dd')}"></span>

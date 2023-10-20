@@ -14,7 +14,7 @@ public class CheckMatchingController {
     private final EmployeeService employeeService;
 
     // 비밀번호 찾기 기능에서 이메일과 휴대전화번호 둘다 일치하는지
-    @GetMapping("/check-emailPhoneMatching")
+    @GetMapping("/api/check-emailPhoneMatching")
     public EmployeeDto checkEmailPhoneMatching(@RequestParam String employeeEmail, @RequestParam String employeePhone) {
 
         boolean isMatching = employeeService.checkEmailPhoneMatching(employeeEmail, employeePhone);

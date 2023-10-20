@@ -3,42 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>이메일 찾기</title>
+    <link rel="stylesheet" th:href="@{/css/employee/findId.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/employee/findId.js}" defer="defer"></script>
 </head>
 <body>
 <div class="container">
-    <div class="find">
-        <div class="find-con">
-            <div class="title">
-                <h1>아이디 찾기</h1>
+    <div class="find_box">
+        <form th:action="@{/api/findId}" method="post" class="find_form">
+            <h1 class="logo">아이디 찾기</h1>
+                <span>이메일</span><input type="email" id="employeeEmail" name="employeeEmail" placeholder="이메일 입력" required>
+                <span>휴대전화번호</span><input type="text" id="employeePhone" name="employeePhone" placeholder="휴대전화번호 입력" required>
+            <input type="submit" value="아이디 찾기" class="find_btn">
+            <div class="login">
+                <a th:href="@{/login}"><span>로그인</span></a>
             </div>
-            <div class="find-form">
-                <form th:action="@{/findId}" method="post">
-                    <ul>
-                        <li class="email">
-                            <label for="employeeEmail">이메일</label>
-                            <div class="email-write">
-                                <input type="text" id="employeeEmail" name="employeeEmail" required="required" placeholder="이메일 입력">
-                            </div>
-                        </li>
-                        <li class="phone">
-                            <label for="employeePhone">휴대전화번호</label>
-                            <div class="phone-write">
-                                <input type="text" id="employeePhone" name="employeePhone" required="required" placeholder="휴대전화번호 입력">
-                            </div>
-                        </li>
-                        <li class="Btn">
-                            <button type="submit">아이디 찾기</button>
-                        </li>
-                    </ul>
-                </form>
-                <!--결과 메시지 출력-->
-                <div id="foundId" style="display: none;" class="foundId"></div>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
-<button th:onclick="@{location.href='/index'}">홈</button>
+<!-- 모달 창 -->
+<div id="findIdModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <p id="foundId"></p>
+        <button id="copyButton">복사</button> <!-- 복사 버튼 추가 -->
+    </div>
+</div>
+<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
 </body>
 </html>

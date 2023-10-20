@@ -149,7 +149,7 @@ public class EmployeeController {
     // 간단한 사원목록(일반사원 조회 가능)
     @GetMapping("/employee/simpleEmployeeList")
     public String getSimpleEmployeeList(
-            @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page=0, size=5, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
             @RequestParam(value = "subject", required = false) String subject,
             @RequestParam(value = "search", required = false) String search,
@@ -158,10 +158,8 @@ public class EmployeeController {
 
         if (myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
-//            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
             model.addAttribute("employee", employee);
-//            model.addAttribute("employeeImageUrl", employeeImageUrl);
             model.addAttribute("myUserDetails", myUserDetails);
         }
 
@@ -291,6 +289,9 @@ public class EmployeeController {
         }
 
         int rs=employeeService.deleteEmployee(employeeNo);
+
+//        EmployeeDto employee = employeeService.detailEmployee(employeeNo);
+//        model.addAttribute("employee", employee.getEmployeeNo());
 
         if (rs==1) {
             System.out.println("사원 삭제 성공");

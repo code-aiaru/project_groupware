@@ -32,36 +32,16 @@ $(function() {
             currentPasswordChanged = true;
         });
 
-//    $('#changePasswordBtn').click(function(e) {
-//        if ($('#currentPasswordMessage').text() === '현재 비밀번호가 일치합니다.') {
-//            // 비밀번호 확인이 성공한 경우 폼을 서버로 제출
-//            $('#confirmPasswordForm').submit();
-//        } else if ($('#currentPasswordMessage').text() === '') {
-//            e.preventDefault();
-//            alert('현재 비밀번호 확인을 먼저 해주세요.');
-//        } else if (currentPasswordChanged && $('#currentPasswordMessage').text() !== '현재 비밀번호가 일치합니다.') {
-//            e.preventDefault();
-//            alert('현재 비밀번호를 확인해주세요.');
-//        }
-//    });
-     $('#redirection').click(function(e) {
-         if ($('#currentPasswordMessage').text() === '' || $('#currentPasswordMessage').text() === '현재 비밀번호가 일치하지 않습니다') {
-             e.preventDefault();
-             alert('현재 비밀번호 확인을 먼저 해주세요.');
-         }
-     });
-
-
-//    $('#changePasswordBtn').click(function(e) {
-//        if ($('#currentPasswordMessage').text() === '현재 비밀번호가 일치합니다.') {
-//                const redirection = document.getElementById('redirection');
-//                redirection.click();
-//        } else if ($('#currentPasswordMessage').text() === '') {
-//            e.preventDefault();
-//            alert('현재 비밀번호 확인을 먼저 해주세요.');
-//        } else if (currentPasswordChanged && $('#currentPasswordMessage').text() !== '현재 비밀번호가 일치합니다.') {
-//            e.preventDefault();
-//            alert('현재 비밀번호를 확인해주세요.');
-//        }
-//    });
+    $('#changePasswordBtn').click(function(e) {
+        if ($('#currentPasswordMessage').text() === '현재 비밀번호가 일치합니다.') {
+                const redirection = document.getElementById('redirection');
+                redirection.click();
+        } else if ($('#currentPasswordMessage').text() === '') {
+            e.preventDefault();
+            alert('현재 비밀번호 확인을 먼저 해주세요.');
+        } else if (currentPasswordChanged && $('#currentPasswordMessage').text() !== '현재 비밀번호가 일치합니다.') {
+            e.preventDefault();
+            alert('현재 비밀번호를 확인해주세요.');
+        }
+    });
 });

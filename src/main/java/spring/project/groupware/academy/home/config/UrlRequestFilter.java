@@ -26,14 +26,12 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/css/");
         excludedUrl.add("/images/");
         excludedUrl.add("/employeeImages/"); // 추가 - 송원철, 프로필 이미지 업로드 시 사용
+        excludedUrl.add("/studentImages/"); // 추가 - 송원철, 수강생 프로필 이미지 업로드 시 사용
         excludedUrl.add("/login");
         excludedUrl.add("/favicon.ico");
         excludedUrl.add("/api/");
         excludedUrl.add("/post/");
-        excludedUrl.add("/findId"); // 추가 - 송원철, 아이디 찾기
-        excludedUrl.add("/tempPassword"); // 추가 - 송원철, 비밀번호 찾기
-        excludedUrl.add("/check-emailPhoneMatching"); // 추가 - 송원철, 비밀번호 찾기 로직
-        excludedUrl.add("/send-mail/password"); // 추가 - 송원철, 임시비밀번호
+        excludedUrl.add("/naver/"); // 추가 - 송원철, 조직도 불러오기
 //        excludedUrl.add("/login/post");
     }
 
@@ -62,17 +60,9 @@ public class UrlRequestFilter implements Filter {
         String previousURL = (String) httpRequest.getSession().getAttribute("CurrentURL");
 
         logRequestDetails(requestedUri, asyncUrlRequest, currentURL, previousURL);
+        requestTypeDecideHandler(httpRequest, httpResponse, asyncUrlRequest, previousURL);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MyUserDetails myUserDetails = getMyUserDetails(authentication);
-
-        Boolean loginStatus= handleLoginStatus(httpRequest, httpResponse, myUserDetails, asyncUrlRequest, previousURL);
-
-        if (!loginStatus){
-            return;
-        } else {
-            chain.doFilter(request, response);
-        }
+        chain.doFilter(request, response);
     }
 
     // 필터 예외 처리된 URL을 확인하기 위한 메소드
@@ -80,28 +70,9 @@ public class UrlRequestFilter implements Filter {
         return excludedUrl.stream().anyMatch(excluded -> requestedUri.contains(excluded));
     }
 
-    // 인증 객체 추출 메소드
-    private MyUserDetails getMyUserDetails(Authentication authentication) {
-        if (authentication != null && authentication.getPrincipal() instanceof MyUserDetails) {
-            return (MyUserDetails) authentication.getPrincipal();
-        }
-        return null;
-    }
-
-    // 로그인 확인 및 처리 메소드
-    private boolean handleLoginStatus(HttpServletRequest httpRequest, HttpServletResponse httpResponse, MyUserDetails myUserDetails, String asyncUrlRequest, String previousURL) throws IOException, ServletException {
-        if (myUserDetails != null) {
-            handleLoggedInUser(httpRequest, httpResponse, asyncUrlRequest, previousURL);
-            return true;
-        } else {
-            handleLoggedOutUser(httpResponse);
-            return false;
-        }
-    }
-
-    // 로그인한 유저 처리 메소드
-    private void handleLoggedInUser(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String asyncUrlRequest, String previousURL) throws IOException, ServletException {
-        logger.info("로그인이 되어있습니다.");
+    // 요청타입 분별 메소드
+    private void requestTypeDecideHandler(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String asyncUrlRequest, String previousURL) throws IOException, ServletException {
+        logger.info("requestTypeDecideHandler activated");
         if (asyncUrlRequest == null && previousURL == null) {
             logger.info("초기 로딩 요청.");
             forwardRequest(httpRequest, httpResponse, "/index");
@@ -114,12 +85,6 @@ public class UrlRequestFilter implements Filter {
         } else if (asyncUrlRequest != null && previousURL != null) {
             logger.info("SPA URL 요청.");
         }
-    }
-
-    // 로그인 안한 유저 처리 메소드
-    private void handleLoggedOutUser(HttpServletResponse httpResponse) throws IOException {
-        logger.info("로그인이 안되어있습니다.");
-        httpResponse.sendRedirect("/login");
     }
 
     // 요청 전달 메소드
@@ -137,5 +102,3 @@ public class UrlRequestFilter implements Filter {
     }
 
 }
-
-

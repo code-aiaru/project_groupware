@@ -18,7 +18,7 @@ public class ScheduleDTO {
     private String target;
     private String start;
     private String end;
-    private Boolean allDay;
+    private Boolean isAllDay;
     private String color;
 
     private LocalDateTime createTime; // from BaseEntity
@@ -35,7 +35,7 @@ public class ScheduleDTO {
         scheduleDTO.setTarget(scheduleEntity.getTarget());
         scheduleDTO.setStart(scheduleEntity.getStart());
         scheduleDTO.setEnd(scheduleEntity.getEnd());
-        scheduleDTO.setAllDay(scheduleEntity.getAllDay());
+        scheduleDTO.setIsAllDay(scheduleEntity.getIsAllDay());
         scheduleDTO.setColor(scheduleEntity.getColor());
         scheduleDTO.setCreateTime(scheduleEntity.getCreateTime());
         scheduleDTO.setUpdateTime(scheduleEntity.getUpdateTime());
