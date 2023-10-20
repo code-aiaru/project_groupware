@@ -290,6 +290,9 @@ public class EmployeeController {
 
         int rs=employeeService.deleteEmployee(employeeNo);
 
+//        EmployeeDto employee = employeeService.detailEmployee(employeeNo);
+//        model.addAttribute("employee", employee.getEmployeeNo());
+
         if (rs==1) {
             System.out.println("사원 삭제 성공");
             return "redirect:/employee/employeeList?page=0&subject=&search=";

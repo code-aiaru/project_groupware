@@ -32,7 +32,7 @@ public class WebSecurityConfig {
             http.authorizeHttpRequests()
                     .antMatchers("/login").permitAll()
                     .antMatchers("/", "/dashboard", "/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
-                            "/student/**", "/boards/**", "/notice/detail/**", "/notice/list", "/attendance/**", "/approval/**", "/naver/**").authenticated()
+                            "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**", "/notice/list", "/attendance/**", "/approval/**", "/naver/**").authenticated()
                     .antMatchers("/employee/join", "/employee/employeeList**", "/notice/create", "/notice/edit/**").hasAnyRole("ADMIN")
 
                     .and()
