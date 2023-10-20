@@ -35,7 +35,7 @@
                         <span th:text="${student.studentGender}"></span>
                     </li>
                     <li>
-                        <span>수강중 강의</span>
+                        <span>수강중인강의</span>
                         <span th:text="${student.studentClass}"></span>
                     </li>
                     <li>
@@ -66,7 +66,7 @@
                         <span>
                             <div class="update">
                                 <li>
-                                    <a th:href="@{/student/update/{studentId}(studentId=${student.studentId})}">수정</a>
+                                    <a th:href="@{/student/update/{studentId}(studentId=${student.studentId})}" data-ajax>수정</a>
                                 </li>
                             </div>
                         </span>
