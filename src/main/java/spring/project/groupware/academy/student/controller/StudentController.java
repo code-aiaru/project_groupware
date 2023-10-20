@@ -77,7 +77,7 @@ public class StudentController {
     // Read - 수강생 목록
     @GetMapping("/student/studentList")
     public String getStudentList(
-            @PageableDefault(page=0, size=2, sort = "studentId", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page=0, size=5, sort = "studentId", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
             @RequestParam(value = "subject", required = false) String subject,
             @RequestParam(value = "search", required = false) String search,

@@ -149,7 +149,7 @@ public class EmployeeController {
     // 간단한 사원목록(일반사원 조회 가능)
     @GetMapping("/employee/simpleEmployeeList")
     public String getSimpleEmployeeList(
-            @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page=0, size=5, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
             @RequestParam(value = "subject", required = false) String subject,
             @RequestParam(value = "search", required = false) String search,
