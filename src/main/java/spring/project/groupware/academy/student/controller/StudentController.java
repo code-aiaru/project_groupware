@@ -118,7 +118,6 @@ public class StudentController {
 
         StudentDto student = studentService.detailStudent(studentId);
         // 이미지 url을 db에서 가져오기
-//        String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
         String studentImageUrl = imageService.findImage2(student.getStudentId()).getImageUrl();
 
         model.addAttribute("student", student);

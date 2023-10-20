@@ -55,6 +55,16 @@
             <p th:if="${#fields.hasErrors('employeeName')}" th:errors="*{employeeName}" class="error"></p>
             <span id="employeeNameErrorMessage" style="color: red;"></span> <!-- 이름 유효성 검사 오류 메시지를 표시할 영역 -->
 
+            <!-- 성별 -->
+            <li>
+                <label>성별</label>
+                <input type="radio" id="male" name="employeeGender" value="남" required="required">
+                <label for="male">남</label>
+
+                <input type="radio" id="female" name="employeeGender" value="여" required="required">
+                <label for="female">여</label>
+            </li>
+
             <!-- 휴대전화 -->
             <li>
                 <label th:for="employeePhone">휴대전화</label>

@@ -38,6 +38,8 @@ public class EmployeeDto {
     @Pattern(regexp = "^[가-힣a-zA-Z]*$", message = "한글과 영문만 입력 가능합니다" )
     private String employeeName;
 
+    private String employeeGender;
+
     @NotBlank
     @Size(min = 10, max = 11)
     @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대전화번호를 입력해주세요")
@@ -98,6 +100,7 @@ public class EmployeeDto {
         employeeDto.setEmployeeId(employeeEntity.getEmployeeId());
         employeeDto.setEmployeePassword(employeeEntity.getEmployeePassword());
         employeeDto.setEmployeeName(employeeEntity.getEmployeeName());
+        employeeDto.setEmployeeGender(employeeEntity.getEmployeeGender());
         employeeDto.setEmployeePhone(employeeEntity.getEmployeePhone());
         employeeDto.setEmployeeEmail(employeeEntity.getEmployeeEmail());
         employeeDto.setEmployeeDep(employeeEntity.getEmployeeDep());

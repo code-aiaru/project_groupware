@@ -35,6 +35,14 @@
           </li>
           <p th:if="${#fields.hasErrors('employeeName')}" th:errors="*{employeeName}" class="error"></p>
           <li>
+            <label>성별</label>
+            <input type="radio" id="male" name="employeeGender" value="남" required="required" th:checked="${employeeDto.employeeGender == '남'}">
+            <label for="male">남</label>
+
+            <input type="radio" id="female" name="employeeGender" value="여" required="required" th:checked="${employeeDto.employeeGender == '여'}">
+            <label for="female">여</label>
+          </li>
+          <li>
             휴대전화번호 : <input type="text" name="employeePhone" th:value="${employeeDto.employeePhone}" id="employeePhone" readonly> <br>
           </li>
           <li>
