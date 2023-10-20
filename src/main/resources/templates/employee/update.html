@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <title>정보수정 페이지</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!--다음 api 관련 js-->
+  <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!--다음 api 관련 js-->
   <script th:src="@{/js/employee/addressApi.js}" defer="defer"></script> <!--다음 api 관련 js-->
   <script th:src="@{/js/employee/update_birth.js}" defer="defer"></script>
 </head>
@@ -98,13 +98,13 @@
           </div>
           <li>
             <label th:for="employeePostCode">우편번호</label>
-            <input type="text" th:field="*{employeePostCode}" th:value="${employeeDto.employeePostCode}" required="required" readonly="readonly"> <br>
+            <input type="text" th:field="*{employeePostCode}" th:value="${employeeDto.employeePostCode}" required="required" readonly>
             <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
           </li>
           <p th:if="${#fields.hasErrors('employeePostCode')}" th:errors="*{employeePostCode}" class="error"></p>
           <li>
             <label th:for="employeeStreetAddress">도로명주소</label>
-            <input type="text" th:field="*{employeeStreetAddress}" th:value="${employeeDto.employeeStreetAddress}" placeholder="도로명주소를 입력하세요" readonly="readonly"> <br>
+            <input type="text" th:field="*{employeeStreetAddress}" th:value="${employeeDto.employeeStreetAddress}" placeholder="도로명주소를 입력하세요" readonly> <br>
           </li>
           <li>
             <label th:for="employeeDetailAddress">상세주소</label>

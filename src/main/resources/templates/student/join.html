@@ -6,7 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/student/checkDuplicate.js}" defer="defer"></script> <!-- 아이디, 이메일, 휴대전화번호 중복 검사 -->
     <script th:src="@{/js/student/join.js}" defer="defer"></script> <!-- 빈칸일 시 사원추가 중단-->
-    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 카카오 주소 api -->
+    <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 주소 api -->
     <script th:src="@{/js/student/addressApi.js}" defer="defer"></script> <!-- 카카오 주소 api -->
     <script th:src="@{/js/student/join_email.js}" defer="defer"></script> <!-- 이메일 관련 스크립트 -->
     <script th:src="@{/js/student/join_validation.js}" defer="defer"></script> <!-- 아이디, 이름, 휴대전화번호 유효성 검사 -->
@@ -89,15 +89,15 @@
             <li>
                 <label>생년월일</label>
                 <div class="birth-select">
-                    <select th:field="*{birthYear}" required="required">
+                    <select th:field="*{birthYear}" required>
                         <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
                     </select>
                     년
-                    <select th:field="*{birthMonth}" required="required">
+                    <select th:field="*{birthMonth}" required>
                         <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
                     </select>
                     월
-                    <select th:field="*{birthDay}" required="required">
+                    <select th:field="*{birthDay}" required>
                         <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
                     </select>
                     일
@@ -107,16 +107,16 @@
             <!-- 주소 -->
             <div class="form-group">
                 <label th:for="studentPostCode">우편번호</label>
-                <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호 필수로 입력해주세요" name="studentPostCode" id="studentPostCode" type="text" readonly="readonly" >
+                <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호 필수로 입력해주세요" name="studentPostCode" id="studentPostCode" type="text" readonly required>
                 <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
             </div>
             <div class="form-group">
                 <label th:for="studentStreetAddress">도로명주소</label>
-                <input class="form-control" style="top: 5px;" placeholder="도로명주소" name="studentStreetAddress" id="studentStreetAddress" type="text" readonly="readonly" />
+                <input class="form-control" style="top: 5px;" placeholder="도로명주소" name="studentStreetAddress" id="studentStreetAddress" type="text" readonly/>
             </div>
             <div class="form-group">
                 <label th:for="studentDetailAddress">상세주소</label>
-                <input class="form-control" placeholder="상세주소" name="studentDetailAddress" id="studentDetailAddress" type="text"  />
+                <input class="form-control" placeholder="상세주소" name="studentDetailAddress" id="studentDetailAddress" type="text"/>
             </div>
 
             <!-- 학생추가 버튼 -->

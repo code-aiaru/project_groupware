@@ -39,6 +39,7 @@ class AcademyApplicationTests {
 				.employeeId("admin")
 				.employeePassword("111")
 				.employeeName("관리자")
+				.employeeGender("남")
 				.employeePhone("01012341234")
 				.employeeEmail("admin@email.com")
 				.employeeDep("총무부")

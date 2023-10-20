@@ -57,7 +57,7 @@ public class EmployeeEntity extends BaseEntity {
     private String employeeBirth;
 
     // 우편번호(주소 api 이용 위해 필요)
-    @Column(name = "employee_postCode", nullable = true)
+    @Column(name = "employee_postCode", nullable = false)
     private String employeePostCode;
 
     // 도로명주소(주소 api 이용 위해 필요)
