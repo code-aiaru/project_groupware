@@ -11,13 +11,13 @@
   <script th:src="@{/js/employee/modal.js}" defer="defer"></script>
 </head>
 <body>
+<div id="loadedContent">
 <div class="container">
   <div class="pagingList">
     <div class="pagingList-con">
       <div class="pagingList-table">
         <h1>인사 조회</h1>
         <div class="search">
-          <a th:href="@{/index}"><span>홈</span></a>
           <form th:action="@{/employee/simpleEmployeeList}" method="get">
             <select name="subject" id="subject">
               <option value="employeeName">이름</option>
@@ -57,7 +57,7 @@
             <span th:if="${1==employeeList.pageable.pageNumber+1}" class="span0">처음</span>
             <!-- 처음 페이지가 아니면  a -->
             <span th:unless="${1==employeeList.pageable.pageNumber+1}">
-              <a th:href="@{/employee/simpleEmployeeList(page=0, search=${param.search}, subject=${param.subject})}" class="span1">처음</a>
+              <a th:href="@{/employee/simpleEmployeeList(page=0, search=${param.search}, subject=${param.subject})}" class="span1" data-ajax>처음</a>
             </span>
           </li>
           <li>
@@ -65,21 +65,21 @@
             <span th:if="${1==employeeList.pageable.pageNumber+1}" class="span0">이전</span>
             <span th:unless="${1==employeeList.pageable.pageNumber+1}">
               <!--boardList.pageable.pageNumber 현재페이지 -1 -->
-              <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.pageable.pageNumber-1}, search=${param.search}, subject=${param.subject})}" class="span1">이전</a>
+              <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.pageable.pageNumber-1}, search=${param.search}, subject=${param.subject})}" class="span1" data-ajax>이전</a>
             </span>
           </li>
           <!--페이지 번호-->
           <li th:each="i: ${#numbers.sequence(startPage, endPage)}" class="block">
             <span th:if="${i==employeeList.pageable.pageNumber+1}" th:text="${i}" class="now"></span>
             <a th:unless="${i==employeeList.pageable.pageNumber+1}"
-               th:href="@{/employee/simpleEmployeeList(page=${i-1}, search=${param.search}, subject=${param.subject})}" th:text="${i}"></a>
+               th:href="@{/employee/simpleEmployeeList(page=${i-1}, search=${param.search}, subject=${param.subject})}" th:text="${i}" data-ajax></a>
           </li>
           <li>
             <!-- 현재페이지가 마지막 페이지이면   span표시 -->
             <span th:if="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}" class="span0">다음</span>
             <!-- 현재페이지가 마지막 페이지아니면    a 표시 현재페이지 +1 -->
             <span th:unless="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}">
-               <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.pageable.pageNumber+1}, search=${param.search}, subject=${param.subject})}"   class="span1">다음</a>
+               <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.pageable.pageNumber+1}, search=${param.search}, subject=${param.subject})}" class="span1" data-ajax>다음</a>
             </span>
           </li>
           <li>
@@ -87,7 +87,7 @@
             <span th:if="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}" class="span0">마지막</span>
             <!-- 현재페이지가 마지막 페이지가 아니면 마지막 페이지로 이동 해라  a -->
             <span th:unless="${employeeList.totalPages ==employeeList.pageable.pageNumber+1}">
-              <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.totalPages-1}, search=${param.search}, subject=${param.subject})}"  class="span1">마지막</a>
+              <a th:href="@{/employee/simpleEmployeeList(page=${employeeList.totalPages-1}, search=${param.search}, subject=${param.subject})}" class="span1" data-ajax>마지막</a>
             </span>
           </li>
         </ul>
@@ -95,6 +95,7 @@
     </div>
   </div>
   </div>
+</div>
 </div>
 </body>
 </html>

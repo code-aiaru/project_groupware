@@ -5,6 +5,7 @@
   <title>공지사항 수정</title>
 </head>
 <body>
+<div id="loadedContent">
 <h1>공지사항 수정</h1>
 <div>
   <form id="updateForm" th:action="@{'/api/notice/'+${notice.id}}" method="post">
@@ -50,7 +51,8 @@ updateForm.addEventListener('submit', (e) => {
     .then(response => {
         if (response.status === 200) {
             alert('게시물이 성공적으로 수정되었습니다.');
-            window.location.href = '/notice/list';
+                       const redirection = document.getElementById('redirection');
+                redirection.click();
         } else if (response.status === 404) {
             alert('게시물 수정에 실패했습니다. 비밀번호가 일치하지 않거나 게시물이 존재하지 않습니다.');
         } else {
@@ -63,7 +65,7 @@ updateForm.addEventListener('submit', (e) => {
 });
 
 
-
 </script>
+</div>
 </body>
 </html>

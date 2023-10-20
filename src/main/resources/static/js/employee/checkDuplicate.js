@@ -47,7 +47,7 @@ $(document).ready(function () {
     $('#emailCheckButton').click(function () {
 
         let employeeEmail = $('#employeeEmail').val();
-        if (employeeEmail.trim() === '') {
+        if (employeeEmail.trim() === '@') {
             alert('이메일을 입력해주세요.');
             return;
         }

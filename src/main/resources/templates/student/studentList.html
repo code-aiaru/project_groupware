@@ -14,8 +14,7 @@
       <div class="pagingList-table">
         <h1>수강생 조회</h1>
         <div class="search">
-          <a th:href="@{/student/join}"><span>수강생추가</span></a>
-          <a th:href="@{/index}"><span>홈</span></a>
+          <a th:href="@{/student/join}" data-ajax><span>수강생추가</span></a>
           <form th:action="@{/student/studentList}" method="get">
             <select name="subject" id="subject">
               <option value="studentName">이름</option>
@@ -30,7 +29,7 @@
       <table style="width:1700px;" align="center" border="1";>
         <thead>
         <tr>
-          <th colspan="9">
+          <th colspan="10">
             현재 로그인 사용자 : <span th:text="${myUserDetails.employeeEntity.employeeName}"></span>,
             권한 : <span th:text="${myUserDetails.employeeEntity.role}"></span>
           </th>
@@ -44,6 +43,7 @@
           <th>이메일</th>
           <th>주소</th>
           <th>등록일</th>
+          <th>수정</th>
           <th>상세보기</th>
         </tr>
         </thead>
@@ -58,7 +58,10 @@
           <td th:text="${student.studentStreetAddress}"></td>
           <td th:text="${#temporals.format(student.createTime, 'yyyy-MM-dd')}"></td>
           <td>
-            <a th:href="@{/student/detail/{studentId}(studentId=${student.studentId})}">상세보기</a>
+            <a th:href="@{/student/update/{studentId}(studentId=${student.studentId})}" data-ajax>수정</a>
+          </td>
+          <td>
+            <a th:href="@{/student/detail/{studentId}(studentId=${student.studentId})}" data-ajax>상세보기</a>
           </td>
         </tr>
         </tbody>

@@ -58,7 +58,12 @@
                 <div class="approval-Answer">
                     <div class="approval-divide">
                         <hr class="divide">
-                        <button type="button" id="approvalAnswerBtn">결재</button>
+                        <th:block th:each="approvalUserList : ${approvalUserList}">
+                            <button type="button" th:if="${#authentication.principal.employeeEntity.equals(approvalUserList.employeeEntity)
+                                                            and approvalUserList.Ap == 0}"
+                                    id="approvalAnswerBtn">결재
+                            </button>
+                        </th:block>
                     </div>
                     <div class="approval-Result">
                         <form th:action="@{/post/approval/ap}" method="post" th:object="${approvalDto}">

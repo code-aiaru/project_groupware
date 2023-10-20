@@ -54,7 +54,6 @@
               <select id="employeeDep" name="employeeDep" required="required" class="box">
                 <option value="영업부" th:selected="${employee.employeeDep == '영업부'}">영업부</option>
                 <option value="총무부" th:selected="${employee.employeeDep == '총무부'}">총무부</option>
-                <option value="마케팅부" th:selected="${employee.employeeDep == '마케팅부'}">마케팅부</option>
                 <option value="교육부" th:selected="${employee.employeeDep == '교육부'}">교육부</option>
               </select>
             </li>
@@ -101,7 +100,7 @@
           </li>
           <li>
             <label th:for="employeeDetailAddress">상세주소</label>
-            <input type="text" th:field="*{employeeDetailAddress}" th:value="${employeeDto.employeeDetailAddress}" required="required" placeholder="상세주소를 입력하세요"> <br>
+            <input type="text" th:field="*{employeeDetailAddress}" th:value="${employeeDto.employeeDetailAddress}" placeholder="상세주소를 입력하세요"> <br>
           </li>
           <th:block sec:authorize="hasAnyRole('EMPLOYEE')">
             <li>
@@ -120,7 +119,6 @@
           </th:block>
           <button type="button" onclick="javascript:history.back()">수정취소</button>
           <input type="submit" value="수정실행">
-<!--          <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax><button type="button">비밀번호 변경</button></a>-->
           <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax>비밀번호 변경</a>
           <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" id="redirection" data-ajax style="display: none;"></a>
         </ul>

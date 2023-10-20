@@ -13,7 +13,7 @@
 
     <ul id="boardList">
         <li th:each="board : ${boardPage.content}">
-            <a th:href="@{'/boards/detail/' + ${board.id}}" th:text="${board.title}" ></a>
+            <a th:href="@{'/boards/detail/' + ${board.id}}" th:text="${board.title}" id="redirection" data-ajax></a>
         </li>
     </ul>
 
@@ -44,8 +44,10 @@
         // 클릭된 엘리먼트가 <a> 태그인지 확인하여 상세 페이지로 이동
         document.getElementById('boardList').addEventListener('click', (event) => {
             if (event.target.tagName === 'A') {
+                            const redirection = document.getElementById('redirection');
                 const id = event.target.getAttribute('data-id');
-                window.location.href = `/boards/detail/${id}`;
+                redirection.click();
+
             }
         });
 
@@ -53,7 +55,7 @@
             fetch(`/boards/list?page=${page}`)
                 .then(response => response.text())
                 .then(data => {
-                    document.getElementById('boardList').innerHTML = data;
+                    docume nt.getElementById('boardList').innerHTML = data;
                 });
         }
     </script>

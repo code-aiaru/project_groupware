@@ -51,7 +51,7 @@ table, td ,th{
           justify-content:center;
 }
 .pagingList .pagingList-con .paging > ul{
-  flex-basis:400px;
+  flex-basis:500px;
   /* background-color:#cee76b; */
            display:flex;
            justify-content:space-between;

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,12 +71,13 @@ public class EmployeeController {
         return "employee/join";
     }
 
-    @PostMapping("/employee/join")
+    @PostMapping("/post/employee/join")
     public String postJoin(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult){
 
-        if (bindingResult.hasErrors()) {
-            return "employee/join";
-        }
+        // 사원 추가 시 오류 때문에 주석처리 해놓음
+//        if (bindingResult.hasErrors()) {
+//            return "redirect:/employee/detail/" + employeeDto.getEmployeeNo();
+//        }
         // 비밀번호 일치 확인
         if (!employeeDto.getEmployeePassword().equals(employeeDto.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "비밀번호가 일치하지않습니다");
@@ -108,7 +111,7 @@ public class EmployeeController {
     // Read - 사원 목록(admin만 조회 가능)
     @GetMapping("/employee/employeeList")
     public String getEmployeeList(
-            @PageableDefault(page=0, size=2, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page=0, size=5, sort = "employeeNo", direction = Sort.Direction.DESC) Pageable pageable,
             Model model,
             @RequestParam(value = "subject", required = false) String subject,
             @RequestParam(value = "search", required = false) String search,
@@ -251,10 +254,10 @@ public class EmployeeController {
     @PostMapping("/post/employee/update")
     public String postUpdate(@Valid EmployeeDto employeeDto, BindingResult bindingResult, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
-        if (bindingResult.hasErrors()) {
-            System.out.println("유효성 검증 관련 오류 발생");
-            return "redirect:/employee/update/" + employeeDto.getEmployeeNo();
-        }
+//        if (bindingResult.hasErrors()) {
+//            System.out.println("유효성 검증 관련 오류 발생");
+//            return "redirect:/employee/update/" + employeeDto.getEmployeeNo();
+//        }
 
         // 생년월일 정보를 조합하여 하나의 문자열로 만듭니다.
         String birthDate = String.format("%04d%02d%02d", employeeDto.getBirthYear(), employeeDto.getBirthMonth(), employeeDto.getBirthDay());
