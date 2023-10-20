@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const hrefUrl = anchor.getAttribute('href');
             console.log(hrefUrl);
             resetLoadedElements();
-            loadContent(hrefUrl);
+            // loadContent(hrefUrl);
+            loadContent(hrefUrl, false, false);
         }
     });
 
@@ -243,10 +244,12 @@ function saveState(state) {
 async function loadScript(src) {
     return new Promise((resolve, reject) => {
         var script = document.createElement('script');
-        // script.type = 'text/javascript';
         script.src = src;
         script.onload = resolve;
-        script.onerror = reject; 
+        script.onerror = () => {
+            console.warn(`Failed to load script: ${src}. Ignoring the error.`);
+            resolve();
+        };
         document.head.appendChild(script);
     });
 }
@@ -256,19 +259,21 @@ async function loadExtStyle(href) {
         const extStyle = document.createElement('link');
         extStyle.rel = "stylesheet";
         extStyle.href = href;
-        extStyle.onload = resolve;  
-        extStyle.onerror = reject;  
+        extStyle.onload = resolve;
+        extStyle.onerror = () => {
+            console.warn(`Failed to load stylesheet: ${href}. Ignoring the error.`);
+            resolve();
+        }; 
         document.head.appendChild(extStyle);
     });
 }
 
 async function loadLiStyle(textContent) {
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve) => { 
         const liStyle = document.createElement('style');
         liStyle.textContent = textContent;
-        liStyle.onload = resolve;  
-        liStyle.onerror = reject; 
         document.head.appendChild(liStyle);
+        resolve(); // style 태그는 즉시 적용되므로 resolve 호출
     });
 }
 
@@ -318,12 +323,33 @@ function resetHighlight() {
     });
 }
 
+// function highlightCurrentMenuItem() {
+
+//     resetHighlight();
+
+//     const currentUrl = window.location.pathname;
+//     const menuItem = document.querySelector(`a[href="${currentUrl}"]`);
+    
+//     if (menuItem) {
+//         const imgTag = menuItem.querySelector('img');
+//         const spanTag = menuItem.querySelector('span');
+
+//         const highlightImage = menuItem.querySelector('.select-highlight');
+//         if (highlightImage && imgTag && spanTag) {
+//             highlightImage.style.display = 'inline-block';
+//             imgTag.style.filter = 'invert(45%) sepia(95%) saturate(403%) hue-rotate(154deg) brightness(86%) contrast(88%)';
+//             spanTag.style.color = '#2788b5';
+//             spanTag.style = 'color: #2788b5; font-weight: bold';
+//         }
+//     }
+// }
+
 function highlightCurrentMenuItem() {
 
     resetHighlight();
 
     const currentUrl = window.location.pathname;
-    const menuItem = document.querySelector(`a[href="${currentUrl}"]`);
+    const menuItem = document.querySelector(`a[href*="${currentUrl}"]`);
     
     if (menuItem) {
         const imgTag = menuItem.querySelector('img');
@@ -338,4 +364,3 @@ function highlightCurrentMenuItem() {
         }
     }
 }
-

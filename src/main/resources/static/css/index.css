@@ -237,19 +237,25 @@
 }
 
 .general {
-    padding: 10px 0;
+    padding-top: 10px;
 }
 .work {
-    padding: 10px 0;
+    padding-top: 10px;
 }
 .student {
-    padding: 10px 0;
+    padding-top: 10px;
 }
 .human-resource {
-    padding: 10px 0;
+    padding-top: 10px;
 }
 .community {
-    padding: 10px 0;
+    padding-top: 10px;
+}
+.salary {
+    padding-top: 10px;
+}
+.attendance {
+    padding-top: 10px;
 }
 
 .expand-shown span {
