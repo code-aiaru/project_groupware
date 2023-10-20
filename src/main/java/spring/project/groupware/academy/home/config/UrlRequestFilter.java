@@ -31,10 +31,6 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/favicon.ico");
         excludedUrl.add("/api/");
         excludedUrl.add("/post/");
-        excludedUrl.add("/findId"); // 추가 - 송원철, 아이디 찾기
-        excludedUrl.add("/tempPassword"); // 추가 - 송원철, 비밀번호 찾기
-        excludedUrl.add("/check-emailPhoneMatching"); // 추가 - 송원철, 비밀번호 찾기 로직
-        excludedUrl.add("/send-mail/password"); // 추가 - 송원철, 임시비밀번호
         excludedUrl.add("/naver/"); // 추가 - 송원철, 조직도 불러오기
 //        excludedUrl.add("/login/post");
     }

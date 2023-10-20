@@ -158,10 +158,8 @@ public class EmployeeController {
 
         if (myUserDetails != null) {
             EmployeeDto employee = employeeService.detailEmployee(myUserDetails.getEmployeeEntity().getEmployeeNo());
-//            String employeeImageUrl = imageService.findImage(employee.getEmployeeId()).getImageUrl();
 
             model.addAttribute("employee", employee);
-//            model.addAttribute("employeeImageUrl", employeeImageUrl);
             model.addAttribute("myUserDetails", myUserDetails);
         }
 

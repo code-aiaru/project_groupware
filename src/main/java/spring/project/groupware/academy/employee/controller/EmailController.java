@@ -13,7 +13,7 @@ import spring.project.groupware.academy.employee.service.EmailService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/send-mail")
+@RequestMapping("/api/send-mail")
 public class EmailController {
 
     private final EmailService emailService;
