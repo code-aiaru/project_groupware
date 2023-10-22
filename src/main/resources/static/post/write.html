@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>글쓰기 페이지</title>
@@ -44,47 +44,46 @@
 
     <div id="btnDiv">
         <button type="button" class="btns save" id="saveButton">저장하기</button>
-        <a href="/post/list.html" class="btns back" data-ajax>뒤로 가기</a>
+        <a href="/post/list.html" class="btns back">뒤로 가기</a>
     </div>
 
     <!-- TUI 에디터 JS CDN -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <!-- 한국어 언어 파일 불러오기 -->
+    <script src="https://uicdn.toast.com/editor/latest/i18n/ko-kr.js"></script>
+
     <script>
     const editor = new toastui.Editor({
-        i18n: {
-            'ko-KR': {
-            'Markdown': '마크다운',
-            'WYSIWYG': '위지위그',
-            'Write': '쓰기',
-            'Preview': '미리보기',
-            'Select image file': '이미지 선택',
-            'No file': '파일 없음',
-            'Choose a file': '파일 선택',
-            'Cancel': '취소',
-            'OK': '확인'
-            }
-        },
         el: document.querySelector('#content'),      // 에디터를 적용할 요소 (컨테이너)
         height: '500px',                             // 에디터 영역의 높이 값 (OOOpx || auto)
-        initialEditType: 'wysiwyg',                 // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+        initialEditType: 'markdown',                 // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
         initialValue: '',                            // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
         previewStyle: 'vertical',                    // 마크다운 프리뷰 스타일 (tab || vertical)
         placeholder: '내용을 입력해 주세요.',
+                    language: 'ko-KR',
+
         /* start of hooks */
         hooks: {
             async addImageBlobHook(blob, callback) { // 이미지 업로드 로직 커스텀
                 try {
+                    /*
+                     * 1. 에디터에 업로드한 이미지를 FormData 객체에 저장
+                     *    (이때, 컨트롤러 uploadEditorImage 메서드의 파라미터인 'image'와 formData에 append 하는 key('image')값은 동일해야 함)
+                     */
                     const formData = new FormData();
                     formData.append('image', blob);
 
+                    // 2. FileApiController - uploadEditorImage 메서드 호출
                     const response = await fetch('/tui-editor/image-upload', {
-                        method: 'POST',
-                        body: formData,
+                        method : 'POST',
+                        body : formData,
                     });
 
+                    // 3. 컨트롤러에서 전달받은 디스크에 저장된 파일명
                     const filename = await response.text();
                     console.log('서버에 저장된 파일명 : ', filename);
 
+                    // 4. addImageBlobHook의 callback 함수를 통해, 디스크에 저장된 이미지를 에디터에 렌더링
                     const imageUrl = `/tui-editor/image-print?filename=${filename}`;
                     callback(imageUrl, 'image alt attribute');
 
@@ -133,10 +132,7 @@
         .then(response => response.json())
         .then(postId => {
             alert(postId + '번 게시글이 저장되었습니다.');
-
-            // 성공적으로 저장된 후에 뒤로 가기 버튼을 클릭
-            const backButton = document.querySelector('.btns.back');
-            backButton.click();
+            location.href = '/post/list.html';
         })
         .catch(error => {
             console.error('저장 실패 : ', error)
