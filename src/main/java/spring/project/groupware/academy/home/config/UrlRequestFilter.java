@@ -29,8 +29,8 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/studentImages/"); // 추가 - 송원철, 수강생 프로필 이미지 업로드 시 사용
         excludedUrl.add("/login");
         excludedUrl.add("/favicon.ico");
-        excludedUrl.add("/api/");
-        excludedUrl.add("/post/");
+        excludedUrl.add("/api/posts");
+        excludedUrl.add("/tui-editor/");
         excludedUrl.add("/naver/"); // 추가 - 송원철, 조직도 불러오기
 //        excludedUrl.add("/login/post");
     }
