@@ -33,7 +33,7 @@
                                 <input type="text" name="nameSearch" id="nameSearch" class="inputSearch">
                                 <div class="searchBox">
                                     <ul>
-                                        <li th:each="employee: ${employeePage}">
+                                        <li th:each="employee: ${employeePage}" th:unless="${employee.employeeNo == #authentication.principal.employeeEntity.employeeNo}">
                                                 <span class="userAddBtn"
                                                       name="employeeNo"
                                                       th:value="${employee.employeeNo}"

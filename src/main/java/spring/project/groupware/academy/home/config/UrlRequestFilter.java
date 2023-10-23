@@ -30,6 +30,7 @@ public class UrlRequestFilter implements Filter {
         excludedUrl.add("/login");
         excludedUrl.add("/favicon.ico");
         excludedUrl.add("/api/posts");
+        excludedUrl.add("/post");
         excludedUrl.add("/tui-editor/");
         excludedUrl.add("/naver/"); // 추가 - 송원철, 조직도 불러오기
 //        excludedUrl.add("/login/post");
