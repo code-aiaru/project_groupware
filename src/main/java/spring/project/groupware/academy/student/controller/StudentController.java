@@ -172,7 +172,7 @@ public class StudentController {
 
         } else {
             System.out.println("학생정보 수정 실패");
-            return "redirect:/";
+            return "student/update";
         }
     }
 

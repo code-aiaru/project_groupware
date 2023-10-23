@@ -69,6 +69,7 @@
               <label for="employeePosition">직급</label>
               <select id="employeePosition" name="employeePosition" required="required" class="box">
                 <option value="부장" th:selected="${employee.employeePosition == '부장'}">부장</option>
+                <option value="부장" th:selected="${employee.employeePosition == '과장'}">과장</option>
                 <option value="대리" th:selected="${employee.employeePosition == '대리'}">대리</option>
                 <option value="사원" th:selected="${employee.employeePosition == '사원'}">사원</option>
               </select>

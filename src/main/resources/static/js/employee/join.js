@@ -1,12 +1,25 @@
 $(document).ready(function () {
-    var isSubmitting = false;
 
     // 회원가입 폼 전송(submit) 이벤트 처리
     $('#signupForm').submit(function (event) {
-        if (isSubmitting) {
-            event.preventDefault();
-            return;
-        }
+        event.preventDefault();
+
+        var formData = $(this).serialize();
+
+            $.ajax({
+              type: 'POST',
+              url: '/api/posts/employee/join',
+              data: formData,
+              success: function (response) {
+                console.log(response);
+
+                const redirection = document.getElementById('redirection');
+                redirection.click();
+              },
+              error: function (error) {
+                console.error("Error:", error);
+              }
+            });
 
         var id = $('#employeeId').val();
         var password = $('#employeePassword').val();
