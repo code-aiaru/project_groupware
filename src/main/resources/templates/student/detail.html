@@ -72,14 +72,10 @@
                         </span>
                     </li>
                     <li class="delete">
-                        <span>
-                            <div class="delete">
-                                <li>
-                                    <input type="button" id="deleteButton" th:value="삭제" th:data-student-id="${student.studentId}">
-                                    <a th:href="@{/student/studentList?page=0&subject=&search=}" id="redirection" data-ajax style="display: none;"></a>
-                                </li>
-                            </div>
-                        </span>
+                        <input type="button" id="deleteButton" th:value="삭제" th:data-student-id="${student.studentId}">
+                    </li>
+                    <li>
+                        <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>수강생목록</a>
                     </li>
                 </ul>
             </div>
@@ -87,15 +83,10 @@
     </div>
 </div>
 </div>
-<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
-<a th:href="@{/index}">홈</a>
-<a th:href="@{/student/studentList?page=0&subject=&search=}">수강생조회</a>
 <!-- Thymeleaf 표현식을 사용하여 employeeNo JavaScript 변수에 할당 -->
 <script th:inline="javascript">
     var studentId = /*[[${student.studentId}]]*/ null;
-</script>
-<!-- 이동 버튼 클릭 시 지정된 URL로 이동 -->
-<script>
+
     function redirectToURL() {
          if (studentId !== null) {
            var dynamicURL = "/student/updateImage/" + studentId;

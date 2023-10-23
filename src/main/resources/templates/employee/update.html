@@ -128,7 +128,9 @@
           </th:block>
           <button type="button" onclick="javascript:history.back()">수정취소</button>
           <input type="submit" value="수정실행">
-          <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax>비밀번호 변경</a>
+          <th:block th:if="${#authentication.principal.username==employee.employeeId}">
+            <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax>비밀번호 변경</a>
+          </th:block>
           <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" id="redirection" data-ajax style="display: none;"></a>
         </ul>
       </form>

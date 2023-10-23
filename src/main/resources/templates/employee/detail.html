@@ -24,11 +24,11 @@
                 <a th:href="@{/employee/updateImage/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>프로필 이미지 수정</a>
             </span>
             </th:block>
-            <th:block th:unless="${#authentication.principal.username==employee.employeeId}">
-            <span>
-                본인글이 아닙니다
-            </span>
-            </th:block>
+<!--            <th:block th:unless="${#authentication.principal.username==employee.employeeId}">-->
+<!--            <span>-->
+<!--                본인글이 아닙니다-->
+<!--            </span>-->
+<!--            </th:block>-->
             <div class="detail">
                 <ul>
 <!--                    <span th:if="${false}" th:text="${employee.employeeNo}"></span> <br> &lt;!&ndash; th:if="${false}" 입력 시 안보이게 처리 &ndash;&gt;-->
@@ -90,15 +90,12 @@
                             </span>
                         </li>
                     </th:block>
-                    <th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                        <li class="delete">
-                            <span>
-                                <div class="delete">
-                                    <li>
-                                        <a th:href="@{/employee/confirmPassword/delete/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>삭제</a>
-                                    </li>
-                                </div>
-                            </span>
+                    <th:block sec:authorize="hasAnyRole('ADMIN')">
+                        <li>
+                            <a th:href="@{/employee/confirmPassword/delete/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>삭제</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>사원목록</a>
                         </li>
                     </th:block>
                 </ul>
@@ -107,19 +104,10 @@
     </div>
 </div>
 </div>
-<!--<button th:onclick="@{location.href='/index'}">홈</button>-->
-<a th:href="@{/index}">홈</a>
-<th:block sec:authorize="hasAnyRole('ADMIN')">
-    <a th:href="@{/employee/employeeList?page=0&subject=&search=}">인사조회</a>
-</th:block>
 <!-- Thymeleaf 표현식을 사용하여 employeeNo JavaScript 변수에 할당 -->
 <script th:inline="javascript">
     var employeeNo = /*[[${employee.employeeNo}]]*/ null;
-</script>
 
-
-<!-- 이동 버튼 클릭 시 지정된 URL로 이동 -->
-<script>
     function redirectToURL() {
          if (employeeNo !== null) {
            var dynamicURL = "/employee/updateImage/" + employeeNo;

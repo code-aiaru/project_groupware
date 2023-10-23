@@ -84,20 +84,18 @@
             <!-- 이메일 -->
             <li>
                 <label>이메일</label>
-                <div class="email-text">
-                    <input type="text" id="emailId" name="emailId" required="required" placeholder="이메일 아이디 입력" class="emailbox">
-                    <span> @ </span>
-                    <input type="text" id="domainCustom" name="domainCustom" placeholder="도메인 직접 입력" class="domainbox">
-                    <select id="domainList" required="required">
-                        <option value="custom">직접 입력</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="nate.com">nate.com</option>
-                        <option value="daum.net">daum.net</option>
-                    </select>
-                    <input type="hidden" id="employeeEmail" name="employeeEmail" value="">
-                    <button type="button" id="emailCheckButton">이메일 중복 확인</button>
-                </div>
+                <input type="text" id="emailId" name="emailId" required="required" placeholder="이메일 아이디 입력" class="emailbox">
+                <span> @ </span>
+                <input type="text" id="domainCustom" name="domainCustom" placeholder="도메인 직접 입력" class="domainbox">
+                <select id="domainList" required="required">
+                    <option value="custom">직접 입력</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="nate.com">nate.com</option>
+                    <option value="daum.net">daum.net</option>
+                </select>
+                <input type="hidden" id="employeeEmail" name="employeeEmail" value="">
+                <button type="button" id="emailCheckButton">이메일 중복 확인</button>
             </li>
             <p th:if="${#fields.hasErrors('employeeEmail')}" th:errors="*{employeeEmail}" class="error"></p>
             <span id="emailIdErrorMessage" style="color: red;"></span> <!-- 이메일 아이디 유효성 검사 오류 메시지를 표시할 영역 -->
@@ -131,20 +129,18 @@
             <!-- 생년월일 -->
             <li>
                 <label>생년월일</label>
-                <div class="birth-select">
-                    <select th:field="*{birthYear}" required="required">
-                        <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
-                    </select>
-                    년
-                    <select th:field="*{birthMonth}" required="required">
-                        <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
-                    </select>
-                    월
-                    <select th:field="*{birthDay}" required="required">
-                        <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
-                    </select>
-                    일
-                </div>
+                <select th:field="*{birthYear}" required="required">
+                    <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
+                </select>
+                년
+                <select th:field="*{birthMonth}" required="required">
+                    <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
+                </select>
+                월
+                <select th:field="*{birthDay}" required="required">
+                    <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
+                </select>
+                일
             </li>
 
             <!-- 주소 -->
