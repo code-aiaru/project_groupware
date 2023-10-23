@@ -24,11 +24,23 @@ public class ScheduleRestController {
 
 
     // 스케줄 조회 (ALL)
+//    @GetMapping
+//    public ResponseEntity<List<ScheduleDTO>> getAllEvents() {
+//        List<ScheduleDTO> events = scheduleService.getAllEvents();
+//        return ResponseEntity.ok(events);
+//    }
+
+    // 스케줄 조회
     @GetMapping
-    public ResponseEntity<List<ScheduleDTO>> getAllEvents() {
-        List<ScheduleDTO> events = scheduleService.getAllEvents();
+    public ResponseEntity<List<ScheduleDTO>> getAllEvents(@AuthenticationPrincipal MyUserDetails myUserDetails) {
+        EmployeeEntity currentUser = myUserDetails.getEmployeeEntity();
+        List<ScheduleDTO> events = scheduleService.getAllEvents(currentUser);
         return ResponseEntity.ok(events);
     }
+
+    // 스케줄 조회 end
+
+
 
     // 스케줄 추가
     @PostMapping
@@ -38,7 +50,6 @@ public class ScheduleRestController {
         EmployeeEntity employeeEntity = myUserDetails.getEmployeeEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
 
         if (employeeEntity == null) {
-            // 사용자 정보가 없는 경우 로그를 남깁니다.
             log.info("사용자 정보가 없습니다.");
         }
 
@@ -52,8 +63,16 @@ public class ScheduleRestController {
 
     // 스케줄 수정
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleDTO> updateEvent(@PathVariable Integer id, @RequestBody ScheduleDTO scheduleDTO) {
-        ScheduleDTO updatedSchedule = scheduleService.updateEvent(id, scheduleDTO);
+    public ResponseEntity<ScheduleDTO> updateEvent(@PathVariable Integer id, @RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+
+        // 현재 로그인한 사용자의 EmployeeEntity 가져오기
+        EmployeeEntity employeeEntity = myUserDetails.getEmployeeEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
+
+        if (employeeEntity == null) {
+            log.info("사용자 정보가 없습니다.");
+        }
+
+        ScheduleDTO updatedSchedule = scheduleService.updateEvent(id, scheduleDTO, employeeEntity);
         return new ResponseEntity<>(updatedSchedule, HttpStatus.OK);
     }
     

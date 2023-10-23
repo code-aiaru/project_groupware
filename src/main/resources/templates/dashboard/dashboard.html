@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="page-title" title="대시보드">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard/dashboard.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script src="/js/dashboard/dashboard_schedule.js"></script>
+    <script src="/js/dashboard/dashboard_doughnutChart.js"></script>
+    <script src="/js/dashboard/dashboard_barChart.js"></script>
+</head>
+<body>
+
+    <div class="dashboard_root" id="loadedContent">
+    
+        <div class="dashboard">
+
+        
+            <div class="upper-preview_section">
+                <div class="bar-chart_section">
+                    <div class="bar">
+                        <div>
+                            <span>출결현황</span>
+                            <div class="bar-chart-target-select_box">
+                                <ul>
+                                    <li>
+                                        <button id="backend">
+                                            <span>백엔드</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id="frontend">
+                                            <span>프론트엔드</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id="photoshop">
+                                            <span>포토샵</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="myBarChart" height="250px">
+                                <!-- 바 차트 위치 -->
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="diagram_section">
+                    <div>
+                        <span>결재현황</span>
+                    </div>
+                    <div class="diagram">
+                        <div>
+                            <canvas id="myDoughnutChart">
+                                <!-- 도넛 차트 위치 -->
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="diagram-summary_section">
+                        <div>
+                            <div class="approval_info">
+                                <div>
+                                    <span id="pendingApprovalsCountDisplay"></span>
+                                    <span>건</span>
+                                </div>
+                                <div>
+                                    <div class="pending-approvals-color"></div>
+                                    <span>대기 중</span>
+                                </div>
+                            </div>
+                            <div class="approval_info">
+                                <div>
+                                    <span id="rejectedApprovalsCountDisplay"></span>
+                                    <span>건</span>
+                                </div>
+                                <div>
+                                    <div class="rejected-approvals-color"></div>
+                                    <span>거부</span>
+                                </div>
+                            </div>
+                            <div class="approval_info">
+                                <div>
+                                    <span id="approvedApprovalsCountDisplay"></span>
+                                    <span>건</span>
+                                </div>
+                                <div>
+                                    <div class="approved-approvals-color"></div>
+                                    <span>승인</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lower-preview_section">
+                <div class="lower-preview_box_1">
+                    <div id="calendar"></div>
+                </div>
+                <div class="lower-preview_box_2">
+            
+                </div>
+            </div>
+        
+
+        </div>
+
+    </div>
+</body>
+</html>
