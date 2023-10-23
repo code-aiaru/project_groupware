@@ -18,7 +18,7 @@
       <div class="title">
         <h1><span th:text="${studentDto.studentName}" ></span>님 정보 수정</h1>
       </div>
-      <form th:action="@{/post/student/update}" method="post" th:object="${studentDto}" onsubmit="return onSubmitForm()">
+      <form th:action="@{/api/posts/student/update}" method="post" th:object="${studentDto}" onsubmit="return onSubmitForm()">
         <ul>
           <li>
             학생번호 : <input type="text" name="studentId" th:value="${studentDto.studentId}" id="studentId" readonly> <br>

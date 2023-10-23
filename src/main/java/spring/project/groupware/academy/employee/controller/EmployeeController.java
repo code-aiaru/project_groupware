@@ -6,8 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -71,7 +69,7 @@ public class EmployeeController {
         return "employee/join";
     }
 
-    @PostMapping("/post/employee/join")
+    @PostMapping("/api/posts/employee/join")
     public String postJoin(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult){
 
         // 사원 추가 시 오류 때문에 주석처리 해놓음
@@ -249,7 +247,7 @@ public class EmployeeController {
 
 
     // Update - 실제 실행
-    @PostMapping("/post/employee/update")
+    @PostMapping("/api/posts/employee/update")
     public String postUpdate(@Valid EmployeeDto employeeDto, BindingResult bindingResult, @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
 //        if (bindingResult.hasErrors()) {
@@ -362,7 +360,7 @@ public class EmployeeController {
     }
 
     // 입력한 현재비밀번호와 DB에 있는 현재비밀번호 일치하는지
-    @PostMapping("/api/employee/checkCurrentPassword")
+    @PostMapping("/api/posts/employee/checkCurrentPassword")
     @ResponseBody
     public Map<String, Boolean> postCheckCurrentPassword(@RequestParam("currentPassword") String currentPassword,
                                                          @RequestParam("employeeNo") Long employeeNo) {
@@ -375,7 +373,7 @@ public class EmployeeController {
     }
 
     // 현재 관리자의 비밀번호와 DB에 있는 관리자 비밀번호 일치하는지
-    @PostMapping("/api/employee/checkAdminPassword")
+    @PostMapping("/api/posts/employee/checkAdminPassword")
     @ResponseBody
     public Map<String, Boolean> postCheckAdminPassword(@RequestParam("currentPassword") String currentPassword) {
 
@@ -403,7 +401,7 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping("/post/employee/confirmPassword")
+    @PostMapping("/api/posts/employee/confirmPassword")
     public String postConfirmPassword(@RequestParam("currentPassword") String currentPassword,
                                       @RequestParam("employeeNo") Long employeeNo,
                                       EmployeeDto employeeDto){
@@ -434,7 +432,7 @@ public class EmployeeController {
     }
 
     // 비밀번호 변경 실행
-    @PostMapping("/post/employee/changePassword")
+    @PostMapping("/api/posts/employee/changePassword")
     public String postChangePassword(@RequestParam("employeeNo") Long employeeNo,
                                      @RequestParam("currentPassword") String currentPassword,
                                      @RequestParam("newPassword") String newPassword,

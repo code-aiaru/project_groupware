@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <div class="find_box">
-        <form th:action="@{/api/findId}" method="post" class="find_form">
+        <form th:action="@{/api/posts/findId}" method="post" class="find_form">
             <h1 class="logo">아이디 찾기</h1>
                 <span>이메일</span><input type="email" id="employeeEmail" name="employeeEmail" placeholder="이메일 입력" required>
                 <span>휴대전화번호</span><input type="text" id="employeePhone" name="employeePhone" placeholder="휴대전화번호 입력" required>

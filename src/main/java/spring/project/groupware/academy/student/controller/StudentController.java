@@ -58,7 +58,7 @@ public class StudentController {
         return "student/join";
     }
 
-    @PostMapping("/post/student/join")
+    @PostMapping("/api/posts/student/join")
     public String postJoin(@ModelAttribute StudentDto studentDto) {
 
         String birthDate = String.format("%04d%02d%02d", studentDto.getBirthYear(), studentDto.getBirthMonth(), studentDto.getBirthDay());
@@ -156,7 +156,7 @@ public class StudentController {
 
 
     // Update - 실제 실행
-    @PostMapping("/post/student/update")
+    @PostMapping("/api/posts/student/update")
     public String postUpdate(StudentDto studentDto) {
 
         // 생년월일 정보를 조합하여 하나의 문자열로 만듭니다.
