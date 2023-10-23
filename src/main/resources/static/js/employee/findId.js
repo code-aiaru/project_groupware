@@ -19,6 +19,8 @@ $('form').submit(function(e) {
         }
     });
 });
+
+
 // 모달 열기
 function openModal() {
   var modal = document.getElementById("findIdModal");
@@ -60,7 +62,6 @@ function showNotFoundId(id) {
 
   openModal(); // 모달 열기
 }
-
 
 
 // 클립보드에 텍스트 복사 함수
