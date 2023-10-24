@@ -38,10 +38,10 @@ public class PostService {
     public List<PostResponseDTO> findAllPost() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
-                .map(post -> new PostResponseDTO(post))
+                .map(PostResponseDTO::new)
                 .collect(Collectors.toList());
     }
-
+    @Transactional
     public boolean deletePost(Long id) {
         try {
             Optional<Post> optionalPost = postRepository.findById(id);
@@ -57,9 +57,11 @@ public class PostService {
         }
 
     }
-
-    public boolean updatePost(Long id, PostResponseDTO postResponseDTO) {
+    @Transactional
+    public boolean updatePost(Long id) {
         Optional<Post> optionalPost = postRepository.findById(id);
+        PostResponseDTO postResponseDTO = new PostResponseDTO();
+
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
             post.setTitle(postResponseDTO.getTitle());
@@ -75,5 +77,15 @@ public class PostService {
     }
 
 
+    public boolean verifyPassword(Long id, String password) {
+      Optional<Post> optionalPost = postRepository.findById(id);
+      if (optionalPost.isPresent()){
+        optionalPost.get().getPw().toString().equals(password);
+          return true;
+      }else {
+          return false;
+      }
+
+    }
 }
 
