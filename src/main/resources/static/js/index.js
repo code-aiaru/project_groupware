@@ -244,11 +244,10 @@ async function loadContent(url, initialLoad = false, isPopstate = false) {
                 if (script.src) {
                     console.log('Loading external-script (after frame):', script.src);
                     await loadScript(script.src);
-                } 
-                // else {
-                //     console.log('Loading inline-script (after frame):', script.textContent);
-                //     eval(script.textContent);
-                // }
+                } else {
+                    console.log('Loading inline-script (after frame):', script.textContent);
+                    eval(script.textContent);
+                }
             }
         });
         
