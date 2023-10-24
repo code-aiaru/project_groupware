@@ -66,7 +66,7 @@ $(function(){
 
         $.ajax({
           type: 'POST',
-          url: '/post/employee/changePassword',
+          url: '/api/employee/changePassword',
           data: formData,
           success: function (response) {
             console.log(response);

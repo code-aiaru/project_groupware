@@ -8,328 +8,111 @@
     <script th:src="@{/js/index.js}" data-static></script>
     <script th:src="@{/js/naver/naver.js}" defer="defer"></script>
     <script>
-        // 새로고침용 url
-        var previousURL = "[[${previousURL}]]";
+            // 새로고침용 url 
+            var previousURL = "[[${previousURL}]]";
     </script>
 </head>
 <body>
-<div class="scriptBack">
+    <div class="scriptBack">
 </div>
-<div class="root">
-
-    <!-- gnb -->
-    <div class="gnb">
-        <div class="dummy_box expanded"></div>
-        <div class="notice">
-            notice list...
-        </div>
-        <div class="user-console">
-            <img src="/images/index/gnb/iconmonstr-email-4.svg" alt="메세지 아이콘" class="console-icon_img">
-            <img src="/images/index/gnb/iconmonstr-bell-2.svg" alt="알람 아이콘" class="console-icon_img">
-            <div class="user-img_box_small" id="user-img_box_small">
-                <img src="" alt="프로필 이미지" class="user_img" style="display: none;">
-                <!--                    <img src="/images/index/gnb/iconmonstr-user-7.svg" alt="대체 프로필 이미지" class="user_img_alt">-->
-                <img id="console-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
-            </div>
-        </div>
-        <div class="dropdown-menu" style="display: none;">
-            <div class="dropdown-menu_head"></div>
-            <th:block sec:authorize="isAuthenticated()">
-                <div class="user-info_box">
-                    <div class="user-img_box_large">
-                        <!--                            <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/gnb/iconmonstr-user-7.svg'">-->
-                        <img th:if="${employeeImageUrl}" th:src="${employeeImageUrl}" alt="프로필 이미지"
-                             style="width: 35px; height: 35px;">
-                        <img th:unless="${employeeImageUrl}" th:src="@{/images/employee/default.png}" alt="프로필 이미지"
-                             style="width: 35px; height: 35px;">
-                    </div>
-                    <div class="user-name_box">
-                        <span th:text="${employee.employeeName}"></span>
-                        <span>님</span>
-                    </div>
-                </div>
-            </th:block>
-            <ul>
-                <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>
-                    <li>
-                        <span>마이페이지</span>
-                        <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
-                    </li>
-                </a>
-                <a href="#">
-                    <li>
-                        <span>b</span>
-                        <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
-                    </li>
-                </a>
-                <a href="#">
-                    <li>
-                        <span>c</span>
-                        <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
-                    </li>
-                </a>
-                <a th:href="@{/logout}">
-                    <li>
-                        <th:block sec:authorize="isAuthenticated()">
-                            <span>로그아웃</span>
-                            <img src="/images/index/gnb/iconmonstr-log-out-16.svg" alt="로그아웃 아이콘">
-                        </th:block>
-                    </li>
-                </a>
-            </ul>
-        </div>
-    </div>
-    <!-- gnb end -->
-
-    <div class="container">
-
-        <!-- snb -->
-        <div class="snb expanded">
-
-            <div class="logo">
-                <span class="expand-shown">그린컴퓨터아카데미</span>
-                <img src="/images/index/logo/new23_headerlogo0-fixed-lined.svg" alt="그린컴퓨터아카데미 로고"
-                     class="contract-shown" style="display: none;">
+    <div class="root">
+        
+        <!-- gnb -->
+        <div class="gnb">
+            <div class="dummy_box expanded">
+                <button class="snb_controller" id="size-control_btn">
+                    <img src="/images/index/snb/iconmonstr-view-11.svg" alt="축소 아이콘" class="contract_btn">
+                    <img src="/images/index/snb/iconmonstr-view-13.svg" alt="확대 아이콘" class="expand_btn" style="display: none;">
+                </button>
             </div>
 
-            <button class="snb_controller" id="size-control_btn">
-                <img src="/images/index/snb_expand/iconmonstr-view-11.svg" alt="축소 아이콘" class="contract_btn">
-                <img src="/images/index/snb_expand/iconmonstr-view-13.svg" alt="확대 아이콘" class="expand_btn"
-                     style="display: none;">
-            </button>
 
-            <div class="expand-shown">
-
-                <div class="general">
-                    <span>GENERAL</span>
-                    <ul>
-                        <li>
-                            <a href="/dashboard" data-ajax>
-                                <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                     class="menu-icon_small">
-                                <span>대시보드</span>
-                                <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                     class="select-highlight">
-                            </a>
-                        </li>
-                    </ul>
+            <div class="notice">
+                notice list...
+            </div>
+            <div class="user-console">
+                <img src="/images/index/gnb/iconmonstr-email-4.svg" alt="메세지 아이콘" class="console-icon_img">
+                <img src="/images/index/gnb/iconmonstr-bell-2.svg" alt="알람 아이콘" class="console-icon_img">
+                <div class="user-img_box_small" id="user-img_box_small">                    
+                    <img src="" alt="프로필 이미지" class="user_img" style="display: none;">
+<!--                    <img src="/images/index/gnb/iconmonstr-user-7.svg" alt="대체 프로필 이미지" class="user_img_alt">-->
+                    <img id="console-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
                 </div>
-
-                <div class="work">
-                    <span>WORK</span>
-                    <ul>
-                        <li>
-                            <a href="/schedule" data-ajax>
-                                <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                     class="menu-icon_small">
-                                <span>일정관리</span>
-                                <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                     class="select-highlight">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/approval/list/create" data-ajax>
-                                <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                     class="menu-icon_small">
-                                <span>전자결재</span>
-                                <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                     class="select-highlight">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="student">
-                    <span>STUDENT</span>
-                    <ul>
-                        <li>
-                            <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>
-                                <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                     class="menu-icon_small">
-                                <span>수강생 조회</span>
-                                <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                     class="select-highlight">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/student/manage" data-ajax>
-                                <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                     class="menu-icon_small">
-                                <span>수강생 관리</span>
-                                <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                     class="select-highlight">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <th:block sec:authorize="hasAnyRole('ADMIN')">
-                    <div class="human-resource">
-                        <span>H.R</span>
-                        <ul>
-                            <li>
-                                <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                         class="menu-icon_small">
-                                    <span>인사조회</span>
-                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                         class="select-highlight">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/employee/manage" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                         class="menu-icon_small">
-                                    <span>인사관리</span>
-                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                         class="select-highlight">
-                                </a>
-                            </li>
-                        </ul>
+            </div>
+            <div class="dropdown-menu" style="display: none;">
+                <div class="dropdown-menu_head"></div>
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="user-info_box">
+                        <div class="user-img_box_large">
+<!--                            <img src="" alt="프로필 이미지" onerror="this.onerror=null; this.src='/images/index/gnb/iconmonstr-user-7.svg'">-->
+                            <img th:if="${employeeImageUrl}" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 35px; height: 35px;">
+                            <img th:unless="${employeeImageUrl}" th:src="@{/images/employee/default.png}" alt="프로필 이미지" style="width: 35px; height: 35px;">
+                        </div>
+                        <div class="user-name_box">
+                            <span th:text="${employee.employeeName}"></span>
+                            <span th:text="${employee.employeeNo}" id="currentUserId" style="display: none;"></span>
+                            <span th:text="${employee.role}" id="currentUserRole" style="display: none;"></span>
+                            <span>님</span>
+                        </div>
                     </div>
                 </th:block>
-                <th:block sec:authorize="hasAnyRole('EMPLOYEE')">
-                    <div class="human-resource">
-                        <span>H.R</span>
-                        <ul>
-                            <li>
-                                <a th:href="@{/employee/simpleEmployeeList?page=0&subject=&search=}" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                         class="menu-icon_small">
-                                    <span>인사조회</span>
-                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                         class="select-highlight">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </th:block>
-
-                <div class="community">
-                    <span>COMMUNITY</span>
-                    <ul>
+                <ul>
+                    <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>
                         <li>
-                            <a href="/boards/list" data-ajax>
-                                <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                     class="menu-icon_small">
-                                <span>자유게시판</span>
-                                <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                     class="select-highlight">
-                            </a>
+                            <span>마이페이지</span>
+                            <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
                         </li>
+                    </a>
+                    <a href="#">
                         <li>
-                            <a href="#">
-                                <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                     class="menu-icon_small">
-                                <span>공지사항</span>
-                                <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                     class="select-highlight">
-                            </a>
+                            <span>b</span>
+                            <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
                         </li>
-                    </ul>
-                </div>
-
-                <div class="salary">
-                    <span>SALARY</span>
-                    <ul>
-                        <th:block sec:authorize="hasAnyRole('ADMIN')">
-                            <li>
-                                <a th:href="@{/salary/list}" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                         class="menu-icon_small">
-                                    <span>일반목록#</span>
-                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                         class="select-highlight">
-                                </a>
-                            </li>
-                        </th:block>
-                        <th:block sec:authorize="hasAnyRole('ADMIN')">
-                            <li>
-                                <a th:href="@{/salary/page/{id}(id=${employee.employeeNo})}" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                         class="menu-icon_small">
-                                    <span>급여조회#page</span>
-                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                         class="select-highlight">
-                                </a>
-                            </li>
-                        </th:block>
-                    </ul>
-                </div>
-
-                <div class="attendance">
-                    <span>ATTENDANCE</span>
-                    <ul>
-                        <th:block sec:authorize="hasAnyRole('ADMIN')">
-                            <li>
-                                <a th:href="@{/attendance/list2}" data-ajax>
-<!--                                    <a th:href="@{/attendance/list2/{id}(id=${employee?.employeeNo?})}" data-ajax>-->
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                         class="menu-icon_small">
-                                    <span>근태조회</span>
-                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                         class="select-highlight">
-                                </a>
-                            </li>
-                        </th:block>
-
-<!--                        <th:block sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">-->
-                            <li>
-                                <a th:href="@{/attendance/create}" data-ajax>
-                                    <!--                                    <a th:href="@{/attendance/list2/{id}(id=${employee?.employeeNo?})}" data-ajax>-->
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"
-                                         class="menu-icon_small">
-                                    <span>근태처리#</span>
-                                    <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지"
-                                         class="select-highlight">
-                                </a>
-                            </li>
-<!--                        </th:block>-->
-
-                        <!--                            <th:block sec:authorize="hasAnyRole('ADMIN')">-->
-                        <!--                                <li>-->
-                        <!--                                    <a th:href="@{/attendance/list2}" data-ajax>-->
-                        <!--                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">-->
-                        <!--                                        <span>근태조회</span>-->
-                        <!--                                        <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">-->
-                        <!--                                    </a>-->
-                        <!--                                </li>-->
-                        <!--                            </th:block>-->
-                    </ul>
-                </div>
+                    </a>
+                    <a href="#">
+                        <li>
+                            <span>c</span>
+                            <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
+                        </li>
+                    </a>
+                    <a th:href="@{/logout}">
+                        <li>
+                            <th:block sec:authorize="isAuthenticated()">
+                                <span>로그아웃</span>
+                                <img src="/images/index/gnb/iconmonstr-log-out-16.svg" alt="로그아웃 아이콘">
+                            </th:block>
+                        </li>
+                    </a>
+                </ul>
             </div>
-            <!--  -->
+        </div>
+        <!-- gnb end -->
 
-            <!--  -->
-            <div class="contract-shown">
-                <div class="index-icon_section">
-                    <a href="/dashboard"><img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg"
-                                              alt="대시보드 아이콘"></a>
-                    <span>대시보드</span>
-                    <a href="#"><img src="/images/index/snb_contract/iconmonstr-task-list-lined.svg"
-                                     alt="작업 관리 아이콘"></a>
-                    <span>작업관리</span>
-                    <a href="#"><img src="/images/index/snb_contract/iconmonstr-school-25.svg" alt="수강생 관리 아이콘"></a>
-                    <span>수강생관리</span>
-                    <a href="#"><img src="/images/index/snb_contract/iconmonstr-user-21.svg" alt="인사 관리 아이콘"></a>
-                    <span>인사관리</span>
-                    <a href="#"><img src="/images/index/snb_contract/iconmonstr-gear-2.svg" alt="설정 아이콘"></a>
-                    <span>설정</span>
+        <div class="container">
+
+            <!-- snb -->
+            <div class="snb expanded">
+
+                <div class="logo">
+                    <a href="/dashboard" data-ajax>
+                        <span class="expand-shown">그린컴퓨터아카데미</span>
+                        <img src="/images/index/logo/new23_headerlogo0-fixed-lined.svg" alt="그린컴퓨터아카데미 로고" class="contract-shown" style="display: none;">
+                    </a>
                 </div>
                 
-                <button class="snb_controller" id="size-control_btn">
-                    <img src="/images/index/snb_expand/iconmonstr-view-11.svg" alt="축소 아이콘" class="contract_btn">
-                    <img src="/images/index/snb_expand/iconmonstr-view-13.svg" alt="확대 아이콘" class="expand_btn" style="display: none;">
-                </button>
+                <!-- <button class="snb_controller" id="size-control_btn">
+                    <img src="/images/index/snb/iconmonstr-view-11.svg" alt="축소 아이콘" class="contract_btn">
+                    <img src="/images/index/snb/iconmonstr-view-13.svg" alt="확대 아이콘" class="expand_btn" style="display: none;">
+                </button> -->
 
-                <div class="expand-shown">
+                <div class="expand-shown" data-snbStatus="expanded">
 
                     <div class="general">
                         <span>GENERAL</span>
                         <ul>
                             <li>
                                 <a href="/dashboard" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
                                     <span>대시보드</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
@@ -342,14 +125,14 @@
                         <ul>
                             <li>
                                 <a href="/schedule" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <img src="/images/index/snb/iconmonstr-task-list-lined.svg" alt="일정관리 아이콘" class="menu-icon_small">
                                     <span>일정관리</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
                             </li>
                             <li>
                                 <a href="/approval/list/create" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <img src="/images/index/snb/document-edit_fixed.svg" alt="전자결재 아이콘" class="menu-icon_small">
                                     <span>전자결재</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
@@ -362,14 +145,14 @@
                         <ul>
                             <li>
                                 <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <img src="/images/index/snb/iconmonstr-school-25.svg" alt="수강생관리 아이콘" class="menu-icon_small">
                                     <span>수강생관리</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
                             </li>
                             <!-- <li>
                                 <a href="/student/manage" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
                                     <span>수강생 관리</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
@@ -383,14 +166,14 @@
                             <ul>
                                 <li>
                                     <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>
-                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        <img src="/images/index/snb/iconmonstr-user-21_fixed.svg" alt="인사관리 아이콘" class="menu-icon_small">
                                         <span>인사관리</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
                                 </li>
                                 <!-- <li>
                                     <a href="/employee/manage" data-ajax>
-                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
                                         <span>인사관리</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
@@ -404,7 +187,7 @@
                             <ul>
                                 <li>
                                     <a th:href="@{/employee/simpleEmployeeList?page=0&subject=&search=}" data-ajax>
-                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                        <img src="/images/index/snb/iconmonstr-user-21_fixed.svg" alt="인사관리 아이콘" class="menu-icon_small">
                                         <span>인사관리</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
@@ -418,14 +201,14 @@
                         <ul>
                             <li>
                                 <a href="/boards/list" data-ajax>
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="자유게시판 아이콘" class="menu-icon_small">
                                     <span>자유게시판</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
+                                    <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="공지사항 아이콘" class="menu-icon_small">
                                     <span>공지사항</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                 </a>
@@ -439,8 +222,8 @@
                             <th:block sec:authorize="hasAnyRole('ADMIN')">
                                 <li>
                                     <a th:href="@{/salary/list}" data-ajax>
-                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
-                                        <span>일반목록#</span>
+                                        <img src="/images/index/snb/card.svg" alt="일반목록 아이콘" class="menu-icon_small">
+                                        <span>일반목록</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
                                 </li>
@@ -452,8 +235,8 @@
 <!--                                    <a th:href="@{/salary/page/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>-->
 <!--                                    <a th:href="@{/salary/page/{id}(id={#authentication.principal.employee.employeeNo})}" data-ajax>-->
 <!--                                        <a th:href="@{/salary/page/{id}(id={#authentication.principal.student.studentId})}" data-ajax>-->
-                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
-                                        <span>급여조회#page</span>
+                                        <img src="/images/index/snb/wallet_fixed.svg" alt="급여조회 아이콘" class="menu-icon_small">
+                                        <span>급여조회</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
                                 </li>
@@ -467,8 +250,8 @@
                             <th:block sec:authorize="hasAnyRole('ADMIN')">
                                 <li>
                                     <a th:href="@{/attendance/list2}" data-ajax>
-                                        <img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘" class="menu-icon_small">
-                                        <span>근태조회</span>
+                                        <img src="/images/index/snb/checkmark.svg" alt="근태관리 아이콘" class="menu-icon_small">
+                                        <span>근태관리</span>
                                         <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">
                                     </a>
                                 </li>
@@ -508,40 +291,91 @@
 
                 </div>
 
-                <div class="contract-shown">
+                <div class="contract-shown" data-snbStatus="contracted">
                     <div class="index-icon_section">
-                        <a href="/dashboard"><img src="/images/index/snb_contract/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘"></a>
-                        <span>대시보드</span>
-                        <a href="#"><img src="/images/index/snb_contract/iconmonstr-task-list-lined.svg" alt="작업 관리 아이콘"></a>
-                        <span>작업관리</span>
-                        <a href="#"><img src="/images/index/snb_contract/iconmonstr-school-25.svg" alt="수강생 관리 아이콘"></a>
-                        <span>수강생관리</span>
-                        <a href="#"><img src="/images/index/snb_contract/iconmonstr-user-21.svg" alt="인사 관리 아이콘"></a>
-                        <span>인사관리</span>
-                        <a href="#"><img src="/images/index/snb_contract/iconmonstr-gear-2.svg" alt="설정 아이콘"></a>
-                        <span>설정</span>
+                        <ul>
+                            <li>
+                                <a href="/dashboard" data-ajax>
+                                    <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="대시보드 아이콘">
+                                    <span>대시보드</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/schedule" data-ajax>
+                                    <img src="/images/index/snb/iconmonstr-task-list-lined.svg" alt="일정관리 아이콘">
+                                    <span>일정관리</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/approval/list/create" data-ajax>
+                                    <img src="/images/index/snb/document-edit_fixed.svg" alt="전자결재 아이콘">
+                                    <span>전자결재</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>
+                                    <img src="/images/index/snb/iconmonstr-school-25.svg" alt="수강생관리 아이콘">
+                                    <span>수강생관리</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/employee/simpleEmployeeList?page=0&subject=&search=}" data-ajax>
+                                    <img src="/images/index/snb/iconmonstr-user-21_fixed.svg" alt="인사관리 아이콘">
+                                    <span>인사관리</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/boards/list" data-ajax>
+                                    <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="자유게시판 아이콘">
+                                    <span>자유게시판</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/salary/list}" data-ajax>
+                                    <img src="/images/index/snb/card.svg" alt="일반목록 아이콘">
+                                    <span>일반목록</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/salary/page}" data-ajax>
+                                    <img src="/images/index/snb/wallet_fixed.svg" alt="급여조회 아이콘">
+                                    <span>급여조회</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/attendance/list2}" data-ajax>
+                                    <img src="/images/index/snb/checkmark.svg" alt="근태관리 아이콘">
+                                    <span>근태관리</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
+                
                 <div class="snb-background-img_box">
                     <img src="/images/index/snb/iconmonstr-share-4-fixed.png" alt="">
                 </div>
 
             </div>
+            <!-- snb end -->
 
-            <div class="snb-background-img_box">
-                <img src="/images/index/snb/iconmonstr-share-4-fixed.png" alt="">
+            <!-- content -->
+            <!-- <div class="contents_wrapper"> -->
+                <div class="contents" id="contents">
+            <!-- </div> -->
+              
             </div>
+            <!-- content end -->
+
+
 
         </div>
-        <!-- snb end -->
-
-
-        <!-- content -->
-        <div class="contents" id="contents">
-
+        
+        <!-- footer -->
+        <div class="footer">
+            
         </div>
-        <!-- content end -->
+        <!-- footer end -->
 
 
     </div>

@@ -69,6 +69,7 @@
               <label for="employeePosition">직급</label>
               <select id="employeePosition" name="employeePosition" required="required" class="box">
                 <option value="부장" th:selected="${employee.employeePosition == '부장'}">부장</option>
+                <option value="부장" th:selected="${employee.employeePosition == '과장'}">과장</option>
                 <option value="대리" th:selected="${employee.employeePosition == '대리'}">대리</option>
                 <option value="사원" th:selected="${employee.employeePosition == '사원'}">사원</option>
               </select>
@@ -127,7 +128,9 @@
           </th:block>
           <button type="button" onclick="javascript:history.back()">수정취소</button>
           <input type="submit" value="수정실행">
-          <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax>비밀번호 변경</a>
+          <th:block th:if="${#authentication.principal.username==employee.employeeId}">
+            <a th:href="@{/employee/confirmPassword/password/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" data-ajax>비밀번호 변경</a>
+          </th:block>
           <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employeeDto.employeeNo})}" id="redirection" data-ajax style="display: none;"></a>
         </ul>
       </form>

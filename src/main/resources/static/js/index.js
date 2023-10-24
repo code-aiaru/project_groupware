@@ -82,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 el.style.display = 'block';
             });
 
+            snbStatus = 'expanded';
+
         } else if(snb.classList.contains('expanded')) {
             snb.classList.remove('expanded');
             snb.classList.add('contracted');
@@ -96,7 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.expand-shown').forEach(el => {
                 el.style.display = 'none';
             });
+
+            snbStatus = 'contracted';
+        
         }
+
+        initializeHightlightMenu();
     });
     
 
@@ -186,11 +193,6 @@ async function loadContent(url, initialLoad = false, isPopstate = false) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         
-        const loadedContent = doc.getElementById('loadedContent');
-        if (loadedContent) {
-            document.getElementById('contents').innerHTML = loadedContent.innerHTML;
-        }
-        
         // 외부 스타일 로드
         const loadedLinks = doc.querySelectorAll('link');
         for (const link of loadedLinks) {
@@ -202,7 +204,11 @@ async function loadContent(url, initialLoad = false, isPopstate = false) {
         for (const style of loadedStyles) {
             await loadLiStyle(style.textContent);
         }
-
+        
+        const loadedContent = doc.getElementById('loadedContent');
+        if (loadedContent) {
+            document.getElementById('contents').innerHTML = loadedContent.innerHTML;
+        }
 
         const loadedTitle = doc.querySelector('meta[name="page-title"]');
         if (loadedTitle) {
@@ -211,19 +217,25 @@ async function loadContent(url, initialLoad = false, isPopstate = false) {
 
         const loadedScripts = doc.querySelectorAll('script');
         for (const script of loadedScripts) {
+            // if (script.hasAttribute('data-quickInitScript')) {
+            //     console.log('Quick Loading inline-script:', script.textContent);
+            //     await loadInlineScript(script.textContent);
+            // } else 
             if (script.src) {
-                console.log('Loading script:', script.src);
+                console.log('Loading external-script:', script.src);
                 await loadScript(script.src);
             } else {
+                console.log('Loading inline-script:', script.textContent);
                 eval(script.textContent);
             }
         }
 
+        
         // history 업데이트
         historyUpdate(url, initialLoad, isPopstate);
 
-        // 메뉴 아이템 하이라이트
-        highlightCurrentMenuItem();
+        // 하이라이트 로직 시작
+        initializeHightlightMenu();
 
         isAsyncUrlRequest = true;
 
@@ -253,6 +265,19 @@ async function loadScript(src) {
         document.head.appendChild(script);
     });
 }
+
+// async function loadInlineScript(content) {
+//     return new Promise((resolve, reject) => {
+//         var script = document.createElement('script');
+//         script.textContent = content;
+//         script.onload = resolve;
+//         script.onerror = () => {
+//             console.warn(`Failed to execute inline script. Ignoring the error.`);
+//             resolve();
+//         };
+//         document.head.appendChild(script);
+//     });
+// }
 
 async function loadExtStyle(href) {
     return new Promise((resolve, reject) => { 
@@ -305,62 +330,94 @@ function historyUpdate(url, initialLoad, isPopstate) {
 
 
 // 하이라이트 관련
-function resetHighlight() {
-    // 모든 메뉴 아이템의 .select-highlight를 선택
-    const menuItems = document.querySelectorAll('.select-highlight');
-    
-    // 각 메뉴 아이템의 하이라이트를 제거
-    menuItems.forEach(item => {
-        const parentMenuItem = item.closest('a'); // 상위의 a 태그를 찾는다.
-        if (!parentMenuItem) return;  // a 태그가 없으면 다음 항목으로 넘어감
-        
-        const imgTag = parentMenuItem.querySelector('img');
-        const spanTag = parentMenuItem.querySelector('span');
 
-        item.style.display = 'none';
-        if (imgTag) imgTag.removeAttribute('style');
-        if (spanTag) spanTag.removeAttribute('style');
-    });
+let snbStatus = 'expanded';
+
+function initializeHightlightMenu() {
+
+    resetHighlightExpanded();
+    resetHighlightContracted();
+
+    console.log('snbStatus: ', snbStatus);
+
+    if (snbStatus === 'expanded') {
+        highlightCurrentMenuExpanded();
+    } else if (snbStatus === 'contracted') {
+        highlightCurrentMenuContracted();
+    }
 }
 
-// function highlightCurrentMenuItem() {
+function highlightCurrentMenuExpanded() {
 
-//     resetHighlight();
-
-//     const currentUrl = window.location.pathname;
-//     const menuItem = document.querySelector(`a[href="${currentUrl}"]`);
-    
-//     if (menuItem) {
-//         const imgTag = menuItem.querySelector('img');
-//         const spanTag = menuItem.querySelector('span');
-
-//         const highlightImage = menuItem.querySelector('.select-highlight');
-//         if (highlightImage && imgTag && spanTag) {
-//             highlightImage.style.display = 'inline-block';
-//             imgTag.style.filter = 'invert(45%) sepia(95%) saturate(403%) hue-rotate(154deg) brightness(86%) contrast(88%)';
-//             spanTag.style.color = '#2788b5';
-//             spanTag.style = 'color: #2788b5; font-weight: bold';
-//         }
-//     }
-// }
-
-function highlightCurrentMenuItem() {
-
-    resetHighlight();
+    console.log('highlightCurrentMenuExpanded activated');
 
     const currentUrl = window.location.pathname;
-    const menuItem = document.querySelector(`a[href*="${currentUrl}"]`);
-    
-    if (menuItem) {
-        const imgTag = menuItem.querySelector('img');
-        const spanTag = menuItem.querySelector('span');
+    const functionTarget = document.querySelector('[data-snbStatus="expanded"]');
+    const hightlightTargetMenu = functionTarget.querySelector(`a[href*="${currentUrl}"]`);
 
-        const highlightImage = menuItem.querySelector('.select-highlight');
+    if (hightlightTargetMenu) {
+        const parentLi = hightlightTargetMenu.parentElement; // 부모 li
+        const imgTag = hightlightTargetMenu.querySelector('img');
+        const spanTag = hightlightTargetMenu.querySelector('span');
+        const highlightImage = hightlightTargetMenu.querySelector('.select-highlight');
+
         if (highlightImage && imgTag && spanTag) {
+            parentLi.setAttribute('data-hightlighted', '');
+            imgTag.style.filter = 'invert(45%) sepia(95%) saturate(403%) hue-rotate(154deg) brightness(86%) contrast(88%)';
+            spanTag.style.color = '#2788b5';
+            spanTag.style = 'color: #2788b5; font-weight: bold';
             highlightImage.style.display = 'inline-block';
+        }
+    }
+}
+
+function highlightCurrentMenuContracted() {
+
+    console.log('highlightCurrentMenuContracted activated');
+
+    const currentUrl = window.location.pathname;
+    const functionTarget = document.querySelector('[data-snbStatus="contracted"]');
+    const hightlightTargetMenu = functionTarget.querySelector(`a[href*="${currentUrl}"]`);
+    
+    if (hightlightTargetMenu) {
+        const parentLi = hightlightTargetMenu.parentElement; // 부모 li
+        const imgTag = hightlightTargetMenu.querySelector('img');
+        const spanTag = hightlightTargetMenu.querySelector('span');
+
+        if (imgTag && spanTag) {
+            parentLi.setAttribute('data-hightlighted', '');
+            parentLi.style.backgroundColor = '#e2e7ec';
             imgTag.style.filter = 'invert(45%) sepia(95%) saturate(403%) hue-rotate(154deg) brightness(86%) contrast(88%)';
             spanTag.style.color = '#2788b5';
             spanTag.style = 'color: #2788b5; font-weight: bold';
         }
     }
+}
+
+
+function resetHighlightExpanded() {
+    const functionTarget = document.querySelector('[data-hightlighted]');
+    if (!functionTarget) return;
+
+    const highlightImg = functionTarget.querySelector('.select-highlight');
+    const imgTag = functionTarget.querySelector('img');
+    const spanTag = functionTarget.querySelector('span');
+
+    if (highlightImg) highlightImg.style.display = 'none';
+    if (imgTag) imgTag.removeAttribute('style');
+    if (spanTag) spanTag.removeAttribute('style');
+    functionTarget.removeAttribute('data-highlightedMenu');
+}
+
+function resetHighlightContracted() {
+    const functionTarget = document.querySelector('[data-hightlighted]');
+    if (!functionTarget) return;
+
+    const imgTag = functionTarget.querySelector('img');
+    const spanTag = functionTarget.querySelector('span');
+
+    if (imgTag) imgTag.removeAttribute('style');
+    if (spanTag) spanTag.removeAttribute('style');
+    functionTarget.removeAttribute('style');
+    functionTarget.removeAttribute('data-hightlighted');
 }

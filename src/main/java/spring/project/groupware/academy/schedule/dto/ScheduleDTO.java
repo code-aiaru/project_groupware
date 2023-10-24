@@ -25,6 +25,7 @@ public class ScheduleDTO {
     private LocalDateTime updateTime; // from BaseEntity
 
     private EmployeeEntity employeeEntity;
+    private Long writer; // Add this line
 
     // getters and setters
 
@@ -39,6 +40,11 @@ public class ScheduleDTO {
         scheduleDTO.setColor(scheduleEntity.getColor());
         scheduleDTO.setCreateTime(scheduleEntity.getCreateTime());
         scheduleDTO.setUpdateTime(scheduleEntity.getUpdateTime());
+
+        if (scheduleEntity.getEmployeeEntity() != null) {
+            scheduleDTO.setWriter(scheduleEntity.getEmployeeEntity().getEmployeeNo());
+        }
+
         return scheduleDTO;
     }
 

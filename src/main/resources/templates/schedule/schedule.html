@@ -77,9 +77,10 @@
                         <span>공지대상</span>
                         <select name="target" class="select" id="schedule-target">
                             <option disabled selected>대상선택</option>
-                            <option value="all">전체</option>
-                            <option value="admin">관리자</option>
-                            <option value="employee">사원</option>
+                            <option value="ALL">전체</option>
+                            <option value="PERSONAL">개인</option>
+                            <option value="ADMIN" sec:authorize="hasAnyRole('ADMIN')">관리자</option>
+                            <option value="EMPLOYEE" sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')">사원</option>
                         </select>
                     </div>
                     <div>

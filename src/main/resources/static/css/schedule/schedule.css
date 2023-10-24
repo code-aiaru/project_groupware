@@ -299,7 +299,10 @@
     justify-content: center;
     align-items: center;
 }
-
+.fc-daygrid-day-events {
+    display: flex;
+    flex-wrap: wrap;
+}
 .fc .fc-daygrid-day-number {
     font-size: 12px;
 }

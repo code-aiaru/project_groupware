@@ -1,6 +1,7 @@
 
 var calendar = null;
 
+
 initializeScript();
 
 function initializeScript() {
@@ -45,7 +46,13 @@ function initializeScript() {
             initializeContextMenu(info, 'select');
         },
         eventClick: function(info) {
-            initializeContextMenu(info, 'eventClick');
+            const currentUserId = document.getElementById('currentUserId').textContent;
+            const currentUserRole = document.getElementById('currentUserRole').textContent;
+            console.log('해당 이벤트 writer Id: ', info.event.extendedProps.writer);
+            console.log('현재 로그인된 user Id: ', currentUserId);
+            if (info.event.extendedProps.writer == currentUserId || currentUserRole == 'ADMIN') {
+                initializeContextMenu(info, 'eventClick');
+            }
         },    
         events: function(fetchInfo, successCallback, failureCallback) {
             readAllScheduleRequest(fetchInfo, successCallback, failureCallback);
@@ -239,7 +246,9 @@ function initializeScript() {
 
         console.log('isAllDay DB에서 가져온 값', info.event.extendedProps.isAllDay)
 
-        $('#schedule-name').val(info.event.title);
+        // $('#schedule-name').val(info.event.title);
+        $('#schedule-name').val(info.event.title.replace(/\[(전체|관리자|사원|개인)\]\s/g, "").trim());
+
         $('#schedule-isAllDay').prop('checked', info.event.extendedProps.isAllDay);
         if ($('#schedule-isAllDay').prop('checked')) {
             // 체크박스가 체크되면 startTime과 endTime 입력란을 비활성화하고 값을 지웁니다.
@@ -312,14 +321,13 @@ function initializeScript() {
         console.log('endDate: ', endDate);
         console.log('startTime: ', startTime);
         console.log('endTime: ', endTime);
-
-        // fullcalendar의 allDay 로직 상으론, 하루를 뒤로 밀어놓아야 올바른 값으로 저장 및 출력이 된다.
-        // if (isAllDay) {
-        //     console.log('allDay: true');
-        //     endDate = new Date(endDate);
-        //     endDate.setDate(endDate.getDate() + 1);
-        // }
         
+        // 필수 입력 정보가 없을 때 alert 창 띄우기
+        if (!title || !startDate || !endDate) {
+            alert("필수 정보를 모두 입력해주세요!");
+            return; // 함수를 여기서 종료
+        }
+
         // startDate와 endDate에 시간 반영      
         var start = mergeDateTimeAsISO8601(startDate, startTime);
         var end = mergeDateTimeAsISO8601(endDate, endTime);
@@ -388,18 +396,39 @@ function initializeScript() {
 
     // 스케줄 조회
     function readAllScheduleRequest(fetchInfo, successCallback, failureCallback) {
+        // 예를 들어, 서버에서 이벤트를 가져오는 AJAX 요청이 있다고 가정하겠습니다.
         $.ajax({
-            url: '/api/full-calendar',
+            url: '/api/full-calendar',  // 이 URL은 실제 서버에 맞게 수정되어야 합니다.
             type: 'GET',
             dataType: 'json',
-            success: function(response) {
-                successCallback(response);
+            success: function(events) {
+                const processedEvents = events.map(event => {
+                    let prefix = "";
+                    switch(event.target) {
+                        case 'ALL':
+                            prefix = "[전체]";
+                            break;
+                        case 'ADMIN':
+                            prefix = "[관리자]";
+                            break;
+                        case 'EMPLOYEE':
+                            prefix = "[사원]";
+                            break;
+                        case 'PERSONAL':
+                            prefix = "[개인]";
+                            break;
+                    }
+                    event.title = prefix + " " + event.title;  // 이벤트 제목 앞에 접두사를 추가합니다.
+                    return event;
+                });
+                successCallback(processedEvents);  // 처리된 이벤트들을 FullCalendar에 전달합니다.
             },
-            error: function() {
+            error: function(error) {
                 failureCallback('There was an error while fetching events.');
             }
         });
     }
+
 
     // 스케줄 수정
     function updateScheduleRequest(eventId, updatedEvent) {

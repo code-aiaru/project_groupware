@@ -2,8 +2,7 @@ package spring.project.groupware.academy.home.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,22 +11,17 @@ import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 import spring.project.groupware.academy.employee.service.ImageService;
-import spring.project.groupware.academy.student.service.StudentService;
-import spring.project.groupware.academy.util.FileStorageService;
 
 import javax.servlet.http.HttpServletRequest;
 //import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final EmployeeService employeeService;
-    private final FileStorageService fileStorageService;
     private final ImageService imageService;
-
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
 
     @GetMapping({"", "/index"})
     public String index(@AuthenticationPrincipal MyUserDetails myUserDetails,
@@ -46,30 +40,24 @@ public class HomeController {
                 System.out.println("previousURL: " + previousURL);
                 model.addAttribute("previousURL", previousURL);
             }
-            logger.info("Redirected to index page");
+            log.info("Redirected to index page");
             return "index"; // 로그인 돼있다면 index 페이지로 이동
         }
-//        logger.info("Redirected to login page");
+//        log.info("Redirected to login page");
 //        return "login"; // 로그인 안돼있으면 로그인 페이지로 이동
 //    }
 
     @GetMapping({"/login"})
     public String login(){
-        System.out.println("login activated");
+        log.info("login activated");
         return "login";
     }
 
     @GetMapping({"/dashboard"})
-    public String getDashboard(){
-        logger.info("GetMapped : dashboard");
-        return "dashboard";
+    public String getDashboard() {
+        log.info("GetMapped : dashboard");
+        return "dashboard/dashboard";
     }
-
-//    @GetMapping({"/student/manage"})
-//    public String getStudentManage() {
-//        logger.info("GetMapped : student/manage");
-//        return "student/manage";
-//    }
 
 
 }

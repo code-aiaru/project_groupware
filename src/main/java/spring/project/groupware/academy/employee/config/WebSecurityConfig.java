@@ -29,10 +29,11 @@ public class WebSecurityConfig {
 
         @Bean
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
-            http.authorizeHttpRequests()
+                    http.csrf().disable();
+            http.authorizeRequests()
                     .antMatchers("/login").permitAll()
                     .antMatchers("/", "/dashboard", "/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
-                            "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**", "/notice/list", "/attendance/**", "/approval/**", "/naver/**").authenticated()
+                            "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**", "/notice/list", "/attendance/**", "/approval/**", "/naver/**" ,"/post/**").authenticated()
                     .antMatchers("/employee/join", "/employee/employeeList**", "/notice/create", "/notice/edit/**").hasAnyRole("ADMIN")
 
                     .and()
@@ -56,7 +57,6 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/")
 
                     .and()
-                    .csrf().disable()
                     .authenticationProvider(userAuthenticationProvider()); // 사용자 지정 로직을 통해 사용자를 인증하고 Spring Security에게 사용자 정보를 제공하는 역할
             return http.build();
         }

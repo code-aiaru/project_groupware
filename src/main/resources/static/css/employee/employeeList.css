@@ -34,7 +34,7 @@ table, td ,th{
 }
 
 .pagingList .pagingList-con table thead tr:nth-child(2) th{
-      background-color:#cda9f6;
+      background-color:#000000;
       color:#ffffff;
       padding:8px 0;
 }
