@@ -15,6 +15,8 @@ import java.util.List;
 @Repository
 public interface SalaryRepository extends JpaRepository<Salary, Long> {
 
+//    Salary findByEmployeeAndSalaryDateBetween(EmployeeEntity employeeEntity, LocalDate start, LocalDate end);
+
     List<Salary> findByEmployeeAndSalaryDateBetween(EmployeeEntity employeeEntity, LocalDate start, LocalDate end);
 
     Page<Salary> findByEmployee(Pageable pageable, EmployeeEntity employee);
@@ -46,4 +48,3 @@ public interface SalaryRepository extends JpaRepository<Salary, Long> {
 //    Page<Salary> findSalariesWithFilters(Pageable pageable, Long id, String subject, String set, String first, String last);
 
 }
-

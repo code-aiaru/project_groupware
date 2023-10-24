@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>근태관리 리스트</title>
+    <link rel="stylesheet" th:href="@{/css/attendance/attendanceList2.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/attendance/attendanceList.js}" defer="defer"></script>
+</head>
+<body>
+<div id="loadedContent">
+    <div class="container">
+        <div class="attendanceList">
+            <div class="attendanceList-con">
+
+                <table>
+                    <thead>
+                    <tr class="th1">
+                        <th colspan="8">근태 페이징 리스트</th>
+                    </tr>
+                    <tr class="th2">
+                        <th> id</th>
+                        <th> 사원</th>
+                        <th> 날짜</th>
+                        <th> 출근시간</th>
+                        <th> 퇴근시간</th>
+                        <th> 출결상태</th>
+<!--                                            <th>출근</th>-->
+<!--                                            <th>퇴근</th>-->
+                        <th>상세</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="attendance :${attendanceList}">
+                        <td th:text="${attendance.id}"></td>
+                        <td th:text="${attendance.employee?.employeeName}"></td>
+                        <td th:text="${attendance.attDate}"></td>
+                        <td th:text="${#temporals.format(attendance.inAtt, 'yy.MM.dd/HH:mm')}"></td>
+                        <td th:text="${#temporals.format(attendance.outAtt, 'yy.MM.dd/HH:mm')}"></td>
+                        <td th:text="${attendance.attendanceStatus}"></td>
+                        <td>
+<!--                            <a th:href="@{/attendance/in/{id}(id=${attendance.id})}" data-ajax >출근</a>-->
+<!--                            <a th:href="@{/attendance/out/{id}(id=${attendance.id})}" data-ajax >퇴근</a>-->
+                            <a th:href="@{/attendance/update/{id}(id=${attendance.id})}" data-ajax >수정</a>
+<!--                            <a th:href="@{/attendance/detail/{id}(id=${attendance.id})}" data-ajax >상세(이번달)</a>-->
+                            <!--                <a th:href="@{/attendance/vacation/{id}(id=${attendance.employee.employeeNo})}">휴가</a>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

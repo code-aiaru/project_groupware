@@ -19,8 +19,16 @@ import javax.persistence.EntityNotFoundException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+
+import javax.persistence.EntityNotFoundException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,23 +52,6 @@ public class SalaryService {
     }
 
     public SalaryDto salaryDetail(Long id) {
-////        EmployeeEntity employeeEntity = salaryRepository.findById(id).get().getEmployee();
-//
-////        EmployeeEntity employee2 = employeeRepository.findById(id)
-////                .orElseThrow(()->new EntityNotFoundException("사원정보가 없음!"));
-//
-//        List<SalaryDto> salaryDtoList = new ArrayList<>();
-//
-//
-//        // 현재 사용중
-//        // 해당 사원 이번달 1일부터 ~ 이번달 마지막 일까지         // 변경 달 초 부터~ LocalDate.now().withDayOfMonth(1)
-////        List<Salary> salaryList = salaryRepository.findByEmployeeAndSalaryDateBetween(employeeEntity, LocalDate.now().withDayOfMonth(1), LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),LocalDate.MAX.getDayOfMonth()));
-//        List<Salary> salaryList = salaryRepository.findByEmployeeAndSalaryDateBetween(employeeEntity, LocalDate.now().withDayOfMonth(1), YearMonth.from(LocalDate.now()).atEndOfMonth());
-//
-//        for (Salary salary : salaryList) {
-//            SalaryDto salaryDto = SalaryDto.toSalaryDto(salary);
-//            salaryDtoList.add(salaryDto);
-//        }
 
         Salary salary = salaryRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("정보가 없음!"));
@@ -90,16 +81,6 @@ public class SalaryService {
 
 
         LocalDate oldDate = salaryRepository.findOldestSalaryDateByEmployeeNo(id);
-
-
-        System.out.println();
-        System.out.println("날짜날짜날짜날짜날짜날짜날짜날짜날짜날짜"+oldDate);
-        System.out.println("날짜날짜날짜날짜날짜날짜날짜날짜날짜날짜"+oldDate);
-        System.out.println("날짜날짜날짜날짜날짜날짜날짜날짜날짜날짜"+oldDate);
-        System.out.println("날짜날짜날짜날짜날짜날짜날짜날짜날짜날짜"+oldDate);
-        System.out.println();
-
-
 
 //        if (subject.equals("0")){
 //            salarys = salaryRepository.findByEmployee(pageable, employee);
@@ -184,4 +165,62 @@ public class SalaryService {
 
         return salaryDtoPageList;
     }
+
+
+
+    //수정1
+    public int salaryToday() {
+        int hourPay = 9620;         // 2023 기준
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonthValue();
+//        int day = LocalDate.now().getDayOfMonth();
+
+        // 변경일 신청시 다음달거 미리 생성 // 출결 처럼 만들기
+        for (EmployeeEntity emp : employeeRepository.findAll()){
+            //지급일 조회
+            if (month==1){
+                year = year-1;
+                month = 12;
+            }else {
+                month = month-1;
+            }
+            // 지난달만 계산
+            // 해당월 1~31까지 일
+
+            // 저번달 급여 지급 있는지 확인
+//            List<Salary> salaryList = salaryRepository.findByEmployeeAndSalaryDateBetween(emp, LocalDate.of(year,month,1), LocalDate.of(year,month, LocalDate.of(year,month,1).lengthOfMonth()));
+
+            List<Attendance> attendancesList1 = attendanceRepository.findByEmployeeAndAttDateBetween(emp, LocalDate.of(year,month,1), LocalDate.of(year,month, LocalDate.of(year,month,1).lengthOfMonth()));
+            if (attendancesList1.isEmpty()){
+//                    continue;
+            }else {
+                int dayPay = 0;
+                for (Attendance attendance : attendancesList1){
+                    if (attendance==null) continue;
+                    // 일한 시간 계산
+                    LocalTime inAtt = attendance.getInAtt();
+                    LocalTime outAtt = attendance.getOutAtt();
+
+                    if (inAtt != null && outAtt != null) {
+                        int workTime = (int) (ChronoUnit.MINUTES.between(outAtt, inAtt)/60);
+                        dayPay = dayPay + (workTime * hourPay);
+                    }else{
+//                            continue;
+                    }
+                }
+                salaryRepository.save(
+                        Salary.builder()
+                                .employee(emp)
+                                .salaryDate(LocalDate.now())
+                                .baseSalary(dayPay)
+                                //  직급따라 추가 %?
+                                // .incentiveSalary()
+                                .build());
+            }
+        }
+        return 1;
+    }
+
+
+
 }

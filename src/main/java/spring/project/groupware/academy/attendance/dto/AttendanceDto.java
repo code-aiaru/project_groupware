@@ -8,6 +8,7 @@ import spring.project.groupware.academy.student.entity.StudentEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Builder
 @AllArgsConstructor
@@ -18,11 +19,15 @@ public class AttendanceDto {
 
     private Long id;
 
-    private java.time.LocalDateTime inAtt;
-    private LocalDateTime outAtt;
+    private LocalTime inAtt;
+    private LocalTime outAtt;
     private LocalDate attDate;
 
     private AttendanceStatus attendanceStatus;
+
+    private LocalDate start;
+    private LocalDate end;
+    private LocalDate applyDate;
 
     private EmployeeEntity employee;
     private StudentEntity student;
@@ -39,6 +44,9 @@ public class AttendanceDto {
                 .inAtt(attendance.getInAtt())
                 .outAtt(attendance.getOutAtt())
                 .attendanceStatus(attendance.getAttendanceStatus())
+                .start(attendance.getStart())
+                .end(attendance.getEnd())
+                .applyDate(attendance.getApplyDate())
                 .employee(attendance.getEmployee())
                 .student(attendance.getStudent())
                 .build();

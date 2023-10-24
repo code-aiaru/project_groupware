@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>근태관리 리스트</title>
+<!--    <link rel="stylesheet" th:href="@{/css/attendance/attendanceUpdate.css}">-->
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--    <script th:src="@{/js/attendance/attendanceUpdate.js}" defer="defer"></script>-->
+</head>
+<body>
+<div id="loadedContent">
+    <div class="container">
+        <div class="attendanceUpdate">
+            <div class="attendanceUpdate-con">
+
+                <h1>출결 수정</h1>
+                <div class="update-header">
+                </div>
+                <form th:action="@{/attendance/update}" method="post">
+                    <ul>
+                        <li>
+                            <label th:for="id">Id번호</label>
+                            <input type="text" th:value="${attendanceDto.id}" readonly class="readonly">
+                        </li>
+
+                        <li>
+                            <label th:for="employeeName">이름</label>
+                            <input type="text" th:value="${attendanceDto.employee?.employeeName}" readonly class="readonly">
+                       </li>
+
+<!--                        <li th:if="${attendance.employee != null}">-->
+<!--                            &lt;!&ndash; "이름" 필드 (직원 경우) &ndash;&gt;-->
+<!--                            <label th:for="employeeName">이름</label>-->
+<!--                            <input type="text" th:value="${attendanceDto.employee?.employeeName}" readonly class="readonly" id="employeeName">-->
+<!--                        </li>-->
+<!--                        <li th:unless="${attendance.employee != null}">-->
+<!--                            &lt;!&ndash; "이름" 필드 (학생 경우) &ndash;&gt;-->
+<!--                            <label th:for="studentName">이름</label>-->
+<!--                            <input type="text" th:value="${attendanceDto.student?.studentName}" readonly class="readonly" id="studentName">-->
+<!--                        </li>-->
+
+
+                        <li>
+                            <label th:for="inAtt">출근 시간</label>
+                            <input type="text" th:value="${attendanceDto.attDate}" readonly class="readonly">
+                            <input type="text" th:value="${#temporals.format(attendanceDto.inAtt)}">
+
+                        </li>
+                        <li>
+                            <label th:for="outAtt">퇴근 시간</label>
+                            <input type="text" th:value="${#temporals.format(attendanceDto.outAtt)}">
+                        </li>
+
+                        <li>
+                            <label th:for="attendanceStatus">상태</label>
+                            <input type="text" th:value="${attendanceDto.attendanceStatus}" >
+                        </li>
+                    </ul>
+
+                    <div class="go-update">
+                        <div>
+<!--                            <button type="button" id="deleteBtn">-->
+<!--                                <a th:href="@{/attendance/delete/{id}(id=${attendance.id})}">출결 삭제</a>-->
+<!--                            </button>-->
+                            <input type="submit" value="출결수정">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

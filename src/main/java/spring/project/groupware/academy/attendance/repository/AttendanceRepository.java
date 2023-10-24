@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 import spring.project.groupware.academy.attendance.entity.Attendance;
 import spring.project.groupware.academy.attendance.entity.AttendanceStatus;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
+import spring.project.groupware.academy.student.entity.StudentEntity;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
@@ -27,13 +29,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
 //    @Query(value = "select * from attendance where employee_no=:employee_no")
 //    List<Attendance> employeeAtt(@Param("employee_no") Long employee_no);
     //mysql에서는 조회 확인됨
-    //위는 잘못 표기 무엇?
-
-    //문제 Attendance.employee 연관 관계 조회 employee? employee_no? employee_id?   // 해결댐
-    //Jpa findBy~~And~~ // 해결
-
-    //작성시 findBy필드명And필드명  이라면 entity 필드명이기는한데 (여기서도 바뀐 Colum이름인지 초기 필드명인지?) DB에 필드명?
-    //받는 findByEmployee(Long employee) 매개변수 이름도 상관이 있는지?  //employee_no 실험 해보니까 상관 있는듯 함>>아닌듯함...
 
     // jpql
 //    @Query(value = "SELECT a FROM Attendance a WHERE a.attDate =:attDate AND a.employee =:employee")
@@ -47,7 +42,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
     // 해당 사원 출결 조회 >> 상세 누르면 나옴 // 일단 detail
     List<Attendance> findByEmployee(@Param("employee") EmployeeEntity employee);
 
-    LocalDate findByAttendanceStatusAndEmployeeAndAttDate(@Param("attendanceStatus")AttendanceStatus attendanceStatus, @Param("employee") EmployeeEntity employee, @Param("attDate")LocalDate attDate);
+    Optional<Attendance> findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus attendanceStatus, EmployeeEntity employee, LocalDate attDate);
 
     List<Attendance> findByAttDateAndAttendanceStatus(@Param("attDate")LocalDate attDate, @Param("attendanceStatus")AttendanceStatus attendanceStatus);
 
@@ -85,17 +80,26 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
 
 //    mysql
 //    select * from attendance where (attendance_status='LATE') and att_date between '2023-9-20' and '2023-10-10';
-    //JPA ??
+
 
 //    //jpql    // 실행 성공1
 //    @Modifying
 //    @Query("SELECT a FROM Attendance a WHERE (a.attendanceStatus = 'LATE' OR a.attendanceStatus = 'ABSENT') AND a.attDate BETWEEN :startDate AND :endDate")
 //    List<Attendance> customAttDate(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+//        //jpql    // 실행 성공1
+//    @Modifying
+//    @Query("SELECT a FROM Attendance a WHERE (a.attendanceStatus = 'LATE' 0R a.attendanceStatus = 'IN') AND a.attDate BETWEEN :startDate AND :endDate")
+//    List<Attendance> customAttDate(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
     //jpql      // 실행 성공2
     @Modifying
     @Query("SELECT a FROM Attendance a WHERE (a.attendanceStatus =:attStatus1 OR a.attendanceStatus =:attStatus2 ) AND a.attDate BETWEEN :startDate AND :endDate")
     List<Attendance> customAttDate(@Param("attStatus1") AttendanceStatus attStatus1, @Param("attStatus2") AttendanceStatus attStatus2, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    //jpql      // 오류
+//    @Query("SELECT a FROM Attendance a WHERE a.attDate =:date AND a.employeeNo =:Id")
+//    Attendance customEmployeeAndAttDate(@Param("date") LocalDate now, @Param("Id") Long employeeId);
 
     //추가 예시 msql
     // 해당 사원 , 설정한 출근상태 기준으로, 정해진 기간1 ~ 기간2 까지
@@ -108,19 +112,18 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
 
     Page<Attendance> findAllByEmployee(Pageable pageable, EmployeeEntity employee);
 
+    Boolean existsByAttDateAndEmployee(LocalDate date, EmployeeEntity emp);
+
+    boolean existsByAttDateAndStudent(LocalDate now, StudentEntity student);
+
     //nativeQuery
-    //nativeQuery = true
 //    @Modifying
 //    @Query(value = "SELECT * FROM attendance WHERE (attendance_status = :attStatus1 OR attendance_status = :attStatus2) AND att_date BETWEEN :attDate1 AND :attDate2")
 //    List<Attendance> customAttDate(@Param("attStatus1") String attStatus1, @Param("attStatus2") String attStatus2, @Param("attDate1") LocalDate date1, @Param("attDate2") LocalDate date2);
 
-
 //    쿼리메서드,네이티브,jpql, 쿼리dsl
-////    @Transactional
-
 
 //    select count(*) from Attendance where 출석=:1 and 날짜~ 비트윈 ~날짜
-
 //    countBy, existsBy
 //    Long countByAttDate(String AttDate);
 //    boolean existsByAttDate(String str);
@@ -132,13 +135,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
 //            FROM emp b
 //            WHERE b.sal between 500 and 1300
 //            AND b.deptno = a.deptno)
-
-
-
-
-
-
-
 
     // 박상재 - 추가
     @Query("SELECT COUNT(a) FROM Attendance a JOIN a.student st " +

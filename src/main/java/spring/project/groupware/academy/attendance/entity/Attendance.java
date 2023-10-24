@@ -8,6 +8,7 @@ import spring.project.groupware.academy.student.entity.StudentEntity;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Builder
@@ -22,12 +23,16 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime inAtt;
-    private LocalDateTime outAtt;
+    private LocalTime inAtt;
+    private LocalTime outAtt;
     private LocalDate attDate;
 
     @Enumerated(EnumType.STRING)
     private AttendanceStatus attendanceStatus;
+
+    private LocalDate start;
+    private LocalDate end;
+    private LocalDate applyDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_no")
@@ -43,11 +48,11 @@ public class Attendance {
 //    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 //    private List<Attendance> attends = new ArrayList<>();
 
-    public void changeInTime(LocalDateTime inAtt){
+    public void changeInTime(LocalTime inAtt){
         this.inAtt = inAtt;
     }
 
-    public void changeOutTime(LocalDateTime outAtt){
+    public void changeOutTime(LocalTime outAtt){
         this.outAtt = outAtt;
     }
 
@@ -74,6 +79,10 @@ public class Attendance {
         attendance.setAttDate(attendanceDto.getAttDate());
         attendance.setAttendanceStatus(attendanceDto.getAttendanceStatus());
         attendance.setEmployee(attendanceDto.getEmployee());
+//        attendance.setStudent(attendanceDto.getStudent());
+        attendance.setStart(attendanceDto.getStart());
+        attendance.setEnd(attendanceDto.getEnd());
+        attendance.setApplyDate(attendanceDto.getApplyDate());
         attendance.setInAtt(attendanceDto.getInAtt());
         attendance.setOutAtt(attendanceDto.getOutAtt());
         return attendance;
