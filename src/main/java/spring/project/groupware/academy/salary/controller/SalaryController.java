@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
+import spring.project.groupware.academy.employee.repository.EmployeeRepository;
 import spring.project.groupware.academy.salary.dto.SalaryDto;
+import spring.project.groupware.academy.salary.entity.Salary;
 import spring.project.groupware.academy.salary.repository.SalaryRepository;
 import spring.project.groupware.academy.salary.service.SalaryService;
+import spring.project.groupware.academy.student.repository.StudentRepository;
 
 import java.util.List;
 
+//@RestController
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/salary")
@@ -26,11 +30,10 @@ public class SalaryController {
 
     private final SalaryService salaryService;
     private final SalaryRepository salaryRepository;
+    private final EmployeeRepository employeeRepository;
+    private final StudentRepository studentRepository;
 
-    // 일반 급여 처리
-    // 추가 급여 처리
-
-    // 관리자가 사원들 급여 목록 확인 //나중에 paging 추가
+    // 관리자가 사원들 급여 목록 확인
     @GetMapping("/list")
     public String SalaryList(Model model) {
         List<SalaryDto> salaryDtoList = salaryService.salaryList();
@@ -42,34 +45,33 @@ public class SalaryController {
 
     //년,월, 급여차수or 상반기(1~6)하반기(7~12)
     //구분/성명/부서(수업)/지급총액/공제총액/실지급액
-    //해당 사원만 보이게 //나중에 paging 추가 고민
     @GetMapping("/detail/{id}")
-    public String detailSalary(@PathVariable("id") Long id,Model model) {
-        List<SalaryDto> salaryDtoList = salaryService.detailSalary(id);
+    public String detailSalary(@PathVariable("id") Long id, Model model) {
 
-        model.addAttribute("salaryDtoList",salaryDtoList);
+        SalaryDto salaryDto = salaryService.salaryDetail(id);
+
+        model.addAttribute("salaryDto", salaryDto);
         return "salary/salaryDetail";
     }
 
-    // 일반 list에서 페이지 추가
     @GetMapping("/page")
-//    @GetMapping("/page/{id}")
-    public String SalaryPageList(@PageableDefault(page = 0, size = 30, sort = "salaryDate",
+    public String SalaryPageListId(@PageableDefault(page = 0, size = 30, sort = "salaryDate",
             direction = Sort.Direction.ASC) Pageable pageable,
-                                 @AuthenticationPrincipal MyUserDetails myUserDetails,
-//                               @RequestParam(value = "id", required = false) Long id,
-                               @RequestParam(value = "subject", required = false) String subject,
-                               @RequestParam(value = "set", required = false) String set,
-                               @RequestParam(value = "first", required = false) String first,
-                               @RequestParam(value = "last", required = false) String last,
-                               Model model){
+                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
+//                               @RequestParam
+                                   @PathVariable(value = "id", required = false) Long id,
+                                   @RequestParam(value = "subject", required = false) String subject,
+                                   @RequestParam(value = "set", required = false) String set,
+                                   @RequestParam(value = "first", required = false) String first,
+                                   @RequestParam(value = "last", required = false) String last,
+                                   Model model) {
 
-        Long id = myUserDetails.getEmployeeEntity().getEmployeeNo();
+        if (id == null) {
+            id = myUserDetails.getEmployeeEntity().getEmployeeNo();
+        }
 
         Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, id, subject, set, first, last);
 
-//        Long totalCount = salaryDtoPage.getTotalElements();
-//        int pagesize = salaryDtoPage.getSize();
         int nowPage = salaryDtoPage.getNumber();
         int totalPage = salaryDtoPage.getTotalPages();
         int blockNum = 5;
@@ -92,4 +94,7 @@ public class SalaryController {
         return "salary/salaryPageList";
     }
 
+
+
 }
+

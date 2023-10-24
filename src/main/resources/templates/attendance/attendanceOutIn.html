@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>근태 처리 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/attendance/attendanceOutIn.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/attendance/attendanceOutIn.js}" defer="defer"></script>
+</head>
+<body>
+<div id="loadedContent">
+
+    <th:block sec:authorize="hasAnyRole('ADMIN')">
+        <div class="attendance-create0">
+            <h1> 급여 처리</h1>
+                    <button>
+                        <input type="button" value="급여처리" id="ToDaySalaryOkBtn">
+                    </button>
+        </div>
+    </th:block>
+
+
+    <th:block sec:authorize="hasAnyRole('ADMIN')">
+        <div class="attendance-create1">
+            <h1>출결 당일 생성</h1>
+                <!--                <li>-->
+                <!--                    <label th:for="today">today</label>-->
+                <!--                    <input type="date" th:value="${LocalDate.now()}" name="today" id="today">-->
+                <!--                </li>-->
+                    <button>
+                        <input type="button" value="출결당일생성" id="ToDayOkBtn">
+                    </button>
+        </div>
+    </th:block>
+
+
+    <th:block sec:authorize="hasAnyRole('ADMIN')">
+        <div class="attendance-create2">
+            <h1>기간 출결 생성</h1>
+            <ul>
+                <li>
+                    <label th:for="start">start</label>
+                    <input type="date" name="start" placeholder="start" id="start">
+                </li>
+                <li>
+                    <label th:for="end">end</label>
+                    <input type="date" name="end" placeholder="end" id="end">
+                </li>
+                <li>
+                    <button>
+                        <input type="button" value="출결생성" id="createOkBtn">
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </th:block>
+
+        <div class="attendance-inOut">
+            <h1>ATTENDANCE IN/OUT</h1>
+                <div class="in" id="in" >
+                    <button>
+                        <input type="button" value="출근" id="InOkBtn" >
+<!--                        <input type="button" value="출근" id="InOkBtn" style="display:block">-->
+                    </button>
+                </div>
+                <div class="out" id="out" >
+                    <button>
+                        <input type="button" value="퇴근" id="OutOkBtn" >
+<!--                        <input type="button" value="퇴근" id="OutOkBtn" style="display:block">-->
+                    </button>
+                </div>
+        </div>
+
+    <div class="attendance-vacation">
+        <h1>휴가 신청</h1>
+        <ul>
+            <li>
+                <label th:for="start2">start</label>
+                <input type="date" name="start2" placeholder="start2" id="start2">
+            </li>
+            <li>
+                <label th:for="end2">end</label>
+                <input type="date" name="end2" placeholder="end2" id="end2">
+            </li>
+            <li>
+                <button>
+                    <input type="button" value="휴가신청" id="vacationOkBtn">
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="attendance-sick">
+        <h1>병가신청</h1>
+        <ul>
+            <li>
+                <label th:for="start3">start</label>
+                <input type="date" name="start3" placeholder="start3" id="start3">
+            </li>
+            <li>
+                <label th:for="end3">end</label>
+                <input type="date" name="end3" placeholder="end3" id="end3">
+            </li>
+
+            <li>
+                <button>
+                    <input type="button" value="병가신청" id="sickOkBtn">
+                </button>
+            </li>
+        </ul>
+    </div>
+
+
+<!--    <div class="attendance-today" id="attToday">-->
+<!--        <div class="attendance-today-form">-->
+<!--            <h1>오늘 출결 현황</h1>-->
+<!--            <table>-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th colspan="6">출결 상황</th>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>출근</th>-->
+<!--                    <th>퇴근</th>-->
+<!--                    <th>휴가</th>-->
+<!--                    <th>병가</th>-->
+<!--                    <th>결석</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody class="tbody">-->
+
+<!--&lt;!&ndash;                &ndash;&gt;-->
+<!--&lt;!&ndash;                <tr >&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td >&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="">${el.attendaceStatus.IN}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td >&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="">${el.attendaceStatus.OUT}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td >&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="">${el.attendaceStatus.VACATION}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td >&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="">${el.attendaceStatus.SICK}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td >&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="">${el.attendaceStatus.ABSENT}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                &ndash;&gt;-->
+
+<!--                </tbody>-->
+<!--            </table>-->
+
+<!--        </div>-->
+
+
+    </div>
+</div>
+</body>
+</html>

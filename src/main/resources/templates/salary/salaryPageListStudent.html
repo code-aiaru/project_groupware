@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>급여 페이지 리스트</title>
-    <link rel="stylesheet" th:href="@{/css/salary/salaryPageList.css}">
+    <link rel="stylesheet" th:href="@{/css/salary/salaryPageListStudent.css}">
 <!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-<!--    <script th:src="@{/js/salary/salaryPageList.js}" defer="defer"></script>-->
+<!--    <script th:src="@{/js/salary/salaryPageListStudent.js}" defer="defer"></script>-->
 </head>
 <body>
 <div id="loadedContent">
@@ -76,14 +76,14 @@
                     <tbody>
                     <tr th:each="salaryDto :${salaryDtoPage}">
                         <td th:text="${salaryDto.id}"></td>
-                        <td th:text="${salaryDto.employee?.employeeName}"></td>
+                        <td th:text="${salaryDto.student?.studentName}"></td>
                         <!--                        <td th:text="${salaryDto.student?.studentName}"></td>-->
                         <td th:text="${salaryDto.baseSalary}"></td>
                         <!--                        <td th:text="${salaryDto.extraSalary}"></td>-->
                         <td th:text="${salaryDto.salaryDate}"></td>
                         <!--                        <td th:text="${#temporals.format(salaryDto.salaryDate, 'yy.MM.dd/HH:mm')}"></td>-->
                         <td>
-                            <a th:href="@{/salary/detail/{id}(id=${salaryDto.employee?.employeeNo})}" data-ajax>상세조회</a>
+                            <a th:href="@{/salary/detail/{id}(id=${salaryDto.student?.studentId})}" data-ajax>상세조회</a>
                         </td>
                     </tr>
                     </tbody>

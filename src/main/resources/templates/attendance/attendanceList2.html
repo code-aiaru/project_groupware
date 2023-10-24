@@ -14,6 +14,16 @@
     <div class="container">
         <div class="attendanceList">
             <div class="attendanceList-con">
+
+                <div class="status">
+                    <ul>
+                        <li>
+                        </li>
+                    </ul>
+
+                </div>
+
+
                 <div class="search">
                     <div class="search-con">
                         <form th:action="@{/attendance/list2}" method="get" class="search" data-ajax>
@@ -50,10 +60,9 @@
                             <!--            표현식설정-->
                             <!--                        <input type="text" name="first" id="first" th:value="${param.first}" placeholder="시작일">-->
                             <!--                        <input type="text" name="last" id="last" th:value="${param.last}" placeholder="끝일">-->
-
-                            <input type="date" name="first" id="first" th:value="${param.first}" placeholder="시작일">
+                            <input type="date" name="first" id="first" placeholder="시작일">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
-                            <input type="date" name="last" id="last" th:value="${param.last}" placeholder="끝일">
+                            <input type="date" name="last" id="last"  placeholder="끝일">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
                             <input type="submit" value="검색">
                         </form>
@@ -65,8 +74,6 @@
                     <thead>
                     <tr class="th1">
                         <th colspan="8">근태 페이징 리스트</th>
-                        <!--                    <br>-->
-                        <!--                    <th colspan="8"><a th:href="@{/attendance/list}">근태 일반 리스트</a></th>-->
                     </tr>
                     <tr class="th2">
                         <th> id</th>
@@ -75,30 +82,30 @@
                         <th> 출근시간</th>
                         <th> 퇴근시간</th>
                         <th> 출결상태</th>
-                        <!--                    <th>출근</th>-->
-                        <!--                    <th>퇴근</th>-->
+<!--                                            <th>출근</th>-->
+<!--                                            <th>퇴근</th>-->
                         <th>상세</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="attendance :${attPageList}">
                         <td th:text="${attendance.id}"></td>
-                        <td th:text="${attendance.employee?.employeeName}"></td>
+<!--                        <td th:text="${attendance.employee?.employeeName}"></td>-->
+                        <td th:if="${attendance.employee != null}" th:text="${attendance.employee?.employeeName}"></td>
+                        <td th:if="${attendance.student != null}" th:text="${attendance.student?.studentName}"></td>
                         <td th:text="${attendance.attDate}"></td>
                         <td th:text="${#temporals.format(attendance.inAtt, 'yy.MM.dd/HH:mm')}"></td>
                         <td th:text="${#temporals.format(attendance.outAtt, 'yy.MM.dd/HH:mm')}"></td>
                         <td th:text="${attendance.attendanceStatus}"></td>
-                        <!--            <td th:text="${#temporals.format(attendance, 'yy-MM-dd HH:mm')}"></td>-->
-                        <!--            <td th:text="${#temporals.format(attendance, 'yy-MM-dd HH:mm')}"></td>-->
-                        <!--            <a th:href="@{/attendance/in/{id}(id=${#authentication.principal.employee.id})}">출근</a>-->
-                        <!--            <a th:href="@{/attendance/out/{id}(id=${#authentication.principal.employee.id})}">퇴근</a>-->
+
                         <td>
                             <!--                <a th:href="@{/attendance/in/{id}(id=${#authentication.principal.employee.id})}">출근</a>-->
                             <!--                <a th:href="@{/attendance/out/{id}(id=${#authentication.principal.employee.id})}">퇴근</a>-->
                             <!--                <a th:href="@{/attendance/detail/{id}(id=${#authentication.principal.employee.id})}">상세</a>-->
-                            <a th:href="@{/attendance/in/{id}(id=${attendance.id})}">출근</a>
-                            <a th:href="@{/attendance/out/{id}(id=${attendance.id})}">퇴근</a>
-                            <a th:href="@{/attendance/detail/{id}(id=${attendance.id})}">상세(이번달)</a>
+                            <a th:href="@{/attendance/in/{id}(id=${attendance.id})}" data-ajax >출근</a>
+                            <a th:href="@{/attendance/out/{id}(id=${attendance.id})}" data-ajax >퇴근</a>
+                            <a th:href="@{/attendance/update/{id}(id=${attendance.id})}" data-ajax >수정</a>
+                            <a th:href="@{/attendance/detail/{id}(id=${attendance.id})}" data-ajax >상세(이번달)</a>
                             <!--                <a th:href="@{/attendance/vacation/{id}(id=${attendance.employee.employeeNo})}">휴가</a>-->
                         </td>
                     </tr>
