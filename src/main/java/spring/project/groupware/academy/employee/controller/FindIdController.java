@@ -18,12 +18,12 @@ public class FindIdController {
     private final EmployeeService employeeService;
 
     // 이메일과 휴대전화번호를 입력하는 폼 화면
-    @GetMapping("/api/posts/findId")
+    @GetMapping("/api/findId")
     public String getShowFindIdForm() {
         return "employee/findId";
     }
 
-    @PostMapping("/api/posts/findId")
+    @PostMapping("/api/findId")
     @ResponseBody
     public ResponseEntity<String> postFindIdByEmailAndPhone(
             @RequestParam String employeeEmail,

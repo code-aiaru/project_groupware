@@ -8,7 +8,7 @@ $(document).ready(function () {
 
             $.ajax({
               type: 'POST',
-              url: '/api/posts/student/join',
+              url: '/post/student/join',
               data: formData,
               success: function (response) {
                 console.log(response);

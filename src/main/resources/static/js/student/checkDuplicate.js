@@ -13,7 +13,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '/api/posts/employee/employeeEmail/check',
+            url: '/api/employee/employeeEmail/check',
             type: 'GET',
             contentType: 'application/json',
             data: {
@@ -45,7 +45,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '/api/posts/employee/employeePhone/check',
+            url: '/api/employee/employeePhone/check',
             type: 'GET',
             contentType: 'application/json',
             data: {

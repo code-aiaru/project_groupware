@@ -18,7 +18,7 @@
       <div class="title">
         <h1><span th:text="${employeeDto.employeeName}" ></span>님 정보 수정</h1>
       </div>
-      <form th:action="@{/api/posts/employee/update}" method="post" th:object="${employeeDto}">
+      <form th:action="@{/post/employee/update}" method="post" th:object="${employeeDto}">
         <ul>
           <li>
             사원번호 : <input type="text" name="employeeNo" th:value="${employeeDto.employeeNo}" id="employeeNo" readonly> <br>
@@ -160,7 +160,7 @@
 
     $.ajax({
       type: 'POST',
-      url: '/api/posts/employee/update',
+      url: '/post/employee/update',
       data: formData,
       success: function (response) {
         console.log(response);

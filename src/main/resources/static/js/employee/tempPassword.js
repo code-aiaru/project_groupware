@@ -8,7 +8,7 @@ $(document).ready(function() {
          // 서버로 이메일과 휴대전화번호 일치 여부를 확인 요청
          $.ajax({
              type: "GET",
-             url: "/api/posts/check-emailPhoneMatching",
+             url: "/api/check-emailPhoneMatching",
              data: {
                  employeeEmail: email,
                  employeePhone: phone
@@ -18,7 +18,7 @@ $(document).ready(function() {
                      // 이메일과 휴대전화번호가 모두 일치할 경우 임시비밀번호 발급 요청
                      $.ajax({
                          type: "POST",
-                         url: "/api/posts/send-mail/password",
+                         url: "/api/send-mail/password",
                          data: JSON.stringify({ email: email, phone: phone }),
                          contentType: "application/json; charset=utf-8",
                          dataType: "json",

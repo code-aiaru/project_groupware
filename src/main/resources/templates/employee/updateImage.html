@@ -27,7 +27,8 @@
                     <li>
                         <button type="submit" id="upload-button" disabled>적용</button>
                         <button type="button" onclick="javascript:history.back()">수정취소</button>
-                        <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" id="redirection" style="display: none" data-ajax></a>
+                        <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>상세보기</a>
+                        <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" id="redirection" data-ajax style="display: none;"></a>
                     </li>
                 </ul>
             </form>

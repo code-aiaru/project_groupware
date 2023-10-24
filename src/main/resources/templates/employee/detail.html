@@ -79,7 +79,7 @@
                         <span>입사일</span>
                         <span th:text="${#temporals.format(employee.createTime, 'yyyy-MM-dd')}"></span>
                     </li>
-                    <th:block th:if="${#authentication.principal.username==employee.employeeId or #authorization.expression('hasRole(''ADMIN'')')}">
+                    <th:block th:if="${#authentication.principal.username == employee.employeeId or #authorization.expression('hasRole(''ADMIN'')')}">
                         <li class="update">
                             <span>
                                 <div class="update">
@@ -90,10 +90,12 @@
                             </span>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyRole('ADMIN')">
+                    <th:block th:if="${#authentication.principal.username != employee.employeeId and #authorization.expression('hasRole(''ADMIN'')')}">
                         <li>
                             <a th:href="@{/employee/confirmPassword/delete/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>삭제</a>
                         </li>
+                    </th:block>
+                    <th:block sec:authorize="hasAnyRole('ADMIN')">
                         <li>
                             <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>사원목록</a>
                         </li>

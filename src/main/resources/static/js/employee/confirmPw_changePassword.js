@@ -23,7 +23,7 @@ $(function(){
         var employeeNo = $('#employeeNo').val();
 
         $.ajax({
-            url: '/api/posts/employee/checkCurrentPassword',
+            url: '/api/employee/checkCurrentPassword',
             method: 'POST',
             data: { employeeNo: employeeNo, currentPassword: currentPassword },
             success: function(response) {
@@ -66,7 +66,7 @@ $(function(){
 
         $.ajax({
           type: 'POST',
-          url: '/api/posts/employee/changePassword',
+          url: '/api/employee/changePassword',
           data: formData,
           success: function (response) {
             console.log(response);

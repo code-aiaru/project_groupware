@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class TempPasswordController {
 
-    @GetMapping("/api/posts/tempPassword")
+    @GetMapping("/api/tempPassword")
     public String getTempPassword() {
         return "employee/tempPassword"; // 닉네임과 휴대전화번호를 입력하는 폼 화면
     }

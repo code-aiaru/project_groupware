@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/posts/employee")
+@RequestMapping("/api/employee")
 @RequiredArgsConstructor
 public class CheckDuplicateController {
 

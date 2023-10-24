@@ -15,7 +15,7 @@ $(document).ready(function () {
             }
 
             $.ajax({
-                url: '/api/posts/employee/employeeId/check',
+                url: '/api/employee/employeeId/check',
                 type: 'GET',
                 contentType: 'application/json',
 //                headers: {
@@ -53,7 +53,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '/api/posts/employee/employeeEmail/check',
+            url: '/api/employee/employeeEmail/check',
             type: 'GET',
             contentType: 'application/json',
             data: {
@@ -85,7 +85,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '/api/posts/employee/employeePhone/check',
+            url: '/api/employee/employeePhone/check',
             type: 'GET',
             contentType: 'application/json',
             data: {
