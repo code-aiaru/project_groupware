@@ -24,6 +24,13 @@ public class Post {
     @Column(nullable = false)
     private String writer;
 
+    @Builder
+    public Post(String title, String content ,String pw ,String writer) {
+        this.title = title;
+        this.content = content;
+        this.pw = pw;
+        this.writer = writer;
+    }
 
 
 }
