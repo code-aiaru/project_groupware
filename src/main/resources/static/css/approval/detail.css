@@ -1,5 +1,14 @@
 @import url(/css/common/reset.css);
-
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+* {
+    font-family: Pretendard;
+    color: #373f4c;
+}
 
 .scriptBack{
     width: 100%;
@@ -16,4 +25,57 @@
     z-index: 999;
     display: none;
     justify-content: center;
+}
+
+
+.approval-con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 35px;
+}
+
+.approval-detail {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+table.approval-table {
+    /* width: 300px; */
+}
+tbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+}
+td.td-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+tr {
+    width: 400px;
+}
+td {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+td.th-last {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+th, td {
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+    padding: 8px 10px;
+    font-size: 14px;
+    box-sizing: border-box;
 }

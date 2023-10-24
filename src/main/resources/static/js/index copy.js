@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('popstate', function(event) {
         console.log('popstate event triggered', event.state);
         if (event.state && event.state.path) {
-            resetLoadedElements();
             loadContent(event.state.path, false, true);  // isPopstate를 true로 설정합니다.
 
         }
@@ -221,36 +220,32 @@ async function loadContent(url, initialLoad = false, isPopstate = false) {
             await loadLiStyle(style.textContent);
         }
         
-        // Load scripts without data-dom-ready first
-        const preDomScripts = doc.querySelectorAll('script:not([data-dom-ready])');
-        for (const script of preDomScripts) {
+        const loadedContent = doc.getElementById('loadedContent');
+        if (loadedContent) {
+            document.getElementById('contents').innerHTML = loadedContent.innerHTML;
+        }
+
+        const loadedTitle = doc.querySelector('meta[name="page-title"]');
+        if (loadedTitle) {
+            document.title = loadedTitle.getAttribute('title');
+        }
+
+        const loadedScripts = doc.querySelectorAll('script');
+        for (const script of loadedScripts) {
+            // if (script.hasAttribute('data-quickInitScript')) {
+            //     console.log('Quick Loading inline-script:', script.textContent);
+            //     await loadInlineScript(script.textContent);
+            // } else 
             if (script.src) {
                 console.log('Loading external-script:', script.src);
                 await loadScript(script.src);
             } else {
                 console.log('Loading inline-script:', script.textContent);
                 eval(script.textContent);
+                // await loadInlineScript(script.textContent);
             }
         }
 
-        const loadedContent = doc.getElementById('loadedContent');
-        if (loadedContent) {
-            document.getElementById('contents').innerHTML = loadedContent.innerHTML;
-        }
-
-        requestAnimationFrame(async () => {
-            // Load scripts with data-dom-ready attribute
-            const postDomScripts = doc.querySelectorAll('script[data-dom-ready]');
-            for (const script of postDomScripts) {
-                if (script.src) {
-                    console.log('Loading external-script (after frame):', script.src);
-                    await loadScript(script.src);
-                } else {
-                    console.log('Loading inline-script (after frame):', script.textContent);
-                    eval(script.textContent);
-                }
-            }
-        });
         
         // history 업데이트
         historyUpdate(url, initialLoad, isPopstate);

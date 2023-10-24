@@ -31,6 +31,9 @@
 
 
     <script defer>
+        
+    console.log('index.js 전역변수 참조.', window.globalClickedURL);  // index.js에서 선언된 전역 변수 참조
+
     function findAllPost() {
         // API 호출 및 데이터 렌더링 로직
         fetch('/api/posts')

@@ -22,10 +22,10 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     public BoardDto createBoard(BoardDto boardDto) {
-        BoardEntity createdBoard = new BoardEntity(boardDto.getTitle(), boardDto.getContent(),boardDto.getWriter(),boardDto.getBoardPw());
+        BoardEntity createdBoard = new BoardEntity(boardDto.getTitle(), boardDto.getContent(), boardDto.getWriter(), boardDto.getBoardPw());
         BoardEntity board = boardRepository.save(createdBoard);
 
-    return new BoardDto(board.getId(),board.getTitle(),board.getContent(),board.getWriter(), board.getBoardPw());
+        return new BoardDto(board.getId(), board.getTitle(), board.getContent(), board.getWriter(), board.getBoardPw());
     }
 
     public BoardDto getBoardById(Long id) {
@@ -47,7 +47,7 @@ public class BoardService {
         try {
             List<BoardEntity> boards = boardRepository.findAll();
             return boards.stream()
-                    .map(board -> new BoardDto(board.getId(),board.getTitle(), board.getWriter(), board.getBoardPw(),board.getContent()))
+                    .map(board -> new BoardDto(board.getId(), board.getTitle(), board.getWriter(), board.getBoardPw(), board.getContent()))
                     .collect(Collectors.toList());
         } catch (DataAccessException ex) {
             ex.printStackTrace();
@@ -113,6 +113,7 @@ public class BoardService {
 
         return boardPage.map(this::convertToDto);
     }
+
     private BoardDto convertToDto(BoardEntity boardEntity) {
         return BoardDto.builder()
                 .id(boardEntity.getId())
@@ -122,10 +123,6 @@ public class BoardService {
                 .boardPw(boardEntity.getBoardPw())
                 .build();
     }
-
-
-
-
 
 
 }
