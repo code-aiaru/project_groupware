@@ -2,6 +2,7 @@ package spring.project.groupware.academy.post.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.groupware.academy.post.dto.PostRequestDTO;
@@ -41,22 +42,24 @@ public class PostService {
                 .map(PostResponseDTO::new)
                 .collect(Collectors.toList());
     }
+
     @Transactional
-    public boolean deletePost(Long id) {
-        try {
-            Optional<Post> optionalPost = postRepository.findById(id);
-            if (optionalPost.isPresent()) {
-                postRepository.deleteById(id);
+    public boolean deletePost(Long id, String password) {
+
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            if (post.verifyPassword(password)) {
+                postRepository.delete(post);
                 return true;
             } else {
                 return false;
             }
-        } catch (DataAccessException ex) {
-            ex.printStackTrace();
-            return false;
-        }
 
+        }
+        return false;
     }
+
     @Transactional
     public boolean updatePost(Long id) {
         Optional<Post> optionalPost = postRepository.findById(id);
@@ -78,13 +81,13 @@ public class PostService {
 
 
     public boolean verifyPassword(Long id, String password) {
-      Optional<Post> optionalPost = postRepository.findById(id);
-      if (optionalPost.isPresent()){
-        optionalPost.get().getPw().toString().equals(password);
-          return true;
-      }else {
-          return false;
-      }
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            optionalPost.get().getPw().toString().equals(password);
+            return true;
+        } else {
+            return false;
+        }
 
     }
 }

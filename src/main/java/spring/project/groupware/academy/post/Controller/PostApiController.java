@@ -3,23 +3,28 @@ package spring.project.groupware.academy.post.Controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.project.groupware.academy.post.dto.NoticeRequestDTO;
 import spring.project.groupware.academy.post.dto.NoticeResponseDTO;
 import spring.project.groupware.academy.post.dto.PostRequestDTO;
 import spring.project.groupware.academy.post.dto.PostResponseDTO;
+import spring.project.groupware.academy.post.entity.Post;
+import spring.project.groupware.academy.post.repository.PostRepository;
 import spring.project.groupware.academy.post.service.NoticeService;
 import spring.project.groupware.academy.post.service.PostService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostApiController {
-
+    private final PostRepository postRepository;
     private final PostService postService;
     private final NoticeService noticeService;
 
@@ -41,20 +46,15 @@ public class PostApiController {
         return postService.findAllPost();
     }
 
-    @DeleteMapping("/{id}/postDelete")
-    private boolean deletePost(@PathVariable final Long id){
-        return postService.deletePost(id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id, @RequestParam String password) {
+        boolean isDeleted = postService.deletePost(id, password);
 
-    }
-
-
-    // 비밀번호 검증
-    @GetMapping("/{id}/verify-password")
-    public Map<String, Boolean> verifyPassword(@PathVariable Long id, @RequestParam(name = "password") String password) {
-        boolean valid = postService.verifyPassword(id, password);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("valid", valid);
-        return response;
+        if (isDeleted) {
+            return ResponseEntity.ok("게시물 삭제 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 일치하지 않습니다.");
+        }
     }
 
 
@@ -97,7 +97,6 @@ public class PostApiController {
         return noticeService.deleteNotice(id);
 
     }
-
 
 
 

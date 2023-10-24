@@ -23,13 +23,17 @@
         <!--/* 에디터 콘텐츠 렌더링 영역 */-->
         <div id="editorContent"></div>
 
-        <br>
-        <!-- 비밀번호 입력 컨테이너 -->
+
         <div id="passwordContainer">
-            <input type="password" id="passwordInput" placeholder="비밀번호를 입력하세요">
-            <button id="editButton">수정</button>
+            <form id="passwordForm">
+                <input type="password" id="passwordInput" placeholder="수정, 삭제 시 비밀번호 확인" autocomplete="new-password"data-ajax>
+                <button type="button" id="postDeleteButton" data-ajax>삭제</button>
+            </form>
         </div>
+
     </div>
+
+
 </div>
 
 

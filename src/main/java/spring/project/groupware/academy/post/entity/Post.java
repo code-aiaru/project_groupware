@@ -32,5 +32,8 @@ public class Post {
         this.writer = writer;
     }
 
+    public boolean verifyPassword(String Password) {
+        return getPw().equals(Password);
 
+    }
 }
