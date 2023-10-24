@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>학생정보 상세보기</title>
+    <link rel="stylesheet" th:href="@{/css/student/detail.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/student/detail.js}" data-dom-ready></script>
     <script th:src="@{/js/student/delete.js}" data-dom-ready></script>
@@ -18,7 +19,7 @@
                 <h1><span th:text="${student.studentName}" ></span>님 상세정보</h1>
             </div>
             <!-- 이미지 미리보기 영역 -->
-            <div id="image-preview"><img id="preview-image" th:src="${studentImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
+            <div id="image-preview" class="detail_image-preview"><img id="preview-image" th:src="${studentImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <span class="image_btn">
 <!--                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>-->
                 <a th:href="@{/student/updateImage/{studentId}(studentId=${student.studentId})}" data-ajax>프로필 이미지 수정</a>
@@ -62,7 +63,9 @@
                         <span>등록일</span>
                         <span th:text="${#temporals.format(student.createTime, 'yyyy-MM-dd')}"></span>
                     </li>
-                    <li class="update">
+
+                    <!-- 수정 (박상재) -->
+                    <!-- <li class="update">
                         <span>
                             <div class="update">
                                 <li>
@@ -77,7 +80,14 @@
                     <li>
                         <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>수강생목록</a>
                     </li>
-                    <a th:href="@{/student/studentList?page=0&subject=&search=}" id="redirection" data-ajax style="display: none;"></a>
+                    <a th:href="@{/student/studentList?page=0&subject=&search=}" id="redirection" data-ajax style="display: none;"></a> -->
+                    <div class="student-detail-submit_section">
+                        <a th:href="@{/student/update/{studentId}(studentId=${student.studentId})}" data-ajax>수정</a>
+                        <input type="button" id="deleteButton" th:value="삭제" th:data-student-id="${student.studentId}">
+                        <a th:href="@{/student/studentList?page=0&subject=&search=}" data-ajax>수강생목록</a>
+                        <a th:href="@{/student/studentList?page=0&subject=&search=}" id="redirection" data-ajax style="display: none;"></a>
+                    </div>
+                    <!-- 수정 끝 -->
                 </ul>
             </div>
         </div>

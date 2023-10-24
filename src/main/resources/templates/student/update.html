@@ -5,6 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <title>정보수정 페이지</title>
+  <link rel="stylesheet" th:href="@{/css/student/update.css}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!--다음 api 관련 js-->
   <script th:src="@{/js/student/addressApi.js}" data-dom-ready></script> <!--다음 api 관련 js-->
@@ -17,79 +18,92 @@
   <div class="nav">
     <div class="update-con">
       <div class="title">
-        <h1><span th:text="${studentDto.studentName}" ></span>님 정보 수정</h1>
+        <h1><span th:text="${studentDto.studentName}" ></span>님 정보수정</h1>
       </div>
       <form th:action="@{/post/student/update}" method="post" th:object="${studentDto}">
         <ul>
-          <li>
-            학생번호 : <input type="text" name="studentId" th:value="${studentDto.studentId}" id="studentId" readonly> <br>
-          </li>
-          <li>
-            <label th:for="studentName">이름</label>
-            <input type="text" th:field="*{studentName}" th:value="${studentDto.studentName}" required="required" placeholder="이름을 입력하세요"> <br>
-          </li>
-          <p th:if="${#fields.hasErrors('studentName')}" th:errors="*{studentName}" class="error"></p>
-          <li>
-            <label>성별</label>
-            <input type="radio" id="male" name="studentGender" value="남" required="required" th:checked="${studentDto.studentGender == '남'}">
-            <label for="male">남</label>
-
-            <input type="radio" id="female" name="studentGender" value="여" required="required" th:checked="${studentDto.studentGender == '여'}">
-            <label for="female">여</label>
-          </li>
-          <li>
-            <label for="studentClass">강의</label>
-            <select id="studentClass" name="studentClass" required="required" class="box">
-              <option value="백엔드" th:selected="${studentDto.studentClass == '백엔드'}">백엔드</option>
-              <option value="프론트엔드" th:selected="${studentDto.studentClass == '프론트엔드'}">프론트엔드</option>
-              <option value="포토샵" th:selected="${studentDto.studentClass == '포토샵'}">포토샵</option>
-            </select>
-          </li>
-          <li>
-            휴대전화번호 : <input type="text" name="studentPhone" th:value="${studentDto.studentPhone}" id="studentPhone" readonly> <br>
-          </li>
-          <li>
-            이메일 : <input type="email" name="studentEmail" th:value="${studentDto.studentEmail}" id="studentEmail" readonly> <br>
-          </li>
-          <li>
-            <label th:for="studentBirth">생년월일</label>
-            <input type="text" th:field="*{studentBirth}" th:value="${studentDto.studentBirth}" required="required" placeholder="생년월일을 입력하세요" onclick="toggleBirthDropdowns(); validateBirth(this);" readonly>
-            <!-- 오류 메시지를 표시할 영역 -->
-            <span id="birthErrorMessage" style="color: red;"></span> <br>
-          </li>
-          <p th:if="${#fields.hasErrors('studentBirth')}" th:errors="*{studentBirth}" class="error"></p>
-          <!-- 드롭다운 선택 영역 -->
-          <div id="birthDropdowns" style="display: none;">
-            <select th:field="*{birthYear}" required="required" onchange="updateBirthInput()">
-              <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
-            </select>
-            년
-            <select th:field="*{birthMonth}" required="required" onchange="updateBirthInput()">
-              <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
-            </select>
-            월
-            <select th:field="*{birthDay}" required="required" onchange="updateBirthInput()">
-              <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
-            </select>
-            일
-          </div>
-          <li>
-            <label th:for="studentPostCode">우편번호</label>
-            <input type="text" th:field="*{studentPostCode}" th:value="${studentDto.studentPostCode}" readonly>
-            <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
-          </li>
-          <p th:if="${#fields.hasErrors('studentPostCode')}" th:errors="*{studentPostCode}" class="error"></p>
-          <li>
-            <label th:for="studentStreetAddress">도로명주소</label>
-            <input type="text" th:field="*{studentStreetAddress}" th:value="${studentDto.studentStreetAddress}" placeholder="도로명주소를 입력하세요" readonly> <br>
-          </li>
-          <li>
-            <label th:for="studentDetailAddress">상세주소</label>
-            <input type="text" th:field="*{studentDetailAddress}" th:value="${studentDto.studentDetailAddress}" placeholder="상세주소를 입력하세요"> <br>
-          </li>
-          <button type="button" onclick="javascript:history.back()">수정취소</button>
-          <input type="submit" value="수정실행">
-          <a th:href="@{/student/detail/{studentId}(studentId=${studentDto.studentId})}" id="redirection" data-ajax style="display: none;"></a>
+            <li>
+                <span>학생번호</span> 
+                <input type="text" name="studentId" th:value="${studentDto.studentId}" id="studentId" readonly> 
+            </li>
+            <li>
+                <label th:for="studentName">이름</label>
+                <input type="text" th:field="*{studentName}" th:value="${studentDto.studentName}" required="required" placeholder="이름을 입력하세요"> 
+                <p th:if="${#fields.hasErrors('studentName')}" th:errors="*{studentName}" class="error"></p>
+            </li>
+            <li>
+                <div class="gender-and-class_section">
+                    <div>
+                        <label>성별</label>
+                        <div>
+                            <input type="radio" id="male" name="studentGender" value="남" required="required" th:checked="${studentDto.studentGender == '남'}">
+                            <label for="male">남</label>
+                            <input type="radio" id="female" name="studentGender" value="여" required="required" th:checked="${studentDto.studentGender == '여'}">
+                            <label for="female">여</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="studentClass">강의</label>
+                        <select id="studentClass" name="studentClass" required="required" class="box">
+                            <option value="백엔드" th:selected="${studentDto.studentClass == '백엔드'}">백엔드</option>
+                            <option value="프론트엔드" th:selected="${studentDto.studentClass == '프론트엔드'}">프론트엔드</option>
+                            <option value="포토샵" th:selected="${studentDto.studentClass == '포토샵'}">포토샵</option>
+                        </select>   
+                    </div>
+                </div>
+            </li>
+            <li>
+                <span>휴대전화번호</span> 
+                <input type="text" name="studentPhone" th:value="${studentDto.studentPhone}" id="studentPhone" readonly>
+            </li>
+            <li>
+                <span>이메일</span> 
+                <input type="email" name="studentEmail" th:value="${studentDto.studentEmail}" id="studentEmail" readonly>
+            </li>
+            <li>
+                <label th:for="studentBirth">생년월일</label>
+                <input type="text" th:field="*{studentBirth}" th:value="${studentDto.studentBirth}" required="required" placeholder="생년월일을 입력하세요" onclick="toggleBirthDropdowns(); validateBirth(this);" readonly>
+                <!-- 오류 메시지를 표시할 영역 -->
+                <span id="birthErrorMessage" style="color: red;"></span> 
+   
+                <p th:if="${#fields.hasErrors('studentBirth')}" th:errors="*{studentBirth}" class="error"></p>
+                <!-- 드롭다운 선택 영역 -->
+                <div id="birthDropdowns" style="display: none;">
+                    <select th:field="*{birthYear}" required="required" onchange="updateBirthInput()">
+                        <option th:each="year : ${birthYears}" th:value="${year}" th:text="${year}"></option>
+                    </select>
+                    년
+                    <select th:field="*{birthMonth}" required="required" onchange="updateBirthInput()">
+                        <option th:each="month : ${birthMonths}" th:value="${month}" th:text="${month}"></option>
+                    </select>
+                    월
+                    <select th:field="*{birthDay}" required="required" onchange="updateBirthInput()">
+                        <option th:each="day : ${birthDays}" th:value="${day}" th:text="${day}"></option>
+                    </select>
+                    일
+               </div>
+            </li>
+            <li>
+                <label th:for="studentPostCode">우편번호</label>
+                <input type="text" th:field="*{studentPostCode}" th:value="${studentDto.studentPostCode}" readonly>
+                <div class="postcode-btn_box">
+                    <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
+                </div>
+                <p th:if="${#fields.hasErrors('studentPostCode')}" th:errors="*{studentPostCode}" class="error"></p>
+            </li>
+            <li>
+                <label th:for="studentStreetAddress">도로명주소</label>
+                <input type="text" th:field="*{studentStreetAddress}" th:value="${studentDto.studentStreetAddress}" placeholder="도로명주소를 입력하세요" readonly> 
+            </li>
+            <li>
+                <label th:for="studentDetailAddress">상세주소</label>
+                <input type="text" th:field="*{studentDetailAddress}" th:value="${studentDto.studentDetailAddress}" placeholder="상세주소를 입력하세요"> 
+            </li>
+            <div class="student-info-update-btn_box">
+                <button type="button" onclick="javascript:history.back()">수정취소</button>
+                <input type="submit" value="수정실행">
+            </div>
+            <a th:href="@{/student/detail/{studentId}(studentId=${studentDto.studentId})}" id="redirection" data-ajax style="display: none;"></a>
         </ul>
       </form>
     </div>

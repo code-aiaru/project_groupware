@@ -1,19 +1,34 @@
 @import url(/css/common/reset.css);
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+* {
+    font-family: Pretendard;
+    font-size: 14px;
+    color: #373f4c;
+}
+
 .attendanceList{
   width:100%;
     display:flex;
     justify-content:center;
+    padding: 35px;
 }
 
 .attendanceList .attendanceList-con{
-  flex-basis: 1400px;
+  /* flex-basis: 1400px;
   min-height:500px;
     padding:20px;
-    box-sizing:border-box;
+    box-sizing:border-box; */
      /* background-color:#ebf9f8; */
-     display:flex;
+     /* display:flex;
      flex-direction:column;
-     justify-content:space-between;
+     justify-content:space-between; */
 }
 
 .attendanceList .attendanceList-con .search{
@@ -21,12 +36,16 @@
 }
 
 .attendanceList .attendanceList-con table{
-    width:100%;
+    width: 1000px;
+    height: auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    margin-bottom: 10px;
 }
 
 table, td ,th{
  border-collapse: collapse;
- border:1px solid #555555;
+ /* border:1px solid #555555; */
  text-align:center;
 }
 
@@ -38,8 +57,8 @@ table, td ,th{
 }
 
 .attendanceList .attendanceList-con table thead tr:nth-child(2) th{
-      background-color:#cda9f6;
-      color:#ffffff;
+      /* background-color:#cda9f6;
+      color:#ffffff; */
       padding:8px 0;
 }
 
@@ -47,27 +66,27 @@ table, td ,th{
       padding:5px 0;
 }
 
-.attendanceList .attendanceList-con .paging{
+/* .attendanceList .attendanceList-con .paging{
   padding:10px 0;
-  box-sizing:border-box;
+  box-sizing:border-box; */
      /* background-color:#ebf9f8; */
-          display:flex;
+          /* display:flex;
           justify-content:center;
 }
 .attendanceList .attendanceList-con .paging > ul{
-  flex-basis:400px;
+  flex-basis:400px; */
   /* background-color:#cee76b; */
-           display:flex;
+           /* display:flex;
            justify-content:space-between;
            gap:5px;
            padding:5px;
            box-sizing:border-box;
 }
 
-.attendanceList .attendanceList-con .paging > ul> li{
+.attendanceList .attendanceList-con .paging > ul> li{ */
  /* flex:1;*/
   /* background-color:#f2a5f6; */
-}
+/* }
 .attendanceList .attendanceList-con .paging > ul> li.block{
   flex:1;
 }
@@ -117,7 +136,7 @@ span.now{
   padding:0 10px;
   position:relative;
   cursor:pointer;
- }
+ } */
 
 /*span.now::after{
   width:auto;
@@ -134,4 +153,117 @@ span.now{
 
 span.now:hover::after{
   visibility:visible;
+}
+
+thead {
+    border-top: 3px solid #444444;
+}
+th.th1 {
+    width: 75px;
+}
+th.th3 {
+    width: 75px;
+}
+th.th4 {
+    width: 185px;
+}
+th.th5 {
+    width: 225px;
+}
+th, td {
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+td.td-title {
+    text-align: start;
+    padding: 0 5px;
+}
+
+
+
+
+
+
+
+
+
+/* paging */
+.paging{
+    display: flex;
+    justify-content: center;
+    padding: 30px 0 30px 0;
+}
+
+.paging >ul{
+    /* width: 220px; */
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.paging > ul > li {
+    text-align: center;
+}
+
+.paging >ul >li a {
+    margin: 0 0.3em;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 10px;
+    -moz-border-radius: 36px;
+    -webkit-border-radius: 36px;
+    border-radius: 36px;
+}
+
+.paging >ul >li .span0{
+    /* background:#c7cdda; */
+    color: #aaaaaa;
+    margin-right:.6em;
+    text-decoration:none;
+    font-size:14px;
+    /* font-style:italic; */
+
+    text-align:center;
+    padding: 5px 10px;
+    -moz-border-radius:36px;
+    -webkit-border-radius:36px;
+    border-radius:36px;
+}
+
+.paging >ul >li .now{
+    background: #2c3e50;
+    color:#FFF;
+    margin: 0 0.3em;
+    text-decoration:none;
+    font-size:14px;
+    /* font-style:italic; */
+
+    text-align:center;
+    padding: 5px 10px;
+    -moz-border-radius:36px;
+    -webkit-border-radius:36px;
+    border-radius:36px;
+}
+
+.paging >ul >li a:hover{
+    font-weight: bold;
+}
+
+
+.spanOff {
+    color: #aaaaaa;
+    margin: 0 0.3em;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 10px;
+}
+.spanOn {
+    margin: 0 0.3em;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 10px;
 }

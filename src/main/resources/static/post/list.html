@@ -3,63 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>리스트 페이지</title>
-    <style>
+    <link rel="stylesheet" href="/css/post/list.css">
+    <!-- <style>
         table { width: 800px; font-size: 14px; margin: auto; }
         table, td, th { border: 1px solid black; border-collapse: collapse; text-align: center; }
         td.left { text-align: left; }
-    </style>
+    </style> -->
 </head>
 <body>
 <div id="loadedContent">
-    <h2 style="text-align: center;">TOAST UI Editor 리스트 페이지</h2>
-    <table>
-        <colgroup>
-            <col style="width: 20%;" />
-            <col style="width: 80%;" />
-        </colgroup>
-        <thead>
-        <tr>
-            <th scope="col">번호</th>
-            <th scope="col">제목</th>
-        </tr>
-        </thead>
-        <!--/* 리스트 데이터 렌더링 영역 */-->
-        <tbody id="posts" data-ajax></tbody>
-    </table>
 
-    <a href="/post/write.html" data-ajax>게시물 작성</a>
-
-
+    <div class="post-list-wrapper">
+        <div class="title">
+            <!-- <h2 style="text-align: center;">TOAST UI Editor 리스트 페이지</h2> -->
+            <h2>TOAST UI Editor 리스트 페이지</h2>
+        </div>
+        <table>
+            <colgroup>
+                <col style="width: 20%;" />
+                <col style="width: 80%;" />
+            </colgroup>
+            <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+            </tr>
+            </thead>
+            <!--/* 리스트 데이터 렌더링 영역 */-->
+            <tbody id="posts" data-ajax></tbody>
+        </table>
+        <div class="post-list-write_btn">
+            <a href="/post/write.html" data-ajax>게시물 작성</a>
+        </div>
+            
+        
+    </div>
+    
     <script defer>
         
-    console.log('index.js 전역변수 참조.', window.globalClickedURL);  // index.js에서 선언된 전역 변수 참조
+        console.log('index.js 전역변수 참조.', window.globalClickedURL);  // index.js에서 선언된 전역 변수 참조
+    
+        function findAllPost() {
+            // API 호출 및 데이터 렌더링 로직
+            fetch('/api/posts')
+                .then(response => response.json())
+                .then(list => {
+                    if (list.length < 1) {
+                        document.querySelector('#posts').innerHTML = '<tr ><td colspan="2">검색된 결과가 없습니다.</td></tr>';
+                        return;
+                    }
+    
+                    let html = '';
+                    list.forEach((item, index) => {
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td class="left"><a href="/post/view.html?id=${item.id}" data-ajax>${item.title}</a></td>
+                            </tr>
+                        `;
+                    });
+    
+                    document.querySelector('#posts').innerHTML = html;
+                })
+                .catch(error => console.error(error));
+        }
+        findAllPost(); // 비동기 함수 호출
 
-    function findAllPost() {
-        // API 호출 및 데이터 렌더링 로직
-        fetch('/api/posts')
-            .then(response => response.json())
-            .then(list => {
-                if (list.length < 1) {
-                    document.querySelector('#posts').innerHTML = '<tr ><td colspan="2">검색된 결과가 없습니다.</td></tr>';
-                    return;
-                }
+    </script>
 
-                let html = '';
-                list.forEach((item, index) => {
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td class="left"><a href="/post/view.html?id=${item.id}" data-ajax>${item.title}</a></td>
-                        </tr>
-                    `;
-                });
-
-                document.querySelector('#posts').innerHTML = html;
-            })
-            .catch(error => console.error(error));
-    }
-    findAllPost(); // 비동기 함수 호출
-</script>
 </div>
 </body>
 </html>
