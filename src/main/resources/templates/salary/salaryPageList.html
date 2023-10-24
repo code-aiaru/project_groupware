@@ -95,7 +95,7 @@
                             <span th:if="${1==salaryDtoPageNo.pageable.pageNumber+1}" class="span0">처음</span>
                             <span th:unless="${1==salaryDtoPageNo.pageable.pageNumber+1}">
                                     <a th:href="@{/salary/page(page=0,set=${param.set} ,subject=${param.subject})}"
-                                       class="span1">처음</a>
+                                       class="span1" data-ajax>처음</a>
                                     </span>
                         </li>
 
@@ -104,7 +104,7 @@
                             <span th:if="${1==salaryDtoPageNo.pageable.pageNumber+1}" class="span0">이전</span>
                             <span th:unless="${1==salaryDtoPageNo.pageable.pageNumber+1}">
                                         <a th:href="@{/salary/page(page=${salaryDtoPageNo.pageable.pageNumber-1},set=${param.set} ,subject=${param.subject})}"
-                                           class="span1">이전</a>
+                                           class="span1" data-ajax>이전</a>
                                      </span>
                         </li>
 
@@ -115,7 +115,7 @@
 
                             <a th:unless="${i == salaryDtoPageNo.pageable.pageNumber+1}"
                                th:href="@{/salary/page(page=${i - 1},set=${param.set} ,subject=${param.subject})}"
-                               th:text="${i}"></a>
+                               th:text="${i}" data-ajax></a>
                         </li>
 
                         <li>
@@ -124,7 +124,7 @@
 
                             <span th:unless="${salaryDtoPageNo.totalPages == salaryDtoPageNo.pageable.pageNumber + 1}">
                             <a th:href="@{/salary/page(page=${salaryDtoPageNo.pageable.pageNumber + 1},set=${param.set} ,subject=${param.subject} )}"
-                               class="span1">다음</a>
+                               class="span1" data-ajax>다음</a>
                         </span>
                         </li>
 
@@ -135,7 +135,7 @@
 
                             <span th:unless="${salaryDtoPageNo.totalPages == salaryDtoPageNo.pageable.pageNumber+1}">
                             <a th:href="@{/salary/page(page=${salaryDtoPageNo.totalPages}-1,set=${param.set} ,subject=${param.subject})}"
-                               class="span1">끝</a>
+                               class="span1" data-ajax>끝</a>
                         </span>
                         </li>
                     </ul>

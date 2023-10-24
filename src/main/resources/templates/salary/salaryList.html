@@ -38,7 +38,7 @@
                         <!--        <td th:text="${salaryDto.extraSalary}"></td>-->
                         <td th:text="${salaryDto.salaryDate}"></td>
                         <td>
-                            <a th:href="@{/salary/page/{id}(id=${salaryDto.employee?.employeeNo})}" data-ajax>상세조회</a>
+                            <a th:href="@{/salary/detail/{id}(id=${salaryDto.employee?.employeeNo})}" data-ajax>상세조회</a>
                         </td>
                     </tr>
                     </tbody>

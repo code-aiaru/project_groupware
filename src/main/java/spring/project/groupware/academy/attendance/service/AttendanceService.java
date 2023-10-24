@@ -30,7 +30,6 @@ public class AttendanceService{
     private final EmployeeRepository employeeRepository;
     private final StudentRepository studentRepository;
 
-
     // 기본 당일 모든 사원 출결목록 "결석"상태로 생성
     // 휴일, 토, 일, 공휴일 , 병가,휴가 제외  추가하기
     @Transactional
@@ -112,7 +111,7 @@ public class AttendanceService{
         if (day==0) day=1;      // 당일 생성
 
         for (EmployeeEntity emp : employeeRepository.findAll()) {
-            for (int i = 0; i < day; i++) {
+            for (int i = 0; i <=day; i++) {
                 LocalDate date = start.plusDays(i); // 반복문 일자
                 // 이미 존재하는 출결 사원 건너뜀(병가,휴가 등)
                 if (attendanceRepository.existsByAttDateAndEmployee(date,emp)) continue;
@@ -132,7 +131,7 @@ public class AttendanceService{
         }
 
         for (StudentEntity student : studentRepository.findAll()) {
-            for (int i = 0; i < day; i++) {
+            for (int i = 0; i <=day; i++) {
                 LocalDate date = start.plusDays(i); // 반복문 일자
                 // 이미 존재하는 출결 사원 건너뜀(병가,휴가 등)
                 if (attendanceRepository.existsByAttDateAndStudent(date,student)) continue;
@@ -165,7 +164,6 @@ public class AttendanceService{
                 attendance.changeInTime(LocalTime.now());
                 attendance.changeAttStatus(AttendanceStatus.LATE);
             }
-
             attendanceRepository.save(attendance);
 
         } else {
@@ -252,13 +250,8 @@ public class AttendanceService{
 
         int day = end.getDayOfYear()-start.getDayOfYear();
 
-        for (int i=0;i<day;i++) {
+        for (int i=0;i<=day;i++) {
             LocalDate date = start.plusDays(i);
-//            LocalDate vacationDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.VACATION, employee, date).orElseThrow(() -> new EntityNotFoundException("근태관리 테이블에 해당하는 데이터가 없음")).getAttDate();
-//            LocalDate sickDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.SICK, employee, date).orElseThrow(() -> new EntityNotFoundException("근태관리 테이블에 해당하는 데이터가 없음")).getAttDate();
-//            if (date == vacationDate || date == sickDate) {
-//                continue;
-//            } else {
             if (date.getDayOfWeek()==DayOfWeek.SATURDAY || date.getDayOfWeek()==DayOfWeek.SUNDAY){
                 continue;
             }else {
@@ -288,12 +281,9 @@ public class AttendanceService{
         EmployeeEntity employee = employeeRepository.findById(empId)
                 .orElseThrow(()->new EntityNotFoundException("사원정보가 없음!"));
 
-//        LocalDate vacationDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.VACATION, employee,LocalDate.now());
-//        LocalDate sickDate = attendanceRepository.findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus.SICK, employee,LocalDate.now());
-
         int day = end.getDayOfYear()-start.getDayOfYear();
 
-        for (int i=0;i<day;i++) {
+        for (int i=0;i<=day;i++) {
             LocalDate date = start.plusDays(i);
             if (date.getDayOfWeek()==DayOfWeek.SATURDAY || date.getDayOfWeek()==DayOfWeek.SUNDAY){
                 continue;
@@ -397,7 +387,8 @@ public class AttendanceService{
 
     public List<AttendanceDto> attendanceList() {
         List<AttendanceDto> attendanceDtoList = new ArrayList<>();
-        List<Attendance> attendanceList = attendanceRepository.customAttDate(AttendanceStatus.LATE, AttendanceStatus.ABSENT, LocalDate.of(2023,9,25), LocalDate.of(2023,10,01));
+        // 이번달 조회
+        List<Attendance> attendanceList = attendanceRepository.findByAttDateBetween(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().lengthOfMonth()));
 
         for (Attendance attendance : attendanceList){
             AttendanceDto attendanceDto = AttendanceDto.toAttendanceDto(attendance);

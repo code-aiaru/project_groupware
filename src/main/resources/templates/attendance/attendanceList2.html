@@ -15,21 +15,13 @@
         <div class="attendanceList">
             <div class="attendanceList-con">
 
-                <div class="status">
-                    <ul>
-                        <li>
-                        </li>
-                    </ul>
-
-                </div>
-
-
                 <div class="search">
                     <div class="search-con">
                         <form th:action="@{/attendance/list2}" method="get" class="search" data-ajax>
                             <select name="subject" id="subject" th:value="${param.subject}">
                                 <option value="ALL">전체</option>
                                 <option value="IN">출근</option>
+                                <option value="LATE">지각</option>
                                 <option value="OUT">퇴근</option>
                                 <option value="OUTING">외출</option>
                                 <option value="ABSENT">결석</option>
@@ -117,8 +109,8 @@
                         <li>
                             <span th:if="${1==attPageNo.pageable.pageNumber+1}" class="span0">처음</span>
                             <span th:unless="${1==attPageNo.pageable.pageNumber+1}">
-                                    <a th:href="@{/attendance/list2(page=0,set=${param.set} ,subject=${param.subject})}"
-                                       class="span1">처음</a>
+                                    <a th:href="@{/attendance/list2(page=0,set=${param.set}, set=${param.set} ,subject=${param.subject})}"
+                                       class="span1" data-ajax>처음</a>
                                     </span>
                         </li>
 
@@ -127,7 +119,7 @@
                             <span th:if="${1==attPageNo.pageable.pageNumber+1}" class="span0">이전</span>
                             <span th:unless="${1==attPageNo.pageable.pageNumber+1}">
                                         <a th:href="@{/attendance/list2(page=${attPageNo.pageable.pageNumber-1},set=${param.set} ,subject=${param.subject})}"
-                                           class="span1">이전</a>
+                                           class="span1" data-ajax>이전</a>
                                      </span>
                         </li>
 
@@ -138,7 +130,7 @@
 
                             <a th:unless="${i == attPageNo.pageable.pageNumber+1}"
                                th:href="@{/attendance/list2(page=${i - 1},set=${param.set} ,subject=${param.subject})}"
-                               th:text="${i}"></a>
+                               th:text="${i}" data-ajax></a>
                         </li>
 
                         <li>
@@ -147,7 +139,7 @@
 
                             <span th:unless="${attPageNo.totalPages == attPageNo.pageable.pageNumber + 1}">
                             <a th:href="@{/attendance/list2(page=${attPageNo.pageable.pageNumber + 1},set=${param.set} ,subject=${param.subject} )}"
-                               class="span1">다음</a>
+                               class="span1" data-ajax>다음</a>
                         </span>
                         </li>
 
@@ -158,7 +150,7 @@
 
                             <span th:unless="${attPageNo.totalPages == attPageNo.pageable.pageNumber+1}">
                             <a th:href="@{/attendance/list2(page=${attPageNo.totalPages}-1,set=${param.set} ,subject=${param.subject})}"
-                               class="span1">끝</a>
+                               class="span1" data-ajax>끝</a>
                         </span>
                         </li>
                     </ul>

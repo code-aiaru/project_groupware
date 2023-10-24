@@ -62,10 +62,11 @@ public class SalaryService {
     }
 
     public Page<SalaryDto> salaryPagingList(Pageable pageable, Long id, String subject, String set, String first, String last) {
+//public Page<SalaryDto> salaryPagingList(Pageable pageable, String subject, String set, String first, String last) {
+        if (id == null) return null;
 
         Page<Salary> salarys = null;
 
-        if (id == null) return null;
         if (subject == null)
             subject = "0";
 //            subject="";
@@ -189,7 +190,7 @@ public class SalaryService {
 
             // 저번달 급여 지급 있는지 확인
 //            List<Salary> salaryList = salaryRepository.findByEmployeeAndSalaryDateBetween(emp, LocalDate.of(year,month,1), LocalDate.of(year,month, LocalDate.of(year,month,1).lengthOfMonth()));
-
+            // 저번달 급여 지급 있는지 확인
             List<Attendance> attendancesList1 = attendanceRepository.findByEmployeeAndAttDateBetween(emp, LocalDate.of(year,month,1), LocalDate.of(year,month, LocalDate.of(year,month,1).lengthOfMonth()));
             if (attendancesList1.isEmpty()){
 //                    continue;
@@ -202,7 +203,8 @@ public class SalaryService {
                     LocalTime outAtt = attendance.getOutAtt();
 
                     if (inAtt != null && outAtt != null) {
-                        int workTime = (int) (ChronoUnit.MINUTES.between(outAtt, inAtt)/60);
+//                        int workTime = (int) (ChronoUnit.MINUTES.between(outAtt, inAtt)/60);
+                        int workTime = (int) (ChronoUnit.HOURS.between(outAtt, inAtt));
                         dayPay = dayPay + (workTime * hourPay);
                     }else{
 //                            continue;

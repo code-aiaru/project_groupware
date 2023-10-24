@@ -77,9 +77,7 @@ public class AttendanceController {
                                @RequestParam(value = "last", required = false) String last,
                                Model model){
 
-
-
-        Page<AttendanceDto> attPageList = attendanceService.attendancePagingList1(pageable, subject, set,first, last);
+        Page<AttendanceDto> attPageList = attendanceService.attendancePagingList1(pageable, subject, set, first, last);
 
         int nowPage = attPageList.getNumber();
         int totalPage = attPageList.getTotalPages();

@@ -6,11 +6,14 @@
     <meta charset="UTF-8">
     <title>급여 상세</title>
     <link rel="stylesheet" th:href="@{/css/salary/salaryDetail.css}">
-    <!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-    <!--    <script th:src="@{/js/salary/salaryDetail.js}" defer="defer"></script>-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script th:src="@{/js/salary/salaryDetail.js}" defer="defer"></script>
 </head>
 <body>
 <div id="loadedContent">
+    <div class="container">
+        <div class="salaryList">
+            <div class="salaryList-con">
     <table>
         <thead>
         <tr class="th1">
@@ -23,7 +26,7 @@
             <th> 기본급</th>
             <!--        <th> 추가급</th>-->
             <th> 지급일</th>
-            <th> 상세</th>
+<!--            <th> 상세</th>-->
         </tr>
         </thead>
         <tbody>
@@ -35,12 +38,15 @@
             <td th:text="${salaryDto.baseSalary}"></td>
             <!--        <td th:text="${salaryDto.extraSalary}"></td>-->
             <td th:text="${salaryDto.salaryDate}"></td>
-            <td>
-                <a th:href="@{/salary/page/{id}(id=${salaryDto.employee?.employeeNo})}" data-ajax>지급일 변경(임시)</a>
-            </td>
+<!--            <td>-->
+<!--                <a th:href="@{/salary/page/{id}(id=${salaryDto.employee?.employeeNo})}" data-ajax>지급일 변경(임시)</a>-->
+<!--            </td>-->
         </tr>
         </tbody>
     </table>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

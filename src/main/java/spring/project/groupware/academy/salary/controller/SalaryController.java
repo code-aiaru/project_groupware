@@ -71,6 +71,7 @@ public class SalaryController {
         }
 
         Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, id, subject, set, first, last);
+//        Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, subject, set, first, last);
 
         int nowPage = salaryDtoPage.getNumber();
         int totalPage = salaryDtoPage.getTotalPages();
@@ -87,8 +88,6 @@ public class SalaryController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("salaryDtoPageNo", salaryDtoPage);
-
-
         model.addAttribute("salaryDtoPage", salaryDtoPage);
 
         return "salary/salaryPageList";
