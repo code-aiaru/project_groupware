@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('popstate', function(event) {
         console.log('popstate event triggered', event.state);
         if (event.state && event.state.path) {
+            resetLoadedElements();
             loadContent(event.state.path, false, true);  // isPopstate를 true로 설정합니다.
 
         }
