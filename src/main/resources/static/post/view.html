@@ -12,48 +12,24 @@
     <script src="/js/post/view.js" data-dom-ready></script>
 </head>
 <body>
-    <div id="loadedContent">
-        <h2 style="text-align: center;">TOAST UI Editor 상세 페이지</h2>
-    
-        <div id="container">
-            <!--/* 에디터 콘텐츠 렌더링 영역 */-->
-            <div id="editorContent">
-    
-            </div>
-        </div>
-    
-        <!-- <script>
-    
-            console.log('index.js 전역변수 참조.', window.globalClickedURL);  // index.js에서 선언된 전역 변수 참조
-    
-            // window.onload = async () => {
-            //     findPost();
-            // }
-    
-            const url = new URL(window.globalClickedURL);
-            const id = url.searchParams.get('id');
-    
-            console.log(idValue); // id 파라미터의 값을 출력합니다.
-    
-    
-            // 게시글 상세정보 조회
-            async function findPost() {
-    
-                // 1. URL 쿼리 스트링에서 게시글 번호 조회
-                // const searchParams = new URLSearchParams(location.search);
-                // const postId = Number(searchParams.get('id'));
-    
-                // 2. API 호출
-                const url = `/api/posts/${id}`;
-                const response = await fetch(url);
-                const post = await response.json();
-    
-                // 3. 에디터 콘텐츠 렌더링
-                document.querySelector('#editorContent').innerHTML = post.content;
-            }
-    
-        </script> -->
+<div id="loadedContent">
+    <h2 style="text-align: center;">상세 페이지</h2>
 
+    <div>
+        <div id="postTitle" style="font-size: 24px; font-weight: bold;"></div>
+        <div id "postWriter" style="font-size: 16px;"></div>
+</div>
+
+<div id="container">
+    <!--/* 에디터 콘텐츠 렌더링 영역 */-->
+    <div id="editorContent"></div>
+
+    <!-- 비밀번호 입력 컨테이너 -->
+    <div id="passwordContainer">
+        <input type="password" id="passwordInput" placeholder="비밀번호를 입력하세요">
+        <button id="passwordSubmit">확인</button>
     </div>
+</div>
+</div>
 </body>
 </html>
