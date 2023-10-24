@@ -142,7 +142,8 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
 
     // 박상재 - 추가
     @Query("SELECT COUNT(a) FROM Attendance a JOIN a.student st " +
-            "WHERE a.attendanceStatus = :status AND st.studentClass = :class")
+            "WHERE a.attendanceStatus = :status AND st.studentClass = :class " +
+            "AND a.attDate = CURRENT_DATE")
     Long countAttendanceByStudentClass(@Param("status") AttendanceStatus attendanceStatus,
                                        @Param("class") String studentClass);
 }

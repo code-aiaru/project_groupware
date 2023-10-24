@@ -26,7 +26,7 @@ function initializeScript() {
         eventLongPressDelay         : 0,
         selectLongPressDelay        : 0,  
         fixedWeekCount              : false,
-        // aspectRatio                 : 3,
+        // aspectRatio                 : 10,
         // handleWindowResize          : false,
         // showNonCurrentDates: false
 

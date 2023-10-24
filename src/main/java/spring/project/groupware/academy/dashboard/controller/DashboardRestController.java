@@ -43,7 +43,7 @@ public class DashboardRestController {
     public Map<String, Object> getAttendanceData(@RequestParam String className) {
         log.info("return response : AttendanceData");
 
-        Map<AttendanceStatus, Long> attendanceCounts = dashboardService.getAttendanceCountsByClass(className);
+        Map<AttendanceStatus, Long> attendanceCounts = dashboardService.getAttendanceCountsByClassForToday(className);
 
         Map<String, Object> response = new HashMap<>();
         for (Map.Entry<AttendanceStatus, Long> entry : attendanceCounts.entrySet()) {

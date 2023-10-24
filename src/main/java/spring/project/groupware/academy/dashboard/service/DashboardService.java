@@ -35,16 +35,13 @@ public class DashboardService {
 
     // 반려된 결재 수 받아오는 메서드
     public Long getApprovedApprovalsCountForUser(EmployeeEntity employeeEntity) {
-        LocalDate currentDate = LocalDate.now(); // Java 8의 java.time.LocalDate 사용
         return approvalRepository.countByApprovedApprovalAndEmployeeEntity("승인", employeeEntity);
     }
 
 
 
-    // 출결현황
-    //     IN,OUT,LATE,SICK,VACATION,OUTING,ABSENT
-
-    public Map<AttendanceStatus, Long> getAttendanceCountsByClass(String className) {
+    // 오늘의 출결현황
+    public Map<AttendanceStatus, Long> getAttendanceCountsByClassForToday(String className) {
         Map<AttendanceStatus, Long> resultMap = new HashMap<>();
 
         for (AttendanceStatus status : AttendanceStatus.values()) {

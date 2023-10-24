@@ -22,20 +22,27 @@
 
     <script>
 
-        window.onload = async () => {
-            findPost();
-        }
+        console.log('index.js 전역변수 참조.', window.globalClickedURL);  // index.js에서 선언된 전역 변수 참조
+
+        // window.onload = async () => {
+        //     findPost();
+        // }
+
+        const url = new URL(window.globalClickedURL);
+        const id = url.searchParams.get('id');
+
+        console.log(idValue); // id 파라미터의 값을 출력합니다.
 
 
         // 게시글 상세정보 조회
         async function findPost() {
 
             // 1. URL 쿼리 스트링에서 게시글 번호 조회
-            const searchParams = new URLSearchParams(location.search);
-            const postId = Number(searchParams.get('id'));
+            // const searchParams = new URLSearchParams(location.search);
+            // const postId = Number(searchParams.get('id'));
 
             // 2. API 호출
-            const url = `/api/posts/${postId}`;
+            const url = `/api/posts/${id}`;
             const response = await fetch(url);
             const post = await response.json();
 
