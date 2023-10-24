@@ -1,6 +1,7 @@
 package spring.project.groupware.academy.post.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.groupware.academy.post.dto.PostRequestDTO;
@@ -9,6 +10,7 @@ import spring.project.groupware.academy.post.entity.Post;
 import spring.project.groupware.academy.post.repository.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,4 +42,38 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    public boolean deletePost(Long id) {
+        try {
+            Optional<Post> optionalPost = postRepository.findById(id);
+            if (optionalPost.isPresent()) {
+                postRepository.deleteById(id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public boolean updatePost(Long id, PostResponseDTO postResponseDTO) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            post.setTitle(postResponseDTO.getTitle());
+            post.setContent(postResponseDTO.getContent());
+
+            Post updatePost = postRepository.save(post);
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
+
 }
+

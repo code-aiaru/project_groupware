@@ -1,14 +1,13 @@
 package spring.project.groupware.academy.post.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 
 @Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Post {
@@ -25,12 +24,6 @@ public class Post {
     @Column(nullable = false)
     private String writer;
 
-    @Builder
-    public Post(String title, String content ,String pw ,String writer) {
-        this.title = title;
-        this.content = content;
-        this.pw = pw;
-        this.writer = writer;
-    }
+
 
 }
