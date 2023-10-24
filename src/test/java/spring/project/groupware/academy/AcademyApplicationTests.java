@@ -12,6 +12,7 @@ import spring.project.groupware.academy.employee.constraint.Role;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
 import spring.project.groupware.academy.employee.repository.EmployeeRepository;
+import spring.project.groupware.academy.salary.repository.SalaryRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ class AcademyApplicationTests {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
+//	@Autowired
+//	private EmployeeRepository employeeRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -189,6 +193,11 @@ class AcademyApplicationTests {
 							.attendanceStatus(status)
 							.build());
 		}
+	}
+
+	@Test
+	void employee2() {
+
 
 	}
 
