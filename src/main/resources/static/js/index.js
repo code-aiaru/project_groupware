@@ -1,5 +1,17 @@
+window.globalClickedURL; // 전역 변수 선언
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
+    document.body.addEventListener('click', function(e) {
+        if (e.target.matches('a[data-passoveredUrl]')) {
+            e.preventDefault();
+            window.globalClickedURL = e.target.href;
+            console.log('Clicked URL:', window.globalClickedURL);
+        }
+    });
+
+    
     if (previousURL != null && previousURL !== "" ) {
         console.log("새로고침 로딩");
         loadContent(previousURL, true)
