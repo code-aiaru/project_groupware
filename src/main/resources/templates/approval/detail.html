@@ -30,13 +30,16 @@
                         <td><span>상태 | </span><span th:text="${approval.ApprovalStatus}"></span></td>
                     </tr>
                     <tr>
-                        <td><span>결제자 | </span></br>
-                            <th:block th:each="approvalUser: ${approvalUserList}">
-                                <span th:text="|${approvalUser.employeeEntity.employeeName} - ${approvalUser.employeeEntity.employeeDep} - ${approvalUser.employeeEntity.employeePosition}|"></span>
-                                <span th:if="${approvalUser.Ap == 0}">결재</span>
-                                <span th:if="${approvalUser.Ap == 1}">참조</span>
-                                </br>
-                            </th:block>
+                        <td><span>결재선 | </span>
+                            <div class="aUser">
+                                <th:block th:each="approvalUser: ${approvalUserList}">
+                                    <div>
+                                        <span th:text="|${approvalUser.employeeEntity.employeeName} - ${approvalUser.employeeEntity.employeeDep} - ${approvalUser.employeeEntity.employeePosition}|"></span>
+                                        <span th:if="${approvalUser.Ap == 0}">결재</span>
+                                        <span th:if="${approvalUser.Ap == 1}">참조</span>
+                                    </div>
+                                </th:block>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -44,12 +47,20 @@
                     </tr>
                     <tr>
                         <td class="th-last">
-                            <th:block
-                                    th:if="${#authentication.principal.employeeEntity.equals(approval.employeeEntity)}">
-                                <a th:href="@{/approval/delete/{id}(id=${approval.id})}" data-ajax>삭제</a>
-                                <a th:href="@{/approval/update/{id}(id=${approval.id})}" data-ajax>수정</a>
-                            </th:block>
-                            <button id="goBackButton">목록</button>
+                            <ul>
+                                <th:block
+                                        th:if="${#authentication.principal.employeeEntity.equals(approval.employeeEntity)}">
+                                    <li>
+                                        <a th:href="@{/approval/delete/{id}(id=${approval.id})}" data-ajax>삭제</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/approval/update/{id}(id=${approval.id})}" data-ajax>수정</a>
+                                    </li>
+                                </th:block>
+                                <li>
+                                    <button id="goBackButton">목록</button>
+                                </li>
+                            </ul>
                         </td>
                     </tr>
                 </table>
@@ -58,11 +69,15 @@
                 <div class="approval-Answer">
                     <div class="approval-divide">
                         <hr class="divide">
-                        <th:block th:each="approvalUserList : ${approvalUserList}">
-                            <button type="button" th:if="${#authentication.principal.employeeEntity.equals(approvalUserList.employeeEntity)
-                                                            and approvalUserList.Ap == 0}"
-                                    id="approvalAnswerBtn">결재
-                            </button>
+                        <th:block th:each="approvalUserList : ${approvalUserList}" th:if="${#authentication.principal.employeeEntity.equals(approvalUserList.employeeEntity)
+                                                            and approvalUserList.Ap == 0}">
+                            <ul>
+                                <li>
+                                    <button type="button"
+                                            id="approvalAnswerBtn">결재
+                                    </button>
+                                </li>
+                            </ul>
                         </th:block>
                     </div>
                     <div class="approval-Result">
@@ -73,16 +88,23 @@
                                 </tr>
                                 <tr>
                                     <td class="td-content"><textarea name="ApprovalAnswer" style=" resize: none;"
-                                                                     cols="30" rows="3"
+                                                                     cols="45" rows="3"
                                                                      placeholder="결제 의견"></textarea>
                                 </tr>
-                                <td>
-                                    <tr>
-                                <td class="td-submit">
-                                    <input type="submit" name="ApprovalStatus" value="승인">
-                                    <input type="submit" name="ApprovalStatus" value="거부">
-                                    <button type="button" id="XBtn">취소</button>
-                                </td>
+                                <tr>
+                                    <td class="td-submit">
+                                        <ul>
+                                            <li>
+                                                <input type="submit" name="ApprovalStatus" value="승인">
+                                            </li>
+                                            <li>
+                                                <input type="submit" name="ApprovalStatus" value="거부">
+                                            </li>
+                                            <li>
+                                                <button type="button" id="XBtn">취소</button>
+                                            </li>
+                                        </ul>
+                                    </td>
                                 </tr>
                             </table>
                         </form>
@@ -93,9 +115,11 @@
                 <div class="approval-Answer">
                     <div class="approval-divide">
                         <hr class="divide">
+                        <table>
                         <tr>
                             <td class="td-Answer"><span th:text="${approval.ApprovalAnswer}"></span></td>
                         </tr>
+                        </table>
                     </div>
                 </div>
             </th:block>

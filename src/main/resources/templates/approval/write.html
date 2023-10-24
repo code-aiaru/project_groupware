@@ -7,8 +7,8 @@
     <link rel="stylesheet" th:href="@{/css/approval/write.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/js/approval/approvalSearch.js" data-dom-ready></script>
-    <script src="/js/approval/approvalUser.js"></script>
-    <script src="/js/approval/approvalForm.js"></script>
+    <script src="/js/approval/approvalUser.js" data-dom-ready></script>
+    <script src="/js/approval/approvalForm.js" data-dom-ready></script>
 </head>
 <body>
 <div class="approvalWrite_root" id="loadedContent">
@@ -33,7 +33,8 @@
                                 <input type="text" name="nameSearch" id="nameSearch" class="inputSearch">
                                 <div class="searchBox">
                                     <ul>
-                                        <li th:each="employee: ${employeePage}" th:unless="${employee.employeeNo == #authentication.principal.employeeEntity.employeeNo}">
+                                        <li th:each="employee: ${employeePage}"
+                                            th:unless="${employee.employeeNo == #authentication.principal.employeeEntity.employeeNo}">
                                                 <span class="userAddBtn"
                                                       name="employeeNo"
                                                       th:value="${employee.employeeNo}"
@@ -56,9 +57,16 @@
                         <tr>
                             <th scope="row" class="th-last"></th>
                             <td class="td-last">
-                                <input type="submit" value="상신">
-                                <a th:href="@{/approval/list/create}" data-ajax>목록</a>
-                                <a href="/approval/list/create" id="redirection" data-ajax style="display: none;"></a>
+                                <ul>
+                                    <li>
+                                        <input type="submit" value="상신">
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/approval/list/create}" data-ajax>목록</a>
+                                        <a href="/approval/list/create" id="redirection" data-ajax
+                                           style="display: none;"></a>
+                                    </li>
+                                </ul>
                             </td>
                         </tr>
                     </table>

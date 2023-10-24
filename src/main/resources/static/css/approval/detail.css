@@ -41,9 +41,7 @@
     justify-content: center;
     align-items: center;
 }
-table.approval-table {
-    /* width: 300px; */
-}
+
 tbody {
     display: flex;
     flex-direction: column;
@@ -65,7 +63,7 @@ td {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    
 }
 td.th-last {
     display: flex;
@@ -78,4 +76,92 @@ th, td {
     padding: 8px 10px;
     font-size: 14px;
     box-sizing: border-box;
+}
+
+td .aUser div {
+    display: flex;
+    justify-content: right;
+}
+td .aUser div > span{
+    padding: 5px;
+}
+
+.td-content {
+    height: 100px;
+    overflow: auto;
+}
+
+.th-last > ul {
+    display: flex;
+}
+.th-last > ul > li {
+    padding: 7px 12px;
+    background-color: #2c3e50;
+    box-sizing: border-box;
+}
+.th-last > ul > li:hover {
+    filter: brightness(1.2);
+}
+.th-last > ul > li > a {
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+}
+.th-last > ul > li > button {
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+}
+
+.approval-divide > ul {
+    display: flex;
+    padding: 8px 10px;
+}
+.approval-divide > ul > li {
+    padding: 7px 12px;
+    background-color: #2c3e50;
+    box-sizing: border-box;
+}
+.approval-divide > ul > li:hover {
+    filter: brightness(1.2);
+}
+.approval-divide > ul > li > a {
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+}
+.approval-divide > ul > li > button {
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+}
+.td-submit {
+    justify-content: right;
+}
+
+.td-submit > ul {
+    display: flex;
+}
+.td-submit > ul > li {
+    padding: 7px 12px;
+    background-color: #2c3e50;
+    box-sizing: border-box;
+}
+.td-submit > ul > li:hover {
+    filter: brightness(1.2);
+}
+.td-submit > ul > li > input {
+    border: none;
+    background-color: #2c3e50;
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+}
+.td-submit > ul > li > button {
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+}
+.td-Answer {
+    height: 100px;
 }

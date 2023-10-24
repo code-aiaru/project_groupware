@@ -1,5 +1,14 @@
 @import url(/css/common/reset.css);
-
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+* {
+    font-family: Pretendard;
+    color: #373f4c;
+}
 
 table {
     position: relative;
@@ -15,4 +24,43 @@ td .searchBox{
     overflow-y: scroll;
     border: 1px solid;
     background-color: #cccccc;
+}
+
+
+.approval-title {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.approval-write {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.td-last > ul {
+    display: flex;
+    justify-content: right;
+}
+.td-last > ul > li {
+    padding: 7px 12px;
+    background-color: #2c3e50;
+    box-sizing: border-box;
+}
+.td-last > ul > li:hover {
+    filter: brightness(1.2);
+}
+.td-last > ul > li > a {
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+}
+.td-last > ul > li > input {
+    border: none;
+    background-color: #2c3e50;
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
 }

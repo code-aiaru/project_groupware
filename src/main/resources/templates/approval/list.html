@@ -50,7 +50,7 @@
                 </table>
             </div>
         </div>
-
+        </th:block>
         <div class="approval-menu">
             <div class="menu">
                 <ul>
@@ -58,7 +58,7 @@
                 </ul>
             </div>
         </div>
-
+        <th:block th:if="${not #lists.isEmpty(approvalList)}">
         <div class="approval-paging-con">
             <div class="paging">
                 <ul>
