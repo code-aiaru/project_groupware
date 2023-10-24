@@ -1,0 +1,64 @@
+@import url(/css/common/reset.css);
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+* {
+    font-family: Pretendard;
+    font-size: 14px;
+    color: #373f4c;
+}
+
+.post-write-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+}
+.post-write-wrapper .title {
+    width: 1000px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.post-write-wrapper h2 {
+    font-size: 32px;
+}
+.post-write-section {
+    width: 1000px;
+    height: auto;
+    margin-bottom: 10px;
+    border-top: 3px solid #444444;
+}
+.post-write-info_section{
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 0 0 10px 10px;
+}
+.post-write-info_section > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-bottom: 15px;
+}
+.post-write-info_section > div > label{
+    margin-bottom: 5px;
+}
+.post-write-info_section > div > input{
+    height: 30px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #aaaaaa;
+    width: 100%;
+    box-sizing: border-box;
+}
+#content {
+    margin-top: 30px;
+}
