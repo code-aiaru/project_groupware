@@ -10,6 +10,9 @@
     color: #373f4c;
 }
 
+.active {
+    filter: brightness(1.2);
+}
 
 .approval-con {
     display: flex;
@@ -38,7 +41,7 @@
     display: flex;
 }
 .menu > ul > li {
-    padding: 5px 10px;
+    padding: 7px 12px;
     background-color: #2c3e50;
     box-sizing: border-box;
 }
@@ -47,12 +50,15 @@
 }
 .menu > ul > li > a {
     color: #ffffff;
+    font-size: 12px;
+    display: flex;
 }
 .approval-list-con > table {
     width: 1000px;
     height: auto;
     border-collapse: collapse;
     background-color: #ffffff;
+    margin-bottom: 10px;
 }
 thead {
     border-top: 3px solid #444444;
@@ -73,6 +79,7 @@ th, td {
     text-align: center;
     border-bottom: 1px solid #dddddd;
     padding: 8px 10px;
+    font-size: 14px;
 }
 td.td-title {
     text-align: start;
@@ -94,7 +101,7 @@ td.td-title {
 }
 
 .paging >ul{
-    width: 220px;
+    /* width: 220px; */
     display: flex;
     /* justify-content: space-between; */
 }
@@ -104,11 +111,9 @@ td.td-title {
 }
 
 .paging >ul >li a {
-    /* background: #0A2647; */
-    margin-right: 0.6em;
+    margin: 0 0.3em;
     text-decoration: none;
     font-size: 14px;
-    /* font-style: italic; */
     text-align: center;
     padding: 5px 10px;
     -moz-border-radius: 36px;
@@ -134,7 +139,7 @@ td.td-title {
 .paging >ul >li .now{
     background: #2c3e50;
     color:#FFF;
-    margin-right:.6em;
+    margin: 0 0.3em;
     text-decoration:none;
     font-size:14px;
     /* font-style:italic; */
@@ -147,21 +152,22 @@ td.td-title {
 }
 
 .paging >ul >li a:hover{
-    background:#BB2525;
-    color:#FFF;
-    margin-right:.6em;
-    text-decoration:none;
-    font-size:14px;
-    font-style:italic;
-    line-height:0;
-    text-align:center;
-    padding: 5px 10px;
-    -moz-border-radius:36px;
-    -webkit-border-radius:36px;
-    border-radius:36px;
+    font-weight: bold;
 }
 
 
 span.spanOff {
-    margin: 0 5px;
+    color: #aaaaaa;
+    margin: 0 0.3em;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 10px;
+}
+a.spanOn {
+    margin: 0 0.3em;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 10px;
 }
