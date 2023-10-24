@@ -87,8 +87,8 @@ public class NaverApiController {
 		con.disconnect();
 		//*/
 		//System.out.println(responseData); JSON 형식 문자열데이터
-		ObjectMapper mapper=new ObjectMapper();
-		NaverTokenDTO dto=mapper.readValue(responseJSONData, NaverTokenDTO.class);
+		ObjectMapper mapper=new ObjectMapper(); // JSON데이터를 java객체로 변환
+		NaverTokenDTO dto=mapper.readValue(responseJSONData, NaverTokenDTO.class); // responseJSONData문자열을 NaverTokenDTO클래스 형식으로 매핑 
 		System.out.println(dto+"  <<< 토큰 갱신 ");
 		//NaverTokenDTO(access_token= ,
 		// refresh_token=,
@@ -96,7 +96,7 @@ public class NaverApiController {
 		// token_type=Bearer,
 		// expires_in=86400)
 		// 전송 데이터 return
-		OrgResponse orgResponse=getOrgUnit(dto);
+		OrgResponse orgResponse=getOrgUnit(dto); // getOrgUnit 메서드 호출, dto 사용해서 조직정보 가져오고 orgResponse객체에 저장 
 		//getOrgUnit(responseJSONData);
 		//System.out.println(">>>:"+responseJSONData);
 		System.out.println("====================");
