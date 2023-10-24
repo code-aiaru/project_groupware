@@ -7,8 +7,9 @@
   <title>정보수정 페이지</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!--다음 api 관련 js-->
-  <script th:src="@{/js/student/addressApi.js}" defer="defer"></script> <!--다음 api 관련 js-->
-  <script th:src="@{/js/student/update_birth.js}" defer="defer"></script>
+  <script th:src="@{/js/student/addressApi.js}" data-dom-ready></script> <!--다음 api 관련 js-->
+  <script th:src="@{/js/student/update_birth.js}" data-dom-ready></script>
+  <script th:src="@{/js/student/update.js}" data-dom-ready></script>
 </head>
 <body>
 <div id="loadedContent">
@@ -95,42 +96,20 @@
   </div>
 </div>
 </div>
-<script>
-  // 생년월일 유효성 검사 함수
-  function validateBirth() {
-      var birth = document.getElementById('studentBirth').textContent;
+<!--<script>-->
+<!--  // 생년월일 유효성 검사 함수-->
+<!--  function validateBirth() {-->
+<!--      var birth = document.getElementById('studentBirth').textContent;-->
 
-      if (!/^[0-9]{8}$/.test(birth)) {
-          document.getElementById('birthErrorMessage').textContent = "올바른 형식으로 입력해주세요 (8자리 숫자)";
-      } else {
-          document.getElementById('birthErrorMessage').textContent = "";
-      }
-  }
-  // 페이지 로드 시 유효성 검사 수행
-  window.onload = validateBirth;
-
-  $('form').submit(function (event) {
-    event.preventDefault(); // 기본 제출 방지
-
-    var formData = $(this).serialize();
-
-    $.ajax({
-      type: 'POST',
-      url: '/post/student/update',
-      data: formData,
-      success: function (response) {
-        console.log(response);
-
-        const redirection = document.getElementById('redirection');
-        redirection.click();
-      },
-      error: function (error) {
-        console.error("Error:", error);
-      }
-    });
-  });
-
-</script>
+<!--      if (!/^[0-9]{8}$/.test(birth)) {-->
+<!--          document.getElementById('birthErrorMessage').textContent = "올바른 형식으로 입력해주세요 (8자리 숫자)";-->
+<!--      } else {-->
+<!--          document.getElementById('birthErrorMessage').textContent = "";-->
+<!--      }-->
+<!--  }-->
+<!--  // 페이지 로드 시 유효성 검사 수행-->
+<!--  window.onload = validateBirth;-->
+<!--</script>-->
 </body>
 </html>
 
