@@ -25,12 +25,14 @@
       <div class="pagingList-table">
         <h1>인사 조회</h1>
         <div class="search">
-          <a th:href="@{/employee/join}" data-ajax><span>사원추가</span></a>
-          <!-- 모달 창 토글 버튼 -->
-<!--          <th:block sec:authorize="hasAnyRole('ADMIN')">-->
-<!--            <button id="openModalBtn">사원 추가</button>-->
-<!--          </th:block>-->
-          <a th:href="@{/index}"><span>홈</span></a>
+            <div>
+                <a th:href="@{/employee/join}" data-ajax><span>사원추가</span></a>
+                <!-- 모달 창 토글 버튼 -->
+      <!--          <th:block sec:authorize="hasAnyRole('ADMIN')">-->
+      <!--            <button id="openModalBtn">사원 추가</button>-->
+      <!--          </th:block>-->
+                <a th:href="@{/index}"><span>홈</span></a>
+            </div>
           <form th:action="@{/employee/employeeList}" method="get">
             <select name="subject" id="subject">
               <option value="employeeName">이름</option>
@@ -42,7 +44,8 @@
             <input type="submit" value="검색">
           </form>
         </div>
-      <table style="width:800px;" align="center" border="1";>
+      <!-- <table style="width:800px;" align="center" border="1";> -->
+      <table>
         <thead>
         <tr>
           <th colspan="8">
