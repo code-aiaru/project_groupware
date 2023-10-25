@@ -2,6 +2,7 @@ package spring.project.groupware.academy.dashboard.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import spring.project.groupware.academy.attendance.entity.AttendanceStatus;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
 import spring.project.groupware.academy.dashboard.service.DashboardService;
+import spring.project.groupware.academy.post.entity.Notice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,4 +55,16 @@ public class DashboardRestController {
         return response;
     }
 
+    @GetMapping("/notice")
+    public Map<String, Object> getNoticeData() {
+        log.info("return response : NoticeData");
+
+        Page<Notice> lastFiveArticlesFromNotice = dashboardService.getLastFiveArticlesFromNotice();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("lastFiveArticlesFromNotice", lastFiveArticlesFromNotice);
+
+
+        return response;
+    }
 }

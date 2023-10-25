@@ -1,6 +1,8 @@
 package spring.project.groupware.academy.dashboard.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import spring.project.groupware.academy.approval.dto.ApprovalDto;
 import spring.project.groupware.academy.approval.entity.ApprovalEntity;
@@ -8,7 +10,8 @@ import spring.project.groupware.academy.approval.repositroy.ApprovalRepository;
 import spring.project.groupware.academy.attendance.entity.AttendanceStatus;
 import spring.project.groupware.academy.attendance.repository.AttendanceRepository;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
-import spring.project.groupware.academy.student.entity.StudentEntity;
+import spring.project.groupware.academy.post.entity.Notice;
+import spring.project.groupware.academy.post.repository.NoticeRepository;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -22,6 +25,7 @@ public class DashboardService {
 
     private final ApprovalRepository approvalRepository;
     private final AttendanceRepository attendanceRepository;
+    private final NoticeRepository noticeRepository;
 
     // 대기 중인 결재 수 받아오는 메서드
     public Long getPendingApprovalsCountForUser(EmployeeEntity employeeEntity) {
@@ -52,7 +56,9 @@ public class DashboardService {
         return resultMap;
     }
 
-
-
+    // 최근 공지 5개 받아오는 메서드
+    public Page<Notice> getLastFiveArticlesFromNotice() {
+        return noticeRepository.findAllByOrderByIdDesc(PageRequest.of(0, 5));
+    }
 }
 

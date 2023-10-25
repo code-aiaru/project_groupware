@@ -5,8 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <title>인사조회 페이지</title>
-  <link rel="stylesheet" th:href="@{/css/employee/employeeList.css}">
-  <link rel="stylesheet" th:href="@{/css/employee/modal.css}">
+  <link rel="stylesheet" th:href="@{/css/employee/simpleEmployeeList.css}">
+<!--  <link rel="stylesheet" th:href="@{/css/employee/modal.css}">-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script th:src="@{/js/employee/modal.js}" data-dom-ready></script>
 </head>
@@ -18,6 +18,9 @@
       <div class="pagingList-table">
         <h1>인사 조회</h1>
         <div class="search">
+          <div>
+            <a th:href="@{/dashboard}" data-ajax><span>홈</span></a>
+          </div>
           <form th:action="@{/employee/simpleEmployeeList}" method="get">
             <select name="subject" id="subject">
               <option value="employeeName">이름</option>

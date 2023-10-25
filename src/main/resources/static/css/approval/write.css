@@ -10,6 +10,11 @@
     color: #373f4c;
 }
 
+h1{
+    width: 1000px;
+    font-size: 32px;
+}
+
 .td-ap{
     position: relative;
     z-index: 998;
@@ -26,25 +31,6 @@
     border: 1px solid;
     background-color: #cccccc;
 }
-
-.parent{
-    width: 100%;
-    display: grid;
-    justify-content: space-between;
-    grid-template-columns: repeat(16, 55px);
-    text-align: center;
-    align-items: center;
-}
-
-.parent span{
-    grid-column: 1/12;
-    text-align: left;
-}
-
-.parent label{
-    text-align: right;
-}
-
 
 
 .approval-con {
@@ -65,9 +51,11 @@
     align-items: center;
 }
 
+
 .td-last > ul {
     display: flex;
-    justify-content: right;
+    border-radius: 5px;
+    overflow: hidden;
 }
 .td-last > ul > li {
     padding: 7px 12px;
@@ -98,23 +86,23 @@
     margin-bottom: 10px;
     border-top: 3px solid #444444;
     position: relative;
-    z-index: 998;
+    /* z-index: 998; */
 }
 .approval-info-section{
     background-color: #ffffff;
     padding: 40px;
     border-radius: 0 0 10px 10px;
 }
-.approval-info-section > div {
+.approval-info-section div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-bottom: 15px;
 }
-.approval-info-section > div > label{
+.approval-info-section div > label{
     margin-bottom: 5px;
 }
-.approval-info-section > div > input{
+.approval-info-section div > input{
     height: 30px;
     padding: 5px 10px;
     border-radius: 5px;
@@ -122,11 +110,42 @@
     width: 100%;
     box-sizing: border-box;
 }
-.approval-info-section > div > textarea{
+.approval-info-section div > textarea{
     height: 150px;
     padding: 5px 10px;
     border-radius: 5px;
     border: 1px solid #aaaaaa;
     width: 100%;
     box-sizing: border-box;
+}
+
+.approval-info-section .td-last {
+    flex-direction: unset;
+    justify-content: right;
+}
+
+
+.approval-info-section div #ApprovalUserData .parent{
+    width: 100%;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: repeat(16, 55px);
+    text-align: center;
+    align-items: center;
+    margin: 3px;
+}
+
+.approval-info-section div #ApprovalUserData .parent span{
+    grid-column: 1/12;
+    text-align: left;
+}
+
+.approval-info-section div #ApprovalUserData .parent label{
+    text-align: right;
+    margin-bottom: 0px;
+}
+
+.approval-info-section div #ApprovalUserData .parent input{
+    text-align: right;
+    height: 10px;
 }

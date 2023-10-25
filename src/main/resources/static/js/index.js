@@ -187,7 +187,7 @@ let isAsyncUrlRequest = false;
 async function loadContent(url, initialLoad = false, isPopstate = false) {
     
     if (isLoadingContent) {
-        console.log('Content is loading, ignoring new request');
+        console.log('콘텐츠 로딩 중. 새로운 요청을 무시합니다.');
         return;
     }
 
@@ -221,7 +221,7 @@ async function loadContent(url, initialLoad = false, isPopstate = false) {
             await loadLiStyle(style.textContent);
         }
         
-        // Load scripts without data-dom-ready first
+        // 일반 스크립트 로드
         const preDomScripts = doc.querySelectorAll('script:not([data-dom-ready])');
         for (const script of preDomScripts) {
             if (script.src) {
@@ -233,13 +233,20 @@ async function loadContent(url, initialLoad = false, isPopstate = false) {
             }
         }
 
+        // html 로드
         const loadedContent = doc.getElementById('loadedContent');
         if (loadedContent) {
             document.getElementById('contents').innerHTML = loadedContent.innerHTML;
         }
 
+        // 내부 html의 (meta 태그로 지정한) title을 출력하도록 로드
+        const loadedTitle = doc.querySelector('meta[name="page-title"]');
+        if (loadedTitle) {
+            document.title = loadedTitle.getAttribute('title');
+        }
+
         requestAnimationFrame(async () => {
-            // Load scripts with data-dom-ready attribute
+            // Dom 요소 렌더링 후 로드 되어야하는 스크립트 로드
             const postDomScripts = doc.querySelectorAll('script[data-dom-ready]');
             for (const script of postDomScripts) {
                 if (script.src) {

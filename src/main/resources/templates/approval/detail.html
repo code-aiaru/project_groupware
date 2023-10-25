@@ -7,6 +7,8 @@
     <title>결재 문서 상세조회</title>
     <link rel="stylesheet" th:href="@{/css/approval/detail.css}">
     <script src="/js/approval/approvalAnswer.js" data-dom-ready></script>
+    <script src="/js/approval/approvalAp.js" data-dom-ready></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js" data-dom-ready></script>
 </head>
 <body>
 <div class="approvalDetail_root" id="loadedContent">
@@ -81,28 +83,32 @@
                         </th:block>
                     </div>
                     <div class="approval-Result">
-                        <form th:action="@{/post/approval/ap}" method="post" th:object="${approvalDto}">
+                        <form th:action="@{/post/approval/ap}" method="post" th:object="${approvalDto}" id="approvalAp">
                             <table class="approval-table">
                                 <tr>
                                     <input type="hidden" readonly name="id" th:value="${approval.Id}"><br>
                                 </tr>
                                 <tr>
                                     <td class="td-content"><textarea name="ApprovalAnswer" style=" resize: none;"
-                                                                     cols="45" rows="3"
-                                                                     placeholder="결제 의견"></textarea>
+                                                                     cols="120" rows="3"
+                                                                     placeholder="결재 의견"></textarea>
                                 </tr>
                                 <tr>
                                     <td class="td-submit">
                                         <ul>
+                                            <input type="hidden" name="ApprovalStatus" id="approvalStatus" value="">
                                             <li>
-                                                <input type="submit" name="ApprovalStatus" value="승인">
+                                                <input type="button" value="승인" onclick="setApproval('승인')">
                                             </li>
                                             <li>
-                                                <input type="submit" name="ApprovalStatus" value="거부">
+                                                <input type="button" value="거부" onclick="setApproval('거부')">
                                             </li>
                                             <li>
                                                 <button type="button" id="XBtn">취소</button>
                                             </li>
+                                            <input type="submit" value="제출"  style="display: none;">
+                                            <a href="/approval/list/read" id="redirection" data-ajax
+                                               style="display: none;"></a>
                                         </ul>
                                     </td>
                                 </tr>

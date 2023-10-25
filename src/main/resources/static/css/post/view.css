@@ -20,18 +20,18 @@
     align-items: center;
     padding: 35px;
 }
-.post-view-wrapper .title {
-    width: 1000px;
+.post-view-wrapper > .title {
+    width: 800px;
     display: flex;
     justify-content: start;
     align-items: center;
     margin-bottom: 40px;
 }
-.post-view-wrapper h2 {
+.post-view-wrapper > title > h2 {
     font-size: 32px;
 }
 .post-view-section {
-    width: 1000px;
+    width: 800px;
     height: auto;
     margin-bottom: 10px;
     border-top: 3px solid #444444;
@@ -40,20 +40,47 @@
     padding: 40px;
     box-sizing: border-box;
 }
-.post-view-section > div:nth-of-type(1) {
-    padding-bottom: 40px;
-    margin-bottom: 40px;
+.post-view-section > #container {
+    width: 680px;
+}
+.post-view-section > #container > div {
+    width: 100%;
+}
+.post-view-section > #container > div > div {
+    width: 100%;
+    margin-bottom: 10px;
+    /* font-size: 18px; */
+}
+.post-view-section > #container > div > div:nth-of-type(1) {
+    display: flex;
+    justify-self: start;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+.post-view-section > #container > div > div:nth-of-type(2) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.post-view-section > div > div:nth-of-type(1) {
+    padding-bottom: 20px;
+    /* margin-bottom: 20px; */
     border-bottom: 1px solid #dddddd;
+}
+.post-view-section > div:nth-of-type(2) {
+    margin: 25px;
 }
 #content {
     margin-top: 30px;
 }
-#passwordContainer {
+.post-view-button-section {
+    margin-top: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 }
-#passwordContainer > input{
+.post-view-button-section > input{
     height: 30px;
     padding: 5px 10px;
     border-radius: 5px;
@@ -61,7 +88,7 @@
     width: 100%;
     box-sizing: border-box;
 }
-#passwordContainer > button {
+.post-view-button-section > button {
     height: 30px;
     margin-left: 3px;
     padding: 5px 20px;
@@ -75,4 +102,9 @@
     align-items: center;
     text-wrap: nowrap;
     cursor: pointer;
+}
+.post-view-button-section > form > input[type=password] {
+    height: 29px;
+    box-sizing: border-box;
+    padding: 4px 6px;
 }

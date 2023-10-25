@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="page-title" title="자유게시판">
     <title>리스트 페이지</title>
     <link rel="stylesheet" href="/css/post/list.css">
-    <!-- <style>
+    <style>
         table { width: 800px; font-size: 14px; margin: auto; }
         table, td, th { border: 1px solid black; border-collapse: collapse; text-align: center; }
         td.left { text-align: left; }
-    </style> -->
+    </style>
+    <script src="/js/post/postList.js" data-dom-ready></script>
 </head>
 <body>
 <div id="loadedContent">
@@ -38,38 +40,7 @@
             
         
     </div>
-    
-    <script defer>
-        
-        console.log('index.js 전역변수 참조.', window.globalClickedURL);  // index.js에서 선언된 전역 변수 참조
-    
-        function findAllPost() {
-            // API 호출 및 데이터 렌더링 로직
-            fetch('/api/posts')
-                .then(response => response.json())
-                .then(list => {
-                    if (list.length < 1) {
-                        document.querySelector('#posts').innerHTML = '<tr ><td colspan="2">검색된 결과가 없습니다.</td></tr>';
-                        return;
-                    }
-    
-                    let html = '';
-                    list.forEach((item, index) => {
-                        html += `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td class="left"><a href="/post/view.html?id=${item.id}" data-ajax>${item.title}</a></td>
-                            </tr>
-                        `;
-                    });
-    
-                    document.querySelector('#posts').innerHTML = html;
-                })
-                .catch(error => console.error(error));
-        }
-        findAllPost(); // 비동기 함수 호출
 
-    </script>
 
 </div>
 </body>

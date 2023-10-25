@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>프로필 이미지 수정</title>
+    <link rel="stylesheet" th:href="@{/css/employee/updateImage.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/employee/detail.js}" data-dom-ready></script>
 </head>
@@ -16,7 +17,8 @@
                 <h1><span th:text="${employee.employeeName}" ></span>님 이미지 수정</h1>
             </div>
             <!-- 이미지 미리보기 영역 -->
-            <div id="image-preview1"><img id="preview-image1" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
+<!--            <div id="image-preview1"><img id="preview-image1" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>-->
+            <div id="image-preview1" class="updateImage_image-preview"><img id="preview-image1" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <!-- 버튼을 클릭하면 /image/upload로 POST 요청 보내기 -->
             <form action="/images/upload" method="post" enctype="multipart/form-data">
                 <ul>
@@ -25,9 +27,11 @@
                         <button type="button" id="delete-button">프로필 이미지 삭제</button>
                     </li>
                     <li>
-                        <button type="submit" id="upload-button" disabled>적용</button>
-                        <button type="button" onclick="javascript:history.back()">수정취소</button>
-                        <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>상세보기</a>
+                        <div class="updateImage-btn_box">
+                            <button type="submit" id="upload-button" disabled>적용</button>
+                            <button type="button" onclick="javascript:history.back()">수정취소</button>
+                            <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>상세보기</a>
+                        </div>
                         <a th:href="@{/employee/detail/{employeeNo}(employeeNo=${employee.employeeNo})}" id="redirection" data-ajax style="display: none;"></a>
                     </li>
                 </ul>

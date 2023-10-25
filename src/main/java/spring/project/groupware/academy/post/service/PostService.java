@@ -2,6 +2,8 @@ package spring.project.groupware.academy.post.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,15 +34,6 @@ public class PostService {
     public PostResponseDTO findPostById(final Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("post not found : " + id));
         return new PostResponseDTO(post);
-    }
-
-    // 게시글 목록 조회
-    @Transactional(readOnly = true)
-    public List<PostResponseDTO> findAllPost() {
-        List<Post> posts = postRepository.findAll();
-        return posts.stream()
-                .map(PostResponseDTO::new)
-                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -79,15 +72,9 @@ public class PostService {
 
     }
 
-
-    public boolean verifyPassword(Long id, String password) {
-        Optional<Post> optionalPost = postRepository.findById(id);
-        if (optionalPost.isPresent()) {
-            optionalPost.get().getPw().toString().equals(password);
-            return true;
-        } else {
-            return false;
-        }
+    //게시글 조회
+    public Page<Post> getLastFiveArticlesFromNotice() {
+        return postRepository.findAllByOrderByIdDesc(PageRequest.of(0, 20));
 
     }
 }

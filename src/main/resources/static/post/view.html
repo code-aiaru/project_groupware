@@ -2,11 +2,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="page-title" title="자유게시판">
     <title>상세 페이지</title>
     <link rel="stylesheet" href="/css/post/view.css">
     <style>
-        #container { font-family: arial; font-size: 22px; margin: 25px; display: flex; justify-content: center; align-items: center; }
-        #editorContent { height: 50px; }
+        #container { font-family: arial; font-size: 22px; margin: 0 25px; display: flex; justify-content: center; align-items: center; }
+        #editorContent { height: auto; min-height: 300px; }
         img { max-width: 350px; }
     </style>
     <script src="/js/post/view.js" data-dom-ready></script>
@@ -14,22 +15,40 @@
 <body>
 <div id="loadedContent">
 
-    <div>
-        <div id="postTitle" style="font-size: 24px; font-weight: bold;"></div>
-        <div id="postWriter" style="font-size: 16px;"></div> <!-- 수정: id와 등호 추가 -->
-    </div>
+    <div class="post-view-wrapper">
 
-    <div id="container">
-        <!--/* 에디터 콘텐츠 렌더링 영역 */-->
-        <div id="editorContent"></div>
-
-
-        <div id="passwordContainer">
-            <form id="passwordForm">
-                <input type="password" id="passwordInput" placeholder="수정, 삭제 시 비밀번호 확인" autocomplete="new-password"data-ajax>
-                <button type="button" id="postDeleteButton" data-ajax>삭제</button>
-            </form>
+        <div class="title">
+            <!-- <h2 style="text-align: center;">공지사항 페이지</h2> -->
+            <h2 style="font-size: 32px;">자유게시판 페이지</h2>
         </div>
+    
+        <div class="post-view-section">
+            <div id="container">
+                <div>
+                    <!-- <div id="postTitle" style="font-size: 24px; font-weight: bold;"></div> -->
+                    <!-- <div id="postWriter" style="font-size: 16px;"></div> 수정: id와 등호 추가 -->
+                    <div id="postTitle"></div>
+                    <div id="postWriter"></div>
+                </div>
+            </div>
+
+            <div>
+                <!--/* 에디터 콘텐츠 렌더링 영역 */-->
+                <div id="editorContent"></div>
+        
+                <div class="post-view-button-section" id="passwordContainer">
+                    <form id="passwordForm">
+                        <input type="password" id="passwordInput" placeholder="수정, 삭제 시 비밀번호 확인" autocomplete="new-password"data-ajax>
+                    </form>
+                    <button type="button" id="postDeleteButton" data-ajax>삭제</button>
+                </div>
+        
+            </div>
+
+        </div>
+
+
+
 
     </div>
 

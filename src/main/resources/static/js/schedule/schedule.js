@@ -469,9 +469,25 @@ function initializeScript() {
         }
     }
 
+    let scheduleColorSaved;
+    // 선택된 색상을, select 태그에 넣어주는 로직
+    const scheduleColor = document.getElementById('schedule-color');
+    scheduleColor.addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        scheduleColorSaved = selectedOption;
+        this.style.backgroundColor = selectedOption.style.backgroundColor;
+    });
 
+    // 원래의 배경색으로 초기화
+    scheduleColor.addEventListener("focusin", function() {
+        this.style.backgroundColor = ""; // 원래의 배경색으로 초기화
+    });
 
-
+    scheduleColor.addEventListener("focusout", function() {
+        if (scheduleColorSaved) { // 선택된 색상이 있을 경우만 배경색을 업데이트
+            this.style.backgroundColor = scheduleColorSaved.style.backgroundColor;
+        }
+    });
 
 
 }

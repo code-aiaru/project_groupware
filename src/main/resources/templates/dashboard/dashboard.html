@@ -11,6 +11,7 @@
     <script src="/js/dashboard/dashboard_schedule.js" data-dom-ready></script>
     <script src="/js/dashboard/dashboard_doughnutChart.js" data-dom-ready></script>
     <script src="/js/dashboard/dashboard_barChart.js" data-dom-ready></script>
+    <script src="/js/dashboard/dashboard_notice.js" data-dom-ready></script>
 </head>
 <body>
 
@@ -19,6 +20,7 @@
         <div class="dashboard">
 
             <div class="upper-preview_section">
+
                 <div class="bar-chart_section">
                     <div class="bar">
                         <div>
@@ -50,6 +52,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="diagram_section">
                     <div>
                         <span>결재현황</span>
@@ -96,18 +99,26 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="lower-preview_section">
-                <div class="lower-preview_box_1">
+
+                <div class="calendar-section">
                     <div id="calendar"></div>
                 </div>
-                <div class="lower-preview_box_2">
-            
+
+                <div class="notice-section">
+                    <div>
+                        <span>공지사항</span>
+                    </div>
+                    <div id="notice-render-area">
+
+                    </div>
                 </div>
+
             </div>
         
-
         </div>
 
     </div>
