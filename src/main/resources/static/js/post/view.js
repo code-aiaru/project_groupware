@@ -52,17 +52,38 @@ async function performDelete() {
     } catch (error) {
         console.error('삭제 요청 실패: ' + error);
     }
+
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+// document.addEventListener('DOMContentLoaded', function() {
+//     const postDeleteButton = document.getElementById('postDeleteButton');
+
+//     if (postDeleteButton) {
+//         postDeleteButton.addEventListener('click', performDelete);
+//     } else {
+//         console.error('postDeleteButton을 찾을 수 없습니다.');
+//     }
+// });
+
+// }
+
+
+
     const postDeleteButton = document.getElementById('postDeleteButton');
 
-    if (postDeleteButton) {
-        postDeleteButton.addEventListener('click', performDelete);
-    } else {
-        console.error('postDeleteButton을 찾을 수 없습니다.');
-    }
-});
+    postDeleteButton.addEventListener('click', function(event) {
+
+        console.log('click actiaveted');
+        const button = event.target.closest('button');  
+        if (button) {
+
+            performDelete();
+
+        }
+    });
 
 }
+
+
+
 
