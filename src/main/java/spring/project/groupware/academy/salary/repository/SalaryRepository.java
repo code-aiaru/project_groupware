@@ -36,6 +36,10 @@ public interface SalaryRepository extends JpaRepository<Salary, Long> {
     @Query(value = "SELECT MIN(salary_date) FROM salary WHERE employee_no=:employeeNo", nativeQuery = true)
     LocalDate findOldestSalaryDateByEmployeeNo(@Param("employeeNo") Long employeeNo);
 
+    Page<Salary> findBySalaryDateBetween(Pageable pageable, LocalDate start, LocalDate end);
+
+    int countByEmployeeAndSalaryDateBetween(EmployeeEntity emp, LocalDate of, LocalDate of1);
+
 
     // LocalDate는 ASC가 불가? >> Desc
 //    LocalDate findTopSalaryDateOrderBySalaryDateAsc();

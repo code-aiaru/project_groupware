@@ -510,7 +510,9 @@ public class AttendanceService{
         EmployeeEntity employee = employeeRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("사원정보가 없음!"));
 
-        if(subject==null) subject="";   //subject="ALL"
+        if(subject==null)
+//            subject="";
+            subject="ALL";
         if(first==null||first=="") first=LocalDate.now().toString();
         if(last==null||last=="") last=LocalDate.now().toString();
         if(set==null||set=="") set="0";

@@ -16,7 +16,7 @@
         <div class="attendance-create0">
             <h1> 급여 처리</h1>
                     <button>
-                        <input type="button" value="급여처리" id="ToDaySalaryOkBtn">
+                        <input type="button" value="급여처리" id="ToDaySalaryOkBtn" data-ajax >
                     </button>
         </div>
     </th:block>
@@ -30,7 +30,7 @@
                 <!--                    <input type="date" th:value="${LocalDate.now()}" name="today" id="today">-->
                 <!--                </li>-->
                     <button>
-                        <input type="button" value="출결당일생성" id="ToDayOkBtn">
+                        <input type="button" value="출결당일생성" id="ToDayOkBtn" data-ajax >
                     </button>
         </div>
     </th:block>
@@ -50,7 +50,7 @@
                 </li>
                 <li>
                     <button>
-                        <input type="button" value="출결생성" id="createOkBtn">
+                        <input type="button" value="출결생성" id="createOkBtn" data-ajax >
                     </button>
                 </li>
             </ul>
@@ -58,16 +58,16 @@
     </th:block>
 
         <div class="attendance-inOut">
-            <h1>ATTENDANCE IN/OUT</h1>
+            <h1>출/퇴근 처리</h1>
                 <div class="in" id="in" >
                     <button>
-                        <input type="button" value="출근" id="InOkBtn" >
+                        <input type="button" value="출근" id="InOkBtn" data-ajax >
 <!--                        <input type="button" value="출근" id="InOkBtn" style="display:block">-->
                     </button>
                 </div>
                 <div class="out" id="out" >
                     <button>
-                        <input type="button" value="퇴근" id="OutOkBtn" >
+                        <input type="button" value="퇴근" id="OutOkBtn" data-ajax >
 <!--                        <input type="button" value="퇴근" id="OutOkBtn" style="display:block">-->
                     </button>
                 </div>
@@ -86,7 +86,7 @@
             </li>
             <li>
                 <button>
-                    <input type="button" value="휴가신청" id="vacationOkBtn">
+                    <input type="button" value="휴가신청" id="vacationOkBtn" data-ajax >
                 </button>
             </li>
         </ul>
@@ -106,13 +106,41 @@
 
             <li>
                 <button>
-                    <input type="button" value="병가신청" id="sickOkBtn">
+                    <input type="button" value="병가신청" id="sickOkBtn" data-ajax >
                 </button>
             </li>
         </ul>
     </div>
 
-    </div>
+<!--    <th:block sec:authorize="hasAnyRole('ADMIN')">-->
+<!--        <a th:href="@{/attendance/join}" data-ajax>-->
+<!--            <li>-->
+<!--                <th:block sec:authorize="isAuthenticated()">-->
+<!--                    <span>관리자페이지</span>-->
+<!--                    &lt;!&ndash;                                <img src="/images/index/gnb/iconmonstr-log-out-16.svg" alt="로그아웃 아이콘">&ndash;&gt;-->
+<!--                </th:block>-->
+<!--            </li>-->
+<!--        </a>-->
+<!--    </th:block>-->
+<!--    <a th:href="@{/attendance/in}">-->
+<!--        <li>-->
+<!--            <th:block sec:authorize="isAuthenticated()">-->
+<!--                <span>출근</span>-->
+<!--                &lt;!&ndash;                                <img src="/images/index/gnb/iconmonstr-log-out-16.svg" alt="로그아웃 아이콘">&ndash;&gt;-->
+<!--            </th:block>-->
+<!--        </li>-->
+<!--    </a>-->
+<!--    <a th:href="@{/attendance/out}">-->
+<!--        <li>-->
+<!--            <th:block sec:authorize="isAuthenticated()">-->
+<!--                <span>퇴근</span>-->
+<!--                &lt;!&ndash;                                <img src="/images/index/gnb/iconmonstr-log-out-16.svg" alt="로그아웃 아이콘">&ndash;&gt;-->
+<!--            </th:block>-->
+<!--        </li>-->
+<!--    </a>-->
+
+
+</div>
 </div>
 </body>
 </html>

@@ -58,9 +58,16 @@
                             <!--                        min="2019-09-10" max="2019-09-25"-->
                             <input type="submit" value="검색">
                         </form>
+
+                        <th:block sec:authorize="hasAnyRole('ADMIN')" style="float: left">
+                            <a th:href="@{/api/attendance/create/now}">
+                                <li>
+                                    <span>출결 생성</span>
+                                </li>
+                            </a>
+                        </th:block>
                     </div>
                 </div>
-
 
                 <table>
                     <thead>

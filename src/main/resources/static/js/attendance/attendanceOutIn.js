@@ -1,12 +1,31 @@
 
-const ToDaySalaryOkBtn = document.querySelector('#ToDaySalaryOkBtn');
 
-  ToDaySalaryOkBtn.addEventListener('click', () => {
+const ToDaySalaryOkBtn = document.getElementById('#ToDaySalaryOkBtn');
+
+//    ToDaySalaryOkBtn.addEventListener('click', function(event) {
+//
+//        console.log('click actiaveted');
+//        const button = event.target.closest('button');
+//        if (button) {
+//
+//            ToDaySalaryOk();
+//
+//            //ToDaySalaryOkBtn.addEventListener('click', () => {
+//            // >>
+//            //async function ToDaySalaryOk() {
+//
+//        }
+//    });
+
+ToDaySalaryOkBtn.addEventListener('click',async function(event) => {
+
+          console.log('click actiaveted');
+          const button = event.target.closest('button');
+          if (button) {
      const url = "/api/salary/calculator";    // get은 여기 + /{id} 처럼
-//     const url = "/api/salary/now";
+
       fetch(url, {                            //{url, 메서드}
           method: "GET",
-//          body: JSON.stringify(attendance_data),
           headers: {
             "Content-Type": "application/json",
           },
@@ -18,7 +37,27 @@ const ToDaySalaryOkBtn = document.querySelector('#ToDaySalaryOkBtn');
         }).catch((error) => {
           console.log(error);
         });
+        }
     });
+
+//  ToDaySalaryOkBtn.addEventListener('click', () => {
+//     const url = "/api/salary/calculator";    // get은 여기 + /{id} 처럼
+////     const url = "/api/salary/now";
+//      fetch(url, {                            //{url, 메서드}
+//          method: "GET",
+////          body: JSON.stringify(attendance_data),
+//          headers: {
+//            "Content-Type": "application/json",
+//          },
+//        })
+//        .then((response) => response.json())
+//        .then((data) => {
+//          alert("급여 처리 성공!");
+//          console.log(data);
+//        }).catch((error) => {
+//          console.log(error);
+//        });
+//    });
 
 const start = document.querySelector('#start');
 const end = document.querySelector('#end');

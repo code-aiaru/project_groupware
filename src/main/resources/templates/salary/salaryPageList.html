@@ -28,8 +28,8 @@
                                 <option value="0">전체</option>
                                 <option value="99">직접입력</option>
                                 <option value="30">이번달</option>
-                                <option value="100">상반기</option>
-                                <option value="77">하반기</option>
+                                <option value="100">상반기(1~6)</option>
+                                <option value="77">하반기(7~12)</option>
                                 <!--                                <option value="90">세달</option>-->
                                 <option value="1">1월</option>
                                 <option value="2">2월</option>
@@ -54,6 +54,13 @@
                             <!--                        min="2019-09-10" max="2019-09-25"-->
                             <input type="submit" value="검색">
                         </form>
+                        <th:block sec:authorize="hasAnyRole('ADMIN')" style="float:right">
+                            <a th:href="@{/salary/calculator}" data-ajax>
+                                <li>
+                                    <span>이달 급여 지급</span>
+                                </li>
+                            </a>
+                        </th:block>
                     </div>
                 </div>
 
@@ -83,7 +90,7 @@
                         <td th:text="${salaryDto.salaryDate}"></td>
                         <!--                        <td th:text="${#temporals.format(salaryDto.salaryDate, 'yy.MM.dd/HH:mm')}"></td>-->
                         <td>
-                            <a th:href="@{/salary/detail/{id}(id=${salaryDto.employee?.employeeNo})}" data-ajax>상세조회</a>
+                            <a th:href="@{/salary/detail/{id}(id=${salaryDto.id})}" data-ajax>상세조회</a>
                         </td>
                     </tr>
                     </tbody>

@@ -26,9 +26,10 @@ public class Salary {
     // 기본, 고정급
     private int baseSalary;
 
-//    // 추가 급여
-//    @ElementCollection
-//    private List<String> extraSalary;
+    // 추가, 급여
+    //@ElementCollection
+//    private int insentiveSalary;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_no")
@@ -37,10 +38,6 @@ public class Salary {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private StudentEntity student;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "employee")
-//    private Employee employee;
 
 
 }

@@ -24,7 +24,7 @@ public class SalaryDto {
     private int baseSalary;
 
     // 추가 급여
-    private List<String> extraSalary;
+    private int insentiveSalary;
 
     private EmployeeEntity employee;
 
