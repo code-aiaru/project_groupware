@@ -30,6 +30,9 @@ h1{
     width: 1000px;
     /* margin-top: 35px; */
 }
+.approval-title > h1 {
+    font-size: 35px;
+}
 .approval-menu {
     width: 1000px;
     display: flex;

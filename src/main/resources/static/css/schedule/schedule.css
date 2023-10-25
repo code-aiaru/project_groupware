@@ -191,6 +191,12 @@
     width: 180px;
 }
 
+.modal_body .select option {
+    /* height: 20px;
+    width: 20px; */
+    /* display: inline-block; */
+    /* padding: 5px 10px; */
+}
 
 
 

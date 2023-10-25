@@ -135,22 +135,21 @@
 }
 .diagram-summary_section {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
-    width: 100%;
 }
 .diagram-summary_section > div {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 240px;
 }
 .approval_info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0px 25px;
+    /* margin: 0px 25px; */
 }
 
 .approval_info > div {
