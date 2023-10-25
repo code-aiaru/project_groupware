@@ -35,7 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-src/main/java/spring/project/groupware/academy/attendance/repository/AttendanceRepository.java
-src/main/java/spring/project/groupware/academy/dashboard/service/DashboardService.java
-src/main/java/spring/project/groupware/academy/attendance/repository/AttendanceRepository.java
-user.dic
