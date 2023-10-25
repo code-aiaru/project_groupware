@@ -93,6 +93,8 @@ td .aUser div > span{
 
 .th-last > ul {
     display: flex;
+    border-radius: 5px;
+    overflow: hidden;
 }
 .th-last > ul > li {
     padding: 7px 12px;
@@ -121,6 +123,7 @@ td .aUser div > span{
     padding: 7px 12px;
     background-color: #2c3e50;
     box-sizing: border-box;
+    border-radius: 5px;
 }
 .approval-divide > ul > li:hover {
     filter: brightness(1.2);
@@ -141,6 +144,8 @@ td .aUser div > span{
 
 .td-submit > ul {
     display: flex;
+    border-radius: 5px;
+    overflow: hidden;
 }
 .td-submit > ul > li {
     padding: 7px 12px;
