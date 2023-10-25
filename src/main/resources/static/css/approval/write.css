@@ -86,7 +86,7 @@ h1{
     margin-bottom: 10px;
     border-top: 3px solid #444444;
     position: relative;
-    z-index: 998;
+    /* z-index: 998; */
 }
 .approval-info-section{
     background-color: #ffffff;
