@@ -14,7 +14,10 @@
       <div class="pagingList-table">
         <h1>수강생 조회</h1>
         <div class="search">
-          <a th:href="@{/student/join}" data-ajax><span>수강생추가</span></a>
+          <div>
+            <a th:href="@{/student/join}" data-ajax><span>수강생추가</span></a>
+            <a th:href="@{/dashboard}" data-ajax><span>홈</span></a>
+          </div>
           <form th:action="@{/student/studentList}" method="get">
             <select name="subject" id="subject">
               <option value="studentName">이름</option>

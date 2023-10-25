@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>회원정보 상세보기</title>
+    <title>사원정보 상세보기</title>
     <link rel="stylesheet" th:href="@{/css/employee/detail.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/employee/detail.js}" data-dom-ready></script>
@@ -33,7 +33,7 @@
             <div class="detail">
                 <ul>
 <!--                    <span th:if="${false}" th:text="${employee.employeeNo}"></span> <br> &lt;!&ndash; th:if="${false}" 입력 시 안보이게 처리 &ndash;&gt;-->
-<!--                    <span th:if="${false}" :text="${employee.employeePassword}"></span> <br>-->
+<!--                    <span th:if="${false}" th:text="${employee.employeePassword}"></span> <br>-->
                     <li>
                         <span>아이디</span>
                         <span th:text="${employee.employeeId}"></span>
