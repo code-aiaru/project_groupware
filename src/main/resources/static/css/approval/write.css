@@ -10,6 +10,11 @@
     color: #373f4c;
 }
 
+h1{
+    width: 1000px;
+    font-size: 32px;
+}
+
 .td-ap{
     position: relative;
     z-index: 998;

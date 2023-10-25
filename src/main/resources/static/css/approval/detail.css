@@ -10,6 +10,11 @@
     color: #373f4c;
 }
 
+h1{
+    width: 1000px;
+    font-size: 32px;
+}
+
 .scriptBack{
     width: 100%;
     height: 100vh;
@@ -57,7 +62,7 @@ td.td-title {
     margin-bottom: 10px;
 }
 tr {
-    width: 400px;
+    width: 1000px;
 }
 td {
     width: 100%;
