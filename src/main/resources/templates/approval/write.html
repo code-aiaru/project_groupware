@@ -17,59 +17,52 @@
             <h1>결재 작성</h1>
         </div>
         <div class="approval-write">
-            <div class="approval-form">
+            <div class="approval-section">
                 <form th:action="@{/post/approval/write}" method="post" th:object="${approvalDto}">
-                    <table border="1">
-                        <tr>
-                            <th scope="row"><label th:for="ApprovalTitle">제목</label></th>
-                            <td>
-                                <input type="hidden" th:field="*{Id}" class="inputTitle">
-                                <input type="text" th:field="*{ApprovalTitle}" class="inputTitle">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><label>결재선</label></th>
-                            <td>
-                                <input type="text" name="nameSearch" id="nameSearch" class="inputSearch">
-                                <div class="searchBox">
-                                    <ul>
-                                        <li th:each="employee: ${employeePage}"
-                                            th:unless="${employee.employeeNo == #authentication.principal.employeeEntity.employeeNo}">
+                    <div class="approval-info-section">
+                        <div>
+                            <label th:for="ApprovalTitle">제목</label>
+                            <input type="hidden" th:field="*{Id}" class="inputTitle">
+                            <input type="text" th:field="*{ApprovalTitle}" class="inputTitle">
+                        </div>
+                        <div class="td-ap">
+                            <label>결재선</label>
+                            <input type="text" name="nameSearch" id="nameSearch" class="inputSearch">
+                            <div class="searchBox">
+                                <ul>
+                                    <li th:each="employee: ${employeePage}"
+                                        th:unless="${employee.employeeNo == #authentication.principal.employeeEntity.employeeNo}">
                                                 <span class="userAddBtn"
                                                       name="employeeNo"
                                                       th:value="${employee.employeeNo}"
                                                       th:text="|${employee.employeeName} - ${employee.employeeDep} - ${employee.employeePosition}|"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                </br>
-                                <div id="ApprovalUserData">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><label th:for="ApprovalContent">내용</label></th>
-                            <td>
-                                    <textarea cols="30" rows="10" th:field="*{ApprovalContent}"
-                                              class="inputContent"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="th-last"></th>
-                            <td class="td-last">
-                                <ul>
-                                    <li>
-                                        <input type="submit" value="상신">
-                                    </li>
-                                    <li>
-                                        <a th:href="@{/approval/list/create}" data-ajax>목록</a>
-                                        <a href="/approval/list/create" id="redirection" data-ajax
-                                           style="display: none;"></a>
                                     </li>
                                 </ul>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                            <!--                            </br>-->
+                            <div id="ApprovalUserData">
+                            </div>
+                        </div>
+                        <div>
+                            <label th:for="ApprovalContent">내용</label>
+
+                            <textarea cols="30" rows="10" th:field="*{ApprovalContent}"
+                                      class="inputContent"></textarea>
+
+                        </div>
+                        <div class="td-last">
+                            <ul>
+                                <li>
+                                    <input type="submit" value="상신">
+                                </li>
+                                <li>
+                                    <a th:href="@{/approval/list/create}" data-ajax>목록</a>
+                                    <a href="/approval/list/create" id="redirection" data-ajax
+                                       style="display: none;"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

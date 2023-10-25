@@ -10,28 +10,53 @@
     color: #373f4c;
 }
 
-table {
+.td-ap{
     position: relative;
     z-index: 998;
 }
 
-td .searchBox{
-    width: 200px;
+.td-ap .searchBox{
+    width: 100%;
     height: 100px;
     display: none;
     position: absolute;
+    bottom: -104px;
     z-index: 999;
     overflow-y: scroll;
     border: 1px solid;
     background-color: #cccccc;
 }
 
+.parent{
+    width: 100%;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: repeat(16, 55px);
+    text-align: center;
+    align-items: center;
+}
 
-.approval-title {
-    margin-top: 10px;
+.parent span{
+    grid-column: 1/12;
+    text-align: left;
+}
+
+.parent label{
+    text-align: right;
+}
+
+
+
+.approval-con {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 35px;
+}
+
+.approval-title {
+    width: 1000px;
 }
 .approval-write {
     margin-top: 10px;
@@ -63,4 +88,45 @@ td .searchBox{
     color: #ffffff;
     font-size: 12px;
     display: flex;
+}
+
+
+
+.approval-section {
+    width: 1000px;
+    height: auto;
+    margin-bottom: 10px;
+    border-top: 3px solid #444444;
+    position: relative;
+    z-index: 998;
+}
+.approval-info-section{
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 0 0 10px 10px;
+}
+.approval-info-section > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.approval-info-section > div > label{
+    margin-bottom: 5px;
+}
+.approval-info-section > div > input{
+    height: 30px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #aaaaaa;
+    width: 100%;
+    box-sizing: border-box;
+}
+.approval-info-section > div > textarea{
+    height: 150px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #aaaaaa;
+    width: 100%;
+    box-sizing: border-box;
 }
