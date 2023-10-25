@@ -32,25 +32,6 @@ h1{
     background-color: #cccccc;
 }
 
-.parent{
-    width: 100%;
-    display: grid;
-    justify-content: space-between;
-    grid-template-columns: repeat(16, 55px);
-    text-align: center;
-    align-items: center;
-}
-
-.parent span{
-    grid-column: 1/12;
-    text-align: left;
-}
-
-.parent label{
-    text-align: right;
-}
-
-
 
 .approval-con {
     display: flex;
@@ -141,4 +122,30 @@ h1{
 .approval-info-section .td-last {
     flex-direction: unset;
     justify-content: right;
+}
+
+
+.approval-info-section div #ApprovalUserData .parent{
+    width: 100%;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: repeat(16, 55px);
+    text-align: center;
+    align-items: center;
+    margin: 3px;
+}
+
+.approval-info-section div #ApprovalUserData .parent span{
+    grid-column: 1/12;
+    text-align: left;
+}
+
+.approval-info-section div #ApprovalUserData .parent label{
+    text-align: right;
+    margin-bottom: 0px;
+}
+
+.approval-info-section div #ApprovalUserData .parent input{
+    text-align: right;
+    height: 10px;
 }
