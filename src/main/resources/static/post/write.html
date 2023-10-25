@@ -149,6 +149,18 @@
             console.error('저장 실패 : ', error)
         });
     }
+
+      fetch('/api/posts/getRandomName') // API 엔드포인트 URL을 사용하세요
+        .then(response => response.json())
+        .then(data => {
+            // API에서 받아온 랜덤 이름을 작성자 입력란에 설정
+            document.getElementById('writer').value = data.randomName;
+        })
+        .catch(error => {
+            console.error('랜덤 이름을 가져오는 동안 오류 발생: ' + error);
+        });
+
+
 </script>
 </div>
 </body>

@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.board;
+package spring.project.groupware.academy.post.service;
 
 import org.springframework.stereotype.Component;
 

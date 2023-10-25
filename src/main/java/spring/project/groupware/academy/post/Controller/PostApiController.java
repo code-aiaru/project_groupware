@@ -14,6 +14,7 @@ import spring.project.groupware.academy.post.entity.Post;
 import spring.project.groupware.academy.post.repository.PostRepository;
 import spring.project.groupware.academy.post.service.NoticeService;
 import spring.project.groupware.academy.post.service.PostService;
+import spring.project.groupware.academy.post.service.RandomNameGenerator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,10 +25,9 @@ import java.util.Optional;
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostApiController {
-    private final PostRepository postRepository;
     private final PostService postService;
     private final NoticeService noticeService;
-
+    private final RandomNameGenerator randomNameGenerator;
     // 게시글 저장
     @PostMapping
     public Long savePost(@RequestBody final PostRequestDTO params) {
@@ -98,6 +98,12 @@ public class PostApiController {
 
     }
 
+    @GetMapping("/getRandomName")
+    public Map<String, String> getRandomName() {
+        Map<String, String> response = new HashMap<>();
+        response.put("randomName", randomNameGenerator.getRandomName());
+        return response;
+    }
 
 
 }
