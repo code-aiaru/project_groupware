@@ -9,9 +9,6 @@ import spring.project.groupware.academy.post.entity.Post;
 
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
-
-
-
     // 박상재 추가
     Page<Notice> findAllByOrderByIdDesc(Pageable pageable);
 }
