@@ -1,0 +1,78 @@
+@import url(/css/common/reset.css);
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+* {
+    font-family: Pretendard;
+    font-size: 14px;
+    color: #373f4c;
+}
+
+.post-view-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+}
+.post-view-wrapper .title {
+    width: 1000px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.post-view-wrapper h2 {
+    font-size: 32px;
+}
+.post-view-section {
+    width: 1000px;
+    height: auto;
+    margin-bottom: 10px;
+    border-top: 3px solid #444444;
+    background-color: #ffffff;
+    border-radius: 0 0 10px 10px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+.post-view-section > div:nth-of-type(1) {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #dddddd;
+}
+#content {
+    margin-top: 30px;
+}
+#passwordContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#passwordContainer > input{
+    height: 30px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #aaaaaa;
+    width: 100%;
+    box-sizing: border-box;
+}
+#passwordContainer > button {
+    height: 30px;
+    margin-left: 3px;
+    padding: 5px 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: none;
+    background-color: #2c3e50;
+    color: #ffffff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
+    cursor: pointer;
+}

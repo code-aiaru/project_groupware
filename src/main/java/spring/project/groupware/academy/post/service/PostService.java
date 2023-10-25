@@ -2,6 +2,7 @@ package spring.project.groupware.academy.post.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.groupware.academy.post.dto.PostRequestDTO;
@@ -38,28 +39,32 @@ public class PostService {
     public List<PostResponseDTO> findAllPost() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
-                .map(post -> new PostResponseDTO(post))
+                .map(PostResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public boolean deletePost(Long id) {
-        try {
-            Optional<Post> optionalPost = postRepository.findById(id);
-            if (optionalPost.isPresent()) {
-                postRepository.deleteById(id);
+    @Transactional
+    public boolean deletePost(Long id, String password) {
+
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            if (post.verifyPassword(password)) {
+                postRepository.delete(post);
                 return true;
             } else {
                 return false;
             }
-        } catch (DataAccessException ex) {
-            ex.printStackTrace();
-            return false;
-        }
 
+        }
+        return false;
     }
 
-    public boolean updatePost(Long id, PostResponseDTO postResponseDTO) {
+    @Transactional
+    public boolean updatePost(Long id) {
         Optional<Post> optionalPost = postRepository.findById(id);
+        PostResponseDTO postResponseDTO = new PostResponseDTO();
+
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
             post.setTitle(postResponseDTO.getTitle());
@@ -75,5 +80,15 @@ public class PostService {
     }
 
 
+    public boolean verifyPassword(Long id, String password) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            optionalPost.get().getPw().toString().equals(password);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
 

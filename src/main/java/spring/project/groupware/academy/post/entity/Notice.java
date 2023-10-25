@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Post {
+public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +25,12 @@ public class Post {
     private String writer;
 
     @Builder
-    public Post(String title, String content ,String pw ,String writer) {
+    public Notice(String title, String content , String pw , String writer) {
         this.title = title;
         this.content = content;
         this.pw = pw;
         this.writer = writer;
     }
 
-    public boolean verifyPassword(String Password) {
-        return getPw().equals(Password);
 
-    }
 }

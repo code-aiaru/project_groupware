@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상세 페이지</title>
+
+    <style>
+        #container { font-family: arial; font-size: 22px; margin: 25px; display: flex; justify-content: center; align-items: center; }
+        #editorContent { height: 50px; }
+        img { max-width: 350px; }
+    </style>
+    <script src="/js/notice/noticeView.js" data-dom-ready></script>
+    <scriptsrc="/js/notice/noticeDelete" data-dom-ready ></scriptsrc>
+</head>
+<body>
+<div id="loadedContent">
+    <h2 style="text-align: center;">공지사항 페이지</h2>
+
+
+    <div id="container">
+    <div>
+        <div id="noticeTitle"></div>
+        <div id="noticeWriter"></div> <!-- 수정: id와 등호 추가 -->
+    </div>
+        <!--/* 에디터 콘텐츠 렌더링 영역 */-->
+        <div id="editorContent"></div>
+
+        <!-- 비밀번호 입력 버튼 오른쪽 아래로 내려주세요 ㅠ-->
+
+            <button id="DeleteButton" data-ajax>삭제</button>
+
+    </div>
+</div>
+
+
+</body>
+</html>

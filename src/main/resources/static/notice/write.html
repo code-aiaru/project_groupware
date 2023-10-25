@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>글쓰기 페이지</title>
-    <link rel="stylesheet" href="/css/post/write.css">
+
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
@@ -19,43 +19,32 @@
 
 <div class="postWrite" id="loadedContent">
 
-    <div class="post-write-wrapper">
+    <h2 style="text-align: center;">TOAST UI Editor 글쓰기 페이지</h2>
 
-        <div class="title">
-            <h2 style="text-align: center;">TOAST UI Editor 글쓰기 페이지</h2>
-        </div>
-    
-        <div class="post-write-section">
-            <div class="post-write-info_section">
-                <!-- 제목 입력란 -->
-                <div>
-                    <label for="title">제목</label>
-                    <input type="text" id="title" name="title" required>
-                </div>
-            
-                <!-- 작성자 입력란 -->
-                <div>
-                    <label for="writer">작성자</label>
-                    <input type="text" id="writer" name="writer" required>
-                </div>
-            
-                <!-- 비밀번호 입력란 -->
-                <div>
-                    <label for="pw">비밀번호</label>
-                    <input type="password" id="pw" name="pw" required>
-                </div>
+    <!-- 제목 입력란 -->
+    <div>
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
 
-                <!-- 에디터를 적용할 요소 (컨테이너) -->
-                <div id="content"></div>
-            </div>
-        
-        
-            <div id="btnDiv">
-                <button type="button" class="btns save" id="saveButton">저장하기</button>
-                <a href="/post/list.html" class="btns back">뒤로 가기</a>
-            </div>
-        </div>
+    <!-- 작성자 입력란 -->
+    <div>
+        <label for="writer">작성자:</label>
+        <input type="text" id="writer" name="writer" required>
+    </div>
 
+    <!-- 비밀번호 입력란 -->
+    <div>
+        <label for="pw">비밀번호:</label>
+        <input type="password" id="pw" name="pw" required>
+    </div>
+
+    <!-- 에디터를 적용할 요소 (컨테이너) -->
+    <div id="content"></div>
+
+    <div id="btnDiv">
+        <button type="button" class="btns save" id="saveButton">저장하기</button>
+        <a href="/notice/list.html" class="btns back">뒤로 가기</a>
     </div>
 
     <!-- TUI 에디터 JS CDN -->
@@ -124,7 +113,7 @@
         }
 
         // 2. url, parameter 세팅
-        const url = '/api/posts';
+        const url = '/api/posts/notice';
         const params = {
             title: title,
             content: editor.getHTML(),
@@ -143,24 +132,12 @@
         .then(response => response.json())
         .then(postId => {
             alert(postId + '번 게시글이 저장되었습니다.');
-            location.href = '/post/list.html';
+            location.href = '/notice/list.html';
         })
         .catch(error => {
             console.error('저장 실패 : ', error)
         });
     }
-
-      fetch('/api/posts/getRandomName') // API 엔드포인트 URL을 사용하세요
-        .then(response => response.json())
-        .then(data => {
-            // API에서 받아온 랜덤 이름을 작성자 입력란에 설정
-            document.getElementById('writer').value = data.randomName;
-        })
-        .catch(error => {
-            console.error('랜덤 이름을 가져오는 동안 오류 발생: ' + error);
-        });
-
-
 </script>
 </div>
 </body>

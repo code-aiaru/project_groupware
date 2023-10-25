@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>상세 페이지</title>
-
+    <link rel="stylesheet" href="/css/post/view.css">
     <style>
         #container { font-family: arial; font-size: 22px; margin: 25px; display: flex; justify-content: center; align-items: center; }
         #editorContent { height: 50px; }
@@ -13,23 +13,29 @@
 </head>
 <body>
 <div id="loadedContent">
-    <h2 style="text-align: center;">상세 페이지</h2>
 
     <div>
         <div id="postTitle" style="font-size: 24px; font-weight: bold;"></div>
-        <div id "postWriter" style="font-size: 16px;"></div>
-</div>
-
-<div id="container">
-    <!--/* 에디터 콘텐츠 렌더링 영역 */-->
-    <div id="editorContent"></div>
-
-    <!-- 비밀번호 입력 컨테이너 -->
-    <div id="passwordContainer">
-        <input type="password" id="passwordInput" placeholder="비밀번호를 입력하세요">
-        <button id="passwordSubmit">확인</button>
+        <div id="postWriter" style="font-size: 16px;"></div> <!-- 수정: id와 등호 추가 -->
     </div>
+
+    <div id="container">
+        <!--/* 에디터 콘텐츠 렌더링 영역 */-->
+        <div id="editorContent"></div>
+
+
+        <div id="passwordContainer">
+            <form id="passwordForm">
+                <input type="password" id="passwordInput" placeholder="수정, 삭제 시 비밀번호 확인" autocomplete="new-password"data-ajax>
+                <button type="button" id="postDeleteButton" data-ajax>삭제</button>
+            </form>
+        </div>
+
+    </div>
+
+
 </div>
-</div>
+
+
 </body>
 </html>

@@ -26,10 +26,10 @@
                 </button>
             </div>
 
-
+<!-- 
             <div class="notice">
                 notice list...
-            </div>
+            </div> -->
             <div class="user-console">
                 <img src="/images/index/gnb/iconmonstr-email-4.svg" alt="메세지 아이콘" class="console-icon_img">
                 <img src="/images/index/gnb/iconmonstr-bell-2.svg" alt="알람 아이콘" class="console-icon_img">
@@ -63,7 +63,7 @@
                             <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
                         </li>
                     </a>
-                    <a href="#">
+                    <!-- <a href="#">
                         <li>
                             <span>b</span>
                             <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
@@ -74,7 +74,7 @@
                             <span>c</span>
                             <img src="/images/index/gnb/iconmonstr-id-card-7.svg" alt="마이페이지 아이콘">
                         </li>
-                    </a>
+                    </a> -->
                     <a th:href="@{/logout}">
                         <li>
                             <th:block sec:authorize="isAuthenticated()">
@@ -208,7 +208,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="/notice/list.html" data-ajax>
                                     <img src="/images/index/snb/iconmonstr-dashboard-lined.svg" alt="공지사항 아이콘" class="menu-icon_small">
                                     <span>공지사항</span>
                                     <img src="/images/index/snb/selected_menu_img2.png" alt="선택 하이라이트 이미지" class="select-highlight">

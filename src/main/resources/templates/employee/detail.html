@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>회원정보 상세보기</title>
+    <link rel="stylesheet" th:href="@{/css/employee/detail.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/employee/detail.js}" data-dom-ready></script>
 </head>
@@ -17,7 +18,7 @@
                 <h1><span th:text="${employee.employeeName}" ></span>님 상세정보</h1>
             </div>
             <!-- 이미지 미리보기 영역 -->
-            <div id="image-preview"><img id="preview-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
+            <div id="image-preview" class="detail_image-preview"><img id="preview-image" th:src="${employeeImageUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;"></div>
             <th:block th:if="${#authentication.principal.username==employee.employeeId}">
             <span class="image_btn">
 <!--                <button onclick="redirectToURL()" class="URLBtn">프로필 이미지 수정</button>--> <!---->
@@ -79,7 +80,8 @@
                         <span>입사일</span>
                         <span th:text="${#temporals.format(employee.createTime, 'yyyy-MM-dd')}"></span>
                     </li>
-                    <th:block th:if="${#authentication.principal.username == employee.employeeId or #authorization.expression('hasRole(''ADMIN'')')}">
+                
+                    <!-- <th:block th:if="${#authentication.principal.username == employee.employeeId or #authorization.expression('hasRole(''ADMIN'')')}">
                         <li class="update">
                             <span>
                                 <div class="update">
@@ -99,7 +101,21 @@
                         <li>
                             <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>사원목록</a>
                         </li>
-                    </th:block>
+                    </th:block> -->
+
+                    <div class="employee-detail-submit_section">
+                        <th:block th:if="${#authentication.principal.username == employee.employeeId or #authorization.expression('hasRole(''ADMIN'')')}">
+                            <a th:href="@{/employee/update/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>수정</a>
+                        </th:block>
+                        <th:block th:if="${#authentication.principal.username != employee.employeeId and #authorization.expression('hasRole(''ADMIN'')')}">
+                            <a th:href="@{/employee/confirmPassword/delete/{employeeNo}(employeeNo=${employee.employeeNo})}" data-ajax>삭제</a>
+                        </th:block>
+                        <th:block sec:authorize="hasAnyRole('ADMIN')">
+                            <a th:href="@{/employee/employeeList?page=0&subject=&search=}" data-ajax>사원목록</a>
+                        </th:block>
+                    </div>
+
+
                 </ul>
             </div>
         </div>
