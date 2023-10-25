@@ -31,7 +31,8 @@ function initializeNotice() {
         for (let notice of notices) {
             // let cleanContent = stripHTML(notice.content);
             // noticeHtml += `<li>[${notice.writer}] ${notice.title} - ${cleanContent}</li>`;
-            noticeHtml += `<li>[${notice.writer}] ${notice.title}</li>`;
+            noticeHtml += `<li><a href="/notice/view.html?id=${notice.id}" data-ajax>[${notice.writer}] ${notice.title}</a></li>`;
+            // console.log(notice.id);
         }
         noticeHtml += '</ul>';
     

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>상세 페이지</title>
-
+    <link rel="stylesheet" href="/css/post/view.css">
     <style>
-        #container { font-family: arial; font-size: 22px; margin: 25px; display: flex; justify-content: center; align-items: center; }
-        #editorContent { height: 50px; }
+        #container { font-family: arial; font-size: 22px; margin: 0 25px; display: flex; justify-content: center; align-items: center; }
+        #editorContent { height: auto; min-height: 300px; }
         img { max-width: 350px; }
     </style>
     <script src="/js/notice/noticeView.js" data-dom-ready></script>
@@ -14,22 +14,36 @@
 </head>
 <body>
 <div id="loadedContent">
-    <h2 style="text-align: center;">공지사항 페이지</h2>
 
+    <div class="post-view-wrapper">
 
-    <div id="container">
-    <div>
-        <div id="noticeTitle"></div>
-        <div id="noticeWriter"></div> <!-- 수정: id와 등호 추가 -->
+        <div class="title">
+            <!-- <h2 style="text-align: center;">공지사항 페이지</h2> -->
+            <h2 style="font-size: 32px;">공지사항 페이지</h2>
+        </div>
+    
+        <div class="post-view-section">
+            <div id="container">
+                <div>
+                    <div id="noticeTitle"></div>
+                    <div id="noticeWriter"></div> <!-- 수정: id와 등호 추가 -->
+                </div>
+            </div>
+
+            <div>
+                <!--/* 에디터 콘텐츠 렌더링 영역 */-->
+                <div id="editorContent"></div>
+        
+                <div class="post-view-button-section">
+                    <!-- 비밀번호 입력 버튼 오른쪽 아래로 내려주세요 ㅠ-->
+                    <button id="DeleteButton" data-ajax>삭제</button>
+                </div>
+            </div>
+    
+        </div>
+
     </div>
-        <!--/* 에디터 콘텐츠 렌더링 영역 */-->
-        <div id="editorContent"></div>
 
-        <!-- 비밀번호 입력 버튼 오른쪽 아래로 내려주세요 ㅠ-->
-
-            <button id="DeleteButton" data-ajax>삭제</button>
-
-    </div>
 </div>
 
 
