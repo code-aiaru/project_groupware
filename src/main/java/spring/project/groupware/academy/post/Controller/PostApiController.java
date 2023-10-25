@@ -3,6 +3,8 @@ package spring.project.groupware.academy.post.Controller;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import spring.project.groupware.academy.post.dto.NoticeRequestDTO;
 import spring.project.groupware.academy.post.dto.NoticeResponseDTO;
 import spring.project.groupware.academy.post.dto.PostRequestDTO;
 import spring.project.groupware.academy.post.dto.PostResponseDTO;
+import spring.project.groupware.academy.post.entity.Notice;
 import spring.project.groupware.academy.post.entity.Post;
 import spring.project.groupware.academy.post.repository.PostRepository;
 import spring.project.groupware.academy.post.service.NoticeService;
@@ -20,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
@@ -42,8 +45,16 @@ public class PostApiController {
 
     // 게시글 목록 조회
     @GetMapping
-    public List<PostResponseDTO> findAllPost() {
-        return postService.findAllPost();
+    public Map<String, Object> getPostData() {
+        log.info("return response : NoticeData");
+
+        Page<Post> listFromPost = postService.getLastFiveArticlesFromNotice();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("listFromPost", listFromPost);
+
+
+        return response;
     }
 
     @DeleteMapping("/delete/{id}")
@@ -86,10 +97,17 @@ public class PostApiController {
         return noticeService.findNoticeById(id);
     }
 
-    // 게시글 목록 조회
     @GetMapping("/notice")
-    public List<NoticeResponseDTO> findNoticeAllPost() {
-        return noticeService.findAllNotice();
+    public Map<String, Object> getNoticeData() {
+        log.info("return response : NoticeData");
+
+        Page<Notice> listFromNotice = noticeService.getLastFiveArticlesFromNotice();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("listFromNotice", listFromNotice);
+
+
+        return response;
     }
 
     @DeleteMapping("/notice/delete/{id}")

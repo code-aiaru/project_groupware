@@ -2,6 +2,8 @@ package spring.project.groupware.academy.post.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +80,9 @@ public class NoticeService {
     }
 
 
+    public Page<Notice> getLastFiveArticlesFromNotice() {
+        return noticeRepository.findAllByOrderByIdDesc(PageRequest.of(0, 20));
 
+    }
 }
 
