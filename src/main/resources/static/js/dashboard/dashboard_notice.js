@@ -29,18 +29,19 @@ function initializeNotice() {
     function displayNoticeTitles(notices) {
         let noticeHtml = '<ul>';
         for (let notice of notices) {
-            let cleanContent = stripHTML(notice.content);
-            noticeHtml += `<li>[${notice.writer}] ${notice.title} - ${cleanContent}</li>`;
+            // let cleanContent = stripHTML(notice.content);
+            // noticeHtml += `<li>[${notice.writer}] ${notice.title} - ${cleanContent}</li>`;
+            noticeHtml += `<li>[${notice.writer}] ${notice.title}</li>`;
         }
         noticeHtml += '</ul>';
     
         noticeLoadSection.innerHTML = noticeHtml;
     }
 
-    function stripHTML(html) {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent || "";
-    }
+    // function stripHTML(html) {
+    //     const doc = new DOMParser().parseFromString(html, 'text/html');
+    //     return doc.body.textContent || "";
+    // }
     
 
 
