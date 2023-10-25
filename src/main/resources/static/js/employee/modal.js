@@ -30,5 +30,4 @@ modalContent.addEventListener('click', function(event) {
     event.stopPropagation(); // 모달 내부를 클릭해도 모달이 닫히지 않도록 이벤트 전파 중지
 });
 
-
 // 여기에 폼 요소 입력 및 서버로 데이터 전송 관련 코드를 추가해야 합니다.
