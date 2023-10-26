@@ -45,17 +45,10 @@ public class PostApiController {
 
     // 게시글 목록 조회
     @GetMapping
-    public Map<String, Object> getPostData() {
-        log.info("return response : NoticeData");
-
-        Page<Post> listFromPost = postService.getLastFiveArticlesFromNotice();
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("listFromPost", listFromPost);
-
-
-        return response;
+    public List<PostResponseDTO> findAllPost() {
+        return postService.findAllPost();
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id, @RequestParam String password) {
@@ -82,8 +75,7 @@ public class PostApiController {
     }
 
 
-
-
+    /*공지사항 게시판*/
 
     // 게시글 저장
     @PostMapping("/notice")
@@ -96,18 +88,10 @@ public class PostApiController {
     public NoticeResponseDTO findNoticePostById(@PathVariable final Long id) {
         return noticeService.findNoticeById(id);
     }
-
+    // 공지사항 리스트
     @GetMapping("/notice")
-    public Map<String, Object> getNoticeData() {
-        log.info("return response : NoticeData");
-
-        Page<Notice> listFromNotice = noticeService.getLastFiveArticlesFromNotice();
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("listFromNotice", listFromNotice);
-
-
-        return response;
+    public List<NoticeResponseDTO> findNoticeAllPost() {
+        return noticeService.findAllNotice();
     }
 
     @DeleteMapping("/notice/delete/{id}")
@@ -116,6 +100,9 @@ public class PostApiController {
 
     }
 
+    
+    
+    // 랜덤이름
     @GetMapping("/getRandomName")
     public Map<String, String> getRandomName() {
         Map<String, String> response = new HashMap<>();

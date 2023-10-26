@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>글쓰기 페이지</title>
+    <title>공지사항 작성</title>
 
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
@@ -19,7 +19,7 @@
 
 <div class="postWrite" id="loadedContent">
 
-    <h2 style="text-align: center;">TOAST UI Editor 글쓰기 페이지</h2>
+    <h2 style="text-align: center;">공지사항 작성</h2>
 
     <!-- 제목 입력란 -->
     <div>
@@ -130,10 +130,18 @@
             body: JSON.stringify(params),
         })
         .then(response => response.json())
-        .then(postId => {
-            alert(postId + '번 게시글이 저장되었습니다.');
-            location.href = '/notice/list.html';
-        })
+       .then(postId => {
+    alert(postId + '번 게시글이 저장되었습니다.');
+
+    // data-ajax 속성이 추가된 a 요소 생성
+    var link = document.createElement('a');
+    link.href = '/notice/list.html';
+    link.setAttribute('data-ajax', 'true');
+
+    // 요소를 DOM에 추가하고 클릭 이벤트 발생
+    document.body.appendChild(link);
+    link.click();
+})
         .catch(error => {
             console.error('저장 실패 : ', error)
         });

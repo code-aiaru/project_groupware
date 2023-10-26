@@ -55,19 +55,6 @@ async function performDelete() {
 
 }
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     const postDeleteButton = document.getElementById('postDeleteButton');
-
-//     if (postDeleteButton) {
-//         postDeleteButton.addEventListener('click', performDelete);
-//     } else {
-//         console.error('postDeleteButton을 찾을 수 없습니다.');
-//     }
-// });
-
-// }
-
-
 
     const postDeleteButton = document.getElementById('postDeleteButton');
 

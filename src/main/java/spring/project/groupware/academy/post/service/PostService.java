@@ -36,6 +36,13 @@ public class PostService {
         return new PostResponseDTO(post);
     }
 
+    @Transactional(readOnly = true)
+    public List<PostResponseDTO> findAllPost() {
+        List<Post> posts= postRepository.findAll();
+        return posts.stream()
+                .map(PostResponseDTO::new)
+                .collect(Collectors.toList());
+    }
     @Transactional
     public boolean deletePost(Long id, String password) {
 
@@ -72,10 +79,6 @@ public class PostService {
 
     }
 
-    //게시글 조회
-    public Page<Post> getLastFiveArticlesFromNotice() {
-        return postRepository.findAllByOrderByIdDesc(PageRequest.of(0, 20));
 
-    }
 }
 

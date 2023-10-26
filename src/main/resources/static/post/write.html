@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="page-title" title="게시글 작성">
-    <title>글쓰기 페이지</title>
+    <title>게시판 작성</title>
     <link rel="stylesheet" href="/css/post/write.css">
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
@@ -23,7 +23,7 @@
     <div class="post-write-wrapper">
 
         <div class="title">
-            <h2 style="text-align: center;">TOAST UI Editor 글쓰기 페이지</h2>
+            <h2 style="text-align: center;">게시판 작성</h2>
         </div>
     
         <div class="post-write-section">
@@ -142,10 +142,18 @@
             body: JSON.stringify(params),
         })
         .then(response => response.json())
-        .then(postId => {
-            alert(postId + '번 게시글이 저장되었습니다.');
-            location.href = '/post/list.html';
-        })
+     .then(postId => {
+    alert(postId + '번 게시글이 저장되었습니다.');
+
+    // data-ajax 속성이 추가된 a 요소 생성
+    var link = document.createElement('a');
+    link.href = '/post/list.html';
+    link.setAttribute('data-ajax', 'true');
+
+    // 요소를 DOM에 추가하고 클릭 이벤트 발생
+    document.body.appendChild(link);
+    link.click();
+})
         .catch(error => {
             console.error('저장 실패 : ', error)
         });
