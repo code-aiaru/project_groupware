@@ -44,7 +44,8 @@ public class ScheduleRestController {
 
     // 스케줄 추가
     @PostMapping
-    public ResponseEntity<?> addEvent(@RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+    public ResponseEntity<?> addEvent(@RequestBody ScheduleDTO scheduleDTO, 
+                                      @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
         // 현재 로그인한 사용자의 EmployeeEntity 가져오기
         EmployeeEntity employeeEntity = myUserDetails.getEmployeeEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
@@ -53,17 +54,19 @@ public class ScheduleRestController {
             log.info("사용자 정보가 없습니다.");
         }
 
-        ScheduleDTO savedEvent = scheduleService.saveEvent(scheduleDTO, employeeEntity);
+        ScheduleDTO savedEvent = scheduleService.addEvent(scheduleDTO, employeeEntity);
         if (savedEvent != null) {
             return ResponseEntity.ok(savedEvent);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save the event");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이벤트 저장 실패");
         }
     }
 
     // 스케줄 수정
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleDTO> updateEvent(@PathVariable Integer id, @RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MyUserDetails myUserDetails) {
+    public ResponseEntity<ScheduleDTO> updateEvent(@PathVariable Integer id, 
+                                                   @RequestBody ScheduleDTO scheduleDTO, 
+                                                   @AuthenticationPrincipal MyUserDetails myUserDetails) {
 
         // 현재 로그인한 사용자의 EmployeeEntity 가져오기
         EmployeeEntity employeeEntity = myUserDetails.getEmployeeEntity(); // 현재 로그인한 사용자의 MemberEntity 가져오기
@@ -81,10 +84,10 @@ public class ScheduleRestController {
     public ResponseEntity<?> deleteEvent(@PathVariable Integer id) {
         try {
             scheduleService.deleteEvent(id);
-            return ResponseEntity.ok("Event deleted successfully.");
+            return ResponseEntity.ok("이벤트가 성공적으로 삭제되었습니다.");
         } catch (Exception e) {
-            log.error("Failed to delete the event with id: " + id, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete the event");
+            log.error("이벤트 삭제 실패 id: " + id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이벤트 삭제 실패");
         }
     }
 

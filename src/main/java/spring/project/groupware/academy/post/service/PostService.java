@@ -74,7 +74,7 @@ public class PostService {
 
     //게시글 조회
     public Page<Post> getLastFiveArticlesFromNotice() {
-        return postRepository.findAllByOrderByIdDesc(PageRequest.of(0, 20));
+        return postRepository.findAllByOrderByIdDesc(PageRequest.of(0, 8));
 
     }
 }

@@ -20,7 +20,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     // 이벤트 추가
-    public ScheduleDTO saveEvent(ScheduleDTO scheduleDTO, EmployeeEntity employeeEntity) {
+    public ScheduleDTO addEvent(ScheduleDTO scheduleDTO, EmployeeEntity employeeEntity) {
         ScheduleEntity scheduleEntity = ScheduleEntity.toEntity(scheduleDTO);
         scheduleEntity.setEmployeeEntity(employeeEntity);
         ScheduleEntity savedEntity = scheduleRepository.save(scheduleEntity);
@@ -39,21 +39,20 @@ public class ScheduleService {
 
     public List<ScheduleDTO> getAllEvents(EmployeeEntity currentUser) {
         List<ScheduleEntity> entities = scheduleRepository.findAll();
-        log.info("Total schedules found: {}", entities.size());
+        log.info("전체 스케줄 수: {}", entities.size());
 
         List<ScheduleDTO> result = entities.stream()
                 .filter(entity -> {
                     boolean allowed = isAllowedToView(entity, currentUser);
                     if(!allowed) {
-                        log.info("Filtered out schedule with id: {} for target: {}", entity.getId(), entity.getTarget());
+                        log.info("필터된 스케줄 id: {} 타겟: {}", entity.getId(), entity.getTarget());
                     }
                     return allowed;
                 })
                 .map(ScheduleDTO::toDTO)
                 .collect(Collectors.toList());
 
-        log.info("Total schedules after filtering: {}", result.size());
-
+        log.info("필터링 된 후 스케줄 수: {}", result.size());
         return result;
     }
 
@@ -94,7 +93,8 @@ public class ScheduleService {
 
     // 이벤트 수정
     public ScheduleDTO updateEvent(Integer id, ScheduleDTO scheduleDTO, EmployeeEntity currentUser) {
-        ScheduleEntity scheduleEntity = scheduleRepository.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
+        ScheduleEntity scheduleEntity =
+                scheduleRepository.findById(id).orElseThrow(() -> new RuntimeException("발견된 이벤트 없음"));
         Role role = currentUser.getRole();
 
         // 사용자가 'ADMIN'이 아니고, 동시에 글 작성자도 아니라면 예외 발생
