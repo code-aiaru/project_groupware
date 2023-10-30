@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.chatbot.chatbot;
+package spring.project.groupware.academy.chatbot.config;
 
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;

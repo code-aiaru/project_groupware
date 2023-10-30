@@ -8,7 +8,7 @@
     <title>근태관리 리스트</title>
     <link rel="stylesheet" th:href="@{/css/attendance/attendanceList2.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script th:src="@{/js/attendance/attendanceList.js}" defer="defer"></script>
+    <script th:src="@{/js/attendance/attendanceList2.js}" defer="defer"></script>
 </head>
 <body>
 <div id="loadedContent">
@@ -53,27 +53,32 @@
                             <!--            표현식설정-->
                             <!--                        <input type="text" name="first" id="first" th:value="${param.first}" placeholder="시작일">-->
                             <!--                        <input type="text" name="last" id="last" th:value="${param.last}" placeholder="끝일">-->
-                            <input type="date" name="first" id="first" placeholder="시작일">
+                            <input type="date" name="first" id="first" placeholder="시작일" th:value="${param.first}">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
-                            <input type="date" name="last" id="last"  placeholder="끝일">
+                            <input type="date" name="last" id="last"  placeholder="끝일" th:value="${param.last}">
                             <!--                        min="2019-09-10" max="2019-09-25"-->
                             <input type="submit" value="검색">
                         </form>
 
-                        <th:block sec:authorize="hasAnyRole('ADMIN')" style="float: left">
+                        <th:block sec:authorize="hasAnyRole('ADMIN')" >
                             <a th:href="@{/api/attendance/create/now}">
-                                <li>
-                                    <span>출결 생성</span>
-                                </li>
+                                    <button type="button">출결 생성</button>
                             </a>
                         </th:block>
+
+<!--                        <th:block sec:authorize="hasAnyRole('ADMIN')">-->
+<!--                                <button type="button" id="ToDayOkBtn" data-ajax>-->
+<!--                                    출결 생성-->
+<!--                                </button>-->
+<!--                        </th:block>-->
+
                     </div>
                 </div>
 
                 <table>
                     <thead>
                     <tr class="th1">
-                        <th colspan="8">근태 페이징 리스트</th>
+                        <th colspan="8">근태 목록</th>
                     </tr>
                     <tr class="th2">
                         <th> id</th>
@@ -94,8 +99,8 @@
                         <td th:if="${attendance.employee != null}" th:text="${attendance.employee?.employeeName}"></td>
                         <td th:if="${attendance.student != null}" th:text="${attendance.student?.studentName}"></td>
                         <td th:text="${attendance.attDate}"></td>
-                        <td th:text="${#temporals.format(attendance.inAtt, 'yy.MM.dd/HH:mm')}"></td>
-                        <td th:text="${#temporals.format(attendance.outAtt, 'yy.MM.dd/HH:mm')}"></td>
+                        <td th:text="${#temporals.format(attendance.inAtt, 'HH:mm')}"></td>
+                        <td th:text="${#temporals.format(attendance.outAtt, 'HH:mm')}"></td>
                         <td th:text="${attendance.attendanceStatus}"></td>
 
                         <td>

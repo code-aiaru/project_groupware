@@ -13,8 +13,13 @@ import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
 import spring.project.groupware.academy.employee.repository.EmployeeRepository;
 import spring.project.groupware.academy.salary.repository.SalaryRepository;
+import spring.project.groupware.academy.student.dto.StudentDto;
+import spring.project.groupware.academy.student.entity.StudentEntity;
+import spring.project.groupware.academy.student.repository.StudentRepository;
+import spring.project.groupware.academy.student.service.StudentService;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +42,11 @@ class AcademyApplicationTests {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private StudentRepository studentRepository;
 
 	@Test
 	void admin() {
@@ -122,6 +132,93 @@ class AcademyApplicationTests {
 			createdAccounts++;
 			userNumber++;
 		}
+	}
+
+	@Test
+	void createStudentAccounts() {
+		List<String> existingIds = new ArrayList<>();
+		List<String> existingPhones = new ArrayList<>();
+		List<String> existingEmails = new ArrayList();
+
+		// 먼저 기존 데이터베이스에 있는 아이디, 휴대전화 및 이메일 목록을 가져옵니다.
+		List<StudentEntity> studentEntities = studentRepository.findAll();
+		for (StudentEntity entity : studentEntities) {
+			existingIds.add(entity.getStudentName());
+			existingPhones.add(entity.getStudentPhone());
+			existingEmails.add(entity.getStudentEmail());
+		}
+
+		int createdAccounts = 0;
+		int userNumber = 1;
+
+		while (createdAccounts < 10) {
+			// 아이디, 휴대전화, 이메일 생성
+			String employeeId = generateUniqueEmployeeId(existingIds);
+			String phone = generateUniquePhone(existingPhones);
+			String email = generateUniqueEmail(existingEmails);
+
+			// 이름에 숫자를 추가하여 계정 생성
+			String employeeName = "수강생 " + userNumber;
+
+			// 나머지 필드에는 랜덤한 값을 부여하거나 기본값을 사용합니다.
+			StudentDto studentDto = StudentDto.builder()
+					.studentName(employeeName)
+					.studentGender("남")
+					.studentPhone(phone)
+					.studentEmail(email)
+					.studentClass(generateClass())
+					.studentBirth("21001231")
+					.studentPostCode("12345")
+					.studentStreetAddress("도로명주소")
+					.studentDetailAddress("상세주소")
+					.build();
+
+			StudentEntity studentEntity = StudentEntity.toStudentEntityInsert(studentDto);
+
+			// Entity를 저장
+			studentRepository.save(studentEntity);
+
+			// 중복 체크를 위해 사용한 아이디, 휴대전화, 이메일을 목록에 추가
+			existingIds.add(employeeId);
+			existingPhones.add(phone);
+			existingEmails.add(email);
+
+			createdAccounts++;
+			userNumber++;
+		}
+	}
+
+	@Test
+	void createinOutTime() {
+		List<EmployeeEntity> employeeEntities = employeeRepository.findAll();
+//		List<StudentEntity> studentEntities = studentRepository.findAll();
+
+//		attendanceService.attendanceCreateCustom1(LocalDate.of(2023, 9, 1), LocalDate.of(2023, 10, 25));
+
+		for(EmployeeEntity employee : employeeEntities){
+			List<Attendance> attendanceList = attendanceRepository.findByEmployee(employee);
+			for (Attendance attendance : attendanceList){
+//				if (attendance.getInAtt()==null&&attendance.getOutAtt()==null){
+//					Random rand = new Random();
+//					Integer[] hour = {9,10,11,12,13,14};
+//					Integer[] minute = {10,20,30,40,50,0};
+//					int time = rand.nextInt(7);
+//					attendance.changeInTime(LocalTime.of(hour[time],minute[time]));
+//					attendance.changeOutTime(LocalTime.of(hour[time]+7,minute[time]));
+				attendance.changeInTime(LocalTime.of(9,10));
+				attendance.changeOutTime(LocalTime.of(18,0));
+//				}
+			}
+		}
+	}
+
+
+	private static String generateClass() {
+		String[] classes = {"프론트엔드", "백엔드", "포토샵"};
+		Random rand = new Random();
+		int randomIndex = rand.nextInt(classes.length);
+
+		return classes[randomIndex];
 	}
 
 	private String generateUniqueEmployeeId(List<String> existingIds) {
