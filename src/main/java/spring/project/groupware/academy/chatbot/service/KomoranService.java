@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
-import spring.project.groupware.academy.chatbot.dto.PhoneInfo;
+//import spring.project.groupware.academy.chatbot.dto.PhoneInfo;
 import spring.project.groupware.academy.chatbot.entity.Answer;
 import spring.project.groupware.academy.chatbot.entity.ChatBotIntention;
-import spring.project.groupware.academy.chatbot.entity.MemberEntity;
+//import spring.project.groupware.academy.chatbot.entity.MemberEntity;
 import spring.project.groupware.academy.chatbot.repository.ChatBotIntentionRepository;
-import spring.project.groupware.academy.chatbot.repository.MemberEntityRepository;
+//import spring.project.groupware.academy.chatbot.repository.MemberEntityRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -67,19 +67,10 @@ public class KomoranService {
       //2차분석 메서드
       AnswerDTO answer = analyzeToken(next, result).toAnswerDTO();
 
-//      //전화인경우 전화,전화번호 번호탐색
-//      if (token.contains("전화")) {
-//        PhoneInfo phone = analyzeTokenIsPhone(next);
-//        answer.phone(phone);//전화인경우에만 전화 데이터
-//      } else if (token.contains("안녕")) {
-//        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
-//        messageDTO.today(today.format(dateFormatter));//처음 접속할때만 날짜표기
-//      } else if (token.contains("부서")) {
-//        PhoneInfo dept = analyzeTokenIsDept(next);
-//        System.out.println(dept.getDeptName()+" << 부서 이름");
-//        System.out.println(dept.getMemberName()+" <<  이름");
-//        answer.phone(dept);// 부서 -> 이름
-//      }
+      if (token.contains("안녕")) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        messageDTO.today(today.format(dateFormatter));//처음 접속할때만 날짜표기
+      }
 
       messageDTO.answer(answer);//토근에대한 응답정보
 
@@ -91,58 +82,58 @@ public class KomoranService {
     return messageDTO;
   }
 
-  @Autowired
-  private MemberEntityRepository memberEntityRepository;
+//  @Autowired
+//  private MemberEntityRepository memberEntityRepository;
 
 
-  private PhoneInfo analyzeTokenIsDept(Set<String> next) {
-
-    for (String name : next) {
-
-      System.out.println(name+" <<2차");
-      Optional<MemberEntity> member = memberEntityRepository.findByName(name);
-      if (!member.isPresent()) continue;
-      //존재하면
-      String deptName = member.get().getDept().getDname();
-/*      String phone = member.get().getPhone();*/
-      String memberName = member.get().getName();
-
-      System.out.println(member.get().getDept().getDname()+" << 부서 이름2");
-      System.out.println(member.get().getName()+" <<  이름2");
-
-
-      return PhoneInfo.builder()
-              .deptName(deptName)
-              /*.phone(phone)*/
-              .memberName(memberName)
-              .build();
-
-    }
-    return null;
-  }
-
-  //전화 문의인경우 DB에서 사원을 을 찾아서 처리
-  private PhoneInfo analyzeTokenIsPhone(Set<String> next) {
-
-    for (String name : next) {
-      System.out.println(name+" <<2차2");
-      Optional<MemberEntity> member = memberEntityRepository.findByName(name);
-      if (!member.isPresent()) continue;
-      //존재하면
-      String deptName = member.get().getDept().getDname();
-      String phone = member.get().getPhone();
-      String memberName = member.get().getName();
-
-
-      return PhoneInfo.builder()
-              /*.deptName(deptName)*/
-              .phone(phone)
-              .memberName(memberName)
-              .build();
-
-    }
-    return null;
-  }
+//  private PhoneInfo analyzeTokenIsDept(Set<String> next) {
+//
+//    for (String name : next) {
+//
+//      System.out.println(name+" <<2차");
+//      Optional<MemberEntity> member = memberEntityRepository.findByName(name);
+//      if (!member.isPresent()) continue;
+//      //존재하면
+//      String deptName = member.get().getDept().getDname();
+///*      String phone = member.get().getPhone();*/
+//      String memberName = member.get().getName();
+//
+//      System.out.println(member.get().getDept().getDname()+" << 부서 이름2");
+//      System.out.println(member.get().getName()+" <<  이름2");
+//
+//
+//      return PhoneInfo.builder()
+//              .deptName(deptName)
+//              /*.phone(phone)*/
+//              .memberName(memberName)
+//              .build();
+//
+//    }
+//    return null;
+//  }
+//
+//  //전화 문의인경우 DB에서 사원을 을 찾아서 처리
+//  private PhoneInfo analyzeTokenIsPhone(Set<String> next) {
+//
+//    for (String name : next) {
+//      System.out.println(name+" <<2차2");
+//      Optional<MemberEntity> member = memberEntityRepository.findByName(name);
+//      if (!member.isPresent()) continue;
+//      //존재하면
+//      String deptName = member.get().getDept().getDname();
+//      String phone = member.get().getPhone();
+//      String memberName = member.get().getName();
+//
+//
+//      return PhoneInfo.builder()
+//              /*.deptName(deptName)*/
+//              .phone(phone)
+//              .memberName(memberName)
+//              .build();
+//
+//    }
+//    return null;
+//  }
 
   //1차의도가 존재하면
   //하위의도가 존재하는지 파악

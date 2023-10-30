@@ -6,6 +6,7 @@
     <title>INDEX</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" data-static>
     <script th:src="@{/js/index.js}" data-static></script>
+    <script th:src="@{/js/chatbot2/chatbot2.js}" data-static></script>
     <script th:src="@{/js/naver/naver.js}" defer="defer"></script>
     <script>
             // 새로고침용 url 
@@ -410,12 +411,11 @@
             <!-- snb end -->
 
             <!-- content -->
-            <!-- <div class="contents_wrapper"> -->
-                <div class="contents" id="contents">
-            <!-- </div> -->
+
+            <div class="contents" id="contents">
               
             </div>
-            <!-- content end -->
+
 
 
 
@@ -423,7 +423,25 @@
         
         <!-- footer -->
         <div class="footer">
-            
+            <div>
+                <button class="chatbot_icon" data-chatbot>
+                    <img src="/images/index/chatbot/70 Basic Icons-all-43.svg" alt="챗봇 아이콘">
+                </button>
+            </div>
+            <div class="chatbot_wrapper" id="chatbot" style="display: none;">
+                <div class="chatbot_box">
+                    <div class="chatbot_title">
+                        <span>CHATBOT</span>
+                    </div>
+                    <div class="chatbot_log">
+    
+                    </div>
+                    <div class="chatbot_submit_box">
+                        <input type="text" id="chatbot_input">
+                        <button><img src="/images/index/chatbot/direction.svg" alt="메세지 보내기 아이콘"></button>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- footer end -->
 

@@ -421,6 +421,111 @@ body {
 .footer {
     
 }
+
+.chatbot_icon {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.chatbot_icon > img {
+    height: 25px;
+    width: 25px;
+    margin: 10px;
+}
+.chatbot_box {
+    position: fixed;
+    bottom: 85px;
+    right: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 0 #999999;
+    height: 400px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.chatbot_box > .chatbot_title {
+    background-image: linear-gradient(to right, #2788b5, #b8d7b8);
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chatbot_box > .chatbot_title > span {
+    font-size: 15px;
+    color: #ffffff;
+}
+.chatbot_box > .chatbot_log {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #dddddd;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.chatbot_box > .chatbot_log::-webkit-scrollbar {
+    display: none;
+}
+.chatbot_box > .chatbot_submit_box {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chatbot_box > .chatbot_submit_box > input {
+    margin: 5px;
+    height: 30px;
+    width: 90%;
+    padding: 3px;
+    box-sizing: border-box;
+}
+.chatbot_box > .chatbot_submit_box > button {
+    height: 30px;
+    width: 30px;
+    margin: 5px 5px 5px 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.chatbot_box > .chatbot_submit_box > button > img{
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+
+p.message_box {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 3px 5px;
+    width: min-content;
+    max-width: 50%;
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+
+}
+.message.user {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.message.bot {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+
+
 /* footer end */
 
 .container {

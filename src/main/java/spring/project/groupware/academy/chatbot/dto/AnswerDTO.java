@@ -18,15 +18,15 @@ public class AnswerDTO {
 	private String content;
 
 	private String keyword;//name
-	
-	private PhoneInfo phone;
-
-	private List<PhoneInfo> phoneInfoList;
-	
-	public AnswerDTO phone(PhoneInfo phone){
-		this.phone=phone;
-		return this;
-	}
+//
+//	private PhoneInfo phone;
+//
+//	private List<PhoneInfo> phoneInfoList;
+//
+//	public AnswerDTO phone(PhoneInfo phone){
+//		this.phone=phone;
+//		return this;
+//	}
 
 
 

@@ -5,8 +5,8 @@ import kr.co.shineware.nlp.komoran.core.Komoran;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import spring.project.groupware.academy.chatbot.repository.DepartmentEntityRepository;
-import spring.project.groupware.academy.chatbot.repository.MemberEntityRepository;
+//import spring.project.groupware.academy.chatbot.repository.DepartmentEntityRepository;
+//import spring.project.groupware.academy.chatbot.repository.MemberEntityRepository;
 
 import java.io.*;
 import java.util.HashSet;
@@ -31,11 +31,11 @@ public class KomoranConfig {
 	//private String DIC_DIR="static/files/";
 	private String USER_DIC="user.dic";
 
-	@Autowired
-	DepartmentEntityRepository dept;//부서이름
+//	@Autowired
+//	DepartmentEntityRepository dept;//부서이름
 	
-	@Autowired
-	MemberEntityRepository member;//사원이름
+//	@Autowired
+//	MemberEntityRepository member;//사원이름
 
 	@Bean
 	Komoran komoran() {
@@ -71,13 +71,13 @@ public class KomoranConfig {
 		}
 		////////////////////////////////////////////////////
 		//부서명을 set에 저장
-		dept.findAll().forEach(e -> {
-			keys.add(e.getDname());
-		});
-		//사원명을 set에 저장
-		member.findAll().forEach(e -> {
-			keys.add(e.getName());
-		});
+//		dept.findAll().forEach(e -> {
+//			keys.add(e.getDname());
+//		});
+//		//사원명을 set에 저장
+//		member.findAll().forEach(e -> {
+//			keys.add(e.getName());
+//		});
 		
 		// Set에 저장된 명단을 고유명사로 파일에 등록
 		try {
