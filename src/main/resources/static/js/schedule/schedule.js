@@ -14,13 +14,11 @@ function initializeScript() {
         ===================== */
 
         locale                      : 'ko',    
-        // allDaySlot                  : true,
         displayEventTime            : true,
         displayEventEnd             : true,
         firstDay                    : 0, //월요일이 먼저 오게 하려면 1
         weekends                    : false,
         selectable                  : true,
-        // editable                    : true,
         slotLabelFormat             : 'HH:mm',
         dayPopoverFormat            : 'MM/DD dddd',
         longPressDelay              : 0,
@@ -64,7 +62,7 @@ function initializeScript() {
     calendar.render();
 
 
-    // 모달 관련 로직 ==========================================================================
+    // 콘텍스트 메뉴 & 모달 관련 로직 ==========================================================================
 
 
     function initializeContextMenu(info, sourceType) {
