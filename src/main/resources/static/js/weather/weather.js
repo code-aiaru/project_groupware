@@ -82,23 +82,46 @@ let appUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityVal}&appid
   }
 )();
 
-function mapFn(lon, lat) {
-  /// 카카오 지도 API
-  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = { // 위도    경도
-      center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
-      level: 10 // 지도의 확대 레벨
-    };
+// function mapFn(lon, lat) {
+//   /// 카카오 지도 API
+//   var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+//     mapOption = { // 위도    경도
+//       center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+//       level: 10 // 지도의 확대 레벨
+//     };
 
-  var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-  // 마커가 표시될 위치입니다                  // 마커 위도   마커 경도
-  var markerPosition = new kakao.maps.LatLng(lat, lon);
-  // 마커를 생성합니다
-  var marker = new kakao.maps.Marker({
-    position: markerPosition
-  });
-  // 마커가 지도 위에 표시되도록 설정합니다
-  marker.setMap(map);
-  // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-  // marker.setMap(null);   
-}
+//   var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+//   // 마커가 표시될 위치입니다                  // 마커 위도   마커 경도
+//   var markerPosition = new kakao.maps.LatLng(lat, lon);
+//   // 마커를 생성합니다
+//   var marker = new kakao.maps.Marker({
+//     position: markerPosition
+//   });
+//   // 마커가 지도 위에 표시되도록 설정합니다
+//   marker.setMap(map);
+//   // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+//   // marker.setMap(null);   
+// }
+
+function mapFn(lon, lat) {
+    kakao.maps.load(function() {
+      // 지도를 표시할 div와 지도 옵션 설정
+      var mapContainer = document.getElementById('map'), 
+          mapOption = { 
+            center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+            level: 10 // 지도의 확대 레벨
+          };
+  
+      // 지도 생성
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+  
+      // 마커 위치 설정 및 마커 생성
+      var markerPosition = new kakao.maps.LatLng(lat, lon),
+          marker = new kakao.maps.Marker({
+            position: markerPosition
+          });
+  
+      // 마커 지도에 표시
+      marker.setMap(map);
+    });
+  }
