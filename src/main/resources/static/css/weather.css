@@ -1,0 +1,13 @@
+@import url(commons/reset.css);
+@import url(commons/leftMenu.css);
+@import url(commons/rightMenu.css);
+@import url(commons/weath-con.css);
+#wrap{
+  width: 100%;
+  /* border: 1px solid; */
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  background-color:#e7ede7;
+}

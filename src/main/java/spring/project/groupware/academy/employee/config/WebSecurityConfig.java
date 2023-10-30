@@ -32,8 +32,9 @@ public class WebSecurityConfig {
                     http.csrf().disable();
             http.authorizeRequests()
                     .antMatchers("/login").permitAll()
-                    .antMatchers("/", "/dashboard", "/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
-                            "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**", "/notice/list", "/attendance/**", "/approval/**", "/naver/**" ,"/post/**").authenticated()
+                    .antMatchers("/", "/dashboard", "/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**",
+                            "/employee/delete/**", "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**",
+                            "/notice/list", "/attendance/**", "/approval/**", "/naver/**" ,"/post/**", "/weather", "/movie", "/bus").authenticated()
                     .antMatchers("/employee/join", "/employee/employeeList**", "/notice/create", "/notice/edit/**").hasAnyRole("ADMIN")
 
                     .and()
