@@ -41,12 +41,13 @@
 <!--                            <input type="text" th:value="${attendanceDto.student?.studentName}" readonly class="readonly" id="studentName">-->
 <!--                        </li>-->
 
-
+                        <li>
+                            <label th:for="inAtt">일자</label>
+                            <input type="text" th:value="${attendanceDto.attDate}" readonly class="readonly">
+                        </li>
                         <li>
                             <label th:for="inAtt">출근 시간</label>
-                            <input type="text" th:value="${attendanceDto.attDate}" readonly class="readonly">
                             <input type="text" th:value="${#temporals.format(attendanceDto.inAtt)}">
-
                         </li>
                         <li>
                             <label th:for="outAtt">퇴근 시간</label>

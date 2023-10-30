@@ -16,6 +16,7 @@ import spring.project.groupware.academy.chatbot.repository.MemberEntityRepositor
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,8 +32,7 @@ public class KomoranService {
     KomoranResult result = komoran.analyze(message);
 
     //문자에서 명사들만 추출한 목록 중복제거해서 set
-    Set<String> nouns = result.getNouns().stream()
-            .collect(Collectors.toSet());
+    Set<String> nouns = new HashSet<>(result.getNouns());
     nouns.forEach((noun) -> {
       System.out.println(">>>:" + noun);
     });
@@ -67,19 +67,19 @@ public class KomoranService {
       //2차분석 메서드
       AnswerDTO answer = analyzeToken(next, result).toAnswerDTO();
 
-      //전화인경우 전화,전화번호 번호탐색
-      if (token.contains("전화")) {
-        PhoneInfo phone = analyzeTokenIsPhone(next);
-        answer.phone(phone);//전화인경우에만 전화 데이터
-      } else if (token.contains("안녕")) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
-        messageDTO.today(today.format(dateFormatter));//처음 접속할때만 날짜표기
-      } else if (token.contains("부서")) {
-        PhoneInfo dept = analyzeTokenIsDept(next);
-        System.out.println(dept.getDeptName()+" << 부서 이름");
-        System.out.println(dept.getMemberName()+" <<  이름");
-        answer.phone(dept);// 부서 -> 이름
-      }
+//      //전화인경우 전화,전화번호 번호탐색
+//      if (token.contains("전화")) {
+//        PhoneInfo phone = analyzeTokenIsPhone(next);
+//        answer.phone(phone);//전화인경우에만 전화 데이터
+//      } else if (token.contains("안녕")) {
+//        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+//        messageDTO.today(today.format(dateFormatter));//처음 접속할때만 날짜표기
+//      } else if (token.contains("부서")) {
+//        PhoneInfo dept = analyzeTokenIsDept(next);
+//        System.out.println(dept.getDeptName()+" << 부서 이름");
+//        System.out.println(dept.getMemberName()+" <<  이름");
+//        answer.phone(dept);// 부서 -> 이름
+//      }
 
       messageDTO.answer(answer);//토근에대한 응답정보
 

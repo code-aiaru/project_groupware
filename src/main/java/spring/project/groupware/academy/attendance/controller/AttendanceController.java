@@ -41,6 +41,13 @@ public class AttendanceController {
         return "redirect:/attendance/list2";
     }
 
+//    @PathVariable("id") Long id, HttpServletRequest request) {
+//        String referer = request.getHeader("Referer");
+//        attendanceService.outAttend1(id);
+//
+//        return "redirect:"+referer;
+//    }
+
     @GetMapping("/out/{id}")
     public String outAttend(@PathVariable("id") Long id) {
         attendanceService.outAttend1(id);

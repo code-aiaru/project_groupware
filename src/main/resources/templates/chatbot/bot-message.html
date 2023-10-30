@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<div id="loadedContent">
+	<div class="flex center date" th:if="${msg.today}" th:text="${msg.today}" data-ajax></div>
+	<div class="msg bot flex">
+		<div  class="icon">
+			<img th:src="@{/images/icon/chat.svg}" data-ajax>
+		</div>
+		<div class="message" >
+			<div class="part" th:if="${msg.answer.keyword ne '전화' or msg.answer.keyword ne '부서' or  msg.answer.phone != null}">
+				<p th:utext="${msg.answer.content}" data-ajax></p>
+			</div>
+			<div th:if="${msg.answer.keyword eq '전화'}" >
+				<div th:replace="~{chatbot/fragments/phone :: phoneFragment}" data-ajax></div>
+			</div>
+			<div th:if="${msg.answer.keyword eq '부서'}" >
+				<div th:replace="~{chatbot/fragments/dept :: deptFragment}" data-ajax></div>
+			</div>
+			<div class="time" th:text="${msg.time}" data-ajax>메세지 작성 시간</div>
+		</div>
+	</div>
+</div>
+</html>
