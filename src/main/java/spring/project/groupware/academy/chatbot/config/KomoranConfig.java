@@ -1,12 +1,9 @@
-//package spring.project.groupware.academy.chatbot.config;
+//package spring.project.groupware.academy.chatbot2.config;
 //
 //import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 //import kr.co.shineware.nlp.komoran.core.Komoran;
-//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
-////import spring.project.groupware.academy.chatbot.repository.DepartmentEntityRepository;
-////import spring.project.groupware.academy.chatbot.repository.MemberEntityRepository;
 //
 //import java.io.*;
 //import java.util.HashSet;
@@ -97,6 +94,8 @@
 //		} catch (IOException e1) {
 //			e1.printStackTrace();
 //		}
+//
+//
 //	}
 //
 //

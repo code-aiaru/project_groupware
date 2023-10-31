@@ -30,7 +30,7 @@ public class Answer {
 		return this;
 	}
 	
-	public AnswerDTO toAnswerDTO() {
+	public spring.project.groupware.academy.chatbot.dto.AnswerDTO toAnswerDTO() {
 		return AnswerDTO.builder()
 				.no(no).content(content).keyword(keyword)
 				.build();
