@@ -7,8 +7,13 @@ import java.util.Optional;
 
 public interface ChatBotIntentionRepository extends JpaRepository<ChatBotIntention, Long>{
 
+//	Optional<ChatBotIntention> findByName(String token);
+//
+//
+//	Optional<ChatBotIntention> findByNameAndUpper(String token, ChatBotIntention upper);
+
 	Optional<ChatBotIntention> findByName(String token);
-
-
 	Optional<ChatBotIntention> findByNameAndUpper(String token, ChatBotIntention upper);
+	Optional<ChatBotIntention> findByNameAndUpperIsNull(String token);
+
 }
