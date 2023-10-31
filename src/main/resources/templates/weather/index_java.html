@@ -5,7 +5,7 @@
   <title>날씨API</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b1a42c4dcdb7bbf54797810adb17304&libraries=services,clusterer,drawing&autoload=false"></script>
-  <script src="/js/weather/weather2.js" data-dom-ready></script>
+  <script src="/js/weather/weather_java.js" data-dom-ready></script>
 </head>
 <body>
 <div id="loadedContent">
@@ -22,6 +22,8 @@
         <button onclick="weatherSearch()">검색</button>
       </div>
       <div class="weather-list">
+        <input type="hidden" id="lat" name="lat" th:value="${coord.lat}"/>
+        <input type="hidden" id="lon" name="lon" th:value="${coord.lon}"/>
         <div class="city">
           <span class="con"></span>
           <span class="description"></span>
@@ -34,14 +36,6 @@
           <span>체감온도</span>
           <span class="con"></span>
         </div>
-        <!--            <div class="temp_min">-->
-        <!--              <span>최저</span>-->
-        <!--              <span class="con"></span>-->
-        <!--            </div>-->
-        <!--            <div class="temp_max">-->
-        <!--              <span>최고</span>-->
-        <!--              <span class="con"></span>-->
-        <!--            </div>-->
         <div class="temperatureRange"> <!--최저, 최고온도-->
           <span class="con"></span>
         </div>
@@ -50,9 +44,9 @@
           <span class="con"></span>
         </div>
       </div>
-      </div>
     </div>
-    <div class="right-con">
+  </div>
+  <div class="right-con">
     <div class="map-con">
       <div id="map" style="width:1000px;height:700px;"></div>
     </div>

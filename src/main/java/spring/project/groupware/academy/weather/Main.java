@@ -17,5 +17,7 @@ public class Main {
     private String temp;
     private String temp_max;
     private String temp_min;
+    private String sea_level;
+    private String grnd_level;
 
 }

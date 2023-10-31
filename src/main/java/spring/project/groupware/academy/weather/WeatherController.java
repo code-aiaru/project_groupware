@@ -1,9 +1,8 @@
 package spring.project.groupware.academy.weather;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +13,8 @@ public class WeatherController {
 
     private final WeatherService weatherService;
 
+
+    // ajax 이용 db 저장
     @PostMapping("/post/weather2")
     public Map<String, String> postWeather(@RequestBody WeatherApiDto weatherApiDto) {
         Map<String, String> response = new HashMap<>();
@@ -35,4 +36,5 @@ public class WeatherController {
         }
         return response;
     }
+
 }
