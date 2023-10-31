@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                     .antMatchers("/login","/movie/saveBoxOfficeData").permitAll()
                     .antMatchers("/", "/dashboard", "/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**",
                             "/employee/delete/**", "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**",
-                            "/notice/list", "/attendance/**", "/approval/**", "/naver/**" ,"/post/**", "/weather", "/movie", "/bus").authenticated()
+                            "/notice/list", "/attendance/**", "/approval/**", "/naver/**" ,"/post/**", "/weather**", "/movie", "/bus").authenticated()
                     .antMatchers("/employee/join", "/employee/employeeList**", "/notice/create", "/notice/edit/**").hasAnyRole("ADMIN")
 
                     .and()
