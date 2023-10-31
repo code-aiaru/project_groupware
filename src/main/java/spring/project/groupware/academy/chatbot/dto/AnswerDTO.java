@@ -16,6 +16,12 @@ public class AnswerDTO {
 	private String content;
 
 	private String keyword;//name
+
+
+
+
+
+
 //
 //	private PhoneInfo phone;
 //

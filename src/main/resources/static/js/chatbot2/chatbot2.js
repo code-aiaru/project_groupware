@@ -1,6 +1,4 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-
     // 챗봇 열기.
     const chatbot = document.getElementById('chatbot');
 
@@ -13,20 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    
+
     // 챗봇 메시지 보내기.
     const chatbotInput = document.getElementById('chatbot_input');
     chatbotInput.addEventListener('keyup', function(event) {
         if (event.key === 'Enter') {
-            // 입력된 값을 가져오고, input을 비웁니다.
             const inputValue = event.target.value;
             event.target.value = '';
-            
-            // 입력된 값을 다른 함수로 보냅니다.
             sendMessage(inputValue);
         }
     });
-
 
     // 챗봇 로그에 띄우기.
     const chatbotLog = document.querySelector('.chatbot_log');
@@ -34,27 +28,68 @@ document.addEventListener('DOMContentLoaded', function() {
     function addMessageToLog(message, type) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', type);
-        // messageDiv.textContent = message;
-        const messageText = document.createElement('p');
-        messageText.textContent = message;
-        messageText.classList.add('message_box');
+        const messageText = document.createElement('div');
+
+        if (type === 'user') {
+            messageText.classList.add('message_box', 'user-message-box');
+        } else if (type === 'bot') {
+            messageText.classList.add('message_box', 'bot-message-box');
+            try {
+                const data = JSON.parse(message);
+                const weeklyBoxOfficeList = data.boxOfficeResult.weeklyBoxOfficeList;
+
+                const table = document.createElement('table');
+                table.classList.add('movie-table');
+
+                // Table header
+                const tableHeader = document.createElement('thead');
+                const tableHeaderRow = document.createElement('tr');
+                for (const key in weeklyBoxOfficeList[0]) {
+                    if (weeklyBoxOfficeList[0].hasOwnProperty(key)) {
+                        const th = document.createElement('th');
+                        th.textContent = key;
+                        tableHeaderRow.appendChild(th);
+                    }
+                }
+                tableHeader.appendChild(tableHeaderRow);
+                table.appendChild(tableHeader);
+
+                // Table data
+                const tableBody = document.createElement('tbody');
+                for (const movie of weeklyBoxOfficeList) {
+                    const row = document.createElement('tr');
+                    for (const key in movie) {
+                        if (movie.hasOwnProperty(key)) {
+                            const cell = document.createElement('td');
+                            cell.textContent = movie[key];
+                            row.appendChild(cell);
+                        }
+                    }
+                    tableBody.appendChild(row);
+                }
+                table.appendChild(tableBody);
+
+                messageText.appendChild(table);
+            } catch (error) {
+                messageText.textContent = message;
+            }
+        } else {
+            messageText.textContent = message;
+        }
 
         messageDiv.appendChild(messageText);
         chatbotLog.appendChild(messageDiv);
-        chatbotLog.scrollTop = chatbotLog.scrollHeight; // 항상 최신 메시지 보이도록 스크롤 조정
+        chatbotLog.scrollTop = chatbotLog.scrollHeight;
     }
-
 
     async function sendMessage(inputValue) {
         const message = inputValue.trim();
         if (message) {
-            addMessageToLog(message, 'user'); // 사용자 메시지 로그에 추가
+            addMessageToLog(message, 'user');
             const response = await fetch(`/api/chatbot2/chat?message=${encodeURIComponent(message)}`);
             const text = await response.text();
-            console.log(text); // 서버에서 받은 응답을 콘솔에 출력
-            addMessageToLog(text, 'bot'); // 챗봇 응답 로그에 추가
+            console.log(text);
+            addMessageToLog(text, 'bot');
         }
     }
-
 });
-

@@ -1,16 +1,22 @@
 package spring.project.groupware.academy.chatbot.service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
 import spring.project.groupware.academy.chatbot.entity.ChatBotIntention;
 import spring.project.groupware.academy.chatbot.repository.ChatBotIntentionRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -21,9 +27,12 @@ import java.util.Set;
 @Service
 public class ChatbotService {
     private final Komoran komoran;
+    private final RestTemplate restTemplate;
 
-    public ChatbotService() {
+    public ChatbotService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
         this.komoran = new Komoran(DEFAULT_MODEL.FULL);
+
     }
 
     public String getResponse(String message) {
@@ -114,7 +123,7 @@ public class ChatbotService {
         switch (askingAbout) {
             case "영화":
 //                return movieService.movieResponse(token);
-                return "대충 영화 api로 받아온 값";
+                return getDataFromMovieApi();
             case "버스":
 //                return busService.busResponse(token);
                 return "대충 버스 api로 받아온 값";
@@ -126,8 +135,50 @@ public class ChatbotService {
         }
     }
 
+    public String getDataFromMovieApi() {
+        String apiUrl = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=2363357e023a09dc65161918ab04d739";
+        LocalDate date = LocalDate.now().minusDays(2);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String targetDate = date.format(formatter);
+        String apiUrl1 = apiUrl + "&targetDt=" + targetDate;
+        String botResponse = restTemplate.getForObject(apiUrl1, String.class);
 
+//        String processedData = botResponse;
 
+        return botResponse;
+    }
+//
+//    private String processMovieData(String rawData) {
+//        // rawData를 JSON 객체로 파싱
+//        JsonObject jsonObject = new JsonParser().parse(rawData).getAsJsonObject();
+//
+//        // 필요한 데이터 추출 및 가공
+//        JsonObject boxOfficeResult = jsonObject.getAsJsonObject("boxOfficeResult");
+//        String boxOfficeType = boxOfficeResult.get("boxofficeType").getAsString();
+//        String showRange = boxOfficeResult.get("showRange").getAsString();
+//
+//        JsonArray weeklyBoxOfficeList = boxOfficeResult.getAsJsonArray("weeklyBoxOfficeList");
+//
+//        StringBuilder result = new StringBuilder();
+//        result.append("주간 박스오피스 유형: ").append(boxOfficeType).append("<br>");
+//        result.append("상영 기간: ").append(showRange).append("<br>");
+//
+//        for (JsonElement movieElement : weeklyBoxOfficeList) {
+//            JsonObject movie = movieElement.getAsJsonObject();
+//            String movieName = movie.get("movieNm").getAsString();
+//            String rank = movie.get("rank").getAsString();
+//            String salesAmt = movie.get("salesAmt").getAsString();
+//            String audiCnt = movie.get("audiCnt").getAsString();
+//
+//            result.append("영화: ").append(movieName).append("<br>");
+//            result.append("순위: ").append(rank).append("<br>");
+//            result.append("매출액: ").append(salesAmt).append("<br>");
+//            result.append("관객 수: ").append(audiCnt).append("<br>");
+//            result.append("<br>");
+//        }
+//
+//        return result.toString();
+//    }
 
     @Autowired
     private ChatBotIntentionRepository intention;
@@ -137,87 +188,6 @@ public class ChatbotService {
     private Optional<ChatBotIntention> decisionTree(String token, ChatBotIntention upper) {
         return intention.findByNameAndUpper(token, upper);
     }
-
-
-
-
-//    //입력된 목적어를 하나씩 파악하여 DB에서 검색하기위해 decisionTree()메서드로 전달
-//    private MessageDTO analyzeToken(Set<String> nouns) {
-//
-//        LocalDateTime today = LocalDateTime.now();
-//        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("a H:mm");
-//        MessageDTO messageDTO = MessageDTO.builder()
-//                .time(today.format(timeFormatter))//시간세팅
-//                .build();
-//
-//        for (String token : nouns) {
-//
-//            //1차의도가 존재하는지 파악
-//            Optional<ChatBotIntention> result = decisionTree(token, null);
-//
-//            if (result.isEmpty()) continue;//존재하지 않으면 다음토큰 검색
-//
-//            //1차 토근확인시 실행
-//            log.info(">>>>1차:" + token);
-//            //1차목록 복사
-//            Set<String> next = nouns.stream().collect(Collectors.toSet());
-//            //목록에서 1차토큰 제거
-//            next.remove(token);
-//
-//            //2차분석 메서드
-//            AnswerDTO answer = analyzeToken(next, result).toAnswerDTO();
-//
-////            //전화인경우 전화,전화번호 번호탐색
-////            if (token.contains("영화")) {
-////                PhoneInfo phone = analyzeTokenIsPhone(next);
-////                answer.phone(phone);//전화인경우에만 전화 데이터
-////            } else if (token.contains("버스")) {
-////                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
-////                messageDTO.today(today.format(dateFormatter));//처음 접속할때만 날짜표기
-////            } else if (token.contains("날씨")) {
-////                PhoneInfo dept = analyzeTokenIsDept(next);
-////                log.info(dept.getDeptName()+" << 부서 이름");
-////                log.info(dept.getMemberName()+" <<  이름");
-////                answer.phone(dept);// 부서 -> 이름
-////            }
-//
-//            messageDTO.answer(answer);//토근에대한 응답정보
-//
-//            return messageDTO;
-//        }
-//        //분석 명사들이 등록한 의도와 일치하는게 존재하지 않을경우 null
-//        AnswerDTO answer = decisionTree("기타", null).get().getAnswer().toAnswerDTO();
-//        messageDTO.answer(answer);//토근에대한 응답정보
-//        return messageDTO;
-//    }
-//
-//
-//
-//
-//
-//    //1차의도가 존재하면
-//    //하위의도가 존재하는지 파악
-//    private Answer analyzeToken(Set<String> next, Optional<ChatBotIntention> upper) {
-//
-//        for (String token : next) {
-//            // 1차의도를 부모로하는 토큰이 존재하는지 파악
-//            Optional<ChatBotIntention> result = decisionTree(token, upper.get());
-//            if (result.isEmpty()) continue;
-//
-//            log.info(">>>>2차:" + token);
-//            return result.get().getAnswer();//1차-2차 존재하는경우 답변
-//        }
-//        return upper.get().getAnswer();//1차만 존재하는 답변
-//    }
-
-
-
-
-
-
-
-
-
 
 
 }
