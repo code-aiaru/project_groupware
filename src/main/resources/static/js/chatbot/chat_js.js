@@ -40,10 +40,10 @@ function connect() {
 
 function sendMessage(message){
 	$.ajax({
-		url:"/chatbot/botController",
-		type:"post",
-		data:{message: message},
-		success:function(responsedHtml){
+		url: "/chatbot/botController",
+		type: "post",
+		data: {message: message},
+		success: function(responsedHtml){
 			showMessage(responsedHtml);
 		}
 	});

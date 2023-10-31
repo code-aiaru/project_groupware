@@ -22,7 +22,8 @@ public class ChatbotRestController {
 
         log.info("챗봇 메세지 : {}", message);
 
-        return chatbotService.getResponse(message);
-    }
+        String botResponse = chatbotService.getResponse(message);
 
+        return botResponse;
+    }
 }
