@@ -18,16 +18,19 @@
             <div class="bus">
                 <div class="bus-box">
                     <div class="bus-header">
-                        <h1 class="bus-title">BUS API</h1>
+                        <h1 class="bus-title">버스 API</h1>
                         <div class="search">
                             <input type="text" name="search" id="search" value="146">
                             <button id="busBtn" onclick="busSearch()">버스 노선 조회</button>
                         </div>
                     </div>
                     <div class="bus-table">
-                        <table class="bus-table1" border="1">
+                        <table class="bus-table1">
                             <thead>
-                            <tr>
+                            <tr class="th1">
+                                <th colspan="9">버스 목록</th>
+                            </tr>
+                            <tr class="th2">
                                 <!--<th>노선ID</th>-->
                                 <th width="100px;">노선명</th>
                                 <th width="100px;">노선유형</th>
@@ -49,7 +52,7 @@
                 </div>
                 <div class="bus-map">
                     <div class="left-bus">
-                        <h1>BUS STATION</h1>
+                        <h1>버스정류장</h1>
                         <div class="bus-station">
 
                         </div>
