@@ -71,7 +71,7 @@ function weatherFn(cityVal) {
 // 초기에 서울 날씨 불러옴
   (
     () => {
-      weatherFn("seoul")
+      weatherFn("Seoul")
     }
   )();
 
@@ -113,4 +113,4 @@ function mapFn(lon, lat) {
       // 마커 지도에 표시
       marker.setMap(map);
     });
-  }
+}

@@ -10,6 +10,7 @@
 <body>
 <div id="loadedContent">
   <div class="weather-con">
+    <h1>날씨(java)</h1>
     <div class="left-con">
       <div class="weather-search">
         <!-- <input type="search" placeholder="지역입력" id="position" value="Seoul"> -->
@@ -22,8 +23,6 @@
         <button onclick="weatherSearch()">검색</button>
       </div>
       <div class="weather-list">
-        <input type="hidden" id="lat" name="lat" th:value="${coord.lat}"/>
-        <input type="hidden" id="lon" name="lon" th:value="${coord.lon}"/>
         <div class="city">
           <span class="con"></span>
           <span class="description"></span>

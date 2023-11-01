@@ -37,4 +37,28 @@ public class WeatherController {
         return response;
     }
 
+
+    // 자바 이용 db 저장
+    @GetMapping("/api/weather_java")
+    public Map<String, String> weatherJava(String q) throws Exception {
+        // String q = "Seoul"
+        String appid = "31baec95fb6d389a7195e4f5dc84530b";
+        String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + q + "&appid=" + appid;
+
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("Content-type", "application/json");
+
+        // OpenApiUtil.get 메서드를 사용하여 API를 호출하고 응답을 가져옴
+        String responseBody = OpenApiUtil.get(apiUrl, requestHeaders);
+        System.out.printf(" << return " + responseBody);
+
+        // API 응답 데이터를 데이터베이스에 저장하기 위해 insertResponseBody 메서드를 호출
+        weatherService.insertResponseBody(responseBody);
+
+        Map<String, String> weather = new HashMap<>();
+        weather.put("weather", responseBody);
+
+        return weather;
+    }
+
 }
