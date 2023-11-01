@@ -11,7 +11,7 @@ import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
 import spring.project.groupware.academy.chatbot.entity.ChatBotIntention;
 import spring.project.groupware.academy.chatbot.repository.ChatBotIntentionRepository;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -21,14 +21,13 @@ import java.util.Set;
 @Slf4j
 @Service
 public class ChatbotService {
-        String apiUrl = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=2363357e023a09dc65161918ab04d739";
     private final Komoran komoran;
-    private final RestTemplate restTemplate;
+    private final MovieService movieService;
     @Autowired
     private ChatBotIntentionRepository intention;
 
-    public ChatbotService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public ChatbotService(RestTemplate restTemplate, MovieService movieService) {
+        this.movieService = movieService;
         this.komoran = new Komoran(DEFAULT_MODEL.FULL);
 
     }
@@ -108,7 +107,7 @@ public class ChatbotService {
         switch (askingAbout) {
             case "영화":
 
-                return getDataFromMovieApi();
+                return movieService.getDataFromMovieApi();
             case "버스":
 //                return busService.busResponse(token);
                 return "대충 버스 api로 받아온 값";
@@ -118,20 +117,6 @@ public class ChatbotService {
             default:
                 return null;
         }
-    }
-
-
-
-    public String getDataFromMovieApi() {
-        LocalDate date = LocalDate.now().minusDays(3);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String targetDate = date.format(formatter);
-        String apiUrl1 = apiUrl + "&targetDt=" + targetDate;
-        String botResponse = restTemplate.getForObject(apiUrl1, String.class);
-
-//        String processedData = botResponse;
-
-        return botResponse;
     }
 
     private Optional<ChatBotIntention> decisionTree(String token, ChatBotIntention upper) {
