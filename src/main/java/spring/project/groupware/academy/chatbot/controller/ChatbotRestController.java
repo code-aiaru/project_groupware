@@ -17,7 +17,7 @@ public class ChatbotRestController {
 
     private final ChatbotService chatbotService;
 
-    @GetMapping("/movie")
+    @GetMapping("/chat")
     public String getChatResponse(@RequestParam String message) {
 
         log.info("챗봇 메세지 : {}", message);

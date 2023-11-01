@@ -40,7 +40,6 @@ function addMessageToLog(message, type) {
         message.forEach(movie => {
             const movieName = movie.movieNm;
             const rank = movie.rank;
-            const salesChange = movie.salesChange;
             const messageHTML = `<p>영화 순위: ${rank}, 영화 제목: ${movieName}</p>`;
             const movieInfoDiv = document.createElement('div');
             movieInfoDiv.innerHTML = messageHTML;

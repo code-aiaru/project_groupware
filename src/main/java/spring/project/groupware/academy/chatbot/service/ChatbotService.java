@@ -107,7 +107,7 @@ public class ChatbotService {
     private String thirdAnalyze(Set<String> nouns, String askingAbout, String askingFor) {
         switch (askingAbout) {
             case "영화":
-//
+
                 return getDataFromMovieApi();
             case "버스":
 //                return busService.busResponse(token);
@@ -123,7 +123,7 @@ public class ChatbotService {
 
 
     public String getDataFromMovieApi() {
-        LocalDate date = LocalDate.now().minusDays(0);
+        LocalDate date = LocalDate.now().minusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String targetDate = date.format(formatter);
         String apiUrl1 = apiUrl + "&targetDt=" + targetDate;
