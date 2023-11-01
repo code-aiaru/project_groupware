@@ -81,3 +81,47 @@ th, td {
 .bus-box .bus-table table tbody tr td{
       padding:5px 0;
 }
+
+.bus-map {
+	max-width: 1400px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	max-height: 50vh;
+	    overflow-y: hidden;
+	/* border: 1px solid; */
+	box-sizing: border-box;
+	padding: 0.5vw;
+	/* flex-direction: column; */
+			background-color:#ffffff;
+}
+
+.left-bus {
+	flex: 1;
+	padding: 0  0.1vw;
+	box-sizing: border-box;
+		background-color:#ffffff;
+	position: sticky;
+	top: 0;
+	overflow-y: auto;
+	font-size:12px;
+	 /* border: 1px solid;
+	box-sizing: border-box; */
+}
+.left-bus h1{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+ line-height:40px;
+ position:sticky;
+ top:0;
+	background-color:#ffffff;
+}
+.right-map {
+	flex: 5;
+	padding: 0.1vw;
+	overflow: hidden;
+	border: 1px solid #cccccc;
+	background-color:#ffffff;
+		box-sizing: border-box;
+}

@@ -1,5 +1,5 @@
-const url = 'https://cors-anywhere.herokuapp.com/http://ws.bus.go.kr/api/rest/';
-const serviceKey='FePVBd0x369IVDEu1PmXyAm%2FduVNjCZ9T0jAGuCw1aIbHELh4zys86XdKTNd%2BfJbn1YMyFZoVOmm%2FeF38QYV0w%3D%3D';
+let url = 'https://cors-anywhere.herokuapp.com/http://ws.bus.go.kr/api/rest/';
+let serviceKey='FePVBd0x369IVDEu1PmXyAm%2FduVNjCZ9T0jAGuCw1aIbHELh4zys86XdKTNd%2BfJbn1YMyFZoVOmm%2FeF38QYV0w%3D%3D';
 
 const busDetail=document.querySelector('.bus-detail')
 let tBodyTag=document.querySelector('#bus1');
@@ -74,7 +74,7 @@ function stationPost(busId){
 
 
    function positionFn(dataVal) {
-
+    kakao.maps.load(function() {
      let positions = [];
 
      let lat = 0;
@@ -121,7 +121,7 @@ function stationPost(busId){
      } //for
 
      map.setCenter(positions[0].latlng); //기점 을 중심좌표
-
+    });
 
    }
 
