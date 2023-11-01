@@ -22,6 +22,7 @@ import java.util.Set;
 @Service
 public class ChatbotService {
         String apiUrl = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=2363357e023a09dc65161918ab04d739";
+        String apiUrlWeather = "https://api.openweathermap.org/data/2.5/weather?";
     private final Komoran komoran;
     private final RestTemplate restTemplate;
     @Autowired
@@ -113,7 +114,7 @@ public class ChatbotService {
 //                return busService.busResponse(token);
                 return "대충 버스 api로 받아온 값";
             case "날씨":
-//                return weatherService.weatherResponse(token);
+
                 return "대충 날씨 api로 받아온 값";
             default:
                 return null;
@@ -131,6 +132,13 @@ public class ChatbotService {
 
 //        String processedData = botResponse;
 
+        return botResponse;
+    }
+
+    // 날씨
+    public String getDataFromWeatherApi(String cityName) {
+        String apiUrl1 = apiUrlWeather + "q=" + cityName + "&appid=31baec95fb6d389a7195e4f5dc84530b";
+        String botResponse = restTemplate.getForObject(apiUrl1, String.class);
         return botResponse;
     }
 

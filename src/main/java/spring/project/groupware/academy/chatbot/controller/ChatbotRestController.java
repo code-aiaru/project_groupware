@@ -29,4 +29,16 @@ public class ChatbotRestController {
 
     }
 
+    @GetMapping("/chat_weather")
+    public String getChatResponseWeather(@RequestParam String message) {
+
+        log.info("챗봇 메세지(날씨) : {}", message);
+
+        String botResponse = chatbotService.getResponse(message);
+
+        return botResponse;
+
+
+    }
+
 }
