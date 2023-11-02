@@ -19,6 +19,12 @@ public class ItemList {
     private String edStationNm; // 종착,회차역
     private String firstBusTm; // 첫차시간
     private String lastBusTm; // 막차시간
+    private String term;
+    private String lastBusYn;
+    private String lastLowTm;
+    private String firstLowTm;
+    private String busRouteNm;
+    private String length;
 
     public static ItemList toBusDto(BusEntity busEntityRs) {
         ItemList busDto = new ItemList();
@@ -30,6 +36,12 @@ public class ItemList {
         busDto.setEdStationNm(busEntityRs.getEdStationNm());
         busDto.setFirstBusTm(busEntityRs.getFirstBusTm());
         busDto.setLastBusTm(busEntityRs.getLastBusTm());
+        busDto.setTerm(busEntityRs.getTerm());
+        busDto.setLastBusYn(busEntityRs.getLastBusYn());
+        busDto.setLastLowTm(busEntityRs.getLastLowTm());
+        busDto.setFirstLowTm(busEntityRs.getFirstLowTm());
+        busDto.setBusRouteNm(busEntityRs.getBusRouteNm());
+        busDto.setLength(busEntityRs.getLength());
         return busDto;
     }
 }

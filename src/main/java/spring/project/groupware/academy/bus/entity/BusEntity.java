@@ -25,4 +25,11 @@ public class BusEntity {
     private String edStationNm; // 종착,회차역
     private String firstBusTm; // 첫차시간
     private String lastBusTm; // 막차시간
+    private String term;
+    private String lastBusYn;
+    private String lastLowTm;
+    private String firstLowTm;
+    private String busRouteNm;
+    private String length;
+
 }
