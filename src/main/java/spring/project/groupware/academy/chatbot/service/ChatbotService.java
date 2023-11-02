@@ -134,7 +134,7 @@ public class ChatbotService {
 
         switch (askingAbout) {
             case "영화":
-                return movieService.getDataFromMovieApi();
+                return movieService.validMethod(message);
             case "버스":
                 return "대충 버스 api로 받아온 값";
             case "날씨":
