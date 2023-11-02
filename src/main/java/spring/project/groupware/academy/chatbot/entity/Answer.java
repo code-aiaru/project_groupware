@@ -19,21 +19,24 @@ public class Answer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long no;
+	private long id;
 
-	private String content;
+	private String responseText;
 	
-	private String keyword;    //name
-	
-	public Answer keyword(String keyword) {
-		this.keyword=keyword;
-		return this;
-	}
-	
-	public spring.project.groupware.academy.chatbot.dto.AnswerDTO toAnswerDTO() {
-		return AnswerDTO.builder()
-				.no(no).content(content).keyword(keyword)
-				.build();
-	}
+	private String keyword;
+
+
+
+
+//	public Answer keyword(String keyword) {
+//		this.keyword=keyword;
+//		return this;
+//	}
+//
+//	public spring.project.groupware.academy.chatbot.dto.AnswerDTO toAnswerDTO() {
+//		return AnswerDTO.builder()
+//				.id(id).content(content).keyword(keyword)
+//				.build();
+//	}
 
 }

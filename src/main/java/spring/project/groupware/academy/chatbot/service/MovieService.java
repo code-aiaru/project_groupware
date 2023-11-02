@@ -16,6 +16,7 @@ public class MovieService {
 
 
 
+
     public String getDataFromMovieApi() {
 //        LocalDate date = LocalDate.now().with(DayOfWeek.MONDAY);
         LocalDate date = LocalDate.now().minusWeeks(1).with(DayOfWeek.MONDAY);
