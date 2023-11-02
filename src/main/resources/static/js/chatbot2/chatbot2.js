@@ -2,7 +2,8 @@
 import { addMovieMessageToLog } from '/js/chatbot2/movie.js';
 import { sendMovieMessage } from '/js/chatbot2/movie.js';
 
-
+import { addBusMessageToLog } from '/js/chatbot2/bus.js';
+import { sendBusMessage } from '/js/chatbot2/bus.js';
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -129,6 +130,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
  			// 입력된 값을 다른 함수로 보냅니다.
             sendMovieMessage(inputValue);
+
+//            // 버스 답변용
+//            sendBusMessage(inputValue);
         }
     });
 
