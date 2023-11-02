@@ -13,18 +13,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "intention")
 @Entity
-public class ChatBotIntention {
+public class Intention {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long no;
-	private String name;
+	private long id;
+
+	private String keyword;
 	
-	@JoinColumn
-	@ManyToOne
-	private Answer answer;
+//	@JoinColumn
+//	@ManyToOne
+//	private Answer answer;
 		
-	@JoinColumn
-	@ManyToOne
-	private ChatBotIntention upper;
+//	@JoinColumn
+//	@ManyToOne
+//	private Intention upper;
 }

@@ -3,125 +3,152 @@ package spring.project.groupware.academy.chatbot.service;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
-import spring.project.groupware.academy.chatbot.entity.ChatBotIntention;
-import spring.project.groupware.academy.chatbot.repository.ChatBotIntentionRepository;
+import spring.project.groupware.academy.chatbot.entity.Intention;
+import spring.project.groupware.academy.chatbot.entity.Interest;
+import spring.project.groupware.academy.chatbot.repository.IntentionRepository;
+import spring.project.groupware.academy.chatbot.repository.InterestRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ChatbotService {
-    private final Komoran komoran;
+
+    private final IntentionRepository intentionRepository;
+    private final InterestRepository interestRepository;
     private final MovieService movieService;
-    @Autowired
-    private ChatBotIntentionRepository intention;
+    private final Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
 
-    public ChatbotService(RestTemplate restTemplate, MovieService movieService) {
-        this.movieService = movieService;
-        this.komoran = new Komoran(DEFAULT_MODEL.FULL);
-
-    }
 
     public String getResponse(String message) {
-        // 사용자 메시지 분석
         MessageDTO messageDTO = nlpAnalyze(message);
-        // 적절한 응답 생성 및 반환
-        return messageDTO.getAnswer().getContent();
+        return messageDTO.getAnswer().getResponseText();
     }
 
     public MessageDTO nlpAnalyze(String message) {
+
         KomoranResult result = komoran.analyze(message);
+        log.info("message: {}", message);
 
-        // 문자에서 명사들만 추출한 목록 중복 제거해서 set
+        //문자에서 명사들만 추출한 목록 중복제거해서 set
         Set<String> nouns = new HashSet<>(result.getNouns());
-        nouns.forEach(noun -> log.info("추출된 명사: " + noun));
+        log.info("KOMORAN 분석 결과: {}", result.getList());
+        nouns.forEach(noun -> log.info("추출된 명사:" + noun));
 
-        return analyzeToken(nouns);
+        return analyzeToken(nouns, message);
     }
 
-    private MessageDTO analyzeToken(Set<String> nouns) {
+    private MessageDTO analyzeToken(Set<String> nouns, String message) {
         LocalDateTime today = LocalDateTime.now();
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("a H:mm");
         MessageDTO messageDTO = MessageDTO.builder().time(today.format(timeFormatter)).build();
 
-        String askingAbout = null;
+        String askingAbout = null; // 질문의 범주 (영화, 날씨, 버스)
         String askingFor = null;
 
+        // 질문의 범주 검사 (영화, 날씨, 버스)
         for (String token : nouns) {
-            log.info("1차시 검사 실행");
+
+            log.info("범주 - 검사 실행");
             askingAbout = firstAnalyze(token);
-            log.info("범위 : {}", askingAbout);
-            log.info("2차시 검사 실행");
+            log.info("범주 : {}", askingAbout);
+
+        }
+
+        // 질문의 세부 범주 검사 (영화, 날씨, 버스)
+        for (String token : nouns) {
+
+            log.info("세부 범주 - 검사 실행");
             askingFor = secondAnalyze(token);
-            log.info("의도 : {}", askingFor);
+            log.info("세부 범주 : {}", askingFor);
+
         }
 
-        if (askingAbout != null && askingFor != null) {
-            String responseFromApi = thirdAnalyze(nouns, askingAbout, askingFor);
-            AnswerDTO answer = AnswerDTO.builder().content(responseFromApi).build();
+        // api 사용이 필요한지?
+        if (isApiRequest(askingAbout)) {
+            // 그렇다면 아래 로직 실행.
+            String responseFromApi = generateResponseFromApi(message, askingAbout, askingFor);
+            AnswerDTO answer = AnswerDTO.builder().responseText(responseFromApi).build();
             messageDTO.setAnswer(answer);
-            return messageDTO;
-        }
+        } else {
+            // 아니라면 일반 답변 생성.
+            String response = generateResponse(askingAbout, askingFor);
+            AnswerDTO answer = AnswerDTO.builder().responseText(response).build();
+            messageDTO.setAnswer(answer);
 
-        if (messageDTO.getAnswer() == null) {
-            AnswerDTO answer = decisionTree("기타", null).orElse(new ChatBotIntention()).getAnswer().toAnswerDTO();
-            messageDTO.setAnswer(answer);
         }
 
         return messageDTO;
     }
 
-    private String firstAnalyze(String token) {
-        if (token.contains("영화")) {
-            return "영화";
-        } else if (token.contains("버스")) {
-            return "버스";
-        } else if (token.contains("날씨")) {
-            return "날씨";
+
+    public String firstAnalyze(String token) {
+
+        String[] words = token.split("\\s+");
+
+        List<Interest> interests = interestRepository.findAll();
+
+        for (Interest interest : interests) {
+            for (String word : words) {
+                if (interest.getKeyword().contains(word)) {
+                    return interest.getKeyword();
+                }
+            }
         }
+
         return null;
     }
 
     private String secondAnalyze(String token) {
-        if (!token.contains("영화")) {
-            return token;
-        } else if (!token.contains("버스")) {
-            return token;
-        } else if (!token.contains("날씨")) {
-            return token;
+        List<Intention> intentions = intentionRepository.findAll();
+
+        for (Intention intention : intentions) {
+            if (intention.getKeyword().contains(token)) {
+                return intention.getKeyword();
+            }
         }
+
         return null;
     }
 
-    private String thirdAnalyze(Set<String> nouns, String askingAbout, String askingFor) {
+    private boolean isApiRequest(String askingAbout) {
+        return interestRepository.findByKeyword(askingAbout)
+                .map(Interest::getIsApiRequired)
+                .orElse(false);
+    }
+
+    private String generateResponseFromApi(String message, String askingAbout, String askingFor) {
+
         switch (askingAbout) {
             case "영화":
-
                 return movieService.getDataFromMovieApi();
             case "버스":
-//                return busService.busResponse(token);
                 return "대충 버스 api로 받아온 값";
             case "날씨":
-//                return weatherService.weatherResponse(token);
                 return "대충 날씨 api로 받아온 값";
             default:
                 return null;
         }
     }
 
-    private Optional<ChatBotIntention> decisionTree(String token, ChatBotIntention upper) {
-        return intention.findByNameAndUpper(token, upper);
+    private String generateResponse(String askingAbout, String askingFor) {
+
+        return "대충 일반 답변";
     }
+
 
 
 }

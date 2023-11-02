@@ -13,9 +13,9 @@ public class AnswerDTO {
 	
 	private long no;
 
-	private String content;
+	private String responseText;
 
-	private String keyword;//name
+	private String keyword;
 
 
 
