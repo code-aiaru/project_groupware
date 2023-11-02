@@ -19,22 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 첫 시작메시지
-
-    // 물어보고싶은거? 1. 영화  2. 날
-
-    // 1
-
-    //
-
-
-    // 사용자 선택
-
-    // 안내메시지
-
-    // 선택
-
-    // 안내메시지
 
     // 챗봇 메시지 보내기.
     const chatbotInput = document.getElementById('chatbot_input');

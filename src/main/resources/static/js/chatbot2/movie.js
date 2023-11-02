@@ -4,8 +4,7 @@ function addMovieMessageToLog(message, type) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', type);
 
-    // 챗봇 응답 메시지 처리
-    if (type === 'bot') {
+    if (type === 'boxOfficeResult') {
         const movieListDiv = document.createElement('div');
         movieListDiv.classList.add('movie-list');
 
@@ -19,8 +18,32 @@ function addMovieMessageToLog(message, type) {
         });
 
         messageDiv.appendChild(movieListDiv);
+    } else if (type === 'movieInfoResult') {
+        const movieInfoDiv = document.createElement('div');
+        movieInfoDiv.classList.add('movie-info');
+
+        const movieInfo = message.movieInfo;
+        const movieName = movieInfo.movieNm;
+        const genre = movieInfo.genres.map(genre => genre.genreNm).join(', ');
+        const watchGrade = movieInfo.audits.map(audit => audit.watchGradeNm).join(', ');
+        const directors = movieInfo.directors.map(director => director.peopleNm).join(', ');
+        const actors = movieInfo.actors.map(actor => `${actor.peopleNm} (${actor.cast})`).join(', ');
+        const showTime = movieInfo.showTm;
+        const nations = movieInfo.nations.map(nation => nation.nationNm).join(', ');
+
+        const messageHTML = `
+            <p>영화 제목: ${movieName}</p>
+            <p>장르: ${genre}</p>
+            <p>관람 등급: ${watchGrade}</p>
+            <p>감독: ${directors}</p>
+            <p>배우: ${actors}</p>
+            <p>상영 시간: ${showTime}분</p>
+            <p>국가: ${nations}</p>
+        `;
+
+        movieInfoDiv.innerHTML = messageHTML;
+        messageDiv.appendChild(movieInfoDiv);
     } else {
-        // 사용자 메시지 처리
         const messageText = document.createElement('p');
         messageText.textContent = message;
         messageText.classList.add('message_box');
@@ -28,28 +51,28 @@ function addMovieMessageToLog(message, type) {
     }
 
     chatbotLog.appendChild(messageDiv);
-    chatbotLog.scrollTop = chatbotLog.scrollHeight; // 항상 최신 메시지 보이도록 스크롤 조정
+    chatbotLog.scrollTop = chatbotLog.scrollHeight;
 }
-
-
-
-
-
 
 async function sendMovieMessage(inputValue) {
     const message = inputValue.trim();
     if (message) {
-        addMovieMessageToLog(message, 'user'); // 사용자 메시지 로그에 추가
+        addMovieMessageToLog(message, 'user');
         const response = await fetch(`/api/chatbot2/chat?message=${encodeURIComponent(message)}`);
-        const jsonResponse = await response.json(); // JSON 형식으로 파싱
-        const botResponse = jsonResponse.boxOfficeResult.weeklyBoxOfficeList; // 원하는 데이터 추출
-        console.log(botResponse); // 서버에서 받은 응답 데이터를 콘솔에 출력
+        const jsonResponse = await response.json();
 
-        // 이제 원하는 데이터를 화면에 표시합니다.
-        addMovieMessageToLog(botResponse, 'bot'); // 챗봇 응답 로그에 추가
+        const boxOfficeResult = jsonResponse.boxOfficeResult;
+        const movieInfoResult = jsonResponse.movieInfoResult;
+
+        if (boxOfficeResult && boxOfficeResult.weeklyBoxOfficeList) {
+            addMovieMessageToLog(boxOfficeResult.weeklyBoxOfficeList, 'boxOfficeResult');
+        }
+
+        if (movieInfoResult) {
+            addMovieMessageToLog(movieInfoResult, 'movieInfoResult');
+        }
     }
 }
 
-// export
 export { addMovieMessageToLog };
 export { sendMovieMessage };
