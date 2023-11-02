@@ -509,7 +509,7 @@ p.message_box {
     border-radius: 5px;
     padding: 3px 5px;
     /* width: min-content; */
-    max-width: 50%;
+    max-width: 75%;
     word-wrap: break-word; /* 긴 단어 줄바꿈 */
 
 }
@@ -522,9 +522,38 @@ p.message_box {
     display: flex;
     justify-content: start;
     align-items: center;
+    margin-bottom: 5px;
 }
 
+.selection {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+}
+.selection > .selection_box {
+    border: 1px solid #dddddd;
+    /* border-radius: 5px; */
+    padding: 3px 5px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+}
+.selection > .selection_box:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
 
+.selection > .selection_box:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.selection > .selection_box:hover {
+    color: #2788b5;
+    font-weight: bold;
+    background-color: #e4f1f7;
+}
 
 /* footer end */
 
