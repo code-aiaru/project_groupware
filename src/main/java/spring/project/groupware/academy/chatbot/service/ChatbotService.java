@@ -31,6 +31,7 @@ public class ChatbotService {
     private final IntentionRepository intentionRepository;
     private final InterestRepository interestRepository;
     private final MovieService movieService;
+    private final BusChatbotService busChatbotService;
     private final Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
 
 
@@ -149,7 +150,7 @@ public class ChatbotService {
 
                 return movieService.validMethod(message);
             case "버스":
-                return "대충 버스 api로 받아온 값";
+                return busChatbotService.getResponseBusNum(message);
             case "날씨":
                 return "대충 날씨 api로 받아온 값";
             default:
