@@ -17,6 +17,8 @@ public class Selection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String inform; // 선택지 (텍스트)
+
     private String selection; // 선택지 (텍스트)
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,6 +28,7 @@ public class Selection {
     public static Selection toEntity(SelectionDTO selectionDTO) {
         Selection selection = new Selection();
         selection.setId(selectionDTO.getId());
+        selection.setInform(selectionDTO.getInform());
         selection.setSelection(selectionDTO.getSelection());
 
         return selection;

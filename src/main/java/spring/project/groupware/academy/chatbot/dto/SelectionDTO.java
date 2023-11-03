@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 @Data
 public class SelectionDTO {
     private Integer id;
+    private String inform;
     private String selection;
 
     public static SelectionDTO toDTO(Selection selection) {
@@ -21,6 +22,7 @@ public class SelectionDTO {
 
         SelectionDTO selectionDTO = new SelectionDTO();
         selectionDTO.setId(selection.getId());
+        selectionDTO.setInform(selection.getInform());
         selectionDTO.setSelection(selection.getSelection());
 
         return selectionDTO;
