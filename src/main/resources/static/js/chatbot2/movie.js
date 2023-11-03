@@ -43,7 +43,26 @@ function addMovieMessageToLog(message, type) {
 
         movieInfoDiv.innerHTML = messageHTML;
         messageDiv.appendChild(movieInfoDiv);
-    } else {
+    }else if(type === 'peopleListResult') {
+ const peopleListDiv = document.createElement('div');
+        peopleListDiv.classList.add('people-list');
+
+        message.peopleList.forEach(person => {
+            const personName = person.peopleNm;
+            const personRole = person.repRoleNm;
+            const filmography = person.filmoNames;
+            const messageHTML = `
+                <p>이름: ${personName}</p>
+                <p>직업: ${personRole}</p>
+                <p>출연 작품: ${filmography}</p>
+            `;
+            const personInfoDiv = document.createElement('div');
+            personInfoDiv.innerHTML = messageHTML;
+            peopleListDiv.appendChild(personInfoDiv);
+                });
+
+                    messageDiv.appendChild(peopleListDiv);
+    }else {
         const messageText = document.createElement('p');
         messageText.textContent = message;
         messageText.classList.add('message_box');
@@ -63,6 +82,7 @@ async function sendMovieMessage(inputValue) {
 
         const boxOfficeResult = jsonResponse.boxOfficeResult;
         const movieInfoResult = jsonResponse.movieInfoResult;
+        const peopleListResult = jsonResponse.peopleListResult;
 
         if (boxOfficeResult && boxOfficeResult.weeklyBoxOfficeList) {
             addMovieMessageToLog(boxOfficeResult.weeklyBoxOfficeList, 'boxOfficeResult');
@@ -70,6 +90,9 @@ async function sendMovieMessage(inputValue) {
 
         if (movieInfoResult) {
             addMovieMessageToLog(movieInfoResult, 'movieInfoResult');
+        }
+        if (peopleListResult) {
+            addMovieMessageToLog(peopleListResult, 'peopleListResult');
         }
     }
 }

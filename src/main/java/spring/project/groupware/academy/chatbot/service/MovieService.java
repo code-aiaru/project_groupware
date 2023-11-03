@@ -11,7 +11,8 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class MovieService {
 
-    String boxofficeUrl = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?";
+    String searchActorUrl ="https://kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?";
+    String boxOfficeUrl = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?";
     String searchMovieListUrl = "https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?";
     String searchMovieDetailUrl ="http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?";
     String key = "key=2363357e023a09dc65161918ab04d739";
@@ -25,16 +26,15 @@ public class MovieService {
 
     public String validMethod(String message){
 
-        if (message.contains("현재")||message.contains("지금")||message.contains("상영중")){
+        if (message.contains("영화")&&message.contains("박스오피스")){
             return getDataFromMovieApi();
-        }else if (message.contains("오늘")){
-            return getDataFromMovieApi();
-        }else if (message.contains("정보")){
-            return getmoviedetail(message);
+        }else if (message.contains("영화")&&message.contains("배우")){
+            return searchActor(message);
+        }else if (message.contains("영화")&&message.contains("제목")){
+            return getMovieDetail(message);
         }else {
-            return "죄송합니다 질문을 이해하지 못했습니다";
+            return null;
         }
-
     }
 
 
@@ -44,20 +44,21 @@ public class MovieService {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String targetDate = date.format(formatter);
-        String apiUrl1 = boxofficeUrl + key + "&targetDt=" + targetDate;
+        String apiUrl1 = boxOfficeUrl + key + "&targetDt=" + targetDate;
 
 
         return restTemplate.getForObject(apiUrl1, String.class);
     }
 
 
+    public String getMovieDetail(String message) {
 
-    public String getmoviedetail(String message) {
-        message = message.replace("영화 ", "").replace("정보 ","");
 
-        String apiUrl1 = searchMovieListUrl + key + "&movieNm=" + message;
+        String newMessage = message.replace("영화", "").replace("제목", "");
+
+        String apiUrl1 = searchMovieListUrl + key + "&movieNm=" + newMessage;
         String movieList = restTemplate.getForObject(apiUrl1, String.class);
-        System.out.println("movieListurl: " + apiUrl1);
+        System.out.println("movieListUrl: " + apiUrl1);
 
         JSONObject listJsonResponse = new JSONObject(movieList);
         JSONArray movieArray = listJsonResponse.getJSONObject("movieListResult").getJSONArray("movieList");
@@ -85,4 +86,16 @@ public class MovieService {
             return "최신 영화를 찾을 수 없습니다.";
         }
     }
+
+
+    public String searchActor(String message){
+
+        String newMessage = message.replace("영화", "").replace("배우", "").replace(" ","");
+
+           String ActorUrl = searchActorUrl+key+"&peopleNm="+newMessage;
+            System.out.println("ActorUrl : "+ActorUrl);
+            return restTemplate.getForObject(ActorUrl, String.class);
+    }
+
+
 }
