@@ -26,7 +26,7 @@ public class MovieService {
 
     public String validMethod(String message){
 
-        if (message.contains("영화")&&message.contains("박스오피스")){
+        if (message.contains("영화")&&message.contains("순위")){
             return getDataFromMovieApi();
         }else if (message.contains("영화")&&message.contains("배우")){
             return searchActor(message);

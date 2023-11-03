@@ -6,7 +6,7 @@ function addMovieMessageToLog(message, type) {
 
     if (type === 'boxOfficeResult') {
         const movieListDiv = document.createElement('div');
-        movieListDiv.classList.add('movie-list');
+        movieListDiv.classList.add('movie');
 
         message.forEach(movie => {
             const movieName = movie.movieNm;
@@ -20,7 +20,7 @@ function addMovieMessageToLog(message, type) {
         messageDiv.appendChild(movieListDiv);
     } else if (type === 'movieInfoResult') {
         const movieInfoDiv = document.createElement('div');
-        movieInfoDiv.classList.add('movie-info');
+        movieInfoDiv.classList.add('movie');
 
         const movieInfo = message.movieInfo;
         const movieName = movieInfo.movieNm;
@@ -45,7 +45,7 @@ function addMovieMessageToLog(message, type) {
         messageDiv.appendChild(movieInfoDiv);
     }else if(type === 'peopleListResult') {
  const peopleListDiv = document.createElement('div');
-        peopleListDiv.classList.add('people-list');
+        peopleListDiv.classList.add('movie');
 
         message.peopleList.forEach(person => {
             const personName = person.peopleNm;
