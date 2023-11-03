@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
@@ -115,7 +116,7 @@ public class ChatbotService {
 
         return null;
     }
-
+    @Transactional
     private String secondAnalyze(String token) {
         List<Intention> intentions = intentionRepository.findAll();
 
@@ -127,7 +128,7 @@ public class ChatbotService {
 
         return null;
     }
-
+    @Transactional
     private boolean isApiRequest(String askingAbout) {
         return interestRepository.findByKeyword(askingAbout)
                 .map(Interest::getIsApiRequired)
