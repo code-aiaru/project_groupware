@@ -23,7 +23,7 @@ public class BusService {
         Map<String, String> response = new HashMap<>();
 
         for (ItemList item : itemList) {
-            Optional<BusEntity> optionalBusEntity = busRepository.findBybusRouteAbrv(item.getBusRouteAbrv());
+            Optional<BusEntity> optionalBusEntity = busRepository.findBybusRouteNm(item.getBusRouteNm());
             if(optionalBusEntity.isEmpty()) {
                 Long busId = busRepository.save(
                         BusEntity.builder()

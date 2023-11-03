@@ -31,7 +31,7 @@ public class BusChatbotService {
 
             if (message.startsWith("버스")) {
                 String busNumber = message.substring(2).trim(); // 임시, "버스 00번" 질문시 "버스" 제거
-                Optional<BusEntity> busInfo = busRepository.findBybusRouteAbrv(busNumber);
+                Optional<BusEntity> busInfo = busRepository.findBybusRouteNm(busNumber);
 
                 if (!busInfo.isEmpty()) {
                     return "질문한 버스 정보: " +
@@ -55,12 +55,16 @@ public class BusChatbotService {
 
 //                            // 응답 처리 로직 추가
 //                            return DBresponse.toString(); // 적절한 응답 포맷을 반환하도록 변경
-                            Optional<BusEntity> busInfo2 = busRepository.findBybusRouteAbrv(busNumber);
-                            return "질문한 버스 정보: " +
-                                    busInfo2.get().getBusRouteAbrv() + "번은 " +"\n"+
-                                    busInfo2.get().getStStationNm() + " ~ " +
-                                    busInfo2.get().getEdStationNm() + " 까지 운행합니다."+"\n"+
-                                    "";
+                            Optional<BusEntity> busInfo2 = busRepository.findBybusRouteNm(busNumber);
+                            if (busInfo2.isPresent()) {
+                                return "질문한 버스 정보: " +
+                                        busInfo2.get().getBusRouteNm() + "번은 " + "\n" +
+                                        busInfo2.get().getStStationNm() + " ~ " +
+                                        busInfo2.get().getEdStationNm() + " 까지 운행합니다." + "\n" +
+                                        "";
+                            }else {
+                                return "조회하는 버스정보 입력오류";
+                            }
                         } catch (IOException e) {
                             // 예외 처리
                             e.printStackTrace();
