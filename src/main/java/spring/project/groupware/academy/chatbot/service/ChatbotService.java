@@ -61,19 +61,25 @@ public class ChatbotService {
 
         // 질문의 범주 검사 (영화, 날씨, 버스)
         for (String token : nouns) {
-
             log.info("범주 - 검사 실행");
-            askingAbout = firstAnalyze(token);
-            log.info("범주 : {}", askingAbout);
-
+            String result = firstAnalyze(token);
+            if (result != null) { // firstAnalyze가 null이 아닌 값을 반환하면 askingAbout을 업데이트
+                askingAbout = result;
+                log.info("범주 : {}", askingAbout);
+                break; // 매칭되는 첫번째 범주를 찾으면 반복 중단
+            }
         }
 
         // 질문의 세부 범주 검사 (영화, 날씨, 버스)
         for (String token : nouns) {
 
             log.info("세부 범주 - 검사 실행");
-            askingFor = secondAnalyze(token);
-            log.info("세부 범주 : {}", askingFor);
+            String result = secondAnalyze(token);
+            if (result != null) { // firstAnalyze가 null이 아닌 값을 반환하면 askingAbout을 업데이트
+                askingFor = result;
+                log.info("세부 범주 : {}", askingFor);
+                break; // 매칭되는 첫번째 범주를 찾으면 반복 중단
+            }
 
         }
 
