@@ -423,6 +423,7 @@ body {
 }
 
 .chatbot_icon {
+    z-index: 999;
     position: fixed;
     bottom: 25px;
     right: 25px;
@@ -439,6 +440,7 @@ body {
     margin: 10px;
 }
 .chatbot_box {
+    z-index: 999;
     position: fixed;
     bottom: 85px;
     right: 10px;

@@ -105,7 +105,7 @@ function stationPost(busId){
 
      // 마커 이미지의 이미지 주소입니다
      //let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-      let imageSrc = "/image/marker.png";
+      let imageSrc = "/images/marker.png";
      for (let i = 0; i < dataVal.length; i++) {
        // 마커 이미지의 이미지 크기 입니다
        let imageSize = new kakao.maps.Size(24, 35);

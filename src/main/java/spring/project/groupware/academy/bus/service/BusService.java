@@ -35,6 +35,12 @@ public class BusService {
                                 .edStationNm(item.getEdStationNm())
                                 .firstBusTm(item.getFirstBusTm())
                                 .lastBusTm(item.getLastBusTm())
+                                .term(item.getTerm())
+                                .lastBusYn(item.getLastBusYn())
+                                .lastLowTm(item.getLastLowTm())
+                                .firstLowTm(item.getFirstLowTm())
+                                .busRouteNm(item.getBusRouteNm())
+                                .length(item.getLength())
                                 .build()).getId();
 
                 BusEntity busEntityRs = busRepository.findById(busId).orElseThrow(() -> {

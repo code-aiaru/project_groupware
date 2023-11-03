@@ -12,13 +12,18 @@ public class BusDto {
 
     private Long id;
     private String busRouteAbrv; // 버스번호
-    private String busRouteNm;  // 버스 노선
-    private String routeType; // 타입
-    private String stStationNm;  //기점
-    private String edStationNm; //종점
-    private String firstBusTm; //첫차
-    private String lastLowTm; // 막차
-    private String term; // 배차시간
-    private String busRouteId; // 버스 기본 ID
-    private String corpNm;  // 버스 회사 정보
+    private String busRouteId; // 버스경로 고유번호
+    private String corpNm; // 운행회사 전화번호
+    private String routeType; // 노선 유형
+    private String stStationNm; // 출발역
+    private String edStationNm; // 종착,회차역
+    private String firstBusTm; // 첫차시간
+    private String lastBusTm; // 막차시간
+    private String term;
+    private String lastBusYn;
+    private String lastLowTm;
+    private String firstLowTm;
+    private String busRouteNm;
+    private String length;
+
 }
