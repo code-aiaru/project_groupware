@@ -1,19 +1,16 @@
 package spring.project.groupware.academy.chatbot.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import spring.project.groupware.academy.chatbot.dto.SelectionDTO;
 import spring.project.groupware.academy.employee.entity.EmployeeEntity;
+import spring.project.groupware.academy.schedule.dto.ScheduleDTO;
 
 import javax.persistence.*;
 
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "selection")
+@Setter
 @Entity
+@Table(name = "selection")
 public class Selection {
 
     @Id
@@ -25,5 +22,13 @@ public class Selection {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "scenario_id")
     private Scenario scenario;
+
+    public static Selection toEntity(SelectionDTO selectionDTO) {
+        Selection selection = new Selection();
+        selection.setId(selectionDTO.getId());
+        selection.setSelection(selectionDTO.getSelection());
+
+        return selection;
+    }
 
 }

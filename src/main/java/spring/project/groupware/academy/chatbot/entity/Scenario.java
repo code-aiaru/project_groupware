@@ -1,19 +1,15 @@
 package spring.project.groupware.academy.chatbot.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import spring.project.groupware.academy.attendance.entity.AttendanceStatus;
+import spring.project.groupware.academy.chatbot.dto.ScenarioDTO;
 
 import javax.persistence.*;
 
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "scenario")
+@Setter
 @Entity
+@Table(name = "scenario")
 public class Scenario {
 
     @Id
@@ -22,7 +18,7 @@ public class Scenario {
 
     private Integer sequence; // 시나리오 순서
 
-    private String anouncement; // 안내 메세지 (텍스트)
+    private String inform; // 안내 메세지 (텍스트)
 
     private String scenarioFor; // 어떤 선택지인지
 
@@ -33,4 +29,13 @@ public class Scenario {
     @JoinColumn(name = "previous_selection_id")
     private Selection selection;
 
+    public static Scenario toEntity(ScenarioDTO scenarioDTO) {
+        Scenario scenario = new Scenario();
+        scenario.setId(scenarioDTO.getId());
+        scenario.setSequence(scenarioDTO.getSequence());
+        scenario.setInform(scenarioDTO.getInform());
+        scenario.setScenarioFor(scenarioDTO.getScenarioFor());
+
+        return scenario;
+    }
 }
