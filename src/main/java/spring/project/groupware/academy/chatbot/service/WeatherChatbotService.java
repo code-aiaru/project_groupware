@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import spring.project.groupware.academy.weather.*;
@@ -21,29 +22,39 @@ public class WeatherChatbotService {
     private final WeatherService weatherService;
     private final WeatherRepository weatherRepository;
 
-    public String saveWeatherDataForCity(String message) {
-           String newMessage = message.replace("날씨", "");
-        String weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather";
-        String apiKey = "31baec95fb6d389a7195e4f5dc84530b";
 
+public String saveWeatherDataForCity(String message) {
+    String weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather";
+    String apiKey = "31baec95fb6d389a7195e4f5dc84530b";
 
-        System.out.println("newMessage :"+newMessage);
+    String newMessage = message.replace("날씨", "");
+    System.out.println("newMessage: " + newMessage);
 
-        String apiUrl = weatherApiUrl + "?q=" + newMessage + "&appid=" + apiKey;
-        log.info("apiUrl : " + apiUrl);
+    String apiUrl = weatherApiUrl + "?q=" + newMessage + "&appid=" + apiKey;
+    log.info("apiUrl: " + apiUrl);
 
-        // API 호출 및 응답 데이터 가져오기
-        ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
+    // API 호출 및 응답 데이터 가져오기
+    ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            // API 응답 데이터를 DB에 저장
-            insertResponseBody(response.getBody());
-            log.info("API 응답 데이터 저장 완료"); // 로그 추가
-        } else {
-            return "날씨정보 가져오는데 실패했습니다 ";
-        }
-        return weatherApiUrl;
+    if (response.getStatusCode().is2xxSuccessful()) {
+        // API 응답 데이터를 DB에 저장
+        return insertResponseBody(response.getBody());
+
+    } else {
+        return null;
     }
+
+//    WeatherEntity weatherEntity = weatherRepository.findByCityName(newMessage);
+//    if (weatherEntity != null) {
+//        return "도시: " + weatherEntity.getCityName() + "\n" +
+//                "현재 기온: " + weatherEntity.getTemp() + "°C";
+//    } else {
+//        return "날씨 정보를 찾을 수 없습니다.";
+//    }
+
+
+
+}
 
     public String insertResponseBody(String responseBody) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -55,7 +66,7 @@ public class WeatherChatbotService {
             response = objectMapper.readValue(responseBody, WeatherApiDto.class);
         } catch (Exception e) {
             e.printStackTrace();
-            return "날씨정보 가져오는데 실패했습니다";
+            return null;
         }
 
         System.out.println(" <<  WeatherApiDto " + response);
@@ -84,7 +95,7 @@ public class WeatherChatbotService {
         for (Weather item : weatherList) {
             System.out.println(" <<  item " + item);
         }
-        return responseBody;
+        return "//view로 보내는 데이터";
     }
 
 

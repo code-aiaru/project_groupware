@@ -15,6 +15,7 @@ import spring.project.groupware.academy.chatbot.entity.Intention;
 import spring.project.groupware.academy.chatbot.entity.Interest;
 import spring.project.groupware.academy.chatbot.repository.IntentionRepository;
 import spring.project.groupware.academy.chatbot.repository.InterestRepository;
+import spring.project.groupware.academy.weather.WeatherService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +33,7 @@ public class ChatbotService {
     private final InterestRepository interestRepository;
     private final MovieService movieService;
     private final BusChatbotService busChatbotService;
+    private final WeatherChatbotService weatherChatbotService;
     private final Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
 
 
@@ -92,7 +94,7 @@ public class ChatbotService {
         if (isApiRequest(askingAbout)) {
             log.info("api 사용 매핑");
             // 그렇다면 아래 로직 실행.
-            String responseFromApi = generateResponseFromApi(message, askingAbout, askingFor, city); // 송원철, city 추가
+            String responseFromApi = generateResponseFromApi(message, askingAbout, askingFor); // 송원철, city 추가
             AnswerDTO answer = AnswerDTO.builder().responseText(responseFromApi).build();
             messageDTO.setAnswer(answer);
         } else {
@@ -143,7 +145,7 @@ public class ChatbotService {
                 .orElse(false);
     }
 
-    private String generateResponseFromApi(String message, String askingAbout, String askingFor, String city) { // 송원철, city 추가
+    private String generateResponseFromApi(String message, String askingAbout, String askingFor) { // 송원철, city 추가
 
         switch (askingAbout) {
             case "영화":
@@ -153,6 +155,7 @@ public class ChatbotService {
             case "버스":
                 return busChatbotService.getResponseBusNum(message);
             case "날씨":
+                System.out.println("send message: " + message);
                 return weatherChatbotService.saveWeatherDataForCity(message); // 송원철
             default:
                 return null;
