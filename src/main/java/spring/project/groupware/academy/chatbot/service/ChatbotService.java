@@ -77,13 +77,17 @@ public class ChatbotService {
 
         }
 
+        log.info("askingAbout : {}", askingAbout);
+
         // api 사용이 필요한지?
         if (isApiRequest(askingAbout)) {
+            log.info("api 사용 매핑");
             // 그렇다면 아래 로직 실행.
             String responseFromApi = generateResponseFromApi(message, askingAbout, askingFor);
             AnswerDTO answer = AnswerDTO.builder().responseText(responseFromApi).build();
             messageDTO.setAnswer(answer);
         } else {
+            log.info("api 사용 매핑 x");
             // 아니라면 일반 답변 생성.
             String response = generateResponse(askingAbout, askingFor);
             AnswerDTO answer = AnswerDTO.builder().responseText(response).build();
@@ -134,6 +138,8 @@ public class ChatbotService {
 
         switch (askingAbout) {
             case "영화":
+                System.out.println("send message: " + message);
+
                 return movieService.validMethod(message);
             case "버스":
                 return "대충 버스 api로 받아온 값";
