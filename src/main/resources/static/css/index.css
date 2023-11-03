@@ -423,6 +423,8 @@ body {
 }
 
 .chatbot_icon {
+    height: 40px;
+    width: 40px;
     z-index: 999;
     position: fixed;
     bottom: 25px;
@@ -433,11 +435,14 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    box-shadow: 0 0 5px 0 #999999;
 }
 .chatbot_icon > img {
+    position: relative;
+    top: 1.5px;
+    left: 0.2px;
     height: 25px;
     width: 25px;
-    margin: 10px;
 }
 .chatbot_box {
     z-index: 999;
@@ -470,9 +475,10 @@ body {
     overflow-y: scroll;
     height: 100%;
     width: 100%;
-    border: 1px solid #dddddd;
+    /* border: 1px solid #dddddd; */
     box-sizing: border-box;
     padding: 10px;
+    background-color: #e4f1f7;
 }
 .chatbot_box > .chatbot_log::-webkit-scrollbar {
     display: none;
@@ -507,10 +513,10 @@ body {
 
 
 p.message_box {
-    border: 1px solid #dddddd;
+    /* border: 1px solid #dddddd; */
+    box-shadow: 0 0 3px 0 #dddddd;
     border-radius: 5px;
-    padding: 3px 5px;
-    /* width: min-content; */
+    padding: 5px 8px;
     max-width: 75%;
     word-wrap: break-word; /* 긴 단어 줄바꿈 */
 
@@ -519,6 +525,7 @@ p.message_box {
     display: flex;
     justify-content: end;
     align-items: center;
+    margin: 5px 0;
 }
 .message.bot {
     display: flex;
@@ -526,8 +533,11 @@ p.message_box {
     align-items: center;
     margin-bottom: 5px;
 }
-.message.user > .message_box {
-    background-color: #e4f1f7;
+.message.user p {
+    background-color: #FEE500;
+}
+.message.bot p {
+    background-color: #ffffff;
 }
 .selection {
     max-width: 50%;
@@ -536,13 +546,14 @@ p.message_box {
     margin: 5px 0;
 }
 .selection > .selection_box {
-    border: 1px solid #dddddd;
-    /* border-radius: 5px; */
-    padding: 3px 5px;
+    /* border: 1px solid #dddddd; */
+    box-shadow: 0 0 3px 0 #dddddd;
+    padding: 5px 8px;
     width: 100%;
     box-sizing: border-box;
     cursor: pointer;
     text-align: center;
+    background-color: #ffffff;
 }
 .selection > .selection_box:first-child {
     border-top-left-radius: 5px;
@@ -558,6 +569,35 @@ p.message_box {
     font-weight: bold;
     background-color: #e4f1f7;
 }
+
+
+
+
+
+
+
+
+
+
+/* Movie */
+.movie {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    /* display: flex; */
+    /* align-items: stretch; */
+}
+.movie p {
+    margin-bottom: 5px;
+}
+
+
+
+
+
+
 
 /* footer end */
 

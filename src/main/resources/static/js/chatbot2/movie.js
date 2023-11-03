@@ -74,9 +74,9 @@ function addMovieMessageToLog(message, type) {
 }
 
 async function sendMovieMessage(inputValue) {
+    console.log('sendMovieMessage activated');
     const message = inputValue.trim();
     if (message) {
-        addMovieMessageToLog(message, 'user');
         const response = await fetch(`/api/chatbot2/chat?message=${encodeURIComponent(message)}`);
         const jsonResponse = await response.json();
 
