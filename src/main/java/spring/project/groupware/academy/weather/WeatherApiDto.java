@@ -26,6 +26,7 @@ public class WeatherApiDto {
     private String visibility;
     private List<Weather> weather;
     private Wind wind;
+    private Rain rain;
 
 
 }
