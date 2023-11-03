@@ -14,11 +14,14 @@ import spring.project.groupware.academy.chatbot.entity.Selection;
 import spring.project.groupware.academy.chatbot.service.ChatbotService;
 import spring.project.groupware.academy.chatbot.service.ScenarioService;
 import spring.project.groupware.academy.chatbot.service.SelectionService;
+import spring.project.groupware.academy.weather.WeatherEntity;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @RestController

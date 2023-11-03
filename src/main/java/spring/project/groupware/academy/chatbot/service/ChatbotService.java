@@ -60,6 +60,7 @@ public class ChatbotService {
 
         String askingAbout = null; // 질문의 범주 (영화, 날씨, 버스)
         String askingFor = null;
+        String city = null; // 송원철
 
         // 질문의 범주 검사 (영화, 날씨, 버스)
         for (String token : nouns) {
@@ -91,7 +92,7 @@ public class ChatbotService {
         if (isApiRequest(askingAbout)) {
             log.info("api 사용 매핑");
             // 그렇다면 아래 로직 실행.
-            String responseFromApi = generateResponseFromApi(message, askingAbout, askingFor);
+            String responseFromApi = generateResponseFromApi(message, askingAbout, askingFor, city); // 송원철, city 추가
             AnswerDTO answer = AnswerDTO.builder().responseText(responseFromApi).build();
             messageDTO.setAnswer(answer);
         } else {
@@ -142,7 +143,7 @@ public class ChatbotService {
                 .orElse(false);
     }
 
-    private String generateResponseFromApi(String message, String askingAbout, String askingFor) {
+    private String generateResponseFromApi(String message, String askingAbout, String askingFor, String city) { // 송원철, city 추가
 
         switch (askingAbout) {
             case "영화":
@@ -152,7 +153,7 @@ public class ChatbotService {
             case "버스":
                 return busChatbotService.getResponseBusNum(message);
             case "날씨":
-                return "대충 날씨 api로 받아온 값";
+                return weatherChatbotService.saveWeatherDataForCity(message); // 송원철
             default:
                 return null;
         }
