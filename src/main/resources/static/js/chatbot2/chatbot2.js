@@ -5,6 +5,9 @@ import { sendMovieMessage } from '/js/chatbot2/movie.js';
 import { addBusMessageToLog } from '/js/chatbot2/bus.js';
 import { sendBusMessage } from '/js/chatbot2/bus.js';
 
+import { addWeatherMessageToLog } from '/js/chatbot2/weather.js'; // 송원철
+import { sendWeatherMessage } from '/js/chatbot2/weather.js'; // 송원철
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const chatbot = document.getElementById('chatbot');
