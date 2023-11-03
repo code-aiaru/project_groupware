@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import spring.project.groupware.academy.chatbot.dto.ScenarioDTO;
+import spring.project.groupware.academy.chatbot.dto.SelectionDTO;
 import spring.project.groupware.academy.chatbot.entity.Scenario;
 import spring.project.groupware.academy.chatbot.entity.Selection;
 import spring.project.groupware.academy.chatbot.service.ChatbotService;
@@ -42,25 +43,30 @@ public class ChatbotRestController {
     }
 
     @GetMapping("/scenario")
-    public ResponseEntity<?> getScenario(
-            @RequestParam(name = "id", required = false) Optional<Integer> selectionIdOpt) {
+    public ResponseEntity<?> getScenario(@RequestParam(name = "id", required = false) Integer previousSelectionId) {
 
-        // selectionId가 없거나 null이면, 기본적으로 id가 1인 시나리오를 반환
-        Integer selectionId = selectionIdOpt.orElse(1);
+        ScenarioDTO scenarioDTO = scenarioService.getScenarioBySelectionId(previousSelectionId);
+        List<SelectionDTO> selectionDTOs = selectionService.getSelectionsByScenarioId(scenarioDTO.getId());
 
-        // selectionId가 0이면, id가 1인 시나리오를 반환
-        if (selectionId == 0) {
-            selectionId = 1;
-        }
-
-        Scenario scenario = scenarioService.getScenarioBySelectionId(selectionId);
-        List<Selection> selections = selectionService.getSelectionsByScenarioId(scenario.getId());
+        log.info("scenarioDTO : {}", scenarioDTO);
+        log.info("selectionDTOs : {}", selectionDTOs);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("scenario", scenario);
-        response.put("selections", selections);
+        response.put("scenario", scenarioDTO);
+        response.put("selections", selectionDTOs);
 
         return ResponseEntity.ok(response);
     }
 
+//    @GetMapping("/scenario")
+//    public ResponseEntity<?> getScenario(@RequestParam(name = "id", required = false) Integer previousSelectionId) {
+//        ScenarioDTO scenarioDTO = scenarioService.getScenarioDTOBySelectionId(previousSelectionId);
+//        List<SelectionDTO> selectionDTOs = selectionService.getSelectionDTOsByScenarioId(scenarioDTO.getId());
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("scenario", scenarioDTO);
+//        response.put("selections", selectionDTOs);
+//
+//        return ResponseEntity.ok(response);
+//    }
 }

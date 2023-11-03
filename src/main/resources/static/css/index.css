@@ -524,7 +524,9 @@ p.message_box {
     align-items: center;
     margin-bottom: 5px;
 }
-
+.message.user > .message_box {
+    background-color: #e4f1f7;
+}
 .selection {
     max-width: 50%;
     display: flex;
