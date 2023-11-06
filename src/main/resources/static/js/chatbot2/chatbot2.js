@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let askingAbout; // 질문 범주 저장용 변수 (영화, 날씨, 버스)
     let responseType; // 질문에 대한 답변 방법 (TEXT, VALUE)
     let askingFor; // 세부 범주
-    let previousSelectionIds = [];
+    let previousSelectionIds = []; // 뒤로가기를 위한 이전 id 저장용
 
     // 챗봇 열기.
     document.addEventListener('click', function(e) {
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     
         if (responseType === null) {
-            // 그 전단계 선택지를 출력
+            // '종료' 혹은 '뒤로가기' 선택지를 출력
             const selectionToGoBackText = document.createElement('span');
             selectionToGoBackText.classList.add('selection_box');
             if (scenarioId == 0) {
