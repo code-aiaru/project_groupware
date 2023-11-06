@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (inputValue.includes('영화')) {
             await sendMovieMessage(inputValue);
         } else if (inputValue.includes('날씨')) {
-
+            await sendWeatherMessage(inputValue);
         } else if (inputValue.includes('버스')) {
 
         }
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (askingAbout == '영화') {
             await sendMovieMessage(requestMessage);
         } else if (askingAbout == '날씨') {
-            
+            await sendWeatherMessage(requestMessage); // 송원철
         } else if (askingAbout == '버스') {
             
         }
