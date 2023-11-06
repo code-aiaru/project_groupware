@@ -156,7 +156,7 @@ public class ChatbotService {
                 return busChatbotService.getResponseBusNum(message);
             case "날씨":
                 System.out.println("send message: " + message);
-                return weatherChatbotService.saveWeatherDataForCity(message); // 송원철
+                return weatherChatbotService.getWeatherForCity(message); // 송원철
             default:
                 return null;
         }
