@@ -1,27 +1,23 @@
 package spring.project.groupware.academy.chatbot.service;
 
-import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
 import spring.project.groupware.academy.chatbot.entity.Intention;
 import spring.project.groupware.academy.chatbot.entity.Interest;
 import spring.project.groupware.academy.chatbot.repository.IntentionRepository;
 import spring.project.groupware.academy.chatbot.repository.InterestRepository;
-import spring.project.groupware.academy.weather.WeatherService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.Set;
 
 @Slf4j
@@ -32,9 +28,9 @@ public class ChatbotService {
     private final IntentionRepository intentionRepository;
     private final InterestRepository interestRepository;
     private final MovieService movieService;
-    private final BusChatbotService busChatbotService;
+    private final BusChatService busChatService;
     private final WeatherChatbotService weatherChatbotService;
-    private final Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
+    private final Komoran komoran;
 
 
     public String getResponse(String message) {
@@ -153,7 +149,7 @@ public class ChatbotService {
 
                 return movieService.validMethod(message);
             case "버스":
-                return busChatbotService.getResponseBusNum(message);
+                return busChatService.BusChat(message);
             case "날씨":
                 System.out.println("send message: " + message);
                 return weatherChatbotService.getWeatherForCity(message); // 송원철
