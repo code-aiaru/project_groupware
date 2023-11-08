@@ -99,7 +99,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectionToGoBackText.setAttribute('data-selection', 'back');
             }
             selectionDiv.appendChild(selectionToGoBackText);
-        } 
+        }else {
+           responseType = 'TEXT';
+        }
         
     
         chatbotLog.appendChild(selectionDiv);
@@ -126,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
     chatbotInput.addEventListener('keyup', async function(event) {
         if (event.key === 'Enter') {
             const inputValue = event.target.value; // 입력된 값을 가져오고, input을 비웁니다
-            addMessageToLog(inputValue, 'user');
+//            addMessageToLog(inputValue, 'user');
             event.target.value = ''; // 인풋창 초기화
             
             console.log('inputValue : ', inputValue);
@@ -149,12 +151,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (inputValue.includes('날씨')) {
             await sendWeatherMessage(inputValue);
         } else if (inputValue.includes('버스')) {
-
+            await sendBusMessage(inputValue);
         }
 
         askingAbout = null;
         askingFor = null;
-        displayScenarioAndSelections(0);
+//        displayScenarioAndSelections(0);
     }
 
     // (봇에게 대답) 텍스트 입력으로 요청
@@ -168,12 +170,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (askingAbout == '날씨') {
             await sendWeatherMessage(requestMessage); // 송원철
         } else if (askingAbout == '버스') {
-            
+            await sendBusMessage(requestMessage);
         }
-        
+
         askingAbout = null;
         askingFor = null;
-        displayScenarioAndSelections(0);
+//        displayScenarioAndSelections(0);
     }
 
     // 일반 챗봇 메세지 통신
@@ -210,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showSelection(data.selections, scenarioId);
 
             if (data.scenario.scenarioResponseType == 'VALUE') {
-                const requestMessage = askingAbout + askingFor;
+                const requestMessage = askingAbout + " " + askingFor;
                 console.log('requestMessage : ', requestMessage);
 
                 if (askingAbout == '영화') {
@@ -218,14 +220,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (askingAbout == '날씨') {
                     
                 } else if (askingAbout == '버스') {
-                    
+                    await sendBusMessage(requestMessage);
                 } else {
                     console.log('VALUE 값 송신 실패. 에러 발생.')
                 }
 
                 askingAbout = null;
                 askingFor = null;
-                displayScenarioAndSelections(0);
+//                displayScenarioAndSelections(0);
             }
 
         } catch (error) {
