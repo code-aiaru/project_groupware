@@ -1,4 +1,4 @@
-// import
+// imports
 import { addMovieMessageToLog } from '/js/chatbot2/movie.js';
 import { sendMovieMessage } from '/js/chatbot2/movie.js';
 
@@ -13,36 +13,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const chatbot = document.getElementById('chatbot');
     const chatbotLog = document.querySelector('.chatbot_log');
-    let isChatbotInit = false; // 초기 메시지 출력용 플래그
-    let askingAbout; // 질문 범주 저장용 변수 (영화, 날씨, 버스)
+    let isChatbotInit = true; // 초기 메시지 출력용 플래그
+    let askingAbout; // 질문 범주 저장용 변수 (영화, 날씨, 버스) -> DB와 대조
     let responseType; // 질문에 대한 답변 방법 (TEXT, VALUE)
     let askingFor; // 세부 범주
     let previousSelectionIds = []; // 뒤로가기를 위한 이전 id 저장용
 
-    // 챗봇 열기.
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('button[data-chatbot]')) {
-            if (chatbot.style.display == 'none') {
-                chatbot.style.display = 'block';
-            } else {
-                chatbot.style.display = 'none';
-            }
-        }
 
-        // 첫번째 시퀀스일 경우
-        if (isChatbotInit == false) {
-            displayScenarioAndSelections(0); // 기본값으로 1을 설정
-            isChatbotInit = true;
+    // 챗봇 열고 닫기 관련 로직 =============================================================================================
+    
+    // 챗봇 가시성 여부
+    document.addEventListener('click', function(e) {
+        const chatbotButton = e.target.closest('#chatbot_icon');
+        const clickedInsideChatbot = e.target.closest('#chatbot');
+    
+        if (chatbotButton) {
+            toggleChatbot();
+            e.stopPropagation();
+        } else if (!clickedInsideChatbot) {
+            hideChatbot();
         }
     });
 
+    // 챗봇 버튼 함수
+    async function toggleChatbot() {
+        const isChatbotVisible = chatbot.style.display === 'block';
+        chatbot.style.display = isChatbotVisible ? 'none' : 'block';
     
+        // 챗봇이 숨겨져 있었고 초기화되지 않았다면 시나리오 표시
+        if (!isChatbotVisible && isChatbotInit) {
+            await displayScenarioAndSelections(0);
+            isChatbotInit = false;
+            console.log('isChatbotInit : ', isChatbotInit);
+        }
+    }
+    
+    // 챗봇 바깥 클릭 시 숨기기 함수
+    function hideChatbot() {
+        if (chatbot.style.display === 'block') {
+            chatbot.style.display = 'none';
+        }
+    }
+  
+    // ==================================================================================================================
+
+
+    // 선택지 관련 로직 ====================================================================================================
+    
+    // 선택지 클릭시
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('selection_box')) {
             handleSelectionClick(e);
         }
     });
 
+    // 선택지 처리 로직
     function handleSelectionClick(event) {
         const selectionText = event.target;
         const selectionId = selectionText.getAttribute('data-selection-id');
@@ -54,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const scenarioId = selectionText.getAttribute('data-scenario-id');
             askingFor = selectionText.getAttribute('data-asking-for');
             console.log('askingFor : ', askingFor);
-
             previousSelectionIds.push(scenarioId);
             displayScenarioAndSelections(selectionId);
         } else if (actionType === 'back') { // 뒤로가기 선택시
@@ -103,45 +127,21 @@ document.addEventListener('DOMContentLoaded', function() {
            responseType = 'TEXT';
         }
         
-    
         chatbotLog.appendChild(selectionDiv);
         chatbotLog.scrollTop = chatbotLog.scrollHeight;
-
     }
     
-    // 챗봇 로그창에 송수신한 메시지 출력
-    function addMessageToLog(message, type) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', type);
-        // messageDiv.textContent = message;
-        const messageText = document.createElement('p');
-        messageText.textContent = message;
-        messageText.classList.add('message_box');
+    // ==================================================================================================================
 
-        messageDiv.appendChild(messageText);
-        chatbotLog.appendChild(messageDiv);
-        chatbotLog.scrollTop = chatbotLog.scrollHeight; // 항상 최신 메시지 보이도록 스크롤 조정
+
+    // 챗봇 입출력 관련 로직 ================================================================================================
+    
+    // 챗봇 내부쿼리 초기화
+    function resetAskingQueries() {
+        askingAbout = null;
+        askingFor = null;
+        displayScenarioAndSelections(0);
     }
-
-    // 챗봇 메시지 보내기.
-    const chatbotInput = document.getElementById('chatbot_input');
-    chatbotInput.addEventListener('keyup', async function(event) {
-        if (event.key === 'Enter') {
-            const inputValue = event.target.value; // 입력된 값을 가져오고, input을 비웁니다
-//            addMessageToLog(inputValue, 'user');
-            event.target.value = ''; // 인풋창 초기화
-            
-            console.log('inputValue : ', inputValue);
-
-            if (askingAbout && askingFor && responseType == 'TEXT') {
-                answerToBot(inputValue);
-            } else if (inputValue.includes('영화') || inputValue.includes('날씨') || inputValue.includes('버스')) {
-                textRequest(inputValue);
-            } else {
-                sendMessage(inputValue);
-            }
-        }
-    });
 
     // 텍스트 입력으로 요청
     async function textRequest(inputValue) {
@@ -154,43 +154,90 @@ document.addEventListener('DOMContentLoaded', function() {
             await sendBusMessage(inputValue);
         }
 
-        askingAbout = null;
-        askingFor = null;
-//        displayScenarioAndSelections(0);
+        resetAskingQueries();
     }
 
     // (봇에게 대답) 텍스트 입력으로 요청
     async function answerToBot(inputValue) {
-
-        const requestMessage = askingAbout + askingFor + inputValue;
-        console.log('requestMessage : ', requestMessage);
-
-        if (askingAbout == '영화') {
-            await sendMovieMessage(requestMessage);
-        } else if (askingAbout == '날씨') {
-            await sendWeatherMessage(requestMessage); // 송원철
-        } else if (askingAbout == '버스') {
-            await sendBusMessage(requestMessage);
-        }
-
-        askingAbout = null;
-        askingFor = null;
-//        displayScenarioAndSelections(0);
+        await redirectMessageTo(inputValue);
+        resetAskingQueries();
     }
+
+    // 챗봇 로그창에 송수신한 메시지 출력
+    function addMessageToLog(message, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+
+        const messageText = document.createElement('p');
+        messageText.classList.add('message_box');
+        messageText.textContent = message;
+
+        messageDiv.appendChild(messageText);
+        chatbotLog.appendChild(messageDiv);
+        chatbotLog.scrollTop = chatbotLog.scrollHeight; // 항상 최신 메시지 보이도록 스크롤 조정
+    }
+
+    // 챗봇 메시지 보내기. (엔터키)
+    document.addEventListener('keyup', async function(event) {
+        const chatbotInput = document.getElementById('chatbot_input');
+
+        if (event.key === 'Enter' && event.target === chatbotInput) {
+            const inputValue = event.target.value; // 입력된 값을 가져오고, input을 비웁니다
+            event.target.value = ''; // 인풋창 초기화
+            addMessageToLog(inputValue, 'user'); // 사용자 메시지 로그에 추가
+            console.log('inputValue : ', inputValue);
+
+            if (askingAbout && askingFor && responseType == 'TEXT') {
+                answerToBot(inputValue);
+            } else if (inputValue.includes('영화') || inputValue.includes('날씨') || inputValue.includes('버스')) {
+                textRequest(inputValue);
+            } else {
+                sendMessage(inputValue);
+            }
+        }
+    });
+
+    // ==================================================================================================================
+
+    // 통신 관련 로직 ======================================================================================================
 
     // 일반 챗봇 메세지 통신
     async function sendMessage(inputValue) {
         const message = inputValue.trim();
         if (message) {
-            addMessageToLog(message, 'user'); // 사용자 메시지 로그에 추가
             const response = await fetch(`/api/chatbot2/chat?message=${encodeURIComponent(message)}`);
             const text = await response.text();
-            console.log(text); // 서버에서 받은 응답을 콘솔에 출력
-            addMessageToLog(text, 'bot'); // 챗봇 응답 로그에 추가
+            console.log(text); 
+            addMessageToLog(text, 'bot');
         }
     }
 
+    // 다른 js 파일에 있는 함수로 메세지를 보냄.
+    async function redirectMessageTo(inputValue) {
 
+        let requestMessageParts = [];
+    
+        if (askingAbout) requestMessageParts.push(askingAbout);
+        if (askingFor) requestMessageParts.push(askingFor);
+        if (inputValue) requestMessageParts.push(inputValue);
+    
+        const requestMessage = requestMessageParts.join('');
+        console.log('requestMessage : ', requestMessage);
+    
+        const actions = {
+            '영화': sendMovieMessage,
+            '날씨': sendWeatherMessage,
+            '버스': sendBusMessage
+        };
+        
+        if (actions[askingAbout]) {
+            await actions[askingAbout](requestMessage);
+        } else {
+            console.log('VALUE 값 송신 실패. 에러 발생.');
+        }
+    }
+
+    // 시나리오 수신
     async function displayScenarioAndSelections(scenarioId) {
         console.log('scenarioId : ', scenarioId);
         try {
@@ -206,34 +253,29 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('responseType : ', responseType);
             console.log('askingAbout : ', askingAbout);
 
-            // 서버로부터 받은 시나리오 메시지를 화면에 표시
-            addMessageToLog(data.scenario.inform, 'bot');
-            // 서버로부터 받은 선택지 데이터를 showSelection 함수에 전달
+            if (!isChatbotInit && data.scenario.inform.includes('안녕하세요.')) {
+                data.scenario.inform = removeGreeting(data.scenario.inform);
+                console.log('if문 안의 인폼', data.scenario.inform);
+            }
+
+            console.log(data.scenario.inform);
+            addMessageToLog(data.scenario.inform, 'bot'); 
             showSelection(data.selections, scenarioId);
 
             if (data.scenario.scenarioResponseType == 'VALUE') {
-                const requestMessage = askingAbout + " " + askingFor;
-                console.log('requestMessage : ', requestMessage);
-
-                if (askingAbout == '영화') {
-                    await sendMovieMessage(requestMessage);
-                } else if (askingAbout == '날씨') {
-                    
-                } else if (askingAbout == '버스') {
-                    await sendBusMessage(requestMessage);
-                } else {
-                    console.log('VALUE 값 송신 실패. 에러 발생.')
-                }
-
-                askingAbout = null;
-                askingFor = null;
-//                displayScenarioAndSelections(0);
+                await redirectMessageTo(null);
+                resetAskingQueries();
             }
 
         } catch (error) {
             console.error('오류 발생:', error);
         }
     }
+
+    function removeGreeting(inform) {
+        return inform.replace('안녕하세요. ', '');
+    }
+    // ==================================================================================================================
 
 });
 
