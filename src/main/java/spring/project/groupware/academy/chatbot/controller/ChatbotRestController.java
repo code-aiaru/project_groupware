@@ -45,6 +45,7 @@ public class ChatbotRestController {
 
     }
 
+    // 챗봇에서의 시나리오 조회
     @GetMapping("/scenario")
     public ResponseEntity<?> getScenario(@RequestParam(name = "id", required = false) Integer previousSelectionId) {
 
