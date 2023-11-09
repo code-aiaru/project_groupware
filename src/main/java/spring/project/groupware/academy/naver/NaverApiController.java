@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @Controller
-public class NaverApiController2 {
+public class NaverApiController {
 
 	@Value("${navar.api.client-id}")
 	String CLIENT_ID;
