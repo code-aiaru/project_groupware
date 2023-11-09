@@ -70,12 +70,15 @@ function addWeatherMessageToLog(message, type) {
             messageText.textContent = message;
             messageText.classList.add('message_box');
         } else {
+            if (message.startsWith("날씨현재")) {
+                    message = message.substring(4); // "날씨현재"를 제외한 나머지 부분만 추출
+                }
             // 사용자 메시지 처리
             messageText = document.createElement('p');
             messageText.textContent = message;
             messageText.classList.add('message_box');
             // 메시지 상자를 감추는 스타일 적용
-            messageText.style.display = 'none';
+//            messageText.style.display = 'none';
         }
     messageDiv.appendChild(messageText);
     chatbotLog.appendChild(messageDiv);
