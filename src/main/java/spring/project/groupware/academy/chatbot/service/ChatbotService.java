@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
-import spring.project.groupware.academy.chatbot.entity.Intention;
+//import spring.project.groupware.academy.chatbot.entity.Intention;
 import spring.project.groupware.academy.chatbot.entity.Interest;
-import spring.project.groupware.academy.chatbot.repository.IntentionRepository;
+//import spring.project.groupware.academy.chatbot.repository.IntentionRepository;
 import spring.project.groupware.academy.chatbot.repository.InterestRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,7 +23,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ChatbotService {
 
-    private final IntentionRepository intentionRepository;
+//    private final IntentionRepository intentionRepository;
     private final InterestRepository interestRepository;
     private final MovieService movieService;
     private final BusChatService busChatService;
@@ -52,12 +50,11 @@ public class ChatbotService {
     }
 
     private MessageDTO analyzeToken(Set<String> nouns, String message) {
-        LocalDateTime today = LocalDateTime.now();
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("a H:mm");
-        MessageDTO messageDTO = MessageDTO.builder().time(today.format(timeFormatter)).build();
+
+        MessageDTO messageDTO = MessageDTO.builder().build();
 
         String askingAbout = null; // 질문의 범주 (영화, 날씨, 버스)
-        String askingFor = null;
+//        String askingFor = null;
         String city = null; // 송원철
 
         // 질문의 범주 검사 (영화, 날씨, 버스)
@@ -72,17 +69,17 @@ public class ChatbotService {
         }
 
         // 질문의 세부 범주 검사 (영화, 날씨, 버스)
-        for (String token : nouns) {
-
-            log.info("세부 범주 - 검사 실행");
-            String result = secondAnalyze(token);
-            if (result != null) { // firstAnalyze가 null이 아닌 값을 반환하면 askingAbout을 업데이트
-                askingFor = result;
-                log.info("세부 범주 : {}", askingFor);
-                break; // 매칭되는 첫번째 범주를 찾으면 반복 중단
-            }
-
-        }
+//        for (String token : nouns) {
+//
+//            log.info("세부 범주 - 검사 실행");
+//            String result = secondAnalyze(token);
+//            if (result != null) { // firstAnalyze가 null이 아닌 값을 반환하면 askingAbout을 업데이트
+//                askingFor = result;
+//                log.info("세부 범주 : {}", askingFor);
+//                break; // 매칭되는 첫번째 범주를 찾으면 반복 중단
+//            }
+//
+//        }
 
         log.info("askingAbout : {}", askingAbout);
 
@@ -90,13 +87,13 @@ public class ChatbotService {
         if (isApiRequest(askingAbout)) {
             log.info("api 사용 매핑");
             // 그렇다면 아래 로직 실행.
-            String responseFromApi = generateResponseFromApi(message, askingAbout, askingFor); // 송원철, city 추가
+            String responseFromApi = generateResponseFromApi(message, askingAbout); // 송원철, city 추가
             AnswerDTO answer = AnswerDTO.builder().responseText(responseFromApi).build();
             messageDTO.setAnswer(answer);
         } else {
             log.info("api 사용 매핑 x");
             // 아니라면 일반 답변 생성.
-            String response = generateResponse(askingAbout, askingFor);
+            String response = generateResponse(askingAbout);
             AnswerDTO answer = AnswerDTO.builder().responseText(response).build();
             messageDTO.setAnswer(answer);
 
@@ -106,6 +103,7 @@ public class ChatbotService {
     }
 
 
+    @Transactional(readOnly = true)
     public String firstAnalyze(String token) {
 
         String[] words = token.split("\\s+");
@@ -122,43 +120,41 @@ public class ChatbotService {
 
         return null;
     }
-    @Transactional
-    private String secondAnalyze(String token) {
-        List<Intention> intentions = intentionRepository.findAll();
+//    @Transactional(readOnly = true)
+//    private String secondAnalyze(String token) {
+//        List<Intention> intentions = intentionRepository.findAll();
+//
+//        for (Intention intention : intentions) {
+//            if (intention.getKeyword().contains(token)) {
+//                return intention.getKeyword();
+//            }
+//        }
+//
+//        return null;
+//    }
 
-        for (Intention intention : intentions) {
-            if (intention.getKeyword().contains(token)) {
-                return intention.getKeyword();
-            }
-        }
-
-        return null;
-    }
-    @Transactional
+    @Transactional(readOnly = true)
     private boolean isApiRequest(String askingAbout) {
         return interestRepository.findByKeyword(askingAbout)
                 .map(Interest::getIsApiRequired)
                 .orElse(false);
     }
 
-    private String generateResponseFromApi(String message, String askingAbout, String askingFor) { // 송원철, city 추가
+    private String generateResponseFromApi(String message, String askingAbout) { // 송원철, city 추가
 
         switch (askingAbout) {
             case "영화":
-                System.out.println("send message: " + message);
-
                 return movieService.validMethod(message);
             case "버스":
                 return busChatService.BusChat(message);
             case "날씨":
-                System.out.println("send message: " + message);
                 return weatherChatbotService.getWeatherForCity(message); // 송원철
             default:
                 return null;
         }
     }
 
-    private String generateResponse(String askingAbout, String askingFor) {
+    private String generateResponse(String askingAbout) {
 
         return "대충 일반 답변";
     }
