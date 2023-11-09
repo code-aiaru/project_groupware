@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (askingFor) requestMessageParts.push(askingFor);
         if (inputValue) requestMessageParts.push(inputValue);
     
-        const requestMessage = requestMessageParts.join('');
+        const requestMessage = requestMessageParts.join(' ');
         console.log('requestMessage : ', requestMessage);
     
         const actions = {
