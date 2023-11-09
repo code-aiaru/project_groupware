@@ -80,6 +80,8 @@ async function sendMovieMessage(inputValue) {
         const response = await fetch(`/api/chatbot2/chat?message=${encodeURIComponent(message)}`);
         const jsonResponse = await response.json();
 
+        console.log(jsonResponse);
+
         const boxOfficeResult = jsonResponse.boxOfficeResult;
         const movieInfoResult = jsonResponse.movieInfoResult;
         const peopleListResult = jsonResponse.peopleListResult;

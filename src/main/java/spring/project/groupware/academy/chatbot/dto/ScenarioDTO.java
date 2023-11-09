@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class ScenarioDTO {
+
     private Integer id;
     private Integer sequence;
     private String inform;

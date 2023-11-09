@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 @Data
 public class SelectionDTO {
+
     private Integer id;
     private String inform;
     private String selection;

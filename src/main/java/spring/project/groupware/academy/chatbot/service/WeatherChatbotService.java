@@ -26,7 +26,7 @@ public class WeatherChatbotService {
         String weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather";
         String apiKey = "31baec95fb6d389a7195e4f5dc84530b";
 
-        String newMessage = message.replace("날씨현재", "");
+        String newMessage = message.replace("날씨 현재 ", "");
         log.info("newMessage: " + newMessage);
 
         String apiUrl = weatherApiUrl + "?q=" + newMessage + "&appid=" + apiKey;
