@@ -13,8 +13,8 @@ public class AnswerDTO {
 	
 	private long id;
 
-	private String responseText;
+	private String response;
 
-	private String keyword;
+	private String triggerKeyword;
 
 }

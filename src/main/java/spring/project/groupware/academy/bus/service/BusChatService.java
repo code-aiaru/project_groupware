@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.chatbot.service;
+package spring.project.groupware.academy.bus.service;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

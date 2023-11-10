@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.chatbot.service;
+package spring.project.groupware.academy.movie.service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
