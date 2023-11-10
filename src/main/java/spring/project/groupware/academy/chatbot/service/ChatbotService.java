@@ -9,8 +9,6 @@ import spring.project.groupware.academy.chatbot.config.HandlerMapping;
 import spring.project.groupware.academy.chatbot.config.ServiceCommand;
 import spring.project.groupware.academy.chatbot.dto.AnswerDTO;
 import spring.project.groupware.academy.chatbot.dto.MessageDTO;
-//import spring.project.groupware.academy.chatbot.entity.Intention;
-//import spring.project.groupware.academy.chatbot.repository.IntentionRepository;
 
 import java.util.HashSet;
 

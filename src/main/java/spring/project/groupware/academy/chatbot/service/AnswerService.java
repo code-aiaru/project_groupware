@@ -24,7 +24,8 @@ public class AnswerService {
     private final Random random = new Random();
 
     public String getResponseByTriggerKeyword(String message) {
-        List<Answer> answers = answerRepository.findByTriggerKeywordContaining(message);
+        List<Answer> answers = answerRepository.findByTriggerKeywordInMessage(message);
+
         if (answers.isEmpty()) {
             log.info("트리거 키워드에 대한 응답을 찾을 수 없습니다.");
             return "해당 키워드에 대한 응답을 찾을 수 없습니다.";
