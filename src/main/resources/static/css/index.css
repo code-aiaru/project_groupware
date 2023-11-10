@@ -539,6 +539,9 @@ p.message_box {
 .message.bot p {
     background-color: #ffffff;
 }
+.message.bot div {
+    background-color: #ffffff;
+}
 .selection {
     max-width: 50%;
     display: flex;
