@@ -11,27 +11,10 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AnswerDTO {
 	
-	private long no;
+	private long id;
 
-	private String responseText;
+	private String response;
 
-	private String keyword;
-
-
-
-
-
-
-//
-//	private PhoneInfo phone;
-//
-//	private List<PhoneInfo> phoneInfoList;
-//
-//	public AnswerDTO phone(PhoneInfo phone){
-//		this.phone=phone;
-//		return this;
-//	}
-
-
+	private String triggerKeyword;
 
 }

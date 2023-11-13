@@ -11,21 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MessageDTO {
 
-	private String today;
-
-	private String time;
-
 	private AnswerDTO answer;
-
-	public MessageDTO today(String today) {
-		this.today = today;
-		return this;
-	}
-
-	public MessageDTO time(String time) {
-		this.time = time;
-		return this;
-	}
 
 	public MessageDTO answer(AnswerDTO answer) {
 		this.answer = answer;

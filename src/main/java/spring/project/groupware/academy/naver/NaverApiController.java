@@ -109,7 +109,7 @@ public class NaverApiController {
 	// 조직 연동 -> 실제 API 조직 get
 	private OrgResponse getOrgUnit(NaverTokenDTO dto) throws IOException {
 
-		String apiURL="https://www.worksapis.com/v1.0/orgunits?domainId=300107817";
+		String apiURL="https://www.worksapis.com/v1.0/orgunits?domainId=300112436";
 
 		URL url=new URL(apiURL);
 		HttpURLConnection con=(HttpURLConnection) url.openConnection();
