@@ -521,6 +521,15 @@ p.message_box {
     word-wrap: break-word; /* 긴 단어 줄바꿈 */
 
 }
+div.message_box {
+    /* border: 1px solid #dddddd; */
+    box-shadow: 0 0 3px 0 #dddddd;
+    border-radius: 5px;
+    padding: 5px 8px;
+    max-width: 75%;
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+
+}
 .message.user {
     display: flex;
     justify-content: end;
@@ -537,6 +546,9 @@ p.message_box {
     background-color: #FEE500;
 }
 .message.bot p {
+    background-color: #ffffff;
+}
+.message.bot div {
     background-color: #ffffff;
 }
 .selection {

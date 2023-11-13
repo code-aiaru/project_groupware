@@ -69,7 +69,7 @@ public class EmployeeController {
         return "employee/join";
     }
 
-    @PostMapping("/api/employee/join")
+    @PostMapping("/post/employee/join")
     public String postJoin(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult){
 
         // 사원 추가 시 오류 때문에 주석처리 해놓음

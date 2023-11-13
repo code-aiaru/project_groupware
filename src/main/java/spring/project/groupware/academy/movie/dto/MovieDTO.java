@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.chatbot.dto;
+package spring.project.groupware.academy.movie.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MovieDTO {
