@@ -1,12 +1,7 @@
 // imports
-import { addMovieMessageToLog } from '/js/chatbot2/movie.js';
 import { sendMovieMessage } from '/js/chatbot2/movie.js';
-
-import { addBusMessageToLog } from '/js/chatbot2/bus.js';
 import { sendBusMessage } from '/js/chatbot2/bus.js';
-
-import { addWeatherMessageToLog } from '/js/chatbot2/weather.js'; // 송원철
-import { sendWeatherMessage } from '/js/chatbot2/weather.js'; // 송원철
+import { sendWeatherMessage } from '/js/chatbot2/weather.js';
 
 
 
@@ -288,10 +283,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 시나리오 수신
-    async function requestScenarioAndSelections(scenarioId) {
-        console.log('scenarioId : ', scenarioId);
+    async function requestScenarioAndSelections(selectionId) {
+        console.log('selectionId : ', selectionId);
         try {
-            const url = `/api/chatbot2/scenario?id=${scenarioId}`;
+            const url = `/api/chatbot2/scenario?id=${selectionId}`;
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('서버로부터 응답을 받지 못했습니다.');
@@ -310,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log(data.scenario.inform);
             addMessageToLog(data.scenario.inform, 'bot'); 
-            createSelectionElements(data.selections, scenarioId);
+            createSelectionElements(data.selections, selectionId);
 
             if (data.scenario.scenarioResponseType == 'VALUE') {
                 await redirectMessageTo(null);
