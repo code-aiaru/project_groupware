@@ -1,4 +1,4 @@
-package spring.project.groupware.academy.chatbot.service;
+package spring.project.groupware.academy.movie.service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,18 +24,19 @@ public class MovieService {
     }
 
 
-    public String validMethod(String message){
-
-        if (message.contains("영화")&&message.contains("순위")){
-            return getDataFromMovieApi();
-        }else if (message.contains("영화")&&message.contains("배우")){
-            return searchActor(message);
-        }else if (message.contains("영화")&&message.contains("제목")){
-            return getMovieDetail(message);
-        }else {
-            return null;
+    public String validMethod(String message) {
+        if (message.contains("영화")) {
+            if (message.contains("순위")) {
+                return getDataFromMovieApi();
+            } else if (message.contains("배우")) {
+                return searchActor(message);
+            } else if (message.contains("제목")) {
+                return getMovieDetail(message);
+            }
         }
+        return null;
     }
+
 
 
     public String getDataFromMovieApi() {

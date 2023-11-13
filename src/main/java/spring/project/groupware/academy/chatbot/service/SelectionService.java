@@ -15,9 +15,6 @@ public class SelectionService {
 
     private final SelectionRepository selectionRepository;
 
-//    public List<Selection> getSelectionsByScenarioId(int scenarioId) {
-//        return selectionRepository.findAllByScenarioId(scenarioId);
-//    }
     public List<SelectionDTO> getSelectionsByScenarioId(int scenarioId) {
         List<Selection> selections = selectionRepository.findAllByScenarioId(scenarioId);
         return selections.stream().map(SelectionDTO::toDTO).collect(Collectors.toList());

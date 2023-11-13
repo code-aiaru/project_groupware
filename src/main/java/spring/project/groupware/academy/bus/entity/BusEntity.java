@@ -3,6 +3,7 @@ package spring.project.groupware.academy.bus.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -31,5 +32,9 @@ public class BusEntity {
     private String firstLowTm;
     private String busRouteNm;
     private String length;
+
+//    // 연관 관계 - bus
+//    @OneToMany(mappedBy = "busEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<StationEntity> busStations;
 
 }
