@@ -9,15 +9,18 @@ import { addWeatherMessageToLog } from '/js/chatbot2/weather.js'; // 송원철
 import { sendWeatherMessage } from '/js/chatbot2/weather.js'; // 송원철
 
 
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const chatbot = document.getElementById('chatbot');
     const chatbotLog = document.querySelector('.chatbot_log');
     let isChatbotInit = true; // 초기 메시지 출력용 플래그
-    let askingAbout; // 질문 범주 저장용 변수 (영화, 날씨, 버스) -> DB와 대조
-    let responseType; // 질문에 대한 답변 방법 (TEXT, VALUE)
+    let askingAbout; // 질문 범주 저장용 변수 (ex. 영화, 날씨, 버스)
     let askingFor; // 세부 범주
-    let previousSelectionIds = []; // 뒤로가기를 위한 이전 id 저장용
+    let responseType; // 질문에 대한 답변 방법 (enum. TEXT, VALUE)
+    let previousSelectionIds = []; // 뒤로가기를 위한 이전 선택지 id 저장용
 
 
     // 챗봇 열고 닫기 관련 로직 =============================================================================================
@@ -28,7 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const clickedInsideChatbot = e.target.closest('#chatbot');
     
         if (chatbotButton) {
-            toggleChatbot();
+            showHideToggleChatbot();
+            initProcessChatbot();
             e.stopPropagation();
         } else if (!clickedInsideChatbot) {
             hideChatbot();
@@ -36,23 +40,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 챗봇 버튼 함수
-    async function toggleChatbot() {
-        const isChatbotVisible = chatbot.style.display === 'block';
-        chatbot.style.display = isChatbotVisible ? 'none' : 'block';
-    
-        // 챗봇이 숨겨져 있었고 초기화되지 않았다면 시나리오 표시
-        if (!isChatbotVisible && isChatbotInit) {
-            await displayScenarioAndSelections(0);
+    async function initProcessChatbot() {
+        if (isChatbotInit && previousSelectionIds.length === 0) {
+            await resetChatbotLog();
+            await requestScenarioAndSelections(0);
             isChatbotInit = false;
             console.log('isChatbotInit : ', isChatbotInit);
         }
     }
     
-    // 챗봇 바깥 클릭 시 숨기기 함수
+    function showHideToggleChatbot() {
+        if (chatbot.style.display === 'none') {
+            chatbot.style.display = 'block';
+        } else if (chatbot.style.display === 'block') {
+            chatbot.style.display = 'none';
+        }
+    }
+
+    // 챗봇의 바깥 쪽을 클릭 시, 챗봇을 숨기는 함수
     function hideChatbot() {
         if (chatbot.style.display === 'block') {
             chatbot.style.display = 'none';
         }
+    }
+
+    // 챗봇로그 리셋
+    async function resetChatbotLog() {
+        const chatbotLog = document.querySelector('.chatbot_log');
+        chatbotLog.innerHTML = '';
     }
   
     // ==================================================================================================================
@@ -62,8 +77,20 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 선택지 클릭시
     document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('selection_box')) {
+        if (e.target.getAttribute('data-selection-id') !== null || e.target.getAttribute('data-selection-action')) {
             handleSelectionClick(e);
+        }
+    });
+    
+    // 선택지 hover시 색상변경
+    document.addEventListener('mouseover', function(e) {
+        if (e.target.getAttribute('data-selection-id') !== null || e.target.getAttribute('data-selection-action') !== null) {
+            e.target.classList.add('--selectable');
+        }
+    });
+    document.addEventListener('mouseout', function(e) {
+        if (e.target.getAttribute('data-selection-id') !== null || e.target.getAttribute('data-selection-action') !== null) {
+            e.target.classList.remove('--selectable');
         }
     });
 
@@ -71,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleSelectionClick(event) {
         const selectionText = event.target;
         const selectionId = selectionText.getAttribute('data-selection-id');
-        const actionType = selectionText.getAttribute('data-selection');
+        const actionType = selectionText.getAttribute('data-selection-action');
         
         addMessageToLog(selectionText.textContent, 'user');
         
@@ -80,57 +107,80 @@ document.addEventListener('DOMContentLoaded', function() {
             askingFor = selectionText.getAttribute('data-asking-for');
             console.log('askingFor : ', askingFor);
             previousSelectionIds.push(scenarioId);
-            displayScenarioAndSelections(selectionId);
+            requestScenarioAndSelections(selectionId);
         } else if (actionType === 'back') { // 뒤로가기 선택시
             if (previousSelectionIds.length > 0) {
                 const previousScenarioId = previousSelectionIds.pop();
-                displayScenarioAndSelections(previousScenarioId);
+                requestScenarioAndSelections(previousScenarioId);
             } else {
                 console.error('뒤로 가기를 할 수 없습니다.');
             }
         } else if (actionType === 'end') { // 종료 선택시
             previousSelectionIds = [];
+            isChatbotInit = true;
+            disablePreviousSelectables();
+
         } else {
             console.error('알 수 없는 선택지입니다.');
         }
     }
     
+    // 기존 선택지 무력화
+    function disablePreviousSelectables() {
+        const selectedIds = document.querySelectorAll('[data-selection-id]');
+        selectedIds.forEach(element => element.removeAttribute('data-selection-id'));
+        
+        const actionTypes = document.querySelectorAll('[data-selection-action]');
+        actionTypes.forEach(element => element.removeAttribute('data-selection-action'));
+
+        const selectables = document.querySelectorAll('.--selectable');
+        selectables.forEach(element => element.classList.remove('--selectable'));
+
+    }
+    
     // 선택지 생성 및 출력
-    function showSelection(selections, scenarioId) {
+    function createSelectionElements(selections, scenarioId) {
+        disablePreviousSelectables();
+
         console.log('responseType', responseType);
         const selectionDiv = document.createElement('div');
         selectionDiv.classList.add('selection');
-    
+        
         selections.forEach(selection => {
             const selectionText = document.createElement('span');
             selectionText.textContent = selection.selection;
             selectionText.classList.add('selection_box');
+            // selectionText.classList.add('--selectable');
             selectionText.setAttribute('data-selection-id', selection.id);
             selectionText.setAttribute('data-scenario-id', scenarioId);
             selectionText.setAttribute('data-asking-for', selection.selection);
             selectionDiv.appendChild(selectionText);
         });
-    
+        
         if (responseType === null) {
             // '종료' 혹은 '뒤로가기' 선택지를 출력
             const selectionToGoBackText = document.createElement('span');
             selectionToGoBackText.classList.add('selection_box');
+            // selectionToGoBackText.classList.add('--selectable');
             if (scenarioId == 0) {
                 selectionToGoBackText.textContent = '종료';
-                selectionToGoBackText.setAttribute('data-selection', 'end');
+                selectionToGoBackText.setAttribute('data-selection-action', 'end');
             } else {
                 selectionToGoBackText.textContent = '뒤로가기';
-                selectionToGoBackText.setAttribute('data-selection', 'back');
+                selectionToGoBackText.setAttribute('data-selection-action', 'back');
             }
             selectionDiv.appendChild(selectionToGoBackText);
-        }else {
-           responseType = 'TEXT';
         }
+        
+        // else {
+        //     responseType = 'TEXT';
+        // }
         
         chatbotLog.appendChild(selectionDiv);
         chatbotLog.scrollTop = chatbotLog.scrollHeight;
     }
-    
+
+
     // ==================================================================================================================
 
 
@@ -140,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetAskingQueries() {
         askingAbout = null;
         askingFor = null;
-        displayScenarioAndSelections(0);
+        requestScenarioAndSelections(0);
     }
 
     // 텍스트 입력으로 요청
@@ -174,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         messageDiv.appendChild(messageText);
         chatbotLog.appendChild(messageDiv);
-        chatbotLog.scrollTop = chatbotLog.scrollHeight; // 항상 최신 메시지 보이도록 스크롤 조정
+        chatbotLog.scrollTop = chatbotLog.scrollHeight;
     }
 
     // 챗봇 메시지 보내기. (엔터키)
@@ -182,9 +232,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const chatbotInput = document.getElementById('chatbot_input');
 
         if (event.key === 'Enter' && event.target === chatbotInput) {
-            const inputValue = event.target.value; // 입력된 값을 가져오고, input을 비웁니다
-            event.target.value = ''; // 인풋창 초기화
-            addMessageToLog(inputValue, 'user'); // 사용자 메시지 로그에 추가
+            const inputValue = event.target.value;
+            event.target.value = '';
+            addMessageToLog(inputValue, 'user');
             console.log('inputValue : ', inputValue);
 
             if (askingAbout && askingFor && responseType == 'TEXT') {
@@ -238,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 시나리오 수신
-    async function displayScenarioAndSelections(scenarioId) {
+    async function requestScenarioAndSelections(scenarioId) {
         console.log('scenarioId : ', scenarioId);
         try {
             const url = `/api/chatbot2/scenario?id=${scenarioId}`;
@@ -260,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log(data.scenario.inform);
             addMessageToLog(data.scenario.inform, 'bot'); 
-            showSelection(data.selections, scenarioId);
+            createSelectionElements(data.selections, scenarioId);
 
             if (data.scenario.scenarioResponseType == 'VALUE') {
                 await redirectMessageTo(null);
@@ -278,4 +328,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==================================================================================================================
 
 });
-

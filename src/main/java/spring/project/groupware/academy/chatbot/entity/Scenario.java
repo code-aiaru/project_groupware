@@ -16,8 +16,6 @@ public class Scenario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer sequence; // 시나리오 순서
-
     private String inform; // 안내 메세지 (텍스트)
 
     private String scenarioFor; // 어떤 선택지인지
@@ -32,7 +30,6 @@ public class Scenario {
     public static Scenario toEntity(ScenarioDTO scenarioDTO) {
         Scenario scenario = new Scenario();
         scenario.setId(scenarioDTO.getId());
-        scenario.setSequence(scenarioDTO.getSequence());
         scenario.setInform(scenarioDTO.getInform());
         scenario.setScenarioFor(scenarioDTO.getScenarioFor());
 

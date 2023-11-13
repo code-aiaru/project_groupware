@@ -7,7 +7,7 @@ import spring.project.groupware.academy.chatbot.entity.Answer;
 
 import java.util.List;
 
-public interface AnswerRepository extends JpaRepository<Answer, Long>{
+public interface AnswerRepository extends JpaRepository<Answer, Integer>{
 
     // 추가할 메서드
     @Query("SELECT a FROM Answer a WHERE :message LIKE CONCAT('%', a.triggerKeyword, '%')")

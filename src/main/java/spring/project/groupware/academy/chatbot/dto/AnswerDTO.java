@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AnswerDTO {
 	
-	private long id;
+	private Integer id;
 
 	private String response;
 

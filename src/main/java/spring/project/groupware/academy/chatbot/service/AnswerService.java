@@ -30,11 +30,9 @@ public class AnswerService {
             log.info("트리거 키워드에 대한 응답을 찾을 수 없습니다.");
             return "해당 키워드에 대한 응답을 찾을 수 없습니다.";
         }
-        // 리스트를 섞어서 무작위로 하나의 응답을 선택합니다.
+        // 리스트를 섞어서 랜덤으로 응답을 선택.
         Collections.shuffle(answers);
         Answer randomAnswer = answers.get(0);
-        // 또는 리스트에서 무작위 인덱스를 사용할 수도 있습니다.
-        // Answer randomAnswer = answers.get(random.nextInt(answers.size()));
 
         return randomAnswer.getResponse();
     }

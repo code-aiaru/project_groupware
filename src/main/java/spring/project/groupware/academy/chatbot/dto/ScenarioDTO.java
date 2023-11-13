@@ -12,7 +12,6 @@ import java.util.List;
 public class ScenarioDTO {
 
     private Integer id;
-    private Integer sequence;
     private String inform;
     private String scenarioFor;
     private ScenarioResponseType scenarioResponseType;
@@ -24,7 +23,6 @@ public class ScenarioDTO {
 
         ScenarioDTO scenarioDTO = new ScenarioDTO();
         scenarioDTO.setId(scenario.getId());
-        scenarioDTO.setSequence(scenario.getSequence());
         scenarioDTO.setInform(scenario.getInform());
         scenarioDTO.setScenarioFor(scenario.getScenarioFor());
         scenarioDTO.setScenarioResponseType(scenario.getScenarioResponseType());

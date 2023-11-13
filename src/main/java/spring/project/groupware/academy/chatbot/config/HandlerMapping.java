@@ -1,13 +1,8 @@
 package spring.project.groupware.academy.chatbot.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Service;
-import spring.project.groupware.academy.chatbot.config.KeywordHandler;
-import spring.project.groupware.academy.chatbot.config.ServiceCommand;
 
 import java.util.HashMap;
 import java.util.List;

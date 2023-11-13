@@ -564,15 +564,15 @@ p.message_box {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-.selection > .selection_box:hover {
+/* .selection > .selection_box:hover {
     color: #2788b5;
     font-weight: bold;
     background-color: #e4f1f7;
+} */
+
+.--selectable {
+    filter: brightness(0.8);
 }
-
-
-
-
 
 
 
