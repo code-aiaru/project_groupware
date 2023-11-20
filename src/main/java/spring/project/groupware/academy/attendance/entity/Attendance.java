@@ -22,7 +22,7 @@ public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    // 출/퇴근 일 기록
     private LocalTime inAtt;
     private LocalTime outAtt;
     private LocalDate attDate;
@@ -30,6 +30,7 @@ public class Attendance {
     @Enumerated(EnumType.STRING)
     private AttendanceStatus attendanceStatus;
 
+    // 휴/병가, 신청일 기록
     private LocalDate start;
     private LocalDate end;
     private LocalDate applyDate;

@@ -7,12 +7,18 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import spring.project.groupware.academy.employee.config.MyUserDetails;
 import spring.project.groupware.academy.employee.dto.EmployeeDto;
 import spring.project.groupware.academy.employee.service.EmployeeService;
 import spring.project.groupware.academy.employee.service.ImageService;
+import spring.project.groupware.academy.weather.OpenApiUtil;
+import spring.project.groupware.academy.weather.WeatherApiDto;
+import spring.project.groupware.academy.weather.WeatherService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 //import spring.project.groupware.academy.employee.service.ImageServiceImpl;
 
 @Slf4j
@@ -58,6 +64,17 @@ public class HomeController {
         log.info("GetMapped : dashboard");
         return "dashboard/dashboard";
     }
+
+    @GetMapping("/weather")
+    public String weather(){
+        return "weather/index";
+    }
+
+    @GetMapping("/weather2")
+    public String weather2(){
+        return "weather/index_java";
+    }
+
 
 
 }

@@ -1,0 +1,131 @@
+@import url(/css/common/reset.css);
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+* {
+    font-family: Pretendard;
+    color: #373f4c;
+}
+
+h1{
+    width: 1000px;
+    font-size: 32px;
+}
+
+.search {
+    display: flex;
+    justify-content: right;
+    padding: 3px 0;
+}
+
+.search > button {
+    padding: 5px 10px;
+    background-color: #2c3e50;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 5px;
+    display: flex;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.con {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+}
+
+.bus-box .bus-table table{
+    width: 1000px;
+    height: auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+}
+
+table, td ,th{
+ border-collapse: collapse;
+ /* border:1px solid #555555; */
+ text-align:center;
+}
+
+thead {
+    border-top: 3px solid #444444;
+}
+
+th, td {
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+.bus-box .bus-table table thead tr:nth-child(1) th{
+      /* background-color:#555555; */
+      /* color:#ffffff; */
+      font-size:20px;
+      padding:5px 0;
+}
+
+.bus-box .bus-table table thead tr:nth-child(2) th{
+      /* background-color:#cda9f6;
+      color:#ffffff; */
+      padding:8px 0;
+}
+
+.bus-box .bus-table table tbody tr td{
+      padding:5px 0;
+}
+
+.bus-map {
+	max-width: 1400px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	max-height: 50vh;
+	    overflow-y: hidden;
+	/* border: 1px solid; */
+	box-sizing: border-box;
+	padding: 0.5vw;
+	/* flex-direction: column; */
+			background-color:#ffffff;
+}
+
+.left-bus {
+    text-align: center;
+	padding: 0  0.1vw;
+	box-sizing: border-box;
+		background-color:#ffffff;
+	position: sticky;
+	top: 0;
+	overflow-y: auto;
+	font-size:12px;
+	 /* border: 1px solid;
+	box-sizing: border-box; */
+}
+.left-bus .bus-station div{
+    padding: 5px;
+}
+
+.left-bus h1{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+ line-height:40px;
+ position:sticky;
+ top:0;
+	background-color:#ffffff;
+}
+.right-map {
+	flex: 5;
+	padding: 0.1vw;
+	overflow: hidden;
+	border: 1px solid #cccccc;
+	background-color:#ffffff;
+		box-sizing: border-box;
+}

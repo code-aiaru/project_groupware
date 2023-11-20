@@ -54,24 +54,34 @@ public class SalaryController {
         return "salary/salaryDetail";
     }
 
+        @GetMapping("/calculator")
+    public String salaryCalculator(){
+        // 일단 지난달 1~31 계산해서 신청일에 지급!
+        // 수정한다면 지급일 변경된다면 전월 기존일 ~ 이번월 변경일
+        int rs = salaryService.salaryToday();
+
+        return "redirect:/salary/page";
+    }
+
     @GetMapping("/page")
     public String SalaryPageListId(@PageableDefault(page = 0, size = 30, sort = "salaryDate",
             direction = Sort.Direction.ASC) Pageable pageable,
-                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
-//                               @RequestParam
-                                   @PathVariable(value = "id", required = false) Long id,
+//                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
+////                               @RequestParam
+////                                   @PathVariable(value = "id", required = false) Long id,
                                    @RequestParam(value = "subject", required = false) String subject,
                                    @RequestParam(value = "set", required = false) String set,
                                    @RequestParam(value = "first", required = false) String first,
                                    @RequestParam(value = "last", required = false) String last,
+//                                   @AuthenticationPrincipal MyUserDetails myUserDetails,
                                    Model model) {
 
-        if (id == null) {
-            id = myUserDetails.getEmployeeEntity().getEmployeeNo();
-        }
+//        if (id == null) {
+//            Long id = myUserDetails.getEmployeeEntity().getEmployeeNo();
+//        }
 
-        Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, id, subject, set, first, last);
-//        Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, subject, set, first, last);
+//        Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, id, subject, set, first, last);
+        Page<SalaryDto> salaryDtoPage = salaryService.salaryPagingList(pageable, subject, set, first, last);
 
         int nowPage = salaryDtoPage.getNumber();
         int totalPage = salaryDtoPage.getTotalPages();

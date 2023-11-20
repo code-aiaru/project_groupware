@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="page-title" title="버스 API">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="/js/bus/bus.js" data-dom-ready></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b1a42c4dcdb7bbf54797810adb17304&libraries=services,clusterer,drawing&autoload=false"></script>
+    <link rel="stylesheet" href="/css/bus/index.css">
+
+</head>
+<body>
+<div class="BusApi_root" id="loadedContent">
+    <div class="menu">
+        <div class="con">
+            <div class="bus">
+                <div class="bus-box">
+                    <div class="bus-header">
+                        <h1 class="bus-title">버스 API</h1>
+                        <div class="search">
+                            <input type="text" name="search" id="search" value="146">
+                            <button id="busBtn" onclick="busSearch()">버스 노선 조회</button>
+                        </div>
+                    </div>
+                    <div class="bus-table">
+                        <table class="bus-table1">
+                            <thead>
+                            <tr class="th1">
+                                <th colspan="9">버스 목록</th>
+                            </tr>
+                            <tr class="th2">
+                                <!--<th>노선ID</th>-->
+                                <th width="50px;">노선명</th>
+                                <th width="50px;">노선유형</th>
+                                <th width="100px;">기점</th>
+                                <th width="100px;" >종점</th>
+                                <th width="150px;">금일첫차시간</th>
+                                <th width="150px;">금일막차시간</th>
+                                <th width="100px;">배차간격</th>
+                                <th width="100px;">버스위치정보</th>
+                                <th width="100px;">버스타입</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bus1">
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <h1>버스정류장</h1>
+                <div class="bus-map">
+                    <div class="left-bus">
+
+                        <div class="bus-station">
+
+                        </div>
+                    </div>
+                    <div class="right-map">
+                        <section id="mymap" style="width: 100%;">
+                            <div class="wrap" id="map" style="width:100%;height:100vh;">
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

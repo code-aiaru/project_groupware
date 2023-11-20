@@ -60,29 +60,29 @@ public class NoticeService {
         }
 
     }
-    @Transactional
-    public boolean updateNotice(Long id) {
-        Optional<Notice> optionalNotice = noticeRepository.findById(id);
-        NoticeResponseDTO NoticeResponseDTO = new NoticeResponseDTO();
-
-        if (optionalNotice.isPresent()) {
-            Notice notice = optionalNotice.get();
-            notice.setTitle(NoticeResponseDTO.getTitle());
-            notice.setContent(NoticeResponseDTO.getContent());
-
-            Notice updateNotice = noticeRepository.save(notice);
-            return true;
-        } else {
-            return false;
-        }
-
-
-    }
-
-
-    public Page<Notice> getLastFiveArticlesFromNotice() {
-        return noticeRepository.findAllByOrderByIdDesc(PageRequest.of(0, 20));
-
-    }
 }
+//    @Transactional
+//    public boolean updateNotice(Long id) {
+//        Optional<Notice> optionalNotice = noticeRepository.findById(id);
+//        NoticeResponseDTO NoticeResponseDTO = new NoticeResponseDTO();
+//
+//        if (optionalNotice.isPresent()) {
+//            Notice notice = optionalNotice.get();
+//            notice.setTitle(NoticeResponseDTO.getTitle());
+//            notice.setContent(NoticeResponseDTO.getContent());
+//
+//            Notice updateNotice = noticeRepository.save(notice);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//
+//
+//    }
+//
+//
+//    public Page<Notice> getLastFiveArticlesFromNotice() {
+//        return noticeRepository.findAllByOrderByIdDesc(PageRequest.of(0, 20));
+//
+//    }
 

@@ -398,9 +398,11 @@ public class AttendanceService{
     }
 
     public Page<AttendanceDto> attendancePagingList1(Pageable pageable, String subject, String set, String first, String last) {
-        if(subject==null) subject="ALL";
-        if(first==null||first=="") first=LocalDate.now().toString();
-        if(last==null||last=="") last=LocalDate.now().toString();
+        if(subject==null)
+//            subject="";
+            subject="ALL";
+        if(first==null||first=="") first="0";
+        if(last==null||last=="") last="0";
         if(set==null||set=="") set="0";
 
         LocalDate start = null;
@@ -408,15 +410,19 @@ public class AttendanceService{
 
         Page<Attendance> attendances =null;
 
-        if(set.equals("0")||set.equals("100")){    // 기간옵션 설정(set) 전체 0 , 오늘 100, 직접 입력 99  >> 기간 유무
-            if (first.equals(LocalDate.now())&&last.equals(LocalDate.now())){   // 기간 미입력 >> 전체
-                // 조건문 아래
+        if(set.equals("0")){    // 기간옵션 설정(set) 전체 0 , 오늘 100, 직접 입력 99  >> 기간 유무
+            if (first.equals("0")||last.equals("0")){   // 기간 미입력 >> 전체
+                // 아래 출결 상태 조건문
+                if (first.equals("0")) start=LocalDate.now();   // 입력 없을시 우선 당일
+                if (last.equals("0")) end=LocalDate.now();   // 입력 없을시 우선 당일
             }else{                                                              // 기간 입력 >> 기간 설정
-//                set = "99";
-//                start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
-//                end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
+                set = "99";
+                start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
+                end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
             }
-
+        }else if(set.equals("100")){    // 기간옵션 설정(set) 전체 0 , 오늘 100, 직접 입력 99  >> 기간 유무
+            start = LocalDate.now();
+            end = LocalDate.now();
         }else if(set.equals("77")){   // 이번 주
             start = LocalDate.now().with(DayOfWeek.MONDAY);
             end = LocalDate.now().with(DayOfWeek.SUNDAY);
@@ -428,12 +434,14 @@ public class AttendanceService{
             end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(0<Integer.parseInt(set) && Integer.parseInt(set)<13){  // 월 선택
             start = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), 1);
-            end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set),1).lengthOfMonth());
+            end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(), 1).lengthOfMonth());
         }else if(set.equals("99")) {     // 직접 입력 (일단 예시)
             start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
             end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
-        }else {
-
+        }else{
+//            attendances = attendanceRepository.findAllByEmployee(pageable, employee);
+//            Page<AttendanceDto> attendanceDtoPageList = attendances.map(AttendanceDto::toAttendanceDto);
+//            return attendanceDtoPageList;
         }
 
         // set 조건 따라서 조회 조건 추가
@@ -510,9 +518,11 @@ public class AttendanceService{
         EmployeeEntity employee = employeeRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("사원정보가 없음!"));
 
-        if(subject==null) subject="";   //subject="ALL"
-        if(first==null||first=="") first=LocalDate.now().toString();
-        if(last==null||last=="") last=LocalDate.now().toString();
+        if(subject==null)
+//            subject="";
+            subject="ALL";
+        if(first==null||first=="") first="0";
+        if(last==null||last=="") last="0";
         if(set==null||set=="") set="0";
 
         LocalDate start = null;
@@ -520,15 +530,19 @@ public class AttendanceService{
 
         Page<Attendance> attendances =null;
 
-        if(set.equals("0")||set.equals("100")){    // 기간옵션 설정(set) 전체 0 , 오늘 100, 직접 입력 99  >> 기간 유무
-            if (first.equals(LocalDate.now())&&last.equals(LocalDate.now())){   // 기간 미입력 >> 전체
+        if(set.equals("0")){    // 기간옵션 설정(set) 전체 0 , 오늘 100, 직접 입력 99  >> 기간 유무
+            if (first.equals("0")||last.equals("0")){   // 기간 미입력 >> 전체
                 // 아래 출결 상태 조건문
+                if (first.equals("0")) start=LocalDate.now();   // 입력 없을시 우선 당일
+                if (last.equals("0")) end=LocalDate.now();   // 입력 없을시 우선 당일
             }else{                                                              // 기간 입력 >> 기간 설정
                 set = "99";
                 start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
                 end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
             }
-
+        }else if(set.equals("100")){    // 기간옵션 설정(set) 전체 0 , 오늘 100, 직접 입력 99  >> 기간 유무
+            start = LocalDate.now();
+            end = LocalDate.now();
         }else if(set.equals("77")){   // 이번 주
             start = LocalDate.now().with(DayOfWeek.MONDAY);
             end = LocalDate.now().with(DayOfWeek.SUNDAY);
@@ -540,21 +554,23 @@ public class AttendanceService{
             end = YearMonth.from(LocalDate.now()).atEndOfMonth();
         }else if(0<Integer.parseInt(set) && Integer.parseInt(set)<13){  // 월 선택
             start = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), 1);
-            //
             end = LocalDate.of(LocalDate.now().getYear(), Integer.parseInt(set), LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(), 1).lengthOfMonth());
         }else if(set.equals("99")) {     // 직접 입력 (일단 예시)
             start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
             end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
-        }else {
-
+        }else{
+//            attendances = attendanceRepository.findAllByEmployee(pageable, employee);
+//            Page<AttendanceDto> attendanceDtoPageList = attendances.map(AttendanceDto::toAttendanceDto);
+//            return attendanceDtoPageList;
         }
 
         // set 조건 따라서 조회 조건 추가
         if (subject.equals("ALL")) {        // subject.equals(null) ||
             if (set.equals("0")) {
-                attendances = attendanceRepository.findAllByEmployee(pageable, employee);
+                    start = LocalDate.of(Integer.parseInt(first.substring(0, 4)), Integer.parseInt(first.substring(5, 7)), Integer.parseInt(first.substring(8, 10)));
+                    end = LocalDate.of(Integer.parseInt(last.substring(0, 4)), Integer.parseInt(last.substring(5, 7)), Integer.parseInt(last.substring(8, 10)));
+                    attendances = attendanceRepository.findByEmployeeAndAttDateBetween(pageable, employee,  start ,end);
             }
-
             else{
                 attendances = attendanceRepository.findByEmployeeAndAttDateBetween(pageable, employee,  start ,end);
             }
@@ -620,7 +636,7 @@ public class AttendanceService{
 
     public List<AttendanceDto> todayList() {
         List<AttendanceDto> todayList = new ArrayList<>();
-
+        //
 
         return todayList;
     }

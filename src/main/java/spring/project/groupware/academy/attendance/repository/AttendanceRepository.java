@@ -19,6 +19,9 @@ import java.util.Optional;
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
 
+    Optional<Attendance> findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus attendanceStatus, EmployeeEntity employee, LocalDate attDate);
+
+    List<Attendance> findByAttDateAndAttendanceStatus(@Param("attDate")LocalDate attDate, @Param("attendanceStatus")AttendanceStatus attendanceStatus);
 
 //    // 정상 작동함
 //    List<Attendance> findByAttDate(LocalDate now);
@@ -30,50 +33,39 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long>{
 //    List<Attendance> employeeAtt(@Param("employee_no") Long employee_no);
     //mysql에서는 조회 확인됨
 
+
+//    List<Attendance> findByAttDateAndEmployee(@Param("attDate")LocalDate attDate, @Param("employee") EmployeeEntity employee);
+
+    Page<Attendance> findAllByAttDateBetween(Pageable pageable, LocalDate date1, LocalDate date2);
+
+    List<Attendance> findByAttendanceStatus(@Param("attendanceStatus") AttendanceStatus attendanceStatus);
+
+    List<Attendance> findByAttendanceStatusAndAttDateBetween(AttendanceStatus attendanceStatus, LocalDate date1, LocalDate date2);
+
+    //    @Modifying
+//    @Query(value = "select * from attendance where attendance_status=:attendanceStatus")
+//    Page<Attendance> customAttendanceStatus(Pageable pageable, @Param("attendanceStatus")AttendanceStatus attendanceStatus);
+
+    Page<Attendance> findAllByAttendanceStatus(Pageable pageable, AttendanceStatus attendanceStatus);
+
+    //    mysql
+//    select * from attendance where attendance_status='ABSENT' and att_date between '2023-9-20' and '2023-10-10';
+
     // jpql
 //    @Query(value = "SELECT a FROM Attendance a WHERE a.attDate =:attDate AND a.employee =:employee")
 //    List<Attendance> customFindByAttDateAndEmployee(@Param("attDate")LocalDate attDate, @Param("employee") EmployeeEntity employee);
 
-//    List<Attendance> findByAttDateAndEmployee(@Param("attDate")LocalDate attDate, @Param("employee") EmployeeEntity employee);
-
     Attendance findByAttDateAndEmployee(@Param("attDate")LocalDate attDate, @Param("employee") EmployeeEntity employee);
-
-
     // 해당 사원 출결 조회 >> 상세 누르면 나옴 // 일단 detail
     List<Attendance> findByEmployee(@Param("employee") EmployeeEntity employee);
-
-    Optional<Attendance> findByAttendanceStatusAndEmployeeAndAttDate(AttendanceStatus attendanceStatus, EmployeeEntity employee, LocalDate attDate);
-
-    List<Attendance> findByAttDateAndAttendanceStatus(@Param("attDate")LocalDate attDate, @Param("attendanceStatus")AttendanceStatus attendanceStatus);
-
-//    @Modifying
-//    @Query(value = "select * from attendance where attendance_status=:attendanceStatus")
-//    Page<Attendance> customAttendanceStatus(Pageable pageable, @Param("attendanceStatus")AttendanceStatus attendanceStatus);
-
-
-    List<Attendance> findByAttendanceStatus(@Param("attendanceStatus") AttendanceStatus attendanceStatus);
-
     Page<Attendance> findByAttendanceStatus(Pageable pageable, @Param("attendanceStatus") AttendanceStatus attendanceStatus);
-
-
-    Page<Attendance> findAllByAttDateBetween(Pageable pageable, LocalDate date1, LocalDate date2);
     Page<Attendance> findByAttDateBetween(Pageable pageable, LocalDate date1, LocalDate date2);
-
     List<Attendance> findByAttDateBetween(LocalDate date1, LocalDate date2);
-
-
-//    mysql
-//    select * from attendance where attendance_status='ABSENT' and att_date between '2023-9-20' and '2023-10-10';
-
-    List<Attendance> findByAttendanceStatusAndAttDateBetween(AttendanceStatus attendanceStatus, LocalDate date1, LocalDate date2);
-
     Page<Attendance> findByAttendanceStatusAndAttDateBetween(Pageable pageable, AttendanceStatus attendanceStatus, LocalDate date1, LocalDate date2);
-
-    Page<Attendance> findAllByAttendanceStatus(Pageable pageable, AttendanceStatus attendanceStatus);
-
     // 해당 사원 정해진 기간동안 출결 조회     >> 상세 누르면 나오는 부분 // 일단 detail
     List<Attendance> findByEmployeeAndAttDateBetween(EmployeeEntity employee, LocalDate date1, LocalDate date2);
     Page<Attendance> findByEmployeeAndAttDateBetween(Pageable pageable, EmployeeEntity employee, LocalDate date1, LocalDate date2);
+
 
 //    List<Attendance> findByAttendanceStatusContains(@Param("attendanceStatus")AttendanceStatus attendanceStatus);
 

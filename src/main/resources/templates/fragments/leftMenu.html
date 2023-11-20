@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="left-menu"  th:fragment="leftMenuFragment">
+  <div class="left-con">
+    <h1 class="logo">
+      <a th:href="@{/}"><img th:src="@{/image/logo.png}" alt="logo"></a>
+    </h1>
+    <div class="dash-board">
+      <h1 class="title">DASHBOARD</h1>
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="#">사원관리</a>
+            <ul class="sub">
+              <li>
+                <a href="#">구성원조회</a>
+              </li>
+              <li>
+                <a href="#">구성원등록</a>
+              </li>
+              <li>
+                <a href="#">구성원삭제</a>
+              </li>
+              <li>
+                <a href="#">구성원수정</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">급여관리</a>
+            <ul class="sub">
+              <li>
+                <a href="#">급여조회</a>
+              </li>
+              <li>
+                <a href="#">급여등록</a>
+              </li>
+              <li>
+                <a href="#">급여삭제</a>
+              </li>
+              <li>
+                <a href="#">급여수정</a>
+              </li>
+            </ul>
+          </li>
+          <li><a href="#">근태관리</a></li>
+          <li><a href="#">부서관리</a></li>
+          <li><a href="#">게시판</a></li>
+          <li><a href="#">결제관리</a></li>
+          <li><a href="#">영업점관리</a></li>
+          <li><a href="#">로그인</a></li>
+        </ul>
+      </div>
+      <div class="naver">
+        <h1><a href="#">NAVER API</a></h1>
+        <ul class="sub">
+          <li><a href="#">NAVER Login</a></li>
+          <li><a href="#">NAVER Object</a></li>
+          <li><a href="#">NAVER Mail</a></li>
+        </ul>
+      </div>
+      <div class="open-api">
+        <h1>OPENAPI_1</h1>
+        <ul class="sub">
+          <li><a th:href="@{/movie}">영화API</a></li>
+          <li><a th:href="@{/bus}">버스API</a></li>
+          <li><a th:href="@{/weather}">날씨API</a></li>
+        </ul>
+      </div>
+      <div class="open-api">
+        <h1>OPENAPI_2(J)</h1>
+        <ul class="sub">
+          <li><a th:href="@{#}">영화API</a></li>
+          <li><a th:href="@{#}">버스API</a></li>
+          <li><a th:href="@{#}">날씨API</a></li>
+        </ul>
+      </div>
+      <div class="open-api">
+        <h1>CHATBOT</h1>
+        <ul class="sub">
+          <li><a th:href="@{#}">ChatBot</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

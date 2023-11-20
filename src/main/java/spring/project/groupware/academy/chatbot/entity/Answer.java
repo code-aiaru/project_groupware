@@ -19,21 +19,10 @@ public class Answer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long no;
+	private Integer id;
 
-	private String content;
+	private String response;
 	
-	private String keyword;    //name
-	
-	public Answer keyword(String keyword) {
-		this.keyword=keyword;
-		return this;
-	}
-	
-	public AnswerDTO toAnswerDTO() {
-		return AnswerDTO.builder()
-				.no(no).content(content).keyword(keyword)
-				.build();
-	}
+	private String triggerKeyword;
 
 }

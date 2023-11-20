@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 
@@ -31,9 +32,10 @@ public class WebSecurityConfig {
         public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
                     http.csrf().disable();
             http.authorizeRequests()
-                    .antMatchers("/login").permitAll()
-                    .antMatchers("/", "/dashboard", "/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**", "/employee/delete/**",
-                            "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**", "/notice/list", "/attendance/**", "/approval/**", "/naver/**" ,"/post/**").authenticated()
+                    .antMatchers("/login","/movie/saveBoxOfficeData").permitAll()
+                    .antMatchers("/", "/dashboard", "/logout", "/employee/simple**", "/employee/detail/**", "/employee/update/**", "/employee/updateImage/**",
+                            "/employee/delete/**", "/employee/confirmPassword/**", "/employee/changePassword/**", "/student/**", "/boards/**", "/notice/detail/**",
+                            "/notice/list", "/attendance/**", "/approval/**", "/naver/**" ,"/post/**", "/weather**", "/movie", "/bus").authenticated()
                     .antMatchers("/employee/join", "/employee/employeeList**", "/notice/create", "/notice/edit/**").hasAnyRole("ADMIN")
 
                     .and()
@@ -77,6 +79,12 @@ public class WebSecurityConfig {
             provider.setUserDetailsService(userDetailsService());
             provider.setPasswordEncoder(passwordEncoder());
             return provider;
+        }
+
+
+        @Bean
+        public RestTemplate restTemplate() {
+            return new RestTemplate();
         }
 
     }

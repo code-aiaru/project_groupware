@@ -421,6 +421,196 @@ body {
 .footer {
     
 }
+
+.chatbot_icon {
+    height: 40px;
+    width: 40px;
+    z-index: 999;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 5px 0 #999999;
+}
+.chatbot_icon > img {
+    position: relative;
+    top: 1.5px;
+    left: 0.2px;
+    height: 25px;
+    width: 25px;
+}
+.chatbot_box {
+    z-index: 999;
+    position: fixed;
+    bottom: 85px;
+    right: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 0 #999999;
+    height: 400px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.chatbot_box > .chatbot_title {
+    background-image: linear-gradient(to right, #2788b5, #b8d7b8);
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chatbot_box > .chatbot_title > span {
+    font-size: 15px;
+    color: #ffffff;
+}
+.chatbot_box > .chatbot_log {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    /* border: 1px solid #dddddd; */
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #e4f1f7;
+}
+.chatbot_box > .chatbot_log::-webkit-scrollbar {
+    display: none;
+}
+.chatbot_box > .chatbot_submit_box {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chatbot_box > .chatbot_submit_box > input {
+    margin: 5px;
+    height: 30px;
+    width: 90%;
+    padding: 3px;
+    box-sizing: border-box;
+}
+.chatbot_box > .chatbot_submit_box > button {
+    height: 30px;
+    width: 30px;
+    margin: 5px 5px 5px 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.chatbot_box > .chatbot_submit_box > button > img{
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+
+p.message_box {
+    /* border: 1px solid #dddddd; */
+    box-shadow: 0 0 3px 0 #dddddd;
+    border-radius: 5px;
+    padding: 5px 8px;
+    max-width: 75%;
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+
+}
+div.message_box {
+    /* border: 1px solid #dddddd; */
+    box-shadow: 0 0 3px 0 #dddddd;
+    border-radius: 5px;
+    padding: 5px 8px;
+    max-width: 75%;
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+
+}
+.message.user {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin: 5px 0;
+}
+.message.bot {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.message.user p {
+    background-color: #FEE500;
+}
+.message.bot p {
+    background-color: #ffffff;
+}
+.message.bot div {
+    background-color: #ffffff;
+}
+.selection {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+}
+.selection > .selection_box {
+    /* border: 1px solid #dddddd; */
+    box-shadow: 0 0 3px 0 #dddddd;
+    padding: 5px 8px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+    background-color: #ffffff;
+}
+.selection > .selection_box:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.selection > .selection_box:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+/* .selection > .selection_box:hover {
+    color: #2788b5;
+    font-weight: bold;
+    background-color: #e4f1f7;
+} */
+
+.--selectable {
+    filter: brightness(0.8);
+}
+
+
+
+
+
+
+/* Movie */
+.movie {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    /* display: flex; */
+    /* align-items: stretch; */
+}
+.movie p {
+    margin-bottom: 5px;
+}
+
+
+
+
+
+
+
 /* footer end */
 
 .container {
