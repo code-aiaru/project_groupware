@@ -99,7 +99,7 @@
 
 <br>
 
-<div style="text-align: right;">
+<div style="display:flex; justify-content:flex-end">
   <a href="#index">목차로 이동</a>
 </div>
 
