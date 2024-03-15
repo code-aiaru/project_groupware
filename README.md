@@ -100,7 +100,7 @@
 <br>
 
 <div style="display:flex; justify-content:flex-end">
-  <a href="#index">목차로 이동</a>
+  <a href="#index" style="align-self: flex-end;">목차로 이동</a>
 </div>
 
 
